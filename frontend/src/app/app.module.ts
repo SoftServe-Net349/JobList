@@ -7,10 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import {ButtonModule} from 'primeng/button';
+import { JobSearchComponent } from './job-search/job-search.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    JobSearchComponent
   ],
   imports: [
     BrowserModule,
