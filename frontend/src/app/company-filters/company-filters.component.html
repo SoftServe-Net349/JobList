@@ -1,0 +1,30 @@
+<aside class="right-company-filters">
+  <div id="company-filters">
+    <h4 class="filter-title">Positions</h4>
+    <p-dropdown [options]="positions" [(ngModel)]="selectedPosition" placeholder="Select a Position" optionLabel="name"></p-dropdown>
+    <hr>  
+
+    <h4 class="filter-title">Cities</h4>
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+    <hr>
+  
+    <h4 class="filter-title">Schools</h4>
+    <p-dropdown [options]="schools" [(ngModel)]="selectedSchool" placeholder="Select a School" optionLabel="name"></p-dropdown>
+    <hr>
+
+    <h4 class="filter-title">Faculties</h4>
+    <p-dropdown [options]="faculties" [(ngModel)]="selectedFaculty" placeholder="Select a Faculty" optionLabel="name"></p-dropdown>
+    <hr>
+
+    <h4>Age Range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h4>
+    <div class="age-range">
+      <p-slider [(ngModel)]="rangeValues" [style]="{'width':'14em'}" [range]="true"></p-slider>
+      <p-button label="Ok"></p-button>     
+    </div> 
+    <hr>  
+
+    <h4 class="filter-title">Languages</h4>
+    <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage" placeholder="Select a Language" optionLabel="name"></p-dropdown>
+    <hr>
+  </div>
+</aside>
