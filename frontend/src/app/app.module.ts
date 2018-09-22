@@ -10,13 +10,15 @@ import {ButtonModule} from 'primeng/button';
 import { JobSearchComponent } from './job-search/job-search.component';
 import { ResumeComponent } from './resume/resume.component';
 import { RecomendedComponent } from './recomended/recomended.component';
+import { AuthorizationsComponent } from './authorizations/authorizations.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     JobSearchComponent,
     ResumeComponent,
-    RecomendedComponent
+    RecomendedComponent,
+    AuthorizationsComponent
   ],
   imports: [
     BrowserModule,
