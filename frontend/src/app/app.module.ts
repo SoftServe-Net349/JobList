@@ -11,6 +11,7 @@ import { JobSearchComponent } from './job-search/job-search.component';
 import { ResumeComponent } from './resume/resume.component';
 import { RecomendedComponent } from './recomended/recomended.component';
 import { AuthorizationsComponent } from './authorizations/authorizations.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AuthorizationsComponent } from './authorizations/authorizations.compone
     JobSearchComponent,
     ResumeComponent,
     RecomendedComponent,
-    AuthorizationsComponent
+    AuthorizationsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
