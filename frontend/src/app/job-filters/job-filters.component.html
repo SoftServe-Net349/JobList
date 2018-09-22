@@ -1,7 +1,11 @@
 <aside class="right-job-filters">
   <div id="job-filters">
+    <h4 class="filter-title">Work Areas</h4>
+    <p-dropdown [options]="workAreas" [(ngModel)]="selectedWorkArea" placeholder="Select a Work Area" optionLabel="name" filter="true"></p-dropdown>
+    <hr>  
+  
     <h4 class="filter-title">Companies</h4>
-    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" placeholder="Select a Company" optionLabel="name"></p-dropdown>
+    <p-multiSelect [options]="companies" [(ngModel)]="selectedCompanies" placeholder="Select a Company(-ies)" optionLabel="name" filter="true"></p-multiSelect>
     <hr>
 
     <h4 class="filter-title">Checked</h4>
@@ -32,7 +36,7 @@
     <hr>
 
     <h4 class="filter-title">Cities</h4>
-    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"></p-dropdown>
     <hr>
 
   </div>

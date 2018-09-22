@@ -19,12 +19,20 @@ h4
         border: 1px solid #ddd
         box-shadow: none
         border-radius: 0
+        position: relative
 
         .filter-title
             font-size: 14px;
 
-        /deep/ .ui-dropdown
+        /deep/ .ui-dropdown, /deep/ .ui-multiselect
             width: 100% !important
+
+        /deep/ .ui-multiselect
+            .ui-multiselect-panel
+                max-width: 254px
+
+            .ui-multiselect-label-container
+                height: 26px
 
         hr 
            border: 0

@@ -7,14 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyFiltersComponent implements OnInit {
 
-  positions: Position[];
-  selectedPosition: Position;
+  workAreas: WorkArea[];
+  selectedWorkArea: WorkArea;
 
   schools: School[];
-  selectedSchool: School;
+  selectedSchools: School[];
 
   faculties: Faculty[];
-  selectedFaculty: Faculty;
+  selectedFaculties: Faculty[];
 
   cities: City[];
   selectedCity: City;
@@ -25,15 +25,47 @@ export class CompanyFiltersComponent implements OnInit {
   rangeValues: number[] = [20, 30];
 
   constructor() {
-    this.positions = [
+    this.workAreas = [
       {name: 'Software developer'},
-      {name: 'UI Engeneer'},
-      {name: 'Front-end developer'},
-      {name: 'Backend developer'},
-      {name: 'HR'}
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Driver'}
     ];
     this.schools = [
-      {name: 'Massachusetts Institute of Technology'},
+      {name: 'Massachusetts Institute of TechnologyMassachusetts Institute of TechnologyMassachusetts Institute of Technology'},
       {name: 'Stanford University'},
       {name: 'Harvard University'},
       {name: 'University of California, Berkeley'},
@@ -68,7 +100,7 @@ export class CompanyFiltersComponent implements OnInit {
   }
 
 }
-class Position {
+class WorkArea {
   name: string;
 
 }

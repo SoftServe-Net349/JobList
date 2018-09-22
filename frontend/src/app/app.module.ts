@@ -11,6 +11,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {SliderModule} from 'primeng/slider';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 import { JobSearchComponent } from './job-search/job-search.component';
 import { ResumeComponent } from './resume/resume.component';
@@ -41,7 +42,8 @@ import { CompanyFiltersComponent } from './company-filters/company-filters.compo
     DropdownModule,
     RadioButtonModule,
     InputSwitchModule,
-    SliderModule
+    SliderModule,
+    MultiSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

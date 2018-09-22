@@ -1,19 +1,19 @@
 <aside class="right-company-filters">
   <div id="company-filters">
-    <h4 class="filter-title">Positions</h4>
-    <p-dropdown [options]="positions" [(ngModel)]="selectedPosition" placeholder="Select a Position" optionLabel="name"></p-dropdown>
+    <h4 class="filter-title">Work Areas</h4>
+    <p-dropdown [options]="workAreas" [(ngModel)]="selectedWorkArea" placeholder="Select a Work Area" optionLabel="name" filter="true"></p-dropdown>
     <hr>  
 
     <h4 class="filter-title">Cities</h4>
-    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"></p-dropdown>
     <hr>
   
     <h4 class="filter-title">Schools</h4>
-    <p-dropdown [options]="schools" [(ngModel)]="selectedSchool" placeholder="Select a School" optionLabel="name"></p-dropdown>
+    <p-multiSelect [options]="schools" [(ngModel)]="selectedSchools" placeholder="Select a School(-s)" optionLabel="name" maxSelectedLabels=0 filter="true"></p-multiSelect>
     <hr>
 
     <h4 class="filter-title">Faculties</h4>
-    <p-dropdown [options]="faculties" [(ngModel)]="selectedFaculty" placeholder="Select a Faculty" optionLabel="name"></p-dropdown>
+    <p-multiSelect [options]="faculties" [(ngModel)]="selectedFaculties" placeholder="Select a Faculty(-ies)" optionLabel="name" filter="true"></p-multiSelect>
     <hr>
 
     <h4>Age Range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h4>
@@ -24,7 +24,7 @@
     <hr>  
 
     <h4 class="filter-title">Languages</h4>
-    <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage" placeholder="Select a Language" optionLabel="name"></p-dropdown>
+    <p-multiSelect [options]="languages" [(ngModel)]="selectedLanguages" placeholder="Select a Language(-s)" optionLabel="name" filter="true"></p-multiSelect>
     <hr>
   </div>
 </aside>

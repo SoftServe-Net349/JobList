@@ -10,11 +10,14 @@ export class JobFiltersComponent implements OnInit {
 
   checked: Boolean = false;
 
+  workAreas: WorkArea[];
+  selectedWorkArea: WorkArea;
+
   cities: City[];
   selectedCity: City;
 
   companies: Company[];
-  selectedCompany: Company;
+  selectedCompanies: Company[];
 
   constructor() {
     this.companies = [
@@ -31,6 +34,45 @@ export class JobFiltersComponent implements OnInit {
       {name: 'Istanbul', code: 'IST'},
       {name: 'Paris', code: 'PRS'}
     ];
+    this.workAreas = [
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Software developer'},
+      {name: 'Builder'},
+      {name: 'Teacher'},
+      {name: 'Doctor'},
+      {name: 'Driver'}
+    ];
    }
 
   ngOnInit() {
@@ -45,6 +87,11 @@ class City {
 }
 
 class Company {
+  name: string;
+
+}
+
+class WorkArea {
   name: string;
 
 }
