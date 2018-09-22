@@ -1,0 +1,39 @@
+<aside class="right-filters">
+  <div id="filters">
+    <h4 class="filter-title">Companies</h4>
+    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" placeholder="Select a Company" optionLabel="name"></p-dropdown>
+    <hr>
+
+    <h4 class="filter-title">Checked</h4>
+    <div class="checked-filter">
+      <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+      <div class="approved">Checked Vacancies</div>
+    </div>
+    <hr>
+
+    <h4 class="filter-title">Type of Employment</h4>
+    <div class="ui-g" style="width:200px;margin-bottom:10px">
+      <div class="ui-g-12"><p-radioButton name="group1" value="Part time" label="Part time" [(ngModel)]="val1" inputId="opt1"></p-radioButton></div>
+      <div class="ui-g-12"><p-radioButton name="group1" value="Full time" label="Full time" [(ngModel)]="val1" inputId="opt2"></p-radioButton></div>
+    </div>
+    <hr>
+
+    <h4 class="filter-title">Salary</h4>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">from</span>
+            <input type="text" pInputText placeholder="  Price">   
+            <span class="ui-inputgroup-addon">$</span>
+            <p-button label="Ok"></p-button>      
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <h4 class="filter-title">Cities</h4>
+    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+    <hr>
+
+  </div>
+</aside>

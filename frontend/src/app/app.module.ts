@@ -7,11 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import {ButtonModule} from 'primeng/button';
+import {DropdownModule} from 'primeng/dropdown';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputSwitchModule} from 'primeng/inputswitch';
+
 import { JobSearchComponent } from './job-search/job-search.component';
 import { ResumeComponent } from './resume/resume.component';
 import { RecomendedComponent } from './recomended/recomended.component';
 import { AuthorizationsComponent } from './authorizations/authorizations.component';
 import { ProfileComponent } from './profile/profile.component';
+import { JobFiltersComponent } from './job-filters/job-filters.component';
+import { CompanyFiltersComponent } from './company-filters/company-filters.component';
 
 @NgModule({
   declarations: [
@@ -20,15 +26,20 @@ import { ProfileComponent } from './profile/profile.component';
     ResumeComponent,
     RecomendedComponent,
     AuthorizationsComponent,
-    ProfileComponent
+    ProfileComponent,
+    JobFiltersComponent,
+    CompanyFiltersComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule, 
-	FormsModule,
-	ButtonModule
+    BrowserAnimationsModule,
+    FormsModule,
+    ButtonModule,
+    DropdownModule,
+    RadioButtonModule,
+    InputSwitchModule
   ],
   providers: [],
   bootstrap: [AppComponent]
