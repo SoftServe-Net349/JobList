@@ -7,10 +7,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import {ButtonModule} from 'primeng/button';
+import { JobSearchComponent } from './job-search/job-search.component';
+import { ResumeComponent } from './resume/resume.component';
+import { RecomendedComponent } from './recomended/recomended.component';
+import { AuthorizationsComponent } from './authorizations/authorizations.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    JobSearchComponent,
+    ResumeComponent,
+    RecomendedComponent,
+    AuthorizationsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
