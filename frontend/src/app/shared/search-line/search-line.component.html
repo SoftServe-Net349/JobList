@@ -1,3 +1,10 @@
-<p>
-  search-line works!
-</p>
+<div class="filter-search">
+	<div class="filter-form">
+		<div class="wrapper">
+			<input type="text" pInputText [(ngModel)]="property" placeholder="Enter name or keyword" />
+			<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" filter="true"></p-dropdown>
+			<p-button label="Search" icon="pi pi-search" ></p-button>
+		</div>
+		
+	</div>
+</div>

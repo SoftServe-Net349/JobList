@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SelectItem} from 'primeng/api';
+
 
 @Component({
   selector: 'app-search-line',
@@ -7,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchLineComponent implements OnInit {
 
-  constructor() { }
+  cities: SelectItem[];
+  selectedCar: string;
+
+  constructor() { //SelectItem API with label-value pairs
+    this.cities = [
+      {label: 'Lviv', value: 'Lviv'},
+      {label: 'Kyiv', value: 'Kyiv'},
+      {label: 'I-F', value: 'I-F'}
+      ];
+    }
 
   ngOnInit() {
   }
