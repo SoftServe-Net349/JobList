@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import { JobFiltersComponent } from './job-filters/job-filters.component';
 import { CompanyFiltersComponent } from './company-filters/company-filters.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
-  {path: 'job-filters', component: JobFiltersComponent},
-  {path: 'company-filters', component: CompanyFiltersComponent}
+  {path: '', component: HomeComponent, pathMatch: 'full'}
 ];
 
 @NgModule({
