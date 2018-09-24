@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RecruiterComponent } from './recruiter.component';
 
 const routes: Routes = [
-  {path: 'recruiter', component: RecruiterComponent}
+  { path: 'recruiter', component: RecruiterComponent }
 ];
 
 @NgModule({
