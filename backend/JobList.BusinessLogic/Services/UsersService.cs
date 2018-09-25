@@ -1,0 +1,82 @@
+﻿using AutoMapper;
+using JobList.BusinessLogic.Interfaces;
+using JobList.Common.DTOS;
+using JobList.Common.Requests;
+using JobList.DataAccess.Entities;
+using JobList.DataAccess.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace JobList.BusinessLogic.Services
+{
+    public class UsersService : IUsersService
+    {
+        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
+
+        public UsersService(IUnitOfWork uow, IMapper mapper)
+        {
+            _uow = uow;
+            _mapper = mapper;
+        }
+
+
+        public async Task<UserDTO> CreateEntityAsync(UserRequest modelRequest)
+        {
+            var entity = _mapper.Map<UserRequest, User>(modelRequest);
+
+            entity = await _uow.UsersRepository.CreateEntityAsync(entity);
+            var result = await _uow.SaveAsync();
+            if (!result)
+            {
+                return null;
+            }
+
+            if (entity == null) return null;
+
+            var dto = _mapper.Map<User, UserDTO>(entity);
+
+            return dto;
+        }
+
+        public async Task<bool> DeleteEntityByIdAsync(int id)
+        {
+            await _uow.UsersRepository.DeleteAsync(id);
+
+            var result = await _uow.SaveAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllEntitiesAsync()
+        {
+            var entities = await _uow.UsersRepository.GetAllEntitiesAsync();
+
+            var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<UserDTO> GetEntityByIdAsync(int id)
+        {
+            var entity = await _uow.UsersRepository.GetEntityAsync(id);
+
+            if (entity == null) return null;
+
+            var dto = _mapper.Map<User, UserDTO>(entity);
+
+            return dto;
+        }
+
+        public async Task<bool> UpdateEntityByIdAsync(UserRequest modelRequest, int id)
+        {
+            var entity = _mapper.Map<UserRequest, User>(modelRequest);
+            entity.Id = id;
+
+            var updated = await _uow.UsersRepository.UpdateAsync(entity);
+            var result = await _uow.SaveAsync();
+
+            return result;
+        }
+    }
+}

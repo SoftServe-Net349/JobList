@@ -2,7 +2,7 @@
 
 namespace JobList.DataAccess.Interfaces.Repositories
 {
-    public interface ISamplesRepository : IRepository<Sample, int>
+    public interface IWorkAreasRepository : IRepository<WorkArea, int>
     {
     }
 }

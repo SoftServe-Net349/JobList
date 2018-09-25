@@ -42,13 +42,27 @@ namespace JobList
                             {
                                 fv.ImplicitlyValidateChildProperties = true;
                                 // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                                fv.RegisterValidatorsFromAssemblyContaining<SampleValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
                             })
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add your services here
-            services.AddTransient<ISamplesService, SamplesService>();
+            services.AddTransient<ICitiesService, CitiesService>();
+            services.AddTransient<ICompaniesService, CompaniesService>();
+            services.AddTransient<IEducationPeriodsService, EducationPeriodsService>();
+            services.AddTransient<IExperiencesService, ExperiencesService>();
+            services.AddTransient<IFacultiesService, FacultiesService>();
+            services.AddTransient<IFavoriteVacanciesService, FavoriteVacanciesService>();
+            services.AddTransient<ILanguagesService, LanguagesService>();
+            services.AddTransient<IRecruitersService, RecruitersService>();
+            services.AddTransient<IResumeLanguagesService, ResumeLanguagesService>();
+            services.AddTransient<IResumesService, ResumesService>();
+            services.AddTransient<IRolesService, RolesService>();
+            services.AddTransient<ISchoolsService, SchoolsService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IVacanciesService, VacanciesService>();
+            services.AddTransient<IWorkAreasService, WorkAreasService>();
 
             InitializeAutomapper(services);
         }
