@@ -7,18 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 // PrimeNG modules
-import {ButtonModule} from 'primeng/button';
-import {DropdownModule} from 'primeng/dropdown';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {SliderModule} from 'primeng/slider';
-import {MultiSelectModule} from 'primeng/multiselect';
 
 // Our created components
-import { ResumeComponent } from './resume/resume.component';
-import { RecomendedComponent } from './recomended/recomended.component';
-import { AuthorizationsComponent } from './authorizations/authorizations.component';
-import { ProfileComponent } from './profile/profile.component';
 
 // Our created modules
 import { HomeModule } from './home/home.module';
@@ -27,14 +17,9 @@ import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 
-
 @NgModule({
   declarations: [
-    AppComponent,
-    ResumeComponent,
-    RecomendedComponent,
-    AuthorizationsComponent,
-    ProfileComponent
+    AppComponent
   ],
   imports: [
     
@@ -43,12 +28,6 @@ import { CompanyModule } from './company/company.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    ButtonModule,
-    DropdownModule,
-    RadioButtonModule,
-    InputSwitchModule,
-    SliderModule,
-    MultiSelectModule,
     HomeModule,
     UserModule,
     AdminModule,

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { MainSearchComponent } from './main-search/main-search.component';
+import { JobSearchComponent } from '../job-search/job-search.component';
 
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
