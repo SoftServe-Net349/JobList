@@ -1,12 +1,16 @@
 .filter-search
 	padding: 30px
-	background: #30caa0
+	background: none
 	border-radius: 3px
 	width: 1260px
 	margin: auto
 
+	input
+		padding: 30px
+
 	/deep/ .ui-inputtext
-		padding: 0.9em!important
+		padding: 1.4em!important
+		max-height: 40px
 
 	/deep/ .ui-button
 		padding: 15px 30px
@@ -41,9 +45,11 @@
 			background: white
 			display: inline-block
 			height: 62px
+			box-shadow: 4px 4px 11px 2px rgba(0,0,0,0.27)
 
 		input 
-			background: #fff			
+			background: #fff
+			outline: none			
 			width: 826px
 			border-radius: none
 			border: 1px solid #DCDCDC
