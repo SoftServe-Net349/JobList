@@ -15,13 +15,10 @@ import {SliderModule} from 'primeng/slider';
 import {MultiSelectModule} from 'primeng/multiselect';
 
 // Our created components
-import { JobSearchComponent } from './job-search/job-search.component';
 import { ResumeComponent } from './resume/resume.component';
 import { RecomendedComponent } from './recomended/recomended.component';
 import { AuthorizationsComponent } from './authorizations/authorizations.component';
 import { ProfileComponent } from './profile/profile.component';
-import { JobFiltersComponent } from './job-filters/job-filters.component';
-import { CompanyFiltersComponent } from './company-filters/company-filters.component';
 
 // Our created modules
 import { HomeModule } from './home/home.module';
@@ -34,13 +31,10 @@ import { CompanyModule } from './company/company.module';
 @NgModule({
   declarations: [
     AppComponent,
-    JobSearchComponent,
     ResumeComponent,
     RecomendedComponent,
     AuthorizationsComponent,
-    ProfileComponent,
-    JobFiltersComponent,
-    CompanyFiltersComponent
+    ProfileComponent
   ],
   imports: [
     
