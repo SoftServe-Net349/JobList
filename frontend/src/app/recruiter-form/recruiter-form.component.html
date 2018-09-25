@@ -18,6 +18,11 @@
 				<label for="float-input">Password</label>
 			</div>
 			<div class="ui-float-label">
+				<input id="float-input" type="text" size="30" pInputText required > 
+				<label for="float-input">Confirm Password</label>
+			</div>
+
+			<div class="ui-float-label">
 				<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
 			</div>
 		</div>

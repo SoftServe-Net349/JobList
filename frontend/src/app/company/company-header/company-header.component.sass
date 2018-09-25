@@ -1,32 +1,34 @@
 h1 
-	margin: 20px 0
+	padding: 20px 0
 	font-size: 1.2em
 	font-weight: 600
 
 hr
-	height: 1px;
-	margin: 0;
-	border: none;
-	background-color: rgba(0,0,0,0.12);
+	height: 2px;
+	margin: 15px 0 15px
+	border: none
+	background-color: rgba(0,0,0,0.12)
 
+.wrapper
+  max-width: 1300px
+  margin: auto
+  position: relative
+  display: flex
+  justify-content: space-between
 
-nav
-	overflow: hidden
+.header
 	background-color: #208087
 	height: 80px
-	
+  position: relative
+	  
 	a 
 		cursor: pointer
 		color: white
 
-
 	#left-side-menu
-		float: left
-		display: block
-		padding: 15px
+		padding: 15px 0
 
 		a
-			padding: 45px
 			font-size: 30px
 			font-family: Roboto, sans-serif
 			font-weight: bold
@@ -39,7 +41,6 @@ nav
     
 
 	#right-side-menu
-		float: right
 		margin-right: 10px
 		margin-top: 30px
 	
@@ -52,31 +53,26 @@ nav
 			color: #f47442
 
 
-	.user-info
+	.profile
 		padding: 17.5px
 		font-weight: 500
 		color: white
 		cursor: pointer
+    position: relative
+    display: block
 
-	.user-photo
-		height: 25px
-		width: 25px
-		border-radius: 3px
-		vertical-align: middle
-		border: 0 none
-		margin-right: 6px
-
-	.user-info
 		span 
 			vertical-align: middle
-			font-size: 14px
 			line-height: 21px
 			text-align: left
 			margin-right: 10px
-			color: #ffffff    
+    
+  i
+    position: absolute
+    top: 28px
 
-	.user-info:hover
-		background-color: #4a4f52    
+	.profile:hover
+		color: #f47442  
 
 	/deep/ .ui-sidebar
 		p
@@ -90,17 +86,25 @@ nav
 			top: 4px
 
 		a 
-			color: #000 !important
-
-		a:hover
-			color: #f47442 !important
+			color: #7C898B !important
 
 
+  /deep/ .ui-panelmenu .ui-panelmenu-header.ui-state-active > a:hover
+    border: none !important
+    background-color: #c8c8c8 !important
 
+	/deep/ .ui-panelmenu .ui-panelmenu-header > a
+    border: 1px solid transparent
+    background-color: #fff
 
+	/deep/ .ui-panelmenu .ui-panelmenu-header > a .ui-panelmenu-icon
+		display: none
 
- 
+	/deep/ .ui-panelmenu .ui-panelmenu-header > a
+		font-size: 16px
 
-	
+	/deep/ .ui-panelmenu .ui-menuitem-icon
+		margin: 0 0.5em 0 0
+
 
 
