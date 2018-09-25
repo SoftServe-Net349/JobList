@@ -5,7 +5,22 @@ namespace JobList.DataAccess.Interfaces
 {
     public interface IUnitOfWork
     {
-        ISamplesRepository SamplesRepository { get; }
+        ICitiesRepository CitiesRepository { get; }
+        ICompaniesRepository CompaniesRepository { get; }
+        IEducationPeriodsRepository EducationPeriodsRepository { get; }
+        IExperiencesRepository ExperiencesRepository { get; }
+        IFacultiesRepository FacultiesRepository { get; }
+        IFavoriteVacanciesRepository FavoriteVacanciesRepository { get; }
+        ILanguagesRepository LanguagesRepository { get; }
+        IRecruitersRepository RecruitersRepository { get; }
+        IResumeLanguagesRepository ResumeLanguagesRepository { get; }
+        IResumesRepository ResumesRepository { get; }
+        IRolesRepository RolesRepository { get; }
+        ISchoolsRepository SchoolsRepository { get; }
+        IUsersRepository UsersRepository { get; }
+        IVacanciesRepository VacanciesRepository { get; }
+        IWorkAreasRepository WorkAreasRepository { get; }
+
 
         Task<bool> SaveAsync();
     }

@@ -5,11 +5,11 @@ using JobList.DataAccess.Interfaces.Repositories;
 
 namespace JobList.DataAccess.Repositories
 {
-    class SamplesRepository : Repository<Sample, int>, ISamplesRepository
+    public class LanguagesRepository : Repository<Language, int>, ILanguagesRepository
     {
-        public SamplesRepository(JobListDbContext context, IMapper mapper) : base(context, mapper)
+        public LanguagesRepository(JobListDbContext context, IMapper mapper) 
+            : base(context, mapper)
         {
-
         }
     }
 }

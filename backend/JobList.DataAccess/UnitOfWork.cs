@@ -13,40 +13,237 @@ namespace JobList.DataAccess
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly JobListDbContext context;
-        private readonly IMapper mapper;
+        private readonly JobListDbContext _context;
+        private readonly IMapper _mapper;
 
-        private ISamplesRepository samplesRepository;
+        private ICitiesRepository _citiesRepository;
+        private ICompaniesRepository _companiesRepository;
+        private IEducationPeriodsRepository _educationPeriods;
+        private IExperiencesRepository _experiencesRepository;
+        private IFacultiesRepository _facultiesRepository;
+        private IFavoriteVacanciesRepository _favoriteVacanciesRepository;
+        private ILanguagesRepository _languagesRepository;
+        private IRecruitersRepository _recruitersRepository;
+        private IResumeLanguagesRepository _resumeLanguagesRepository;
+        private IResumesRepository _resumesRepository;
+        private IRolesRepository _rolesRepository;
+        private ISchoolsRepository _schoolsRepository;
+        private IUsersRepository _usersRepository;
+        private IVacanciesRepository _vacanciesRepository;
+        private IWorkAreasRepository _workAreasRepository;
 
-        public UnitOfWork(JobListDbContext _context, IMapper _mapper)
+        public UnitOfWork(JobListDbContext context, IMapper mapper)
         {
-            context = _context;
-            mapper = _mapper;
+            _context = context;
+            _mapper = mapper;
         }
 
-        public ISamplesRepository SamplesRepository
+        public ICitiesRepository CitiesRepository
         {
             get
             {
-                if (samplesRepository == null)
+                if(_citiesRepository != null)
                 {
-                    samplesRepository = new SamplesRepository(context, mapper);
+                    _citiesRepository = new CitiesRepository(_context, _mapper);
                 }
 
-                return samplesRepository;
+                return _citiesRepository;
             }
         }
+
+        public ICompaniesRepository CompaniesRepository
+        {
+            get
+            {
+                if (_companiesRepository != null)
+                {
+                    _companiesRepository = new CompaniesRepository(_context, _mapper);
+                }
+
+                return _companiesRepository;
+            }
+        }
+
+        public IEducationPeriodsRepository EducationPeriodsRepository
+        {
+            get
+            {
+                if (_educationPeriods != null)
+                {
+                    _educationPeriods = new EducationPeriodsRepository(_context, _mapper);
+                }
+
+                return _educationPeriods;
+            }
+        }
+    
+        public IExperiencesRepository ExperiencesRepository
+        {
+            get
+            {
+                if (_experiencesRepository != null)
+                {
+                    _experiencesRepository = new ExperiencesRepository(_context, _mapper);
+                }
+
+                return _experiencesRepository;
+            }
+        }
+
+        public IFacultiesRepository FacultiesRepository
+        {
+            get
+            {
+                if (_facultiesRepository != null)
+                {
+                    _facultiesRepository = new FacultiesRepository(_context, _mapper);
+                }
+
+                return _facultiesRepository;
+            }
+        }
+
+        public IFavoriteVacanciesRepository FavoriteVacanciesRepository
+        {
+            get
+            {
+                if (_favoriteVacanciesRepository != null)
+                {
+                    _favoriteVacanciesRepository = new FavoriteVacanciesRepository(_context, _mapper);
+                }
+
+                return _favoriteVacanciesRepository;
+            }
+        }
+
+        public ILanguagesRepository LanguagesRepository
+        {
+            get
+            {
+                if (_languagesRepository != null)
+                {
+                    _languagesRepository = new LanguagesRepository(_context, _mapper);
+                }
+
+                return _languagesRepository;
+            }
+        }
+
+        public IRecruitersRepository RecruitersRepository
+        {
+            get
+            {
+                if (_recruitersRepository != null)
+                {
+                    _recruitersRepository = new RecruitersRepository(_context, _mapper);
+                }
+
+                return _recruitersRepository;
+            }
+        }
+
+        public IResumeLanguagesRepository ResumeLanguagesRepository
+        {
+            get
+            {
+                if (_resumeLanguagesRepository != null)
+                {
+                    _resumeLanguagesRepository = new ResumeLanguagesRepository(_context, _mapper);
+                }
+
+                return _resumeLanguagesRepository;
+            }
+        }
+
+        public IResumesRepository ResumesRepository
+        {
+            get
+            {
+                if (_resumesRepository != null)
+                {
+                    _resumesRepository = new ResumesRepository(_context, _mapper);
+                }
+
+                return _resumesRepository;
+            }
+        }
+
+        public IRolesRepository RolesRepository
+        {
+            get
+            {
+                if (_rolesRepository != null)
+                {
+                    _rolesRepository = new RolesRepository(_context, _mapper);
+                }
+
+                return _rolesRepository;
+            }
+        }
+
+        public ISchoolsRepository SchoolsRepository
+        {
+            get
+            {
+                if (_schoolsRepository != null)
+                {
+                    _schoolsRepository = new SchoolsRepository(_context, _mapper);
+                }
+
+                return _schoolsRepository;
+            }
+        }
+
+        public IUsersRepository UsersRepository
+        {
+            get
+            {
+                if (_usersRepository != null)
+                {
+                    _usersRepository = new UsersRepository(_context, _mapper);
+                }
+
+                return _usersRepository;
+            }
+        }
+
+        public IVacanciesRepository VacanciesRepository
+        {
+            get
+            {
+                if (_vacanciesRepository != null)
+                {
+                    _vacanciesRepository = new VacanciesRepository(_context, _mapper);
+                }
+
+                return _vacanciesRepository;
+            }
+        }
+
+        public IWorkAreasRepository WorkAreasRepository
+        {
+            get
+            {
+                if (_workAreasRepository != null)
+                {
+                    _workAreasRepository = new WorkAreasRepository(_context, _mapper);
+                }
+
+                return _workAreasRepository;
+            }
+        }
+
 
         public async Task<bool> SaveAsync()
         {
             try
             {
-                var changes = context.ChangeTracker.Entries().Count(
+                var changes = _context.ChangeTracker.Entries().Count(
                     p => p.State == EntityState.Modified || p.State == EntityState.Deleted
                                                          || p.State == EntityState.Added);
                 if (changes == 0) return true;
 
-                return await context.SaveChangesAsync() > 0;
+                return await _context.SaveChangesAsync() > 0;
             }
             catch (Exception ex)
             {
@@ -65,7 +262,7 @@ namespace JobList.DataAccess
                 if (disposing)
                 {
                     // DbSet?.Local?.Clear();
-                    context?.Dispose();
+                    _context?.Dispose();
                     // TODO: dispose managed state (managed objects).
                 }
 
