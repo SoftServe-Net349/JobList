@@ -1,4 +1,5 @@
-<app-header></app-header>
+<app-company-header></app-company-header>
+
 <div id="company-page">
   <div class="company-info">
     <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Company logo">
@@ -12,7 +13,7 @@
         <p><span>Address:</span> Address: Kavaleridze 25</p>
       </div>
       <div>
-        <app-recruiter-form></app-recruiter-form>
+        <app-recruiter-form #recruiterForm></app-recruiter-form>
       </div>
     </div>
     <div class="description">
@@ -48,7 +49,7 @@
               <p><span>Email:</span> pavlopaitak@gmail.com</p>
           </div>
           <div class="recruiter-modification">
-              <button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
+              <button pButton type="button" (click)="recruiterForm.showRecruiterForm('Update')" label="Update" class="ui-button-rounded ui-button-warning"></button>
               <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
           </div>
         </div>

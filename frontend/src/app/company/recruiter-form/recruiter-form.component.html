@@ -1,35 +1,31 @@
-<p-dialog [(visible)]="display" [modal]="true" [closable]="false" [showHeader]="false" [width]="350" [minWidth]="200" [minY]="70" 
-         [baseZIndex]="10000">
-         <div class="add-recruiter-text">
-                <hr class="fd-f1">
-                <p>Add Recruiter</p>
-                <hr class="fd-f1">
-              </div>
-          
-         <div class="ui-float-label">
-            <input id="float-input" type="text" size="30" pInputText required> 
-            <label for="float-input">Firt Name</label>
-        </div>
-        <div class="ui-float-label">
-            <input id="float-input" type="text" size="30" pInputText required> 
-            <label for="float-input">Last Name</label>
-        </div>
-        <div class="ui-float-label">
-            <input id="float-input" type="text" size="30" pInputText required> 
-            <label for="float-input">Email</label>
-        </div>
-        <div class="ui-float-label">
-            <input id="float-input" type="text" size="30" pInputText required> 
-            <label for="float-input">Password</label>
-        </div>
-        <div class="ui-float-label">
-            <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
-        </div>
-    
+<p-dialog [header]="action + ' Recruiter'" [dismissableMask]="true" [(visible)]="display" [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="200" [minY]="70" 
+		 [baseZIndex]="10000">   
+		<div id="recruiter-form">      
+			<div class="ui-float-label">
+				<input id="float-input" type="text" size="30" pInputText required > 
+				<label for="float-input">Firt Name</label>
+			</div>
+			<div class="ui-float-label">
+				<input id="float-input" type="text" size="30" pInputText required > 
+				<label for="float-input">Last Name</label>
+			</div>
+			<div class="ui-float-label">
+				<input id="float-input" type="text" size="30" pInputText required > 
+				<label for="float-input">Email</label>
+			</div>
+			<div class="ui-float-label">
+				<input id="float-input" type="text" size="30" pInputText required > 
+				<label for="float-input">Password</label>
+			</div>
+			<div class="ui-float-label">
+				<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
+			</div>
+		</div>
+ 
         <p-footer>
-            <button pButton type="button" (click)="display=false" label="Submit" class="ui-button-success"></button>
-            <button pButton type="button" (click)="display=false" label="Cancel" class="ui-button-danger"></button>
+            <button pButton type="button" icon="pi pi-check" (click)="display=false" label="Submit" class="ui-button-success"></button>
+            <button pButton type="button" icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
           </p-footer>
 </p-dialog>
 
-<button type="button" (click)="showRecruiterForm()" pButton icon="pi pi-fw pi-plus" label="Add Recruiter"></button>
+<button type="button" (click)="showRecruiterForm('Create')" pButton icon="pi pi-fw pi-plus" label="Add Recruiter"></button>

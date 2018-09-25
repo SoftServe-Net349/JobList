@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 export class RecruiterFormComponent implements OnInit {
 
   display: Boolean = false;
+  action: String
 
   uploadedFiles: any[] = [];
 
@@ -25,8 +26,9 @@ export class RecruiterFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  showRecruiterForm() {
-    this.display = true;
-}
+  showRecruiterForm(action: String) {
+	this.display = true;
+	this.action = action;
+  }
 
 }

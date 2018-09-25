@@ -5,6 +5,8 @@ import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { CompanyHeaderComponent } from './company-header/company-header.component';
+import { InformationFormComponent } from './information-form/information-form.component';
 
 import { MessageService } from 'primeng/api';
 
@@ -14,6 +16,8 @@ import {DialogModule} from 'primeng/dialog';
 import { RecruiterFormComponent } from './recruiter-form/recruiter-form.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {FileUploadModule} from 'primeng/fileupload';
+import {SidebarModule} from 'primeng/sidebar';
+import {PanelMenuModule} from 'primeng/panelmenu';
 
 @NgModule({
   imports: [
@@ -23,13 +27,17 @@ import {FileUploadModule} from 'primeng/fileupload';
     AccordionModule,
     DialogModule,
     InputTextModule,
-    FileUploadModule
+	FileUploadModule,
+	SidebarModule,
+	PanelMenuModule
   ],
   declarations: [
     CompanyComponent,
     HeaderComponent,
     FooterComponent,
-    RecruiterFormComponent
+    RecruiterFormComponent,
+    CompanyHeaderComponent,
+    InformationFormComponent
   ],
   providers: [MessageService]
 })
