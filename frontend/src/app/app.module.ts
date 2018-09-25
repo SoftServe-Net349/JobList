@@ -43,6 +43,7 @@ import { CompanyModule } from './company/company.module';
     CompanyFiltersComponent
   ],
   imports: [
+    
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
