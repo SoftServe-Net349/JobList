@@ -1,0 +1,201 @@
+
+
+<p-dialog header="Create CV" [(visible)]="display" [modal]="true" [responsive]="true" [width]="630" [minWidth]="200" [minY]="70" [focusOnShow]="false"
+[resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
+<aside class="cv-form">
+    <div id="resume-form">
+        <h4 class="resume-title">Address</h4>
+
+        <div class="sdf">
+        <span class="ui-float-label">
+            <input id="country" type="text" size="30" pInputText> 
+            <label for="country">Country</label>
+        </span> 
+        <span class="ui-float-label">
+            <input id="city" type="text" size="30" pInputText> 
+            <label for="city">City</label>
+        </span>
+        </div>
+        <span class="ui-float-label">
+            <input id="street" type="text" size="30" pInputText> 
+            <label for="street">Street</label>
+        </span>
+
+        <hr>
+
+        <h4 class="resume-title">Birth Date</h4>
+
+        <p-calendar [(ngModel)]="BirthDate" dateFormat="dd.mm.yy"></p-calendar>
+
+        <hr>
+
+        <h4 class="resume-title">Phone</h4>
+        <div class="sdf">
+        <span class="ui-float-label">
+            <input id="phone" type="text" size="30" pInputText> 
+        </span>
+        </div>
+        <hr>
+
+        <h4 class="resume-title">Education</h4>
+
+        <p-dropdown [options]="edschool" [(ngModel)]="selectedSchool" [style]="{'width':'242px', 'height':'35px', 'margin-right':'20px'}" placeholder="Select School">
+            <ng-template let-item pTemplate="selectedItem"> 
+               <span style="vertical-align:middle">{{item.label}}</span>
+           </ng-template> 
+           <ng-template let-status pTemplate="item"> 
+               <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+               <div style="font-size:14px;float:left;margin-top:4px">{{status.label}}</div> </div>
+           </ng-template>
+       </p-dropdown>
+
+       <p-dropdown [options]="edfaculty" [(ngModel)]="selectedFaculty" [style]="{'width':'242px', 'height':'35px', 'margin-right':'20px'}" placeholder="Select Faculty">
+        <ng-template let-item pTemplate="selectedItem"> 
+           <span style="vertical-align:middle">{{item.label}}</span>
+       </ng-template> 
+       <ng-template let-status pTemplate="item"> 
+           <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+           <div style="font-size:14px;float:left;margin-top:4px">{{status.label}}</div> </div>
+        </ng-template>
+        </p-dropdown>
+
+        
+        <p-calendar [(ngModel)]="EdStartDate" dateFormat="dd.mm.yy" [style]="{'margin-top':'20px', 'margin-right':'20px'}" 
+        placeholder="Start Date"></p-calendar>
+        <p-calendar [(ngModel)]="EdFinishDate" dateFormat="dd.mm.yy" [style]="{'margin-top':'20px', 'margin-right':'20px'}" 
+        placeholder="Finish Date"></p-calendar>
+
+        <button pButton type="button" icon="pi pi-plus" label="Add School" style="margin-top: 20px; margin-left: 0px"></button>
+        
+        <hr>
+
+        <h4 class="resume-title">Experience</h4>
+
+        <div class="sdf">
+        <span class="ui-float-label">
+            <input id="companyname" type="text" size="30" pInputText> 
+            <label for="companyname">Company Name</label>
+        </span> 
+        <span class="ui-float-label">
+            <input id="position" type="text" size="30" pInputText> 
+            <label for="position">Position</label>
+        </span> 
+        </div>
+
+        <p-calendar [(ngModel)]="ExpStartDate" dateFormat="dd.mm.yy" [style]="{'margin-top':'20px', 'margin-right':'20px'}" 
+        placeholder="Start Date"></p-calendar>
+        <p-calendar [(ngModel)]="ExpFinishDate" dateFormat="dd.mm.yy" [style]="{'margin-top':'20px', 'margin-right':'20px'}" 
+        placeholder="Finish Date"></p-calendar>
+        
+        <button pButton type="button" icon="pi pi-plus" label="Add Company" style="margin-top: 20px; margin-left: 0px"></button>
+
+        <hr>
+
+        <h4 class="resume-title">Courses</h4>
+
+        <div class="sdf">
+        <span class="ui-float-label">
+            <input id="courseschoolname" type="text" size="30" pInputText> 
+            <label for="courseschoolname">School Name</label>
+        </span> 
+        </div>
+
+        <p-calendar [(ngModel)]="CoursesStartDate" dateFormat="dd.mm.yy" [style]="{'margin-top':'20px', 'margin-right':'20px'}" 
+        placeholder="Start Date"></p-calendar>
+        <p-calendar [(ngModel)]="CoursesFinishDate" dateFormat="dd.mm.yy" [style]="{'margin-top':'20px', 'margin-right':'20px'}" 
+        placeholder="Finish Date"></p-calendar>
+        
+        <button pButton type="button" icon="pi pi-plus" label="Add Course" style="margin-top: 20px; margin-left: 0px"></button>
+
+        <hr>
+
+        <h4 class="resume-title">Languages</h4>
+
+        <div class="sdf">
+            <span class="ui-float-label">
+                <input id="language" type="text" size="20" pInputText> 
+                <label for="language">Language</label>
+            </span> 
+        
+
+        <p-dropdown [options]="languagelevel" [(ngModel)]="selectedLanguageLevel" [style]="{'width':'242px', 'margin-right':'20px', 'height':'33px','margin-top':'-4px'}"
+        placeholder="Select Level">
+            <ng-template let-item pTemplate="selectedItem"> 
+               <span style="vertical-align:middle">{{item.label}}</span>
+           </ng-template> 
+           <ng-template let-status pTemplate="item"> 
+               <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+               <div style="font-size:14px;float:left;margin-top:4px">{{status.label}}</div> </div>
+           </ng-template>
+        </p-dropdown>
+        </div>
+
+        <button pButton type="button" icon="pi pi-plus" label="Add Language" style="margin-top: 20px; margin-left: 0px"></button>
+
+        <hr>
+
+        <h4 class="resume-title">Marital Status</h4>
+        <p-dropdown [options]="maritalstatus" [(ngModel)]="selectedStatus" [style]="{'width':'242px', 'height':'35px'}">
+            <ng-template let-item pTemplate="selectedItem"> 
+                
+               <span style="vertical-align:middle">{{item.label}}</span>
+           </ng-template> 
+           <ng-template let-status pTemplate="item"> 
+               <div class="ui-helper-clearfix" style="position: relative;height:25px;">
+                
+               <div style="font-size:14px;float:left;margin-top:4px">{{status.label}}</div> </div>
+           </ng-template>
+       </p-dropdown>
+
+       <hr>
+
+       <h4 class="resume-title">Soft Skills</h4>
+
+       <textarea [rows]="5" [cols]="72" pSoftSkills style="resize:none"></textarea>
+
+       <hr>
+
+       <h4 class="resume-title">Key Skills</h4>
+
+       <textarea [rows]="5" [cols]="72" pKeySkills style="resize:none"></textarea>
+
+       <hr>
+
+       <h4 class="resume-title">Social Networks</h4>
+
+       <div class="sdf">
+       <span class="ui-float-label">
+        <input id="linkedInt" type="text" size="30" pInputText> 
+        <label for="linkedIn">LinkedIn</label>
+       </span>
+
+       <span class="ui-float-label">
+        <input id="gitHub" type="text" size="30" pInputText> 
+        <label for="gitHub">GitHub</label>
+       </span>
+       </div>
+
+       <span class="ui-float-label">
+        <input id="facebook" type="text" size="30" pInputText> 
+        <label for="facebook">Facebook</label>
+       </span>
+
+       <span class="ui-float-label">
+        <input id="skype" type="text" size="30" pInputText> 
+        <label for="skype">Skype</label>
+       </span>
+    </div>
+
+    
+</aside>
+
+<p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Confirm" class="ui-button-success"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+</p-footer>
+</p-dialog>
+
+<button type="button" (click)="showDialog()" pButton icon="pi pi-copy" label="Create CV"></button>
+
+
+
