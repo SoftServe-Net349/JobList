@@ -674,6 +674,8 @@ namespace JobList.DataAccess.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Seed();
         }
     }
 }
