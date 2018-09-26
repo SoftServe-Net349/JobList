@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
-import { RecruiterFormComponent } from '../../recruiter-form/recruiter-form.component';
 
 @Component({
   selector: 'app-company-header',
@@ -12,9 +11,6 @@ export class CompanyHeaderComponent implements OnInit {
 
   visibleSidebar2;
   items: MenuItem[];
-
-  @Input('recruiterForm')
-  recruiterForm: RecruiterFormComponent;
 
   @ViewChild(CompanyInfoFormComponent)
   companyInfoForm: CompanyInfoFormComponent;
@@ -31,11 +27,6 @@ export class CompanyHeaderComponent implements OnInit {
         label: 'Update Info',
         icon: 'fa fa-pencil-square-o',
         command: (event) => { this.companyInfoForm.showInformationForm('Update'); }
-      },
-      {
-        label: 'Add Recruiter',
-        icon: 'fa fa-plus',
-        command: (event) => { this.recruiterForm.showRecruiterForm('Create'); }
       },
       {
         label: 'Settings',
