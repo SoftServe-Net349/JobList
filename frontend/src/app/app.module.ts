@@ -19,7 +19,7 @@ import { CompanyModule } from './company/company.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+	AppComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,7 @@ import { CompanyModule } from './company/company.module';
     UserModule,
     AdminModule,
     RecruiterModule,
-    CompanyModule
+	CompanyModule
   ],
   providers: [],
   bootstrap: [
