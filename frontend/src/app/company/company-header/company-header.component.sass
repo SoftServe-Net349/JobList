@@ -86,9 +86,12 @@ hr
 		a 
 			color: #7C898B !important
 
+  /deep/ .ui-panelmenu .ui-panelmenu-header.ui-state-active > a:nth-child(4)
+    border: 1px solid transparent !important
+    background-color: #c8c8c8 !important
 
   /deep/ .ui-panelmenu .ui-panelmenu-header.ui-state-active > a:hover
-    border: none !important
+    border: 1px solid transparent !important
     background-color: #c8c8c8 !important
 
 	/deep/ .ui-panelmenu .ui-panelmenu-header > a
@@ -103,3 +106,6 @@ hr
 
 	/deep/ .ui-panelmenu .ui-menuitem-icon
 		margin: 0 0.5em 0 0
+
+/deep/ body .ui-panelmenu .ui-panelmenu-content
+    border: 1px solid transparent !important  

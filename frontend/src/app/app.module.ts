@@ -22,7 +22,6 @@ import { CompanyModule } from './company/company.module';
     AppComponent
   ],
   imports: [
-    
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -35,6 +34,8 @@ import { CompanyModule } from './company/company.module';
     CompanyModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
