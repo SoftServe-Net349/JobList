@@ -16,10 +16,20 @@ import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
+import { ButtonModule } from 'primeng/button';
+import { AccordionModule } from 'primeng/accordion';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { FileUploadModule } from 'primeng/fileupload';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { VacancyFormComponent } from './vacancy-form/vacancy-form.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
-    AppComponent
+	AppComponent,
+	VacancyFormComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +41,15 @@ import { CompanyModule } from './company/company.module';
     UserModule,
     AdminModule,
     RecruiterModule,
-    CompanyModule
+	CompanyModule,
+	ButtonModule,
+    AccordionModule,
+    DialogModule,
+    InputTextModule,
+    FileUploadModule,
+	SidebarModule,
+	DropdownModule,
+    PanelMenuModule
   ],
   providers: [],
   bootstrap: [
