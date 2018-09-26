@@ -1,62 +1,72 @@
 .jobsearch
     background: #f4f4f4
 
-    .wrapper
+    
+    .container
         margin: auto
         padding: 15px 0px
         width: 1024px
-        display: block
+        display: grid
+        grid-template-columns: 700px 300px
+        grid-template-rows: auto
+        grid-column-gap: 24px
+        grid-template-areas: "vacancy-list filter" 
 
-    .vacancy-list
-        max-width: 700px
-        background-color: #fff
-        overflow: hidden
-        padding: 30px 40px
-        border: 1px solid #ddd
-        box-shadow: none
-        border-radius: 0
+        .filter-container
+            max-width: 300px
+            grid-area: filter
 
-    .vacancy-block
-        display: flex
-        justify-content: space-between
-        border-bottom: 1px solid rgba(0,0,0,.12)
-        padding: 30px 0px  
-        flex-wrap: wrap 
+        .vacancy-container
+            grid-area: vacancy-list
+            max-width: 700px
+            background-color: #fff
+            overflow: hidden
+            padding: 30px 40px
+            border: 1px solid #ddd
+            box-shadow: none
+            border-radius: 0
 
-        .inform
-            flex-grow: 3
+        .vacancy-block
+            display: flex
+            justify-content: space-between
+            border-bottom: 1px solid rgba(0,0,0,.12)
+            padding: 30px 0px  
+            flex-wrap: wrap 
 
-        .logo
-            flex-grow: 1
+            .inform
+                flex-grow: 3
 
-        h3 
-            font-size: 20px 
-            font-family: "Graphik Medium",sans-serif 
-        p
-            display: block
-            margin-block-start: 1em
-            margin-block-end: 1em
-            margin-inline-start: 0px
-            margin-inline-end: 0px
-            font-size: 16px
-    
-        .company-name
-            font-size: 16px
-            font-family: "Graphik Regular",sans-serif
-        .location
-            line-height: 1.2
-            font-family: "Graphik Regular",sans-serif
+            .logo
+                flex-grow: 1
 
-        .short-description
-            margin-bottom: 0
-            max-width: 490px
-            word-wrap: break-word
-            color: #777
-        .agotime
-            padding-top: 20px
-            margin: 0
-            font-size: 14px
-            color: rgba(0,0,0,0.3) 
+            h3 
+                font-size: 20px 
+                font-family: "Graphik Medium",sans-serif 
+            p
+                display: block
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 0px
+                margin-inline-end: 0px
+                font-size: 16px
+      
+            .company-name
+                font-size: 16px
+                font-family: "Graphik Regular",sans-serif
+            .location
+                line-height: 1.2
+                font-family: "Graphik Regular",sans-serif
+
+            .short-description
+                margin-bottom: 0
+                max-width: 490px
+                word-wrap: break-word
+                color: #777
+            .agotime
+                padding-top: 20px
+                margin: 0
+                font-size: 14px
+                color: rgba(0,0,0,0.3) 
 
         
 
