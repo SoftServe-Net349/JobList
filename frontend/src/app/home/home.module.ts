@@ -6,10 +6,12 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { MainSearchComponent } from './main-search/main-search.component';
 import { JobSearchComponent } from '../job-search/job-search.component';
+import { JobFiltersComponent } from '../job-filters/job-filters.component';
+import { CompanyFiltersComponent } from '../company-filters/company-filters.component'
+import { ResumesSearchComponent } from '../resumes-search/resumes-search.component'
 
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { JobFiltersComponent } from '../job-filters/job-filters.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SliderModule } from 'primeng/slider';
@@ -34,7 +36,9 @@ import { SharedModule } from '../shared/shared.module';
     HomeComponent,
     MainSearchComponent,
     JobSearchComponent,
-    JobFiltersComponent
+    JobFiltersComponent,
+    CompanyFiltersComponent,
+    ResumesSearchComponent
   ]
 })
 export class HomeModule { }

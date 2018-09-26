@@ -17,6 +17,7 @@ import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 
+
 @NgModule({
   declarations: [
 	AppComponent
