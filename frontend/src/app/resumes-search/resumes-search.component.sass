@@ -1,0 +1,77 @@
+.resumes-search
+    background: #f4f4f4
+
+    
+    .container
+        margin: auto
+        padding: 15px 0px
+        width: 1024px
+        display: grid
+        grid-template-columns: 700px 300px
+        grid-template-rows: auto
+        grid-column-gap: 24px
+        grid-template-areas: "vacancy-list filter" 
+
+        .filter-container
+            max-width: 300px
+            grid-area: filter
+
+        .resume-container
+            grid-area: vacancy-list
+            max-width: 700px
+            background-color: #fff
+            overflow: hidden
+            padding: 30px 40px
+            border: 1px solid #ddd
+            box-shadow: none
+            border-radius: 0
+
+        .resume-block
+            display: flex
+            justify-content: space-between
+            border-bottom: 1px solid rgba(0,0,0,.12)
+            padding: 30px 0px  
+            flex-wrap: wrap
+
+            .inform
+                flex-grow: 4
+                font-family: "Graphik Medium",sans-serif 
+
+            .avatar
+                flex-grow: 1
+                img
+                    max-width: 120px
+                    max-height: 120px
+                    border-radius: 80px
+            h3 
+                font-size: 20px 
+                
+            p
+                display: block
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 0px
+                margin-inline-end: 0px
+            .person-inform
+                span
+                    margin-right: 20px
+
+            .experiance
+                span
+                    margin-right: 7px
+                    font-size: 13px
+                    color: #777
+            
+            .agotime
+                span
+                    font-size: 13px
+                    color: #777
+
+
+
+        
+
+    
+                
+                    
+                
