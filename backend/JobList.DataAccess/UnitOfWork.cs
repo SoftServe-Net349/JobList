@@ -42,7 +42,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if(_citiesRepository != null)
+                if(_citiesRepository == null)
                 {
                     _citiesRepository = new CitiesRepository(_context, _mapper);
                 }

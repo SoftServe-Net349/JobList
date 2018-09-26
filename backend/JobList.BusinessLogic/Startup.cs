@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.
 
 using JobList.Common.Validators;
 using JobList.BusinessLogic.Interfaces;
@@ -11,10 +9,6 @@ using JobList.BusinessLogic.Services;
 using JobList.DataAccess;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces;
-using FluentValidation.AspNetCore;
-using JobList.Common.Validators;
-using AutoMapper;
-using JobList.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobList
