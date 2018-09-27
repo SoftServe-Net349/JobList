@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 // PrimeNG modules
 
+
 // Our created components
 
 // Our created modules
@@ -17,9 +18,10 @@ import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 
+
 @NgModule({
   declarations: [
-    AppComponent
+	AppComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,7 @@ import { CompanyModule } from './company/company.module';
     UserModule,
     AdminModule,
     RecruiterModule,
-    CompanyModule
+	CompanyModule
   ],
   providers: [],
   bootstrap: [
