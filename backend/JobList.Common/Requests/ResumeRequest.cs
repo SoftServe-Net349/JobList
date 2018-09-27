@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace JobList.Common.Requests
 {
     public class ResumeRequest
     {
+        public int Id { get; set; }
         public string Linkedin { get; set; }
         public string Github { get; set; }
         public string Facebook { get; set; }
@@ -14,6 +16,6 @@ namespace JobList.Common.Requests
         public string KeySkills { get; set; }
         public string Courses { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime? ModDate { get; set; }
+        public int WorkAreaId { get; set; }
     }
 }
