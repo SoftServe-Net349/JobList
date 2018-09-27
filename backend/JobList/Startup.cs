@@ -12,11 +12,8 @@ using JobList.DataAccess;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces;
 using FluentValidation.AspNetCore;
-using JobList.Common.Validators;
 using AutoMapper;
-using JobList.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 
 namespace JobList
 {
@@ -48,6 +45,8 @@ namespace JobList
                                 fv.ImplicitlyValidateChildProperties = true;
                                 // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                                 fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
                             })
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -107,6 +106,20 @@ namespace JobList
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<CitiesProfile>();
+                cfg.AddProfile<CompanyProfile>();
+                cfg.AddProfile<EducationPeriodProfile>();
+                cfg.AddProfile<ExperienceProfile>();
+                cfg.AddProfile<FacultyProfile>();
+                cfg.AddProfile<FavoriteVacancyProfile>();
+                cfg.AddProfile<LanguageProfile>();
+                cfg.AddProfile<RecruiterProfile>();
+                cfg.AddProfile<ResumeProfile>();
+                cfg.AddProfile<ResumeLanguageProfile>();
+                cfg.AddProfile<RoleProfile>();
+                cfg.AddProfile<SchoolProfile>();
+                cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<VacancyProfile>();
+                cfg.AddProfile<WorkAreaProfile>();
             }); // Scoped Lifetime!
 
             return services;

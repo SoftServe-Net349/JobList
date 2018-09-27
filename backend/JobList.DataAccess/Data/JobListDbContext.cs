@@ -435,7 +435,7 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.WorkAreaId).HasColumnName("WORK_AREA_ID");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.User)
                     .WithOne(p => p.Resumes)
                     .HasForeignKey<Resume>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)

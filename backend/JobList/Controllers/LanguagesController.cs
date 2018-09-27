@@ -11,20 +11,20 @@ namespace JobList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CitiesController : Controller
+    public class LanguagesController : Controller
     {
-        private ICitiesService _citiesService;
+        private ILanguagesService _languagesService;
 
-        public CitiesController(ICitiesService citiesService)
+        public LanguagesController(ILanguagesService languagesService)
         {
-            _citiesService = citiesService;
+            _languagesService = languagesService;
         }
 
-        // GET: /cities
+        // GET: /languages
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<CityDTO>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<LanguageDTO>>> Get()
         {
-            var dtos = await _citiesService.GetAllEntitiesAsync();
+            var dtos = await _languagesService.GetAllEntitiesAsync();
             if (!dtos.Any())
             {
                 return NoContent();
@@ -35,9 +35,9 @@ namespace JobList.Controllers
 
 
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<CityDTO>> GetById(int id)
+        public virtual async Task<ActionResult<LanguageDTO>> GetById(int id)
         {
-            var dto = await _citiesService.GetEntityByIdAsync(id);
+            var dto = await _languagesService.GetEntityByIdAsync(id);
             if (dto == null)
             {
                 return NotFound();
@@ -46,16 +46,16 @@ namespace JobList.Controllers
             return Ok(dto);
         }
 
-        // POST: /cities
+        // POST: /languages
         [HttpPost]
-        public virtual async Task<ActionResult<CityDTO>> Create([FromBody] CityRequest request)
+        public virtual async Task<ActionResult<LanguageDTO>> Create([FromBody] LanguageRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var dtos = await _citiesService.CreateEntityAsync(request);
+            var dtos = await _languagesService.CreateEntityAsync(request);
             if (dtos == null)
             {
                 return StatusCode(500);
@@ -64,16 +64,16 @@ namespace JobList.Controllers
             return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
         }
 
-        // PUT: /cities/:id
+        // PUT: /languages/:id
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]CityRequest request)
+        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]LanguageRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _citiesService.UpdateEntityByIdAsync(request, id);
+            var result = await _languagesService.UpdateEntityByIdAsync(request, id);
             if (!result)
             {
                 return StatusCode(500);
@@ -82,11 +82,11 @@ namespace JobList.Controllers
             return NoContent();
         }
 
-        // DELETE: /cities/:id
+        // DELETE: /languages/:id
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
-            var result = await _citiesService.DeleteEntityByIdAsync(id);
+            var result = await _languagesService.DeleteEntityByIdAsync(id);
             if (!result)
             {
                 return BadRequest();
@@ -94,5 +94,6 @@ namespace JobList.Controllers
 
             return NoContent();
         }
+
     }
 }
