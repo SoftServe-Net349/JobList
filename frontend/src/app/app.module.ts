@@ -14,6 +14,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import {SliderModule} from 'primeng/slider';
 import {MultiSelectModule} from 'primeng/multiselect';
 
+
 // Our created components
 import { JobSearchComponent } from './job-search/job-search.component';
 import { ResumeComponent } from './resume/resume.component';
