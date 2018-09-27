@@ -11,7 +11,23 @@ export class CompanyComponent implements OnInit {
 
 	company: Company;
 
-  constructor(private companyService : CompanyService) { }
+  constructor(private companyService : CompanyService) { 
+		this.company = {
+			id: 0, name: '',
+			bossName: '',
+			fullDescription: '',
+			shortDescription: '',
+			address: '',
+			phone: '',
+			logoData: [],
+			logoMimetype: '',
+			site: '',
+			email: '',
+			password: '',
+			role: {id: 1, name: ''},
+			recruiters: []
+		};
+	}
 
   ngOnInit() {
 		this.loadCompany();

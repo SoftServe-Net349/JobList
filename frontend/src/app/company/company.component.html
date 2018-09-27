@@ -5,12 +5,12 @@
     <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Company logo">
     <div class="wrapper-flex">
       <div class="additional-info">
-        <p>{company.shortDescription}</p>
-        <p><span>Company Name:</span>  {company.name}</p>
-        <p><span>Boss Name:</span> {company.bossName}</p>
-        <p>{company.email}</p>
-        <p><span>Phone:</span> {company.phone}</p>
-        <p><span>Address:</span> {company.address}</p>
+        <p>{{company.shortDescription}}</p>
+        <p><span>Company Name:</span>  {{company.name}}</p>
+        <p><span>Boss Name:</span> {{company.bossName}}</p>
+        <p>{{company.email}}</p>
+        <p><span>Phone:</span> {{company.phone}}</p>
+        <p><span>Address:</span> {{company.address}}</p>
       </div>
       <div>
         <app-recruiter-form #recruiterForm></app-recruiter-form>
@@ -19,7 +19,7 @@
     <div class="description">
       <p-accordion>
         <p-accordionTab header="Description" [selected]="false">
-						{company.fullDescription}
+						{{company.fullDescription}}
         </p-accordionTab>
       </p-accordion>
     </div>
