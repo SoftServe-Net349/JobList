@@ -16,7 +16,7 @@ namespace JobList.BusinessLogic.MappingProfiles
 
             CreateMap<VacancyDTO, Vacancy>();
 
-            CreateMap<VacancyRequest, Vacancy>()
+            CreateMap<VacancyRequest, Vacancy>();
 
         }
     }
