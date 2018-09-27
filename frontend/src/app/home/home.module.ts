@@ -18,9 +18,12 @@ import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../shared/shared.module';
 
+import {DropdownModule} from 'primeng/dropdown';
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
   imports: [
+    ButtonModule,
     CommonModule,
     HomeRoutingModule,
     FormsModule,
