@@ -11,9 +11,8 @@ namespace JobList.Common.Validators
             RuleFor(x => x.SoftSkills).NotEmpty().WithMessage("Please specify a valid SoftSkills.");
             RuleFor(x => x.KeySkills).NotEmpty().WithMessage("Please specify a valid SoftSkills.");
             RuleFor(x => x.WorkAreaId).NotEmpty().WithMessage("Please specify a valid WorkAreaId.");
-            //RuleFor(x => x.Count).NotEmpty().Must(c => c > 5 && c < 20).WithMessage("Please specify a valid Count. Max value: 19, Min value: 6");
-            //RuleFor(x => x.DateOfCreation).NotEmpty().Must(BeAValidCreationDate).WithMessage($"Please specify a valid Creation Date. Sample Creation Date have to be between {DateTime.UtcNow.AddYears(-50).ToShortDateString()} and {DateTime.UtcNow.ToShortDateString()}");
-            //RuleFor(x => x.SampleField).NotEmpty().WithMessage("Please specify a valid SampleField");
+            RuleFor(x => x.CreateDate).NotEmpty().WithMessage("Please specify a valid CreateDate.");
+            RuleFor(x => x.FamilyState).Length(2, 20).WithMessage("Please specify a valid Title. Max length: 20, Min length: 2");
 
         }
     }

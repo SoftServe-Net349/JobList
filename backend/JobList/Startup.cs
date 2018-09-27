@@ -12,11 +12,8 @@ using JobList.DataAccess;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces;
 using FluentValidation.AspNetCore;
-using JobList.Common.Validators;
 using AutoMapper;
-using JobList.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 
 namespace JobList
 {
@@ -48,6 +45,8 @@ namespace JobList
                                 fv.ImplicitlyValidateChildProperties = true;
                                 // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                                 fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
                             })
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
