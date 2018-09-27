@@ -11,20 +11,20 @@ namespace JobList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CitiesController : Controller
+    public class FacultiesController : Controller
     {
-        private ICitiesService _citiesService;
+        private IFacultiesService _facultiesService;
 
-        public CitiesController(ICitiesService citiesService)
+        public FacultiesController(IFacultiesService facultiesService)
         {
-            _citiesService = citiesService;
+            _facultiesService = facultiesService;
         }
 
-        // GET: /cities
+        // GET: /faculties
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<CityDTO>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<FacultyDTO>>> Get()
         {
-            var dtos = await _citiesService.GetAllEntitiesAsync();
+            var dtos = await _facultiesService.GetAllEntitiesAsync();
             if (!dtos.Any())
             {
                 return NoContent();
@@ -35,9 +35,9 @@ namespace JobList.Controllers
 
 
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<CityDTO>> GetById(int id)
+        public virtual async Task<ActionResult<FacultyDTO>> GetById(int id)
         {
-            var dto = await _citiesService.GetEntityByIdAsync(id);
+            var dto = await _facultiesService.GetEntityByIdAsync(id);
             if (dto == null)
             {
                 return NotFound();
@@ -46,16 +46,16 @@ namespace JobList.Controllers
             return Ok(dto);
         }
 
-        // POST: /cities
+        // POST: /faculties
         [HttpPost]
-        public virtual async Task<ActionResult<CityDTO>> Create([FromBody] CityRequest request)
+        public virtual async Task<ActionResult<FacultyDTO>> Create([FromBody] FacultyRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var dtos = await _citiesService.CreateEntityAsync(request);
+            var dtos = await _facultiesService.CreateEntityAsync(request);
             if (dtos == null)
             {
                 return StatusCode(500);
@@ -64,16 +64,16 @@ namespace JobList.Controllers
             return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
         }
 
-        // PUT: /cities/:id
+        // PUT: /faculties/:id
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]CityRequest request)
+        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]FacultyRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _citiesService.UpdateEntityByIdAsync(request, id);
+            var result = await _facultiesService.UpdateEntityByIdAsync(request, id);
             if (!result)
             {
                 return StatusCode(500);
@@ -82,11 +82,11 @@ namespace JobList.Controllers
             return NoContent();
         }
 
-        // DELETE: /cities/:id
+        // DELETE: /faculties/:id
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
-            var result = await _citiesService.DeleteEntityByIdAsync(id);
+            var result = await _facultiesService.DeleteEntityByIdAsync(id);
             if (!result)
             {
                 return BadRequest();
