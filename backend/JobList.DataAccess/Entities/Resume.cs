@@ -5,13 +5,6 @@ namespace JobList.DataAccess.Entities
 {
     public class Resume :  Entity<int>
     {
-        public Resume()
-        {
-            EducationPeriods = new HashSet<EducationPeriod>();
-            Experiences = new HashSet<Experience>();
-            ResumeLanguages = new HashSet<ResumeLanguage>();
-        }
-
         public override int Id { get; set; }
         public string Linkedin { get; set; }
         public string Github { get; set; }
@@ -28,8 +21,8 @@ namespace JobList.DataAccess.Entities
 
         public User IdNavigation { get; set; }
         public WorkArea WorkArea { get; set; }
-        public ICollection<EducationPeriod> EducationPeriods { get; set; }
-        public ICollection<Experience> Experiences { get; set; }
-        public ICollection<ResumeLanguage> ResumeLanguages { get; set; }
+        public IList<EducationPeriod> EducationPeriods { get; set; }
+        public IList<Experience> Experiences { get; set; }
+        public IList<ResumeLanguage> ResumeLanguages { get; set; }
     }
 }

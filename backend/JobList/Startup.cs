@@ -15,6 +15,8 @@ using FluentValidation.AspNetCore;
 using JobList.Common.Validators;
 using AutoMapper;
 using JobList.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace JobList
 {
@@ -30,6 +32,9 @@ namespace JobList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //connection to db
+            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -45,6 +50,12 @@ namespace JobList
                                 fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
                             })
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            //services.AddDbContext<JobListDbContext>();
+            //services.AddScoped<DbContext>(sp => sp.GetService<JobListDbContext>());
+
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add your services here
@@ -95,9 +106,8 @@ namespace JobList
 
             services.AddAutoMapper(cfg =>
             {
-                cfg.AddProfile<SamplesProfile>();
+                cfg.AddProfile<CitiesProfile>();
             }); // Scoped Lifetime!
-            // https://lostechies.com/jimmybogard/2016/07/20/integrating-automapper-with-asp-net-core-di/
 
             return services;
         }
