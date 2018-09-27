@@ -11,20 +11,20 @@ namespace JobList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CitiesController : Controller
+    public class WorkAreasController : Controller
     {
-        private ICitiesService _citiesService;
+        private IWorkAreasService _workAreasService;
 
-        public CitiesController(ICitiesService citiesService)
+        public WorkAreasController(IWorkAreasService workAreasService)
         {
-            _citiesService = citiesService;
+            _workAreasService = workAreasService;
         }
 
-        // GET: /cities
+        // GET: /workAreas
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<CityDTO>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<WorkAreaDTO>>> Get()
         {
-            var dtos = await _citiesService.GetAllEntitiesAsync();
+            var dtos = await _workAreasService.GetAllEntitiesAsync();
             if (!dtos.Any())
             {
                 return NoContent();
@@ -35,9 +35,9 @@ namespace JobList.Controllers
 
 
         [HttpGet("{id}")]
-        public virtual async Task<ActionResult<CityDTO>> GetById(int id)
+        public virtual async Task<ActionResult<WorkAreaDTO>> GetById(int id)
         {
-            var dto = await _citiesService.GetEntityByIdAsync(id);
+            var dto = await _workAreasService.GetEntityByIdAsync(id);
             if (dto == null)
             {
                 return NotFound();
@@ -46,16 +46,16 @@ namespace JobList.Controllers
             return Ok(dto);
         }
 
-        // POST: /cities
+        // POST: /workAreas
         [HttpPost]
-        public virtual async Task<ActionResult<CityDTO>> Create([FromBody] CityRequest request)
+        public virtual async Task<ActionResult<WorkAreaDTO>> Create([FromBody] WorkAreaRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var dtos = await _citiesService.CreateEntityAsync(request);
+            var dtos = await _workAreasService.CreateEntityAsync(request);
             if (dtos == null)
             {
                 return StatusCode(500);
@@ -64,16 +64,16 @@ namespace JobList.Controllers
             return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
         }
 
-        // PUT: /cities/:id
+        // PUT: /workAreas/:id
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]CityRequest request)
+        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]WorkAreaRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _citiesService.UpdateEntityByIdAsync(request, id);
+            var result = await _workAreasService.UpdateEntityByIdAsync(request, id);
             if (!result)
             {
                 return StatusCode(500);
@@ -82,11 +82,11 @@ namespace JobList.Controllers
             return NoContent();
         }
 
-        // DELETE: /cities/:id
+        // DELETE: /workAreas/:id
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
-            var result = await _citiesService.DeleteEntityByIdAsync(id);
+            var result = await _workAreasService.DeleteEntityByIdAsync(id);
             if (!result)
             {
                 return BadRequest();
