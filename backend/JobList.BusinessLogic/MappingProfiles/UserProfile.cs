@@ -5,18 +5,20 @@ using JobList.DataAccess.Entities;
 
 namespace JobList.BusinessLogic.MappingProfiles
 {
-    public class CitiesProfile : Profile
+    public class UserProfile : Profile
     {
-        public CitiesProfile()
+        public UserProfile()
         {
-            CreateMap<City, City>()
+            CreateMap<User, User>()
                 .ForMember(d => d.Id, o => o.Ignore()); // Don't Map Id because It is useless for Ids when updating
 
-            CreateMap<City, CityDTO>();
+            CreateMap<User, UserDTO>();
 
-            CreateMap<CityDTO, City>();
+            CreateMap<UserDTO, User>();
 
-            CreateMap<CityRequest, City>();
+            CreateMap<UserRequest, User>()
+                .ForMember(d => d.Id, o => o.UseValue(0));
+
         }
     }
 }

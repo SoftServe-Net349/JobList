@@ -107,6 +107,20 @@ namespace JobList
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<CitiesProfile>();
+                cfg.AddProfile<CompanyProfile>();
+                cfg.AddProfile<EducationPeriodProfile>();
+                cfg.AddProfile<ExperienceProfile>();
+                cfg.AddProfile<FacultyProfile>();
+                cfg.AddProfile<FavoriteVacancyProfile>();
+                cfg.AddProfile<LanguageProfile>();
+                cfg.AddProfile<RecruiterProfile>();
+                cfg.AddProfile<ResumeProfile>();
+                cfg.AddProfile<ResumeLanguageProfile>();
+                cfg.AddProfile<RoleProfile>();
+                cfg.AddProfile<SchoolProfile>();
+                cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<VacancyProfile>();
+                cfg.AddProfile<WorkAreaProfile>();
             }); // Scoped Lifetime!
 
             return services;
