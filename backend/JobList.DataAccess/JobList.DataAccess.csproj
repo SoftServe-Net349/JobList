@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180926074116_Initial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Bogus" Version="24.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.3" />
