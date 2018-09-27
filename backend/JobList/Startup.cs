@@ -16,6 +16,7 @@ using JobList.Common.Validators;
 using AutoMapper;
 using JobList.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace JobList
 {
@@ -31,6 +32,9 @@ namespace JobList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //connection to db
+            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -48,10 +52,11 @@ namespace JobList
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddDbContext<JobListDbContext>();
+            //services.AddScoped<DbContext>(sp => sp.GetService<JobListDbContext>());
 
-            services.AddDbContext<JobListDbContext>();
-            services.AddScoped<DbContext>(sp => sp.GetService<JobListDbContext>());
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add your services here
             services.AddTransient<ICitiesService, CitiesService>();
@@ -76,7 +81,7 @@ namespace JobList
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseHttpStatusCodeExceptionMiddleware();
+            //app.UseHttpStatusCodeExceptionMiddleware();
 
             app.UseCors("CorsPolicy");
 
@@ -103,7 +108,6 @@ namespace JobList
             {
                 cfg.AddProfile<CitiesProfile>();
             }); // Scoped Lifetime!
-            // https://lostechies.com/jimmybogard/2016/07/20/integrating-automapper-with-asp-net-core-di/
 
             return services;
         }

@@ -27,7 +27,7 @@ namespace JobList.Controllers
         public virtual async Task<ActionResult<IEnumerable<CityDTO>>> Get()
         {
             var dtos = await _citiesService.GetAllEntitiesAsync();
-            if(!dtos.Any())
+            if (!dtos.Any())
             {
                 return NoContent();
             }
@@ -40,7 +40,7 @@ namespace JobList.Controllers
         public virtual async Task<ActionResult<CityDTO>> GetById(int id)
         {
             var dto = await _citiesService.GetEntityByIdAsync(id);
-            if(dto == null)
+            if (dto == null)
             {
                 return NotFound();
             }
@@ -58,12 +58,12 @@ namespace JobList.Controllers
             }
 
             var dtos = await _citiesService.CreateEntityAsync(request);
-            if(dtos == null)
+            if (dtos == null)
             {
                 return StatusCode(500);
             }
 
-            return CreatedAtAction("GetById", new { id = dtos.Id}, dtos);
+            return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
         }
 
 
@@ -89,7 +89,7 @@ namespace JobList.Controllers
         public virtual async Task<ActionResult> Delete(int id)
         {
             var result = await _citiesService.DeleteEntityByIdAsync(id);
-            if(!result)
+            if (!result)
             {
                 return BadRequest();
             }

@@ -1,5 +1,6 @@
 ﻿using JobList.Common.Interfaces.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace JobList.Common.DTOS
 {
@@ -18,5 +19,9 @@ namespace JobList.Common.DTOS
         public string Password { get; set; }
         public int RoleId { get; set; }
         public int CityId { get; set; }
+
+        public CityDTO City { get; set; }
+        public ResumeDTO Resumes { get; set; }
+        public IList<FavoriteVacancyDTO> FavoriteVacancies { get; set; }
     }
 }

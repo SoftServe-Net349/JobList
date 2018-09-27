@@ -12,9 +12,6 @@ namespace JobList.BusinessLogic.MappingProfiles
             CreateMap<City, City>()
                 .ForMember(d => d.Id, o => o.Ignore()); // Don't Map Id because It is useless for Ids when updating
 
-            //CreateMap<City, CityDTO>()
-            //    .ForMember(d => d.Name, o => o.MapFrom(s => s.Name));
-
             CreateMap<CityRequest, City>()
                 .ForMember(d => d.Id, o => o.UseValue(0));
         }
