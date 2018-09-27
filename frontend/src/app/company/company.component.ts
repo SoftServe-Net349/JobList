@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CompanyService} from '../core/services/company.service';
+import { Company } from '../shared/models/company.model';
 
 @Component({
   selector: 'app-company',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyComponent implements OnInit {
 
-  constructor() { }
+	company: Company;
+
+  constructor(private companyService : CompanyService) { }
 
   ngOnInit() {
+		this.loadCompany();
   }
 
+	loadCompany(){
+    this.companyService.getById(1)
+    .subscribe((data:Company)=>this.company=data);
+  }
 }

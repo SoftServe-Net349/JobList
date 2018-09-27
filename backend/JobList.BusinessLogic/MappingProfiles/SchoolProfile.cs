@@ -16,7 +16,7 @@ namespace JobList.BusinessLogic.MappingProfiles
 
             CreateMap<SchoolDTO, School>();
 
-            CreateMap<SchoolRequest, School>()
+            CreateMap<SchoolRequest, School>();
 
         }
     }

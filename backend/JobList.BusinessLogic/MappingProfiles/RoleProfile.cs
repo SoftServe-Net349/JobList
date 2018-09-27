@@ -16,7 +16,7 @@ namespace JobList.BusinessLogic.MappingProfiles
 
             CreateMap<RoleDTO, Role>();
 
-            CreateMap<RoleRequest, Role>()
+            CreateMap<RoleRequest, Role>();
 
         }
     }

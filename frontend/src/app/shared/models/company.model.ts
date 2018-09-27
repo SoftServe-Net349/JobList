@@ -1,4 +1,5 @@
 import { Role } from "./role.model";
+import { Recruiter } from "./recruiter.model";
 
 export interface Company{
     id: number;
@@ -13,5 +14,7 @@ export interface Company{
     site: string;
     email: string;
     password: string;
-    role: Role;
+		role: Role;
+		
+		recruiters: Recruiter[];
 }

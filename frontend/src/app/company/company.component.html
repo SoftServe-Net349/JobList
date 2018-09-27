@@ -5,12 +5,12 @@
     <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Company logo">
     <div class="wrapper-flex">
       <div class="additional-info">
-        <p>Short Description</p>
-        <p><span>Company Name:</span>  SoftServe</p>
-        <p><span>Boss Name:</span> Pavlo Paitak</p>
-        <p>pavlopaitak@gmail.com</p>
-        <p><span>Phone:</span> 0936977685</p>
-        <p><span>Address:</span> Address: Kavaleridze 25</p>
+        <p>{company.shortDescription}</p>
+        <p><span>Company Name:</span>  {company.name}</p>
+        <p><span>Boss Name:</span> {company.bossName}</p>
+        <p>{company.email}</p>
+        <p><span>Phone:</span> {company.phone}</p>
+        <p><span>Address:</span> {company.address}</p>
       </div>
       <div>
         <app-recruiter-form #recruiterForm></app-recruiter-form>
@@ -19,13 +19,7 @@
     <div class="description">
       <p-accordion>
         <p-accordionTab header="Description" [selected]="false">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore exercitationem voluptatem, temporibus, placeat quasi rem hic ipsa alias beatae laborum a rerum quae ad doloremque. Repellendus aut dolore commodi minus.
-          Animi maxime est unde, accusamus a possimus eius numquam fugiat exercitationem, iure corrupti consequuntur! Harum excepturi laborum illum tempore rerum iusto quibusdam sapiente dolor adipisci molestiae in ab, laudantium numquam!
-          Deserunt, quidem voluptates soluta pariatur deleniti veritatis. Est totam eveniet suscipit vero iste quod architecto? Repellat accusamus ipsum aspernatur error neque vel soluta alias explicabo! In eligendi optio debitis repellat!
-          Aperiam, ea eos mollitia possimus iusto labore laboriosam sint. Quisquam ea eius ipsum aliquam nesciunt quis deserunt animi, sed esse repellendus, tempore commodi sequi voluptatum in asperiores itaque optio incidunt!
-          Doloribus nostrum possimus velit incidunt odio error animi fugit deserunt earum maxime delectus praesentium sed eos asperiores saepe accusantium, at, odit atque, id qui a est rem impedit! Labore, illo?
-          Ullam, earum officia ab porro explicabo esse, aliquam consectetur non vero reiciendis alias repellat odit. Eius quo neque voluptate ducimus asperiores, iste adipisci, ab libero voluptatem, id architecto accusantium doloribus?
-          Voluptate repudiandae facere numquam assumenda? Optio eveniet commodi quidem rem, laborum non aspernatur reprehenderit consectetur itaque impedit. Suscipit atque autem deleniti obcaecati illum non magni, aliquid eum ea dicta itaque?
+						{company.fullDescription}
         </p-accordionTab>
       </p-accordion>
     </div>
