@@ -4,6 +4,7 @@ using JobList.Common.DTOS;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,7 +51,12 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync()
         {
-            var entities = await _uow.ResumesRepository.GetAllEntitiesAsync();
+            var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
+                 include: r => r.Include(o => o.User)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.EducationPeriods).ThenInclude(e=>e.School)
+                                .Include(o => o.Experiences)
+                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
 
@@ -59,7 +65,12 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<ResumeDTO> GetEntityByIdAsync(int id)
         {
-            var entity = await _uow.ResumesRepository.GetEntityAsync(id);
+            var entity = await _uow.ResumesRepository.GetEntityAsync(id,
+                include: r => r.Include(o => o.User)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
+                                .Include(o => o.Experiences)
+                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
 
             if (entity == null) return null;
 

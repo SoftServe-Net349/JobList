@@ -4,6 +4,7 @@ using JobList.Common.DTOS;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,7 +51,10 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync()
         {
-            var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync();
+            var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
+                include: r => r.Include(o => o.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company));
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 
@@ -59,7 +63,10 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<VacancyDTO> GetEntityByIdAsync(int id)
         {
-            var entity = await _uow.VacanciesRepository.GetEntityAsync(id);
+            var entity = await _uow.VacanciesRepository.GetEntityAsync(id,
+                 include: r => r.Include(o => o.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company));
 
             if (entity == null) return null;
 
