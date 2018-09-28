@@ -33,14 +33,15 @@
     </div>
     
     <ul>
-      <li>
+      <li *ngFor="let recruiter of company.recruiters">
         <div class="recruiter-wrapper-flex">
           <div>
               <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
           </div>
           <div class="recruiter-info">
-              <p>Pavlo Paitak</p>
-              <p>pavlopaitak@gmail.com</p>
+              <p>{{recruiter.firstName}} {{recruiter.lastName}}</p>
+							<p>{{recruiter.email}}</p>
+							<p>{{recruiter.phone}}</p>
           </div>
           <div class="recruiter-modification">
               <button pButton type="button" (click)="recruiterForm.showRecruiterForm('Update')" label="Update" class="ui-button-rounded ui-button-warning"></button>
@@ -48,70 +49,6 @@
           </div>
         </div>
         <hr>
-      </li>
-      <li>
-        <div class="recruiter-wrapper-flex">
-          <div>
-              <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
-          </div>
-          <div class="recruiter-info">
-              <p>Pavlo Paitak</p>
-              <p>pavlopaitak@gmail.com</p>
-          </div>
-          <div class="recruiter-modification">
-              <button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-              <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-          </div>
-        </div>
-        <hr>
-      </li>
-      <li>
-          <div class="recruiter-wrapper-flex">
-            <div>
-                <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
-            </div>
-            <div class="recruiter-info">
-                <p>Pavlo Paitak</p>
-                <p>pavlopaitak@gmail.com</p>
-            </div>
-            <div class="recruiter-modification">
-                <button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-                <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-            </div>
-          </div>
-          <hr>
-      </li>
-      <li>
-          <div class="recruiter-wrapper-flex">
-            <div>
-                <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
-            </div>
-            <div class="recruiter-info">
-                <p>Pavlo Paitak</p>
-                <p>pavlopaitak@gmail.com</p>
-            </div>
-            <div class="recruiter-modification">
-                <button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-                <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-            </div>
-          </div>
-          <hr>
-      </li>
-      <li>
-          <div class="recruiter-wrapper-flex">
-            <div>
-                <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
-            </div>
-            <div class="recruiter-info">
-                <p>Pavlo Paitak</p>
-                <p>pavlopaitak@gmail.com</p>
-            </div>
-            <div class="recruiter-modification">
-                <button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-                <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-            </div>
-          </div>
-          <hr>
       </li>
     </ul>
   </div>
