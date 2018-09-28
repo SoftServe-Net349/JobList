@@ -1,9 +1,28 @@
-
-
-<p-dialog header="Create CV" [(visible)]="display" [modal]="true" [responsive]="true" [width]="630" [minWidth]="200" [minY]="70" [focusOnShow]="false"
+<p-dialog header="Edit CV" [(visible)]="display" [modal]="true" [responsive]="true" [width]="630" [minWidth]="200" [minY]="70" [focusOnShow]="false"
 [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
 <aside class="cv-form">
     <div id="resume-form">
+        <h4 class="resume-title">Full Name</h4>
+
+        <div class="sdf">
+            <span class="ui-float-label">
+                <input id="firstname" type="text" size="30" pInputText> 
+                <label for="firstname">First Name</label>
+            </span> 
+            <span class="ui-float-label">
+                <input id="lastname" type="text" size="30" pInputText> 
+                <label for="lastname">Last Name</label>
+            </span>
+        </div><hr>
+
+        <h4 class="resume-title">E-Mail</h4>
+        <div class="sdf">
+        <span class="ui-float-label">
+            <input id="email" type="text" size="50" pInputText> 
+        </span>
+        </div>
+        <hr>
+
         <h4 class="resume-title">Address</h4>
 
         <div class="sdf">
@@ -33,9 +52,12 @@
         <div class="sdf">
         <span class="ui-float-label">
             <input id="phone" type="text" size="30" pInputText> 
+            <label for="phone">+380XXXXXXXXX</label>
         </span>
+        
         </div>
         <hr>
+
 
         <h4 class="resume-title">Education</h4>
 
@@ -195,7 +217,7 @@
 </p-footer>
 </p-dialog>
 
-<button type="button" (click)="showDialog()" pButton icon="pi pi-copy" label="Create CV"></button>
+<button type="button" (click)="showDialog()" pButton icon="pi pi-copy" label="Edit CV"></button>
 
 
 
