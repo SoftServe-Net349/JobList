@@ -51,9 +51,10 @@ namespace JobList
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
-            //services.AddDbContext<JobListDbContext>();
-            //services.AddScoped<DbContext>(sp => sp.GetService<JobListDbContext>());
-
+            services.AddMvc()
+                .AddJsonOptions(
+                 options => options.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
