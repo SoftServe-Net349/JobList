@@ -8,7 +8,9 @@
       <div id="right-side-menu"> 
       <a>Find Job</a>
       <a href="">Resume</a>
-      <a>SignIn</a>
+      <a (click)="authorizations.showDialog()">SignIn</a>
     </div>
   </div>
 </div>
+
+<app-authorizations #authorizations></app-authorizations>
