@@ -14,6 +14,7 @@ namespace JobList.DataAccess.Data
         {
         }
 
+
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<EducationPeriod> EducationPeriods { get; set; }
@@ -29,14 +30,6 @@ namespace JobList.DataAccess.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vacancy> Vacancies { get; set; }
         public virtual DbSet<WorkArea> WorkAreas { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDb;Initial Catalog=JOB_LIST_DB;Integrated Security=True");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -442,7 +435,7 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.WorkAreaId).HasColumnName("WORK_AREA_ID");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.User)
                     .WithOne(p => p.Resumes)
                     .HasForeignKey<Resume>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
