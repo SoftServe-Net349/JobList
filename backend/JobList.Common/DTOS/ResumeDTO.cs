@@ -24,6 +24,5 @@ namespace JobList.Common.DTOS
         public IList<EducationPeriodDTO> EducationPeriods { get; set; }
         public IList<ExperienceDTO> Experiences { get; set; }
         public IList<ResumeLanguageDTO> ResumeLanguages { get; set; }
-
     }
 }
