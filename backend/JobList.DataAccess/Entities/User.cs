@@ -5,11 +5,6 @@ namespace JobList.DataAccess.Entities
 {
     public class User : Entity<int>
     {
-        public User()
-        {
-            FavoriteVacancies = new HashSet<FavoriteVacancy>();
-        }
-
         public override int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -27,6 +22,6 @@ namespace JobList.DataAccess.Entities
         public City City { get; set; }
         public Role Role { get; set; }
         public Resume Resumes { get; set; }
-        public ICollection<FavoriteVacancy> FavoriteVacancies { get; set; }
+        public IList<FavoriteVacancy> FavoriteVacancies { get; set; }
     }
 }

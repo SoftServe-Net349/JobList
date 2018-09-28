@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobList.DataAccess.Migrations
 {
     [DbContext(typeof(JobListDbContext))]
-    [Migration("20180926074416_Initial")]
+    [Migration("20180927111859_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,16 +139,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("COMPANIES");
 
                     b.HasData(
-                        new { Id = 1, Address = "38347 King Circles, New Lorena, Gibraltar", BossName = "Kadin", Email = "Edison.Kovacek77@hotmail.com", FullDescription = "Neque laborum vel qui ex vitae provident laboriosam.", Name = "Company № 914", Password = "22np1428du", Phone = "073 8145", RoleId = 1, ShortDescription = "voluptatem", Site = "http://candice.org" },
-                        new { Id = 2, Address = "0956 Kelton Estates, West Anthonymouth, Oman", BossName = "Calista", Email = "Dino_Howell@yahoo.com", FullDescription = "Fugit ducimus suscipit.", Name = "Company № 20", Password = "vx6l_0YTvg", Phone = "073 9896", RoleId = 1, ShortDescription = "ab", Site = "https://jon.name" },
-                        new { Id = 3, Address = "166 Sawayn Shoals, Lake Stella, Saint Vincent and the Grenadines", BossName = "Dante", Email = "Hudson87@gmail.com", FullDescription = "Fugiat sint aliquid dolores voluptatibus.", Name = "Company № 644", Password = "rk8ttnU2nP", Phone = "073 9359", RoleId = 2, ShortDescription = "ea", Site = "http://jalen.biz" },
-                        new { Id = 4, Address = "79419 Rempel Glen, West Keonberg, Vanuatu", BossName = "Willa", Email = "Nettie1@yahoo.com", FullDescription = "Eveniet ea debitis expedita consequatur consequatur.", Name = "Company № 396", Password = "Nyfi7cBV2o", Phone = "073 80", RoleId = 1, ShortDescription = "consequatur", Site = "https://eldridge.com" },
-                        new { Id = 5, Address = "671 Turner Drive, Port Juwanbury, Slovenia", BossName = "Toni", Email = "Rosalinda_Miller@hotmail.com", FullDescription = "Illum velit ratione itaque aliquid recusandae.", Name = "Company № 356", Password = "F43XlcFKFR", Phone = "073 2323", RoleId = 1, ShortDescription = "doloremque", Site = "https://shane.info" },
-                        new { Id = 6, Address = "055 Jewell Village, Willside, Mozambique", BossName = "Delbert", Email = "Easton_Klocko67@hotmail.com", FullDescription = "Non sed sequi est iste ut iste sed sunt.", Name = "Company № 830", Password = "KLOTMdLQzK", Phone = "073 7057", RoleId = 2, ShortDescription = "et", Site = "https://shaina.info" },
-                        new { Id = 7, Address = "7200 Lorenzo Prairie, Lakinshire, Hungary", BossName = "Merle", Email = "Elian_Hettinger@yahoo.com", FullDescription = "Aut voluptas velit et aut.", Name = "Company № 881", Password = "gVKDVar_J6", Phone = "073 8114", RoleId = 2, ShortDescription = "cum", Site = "https://shemar.com" },
-                        new { Id = 8, Address = "315 Zemlak Lights, West Annabel, Liberia", BossName = "Adella", Email = "Catalina95@hotmail.com", FullDescription = "Numquam molestias et est sit.", Name = "Company № 801", Password = "VWlpTveR6V", Phone = "073 602", RoleId = 2, ShortDescription = "molestiae", Site = "https://sarina.info" },
-                        new { Id = 9, Address = "043 Hegmann Circles, Vivienneborough, Denmark", BossName = "Marlin", Email = "Reed.Cronin67@yahoo.com", FullDescription = "Consequuntur accusamus eum.", Name = "Company № 707", Password = "Dq0rz2nbgj", Phone = "073 9071", RoleId = 2, ShortDescription = "corporis", Site = "http://ansel.name" },
-                        new { Id = 10, Address = "5613 Beatty Ramp, East Saigemouth, Jamaica", BossName = "Mya", Email = "Bryon_OConnell30@hotmail.com", FullDescription = "Excepturi totam aliquid consequatur error repudiandae nisi libero quasi.", Name = "Company № 219", Password = "aFFLz1wY6a", Phone = "073 4527", RoleId = 2, ShortDescription = "earum", Site = "https://jayce.com" }
+                        new { Id = 1, Address = "161 Laurine Ports, Monserratmouth, Rwanda", BossName = "Ludie", Email = "Reinhold_Schimmel66@gmail.com", FullDescription = "Qui doloribus qui libero.", Name = "Company № 832", Password = "VSEm34uDiT", Phone = "073 6449", RoleId = 2, ShortDescription = "nihil", Site = "https://briana.info" },
+                        new { Id = 2, Address = "958 Bayer Crest, West Brennaview, Austria", BossName = "Lazaro", Email = "Hildegard86@yahoo.com", FullDescription = "Impedit magnam ex.", Name = "Company № 213", Password = "WdpB2WG5kr", Phone = "073 6007", RoleId = 1, ShortDescription = "maxime", Site = "http://fredy.biz" },
+                        new { Id = 3, Address = "3799 Fletcher Shoal, Carrollview, Democratic People's Republic of Korea", BossName = "Annabell", Email = "Mervin73@gmail.com", FullDescription = "Perspiciatis accusantium quis rem dolores.", Name = "Company № 664", Password = "rWX75tmtEk", Phone = "073 4121", RoleId = 1, ShortDescription = "quia", Site = "http://marilou.info" },
+                        new { Id = 4, Address = "7948 Trace Drive, Orieland, Canada", BossName = "Tabitha", Email = "Adam.Hickle84@yahoo.com", FullDescription = "Quo mollitia nobis ullam saepe itaque sit tempora nemo.", Name = "Company № 46", Password = "XcvBlqAXTL", Phone = "073 5053", RoleId = 2, ShortDescription = "et", Site = "http://alfred.net" },
+                        new { Id = 5, Address = "0534 Edwina Hills, Abernathyton, Barbados", BossName = "Karen", Email = "Linnea_Block@yahoo.com", FullDescription = "Ex sit inventore est dignissimos dolor quaerat et.", Name = "Company № 230", Password = "LfOjv9pUuT", Phone = "073 7243", RoleId = 2, ShortDescription = "ut", Site = "https://kellie.info" },
+                        new { Id = 6, Address = "188 Quigley Springs, Smithmouth, Suriname", BossName = "Mathias", Email = "Jennings65@yahoo.com", FullDescription = "Delectus fuga est aliquam ut in veniam.", Name = "Company № 984", Password = "s8iKdDw4BD", Phone = "073 608", RoleId = 1, ShortDescription = "id", Site = "http://claudie.org" },
+                        new { Id = 7, Address = "96985 Hyman Way, North Kelvin, Turkey", BossName = "Arjun", Email = "Nikita9@hotmail.com", FullDescription = "Eum ratione placeat nulla praesentium dolore sed culpa.", Name = "Company № 883", Password = "GnePxPG8fx", Phone = "073 3894", RoleId = 1, ShortDescription = "ex", Site = "https://keshawn.biz" },
+                        new { Id = 8, Address = "8757 Norbert Ranch, Armstrongtown, Cayman Islands", BossName = "Curt", Email = "Verona31@gmail.com", FullDescription = "Accusamus quo et.", Name = "Company № 145", Password = "RhF1SD6DhT", Phone = "073 2124", RoleId = 1, ShortDescription = "ut", Site = "https://effie.com" },
+                        new { Id = 9, Address = "67006 Runte Place, Goldnerfurt, Reunion", BossName = "Neha", Email = "Mikel54@yahoo.com", FullDescription = "Iure commodi molestiae sit aspernatur sunt voluptates alias.", Name = "Company № 147", Password = "BdX4IqF8EX", Phone = "073 579", RoleId = 1, ShortDescription = "recusandae", Site = "https://lori.biz" },
+                        new { Id = 10, Address = "2692 Magdalen Key, Port Ayla, Nauru", BossName = "Rhoda", Email = "Erwin.Ritchie86@yahoo.com", FullDescription = "Aspernatur doloremque facere laudantium nihil quidem.", Name = "Company № 773", Password = "0ir7jufMq2", Phone = "073 9064", RoleId = 1, ShortDescription = "quis", Site = "http://bridie.org" }
                     );
                 });
 
@@ -182,16 +182,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("EDUCATION_PERIODS");
 
                     b.HasData(
-                        new { Id = 63, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 42, SchoolId = 1, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 64, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 42, SchoolId = 2, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 65, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 48, SchoolId = 3, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 66, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 42, SchoolId = 1, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 67, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 48, SchoolId = 3, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 68, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 48, SchoolId = 2, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 69, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 48, SchoolId = 2, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 70, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 48, SchoolId = 3, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 71, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 48, SchoolId = 3, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 72, FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 42, SchoolId = 1, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                        new { Id = 63, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 3, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 64, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 1, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 65, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 1, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 66, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 42, SchoolId = 2, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 67, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 3, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 68, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 2, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 69, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 42, SchoolId = 2, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 70, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 3, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 71, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 1, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 72, FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), ResumeId = 44, SchoolId = 1, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                     );
                 });
 
@@ -232,16 +232,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("EXPERIENCES");
 
                     b.HasData(
-                        new { Id = 53, CompanyName = "Nat Prosacco", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Saepe earum repellat cum a quidem explicabo sed eius rerum.", ResumeId = 48, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 54, CompanyName = "America Casper", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Sapiente accusantium porro.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 55, CompanyName = "Marcelino Frami", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Eligendi incidunt nihil.", ResumeId = 48, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 56, CompanyName = "Jordi Douglas", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Et explicabo incidunt maxime rerum tempore delectus sit animi nihil.", ResumeId = 48, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 57, CompanyName = "Lupe Rowe", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Fugiat autem et.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 58, CompanyName = "Robert Kihn", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Ut asperiores nulla architecto praesentium repudiandae velit quo sunt.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 59, CompanyName = "Ilene Kerluke", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Exercitationem quia expedita beatae.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 60, CompanyName = "Ivah Boyer", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Molestiae nostrum excepturi voluptatem atque ipsa vero vero.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 61, CompanyName = "Faye Parisian", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Nesciunt rerum aspernatur eum libero nihil omnis voluptas dolorum.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 62, CompanyName = "Elyse Denesik", FinishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Id nihil quo porro.", ResumeId = 42, StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                        new { Id = 53, CompanyName = "Domenica Herman", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Molestias nam quisquam possimus explicabo.", ResumeId = 42, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 54, CompanyName = "Billy Nicolas", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Architecto harum fuga quis odit.", ResumeId = 44, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 55, CompanyName = "Gregg Lebsack", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Quasi excepturi voluptatum amet impedit consequatur dolorem qui.", ResumeId = 42, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 56, CompanyName = "Brennon Sipes", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Quis at earum et aliquam qui dolore quo quidem.", ResumeId = 44, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 57, CompanyName = "Tanya Dicki", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Voluptatibus quo pariatur omnis earum.", ResumeId = 44, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 58, CompanyName = "Bonita Hermann", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Adipisci voluptas quibusdam quia tenetur.", ResumeId = 42, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 59, CompanyName = "Tony Hilll", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Maiores aut quam temporibus dolor nobis officiis at et sequi.", ResumeId = 44, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 60, CompanyName = "Angel Herzog", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Quis eveniet qui non aut delectus eius.", ResumeId = 42, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 61, CompanyName = "Mercedes Kutch", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Expedita aspernatur nihil recusandae et saepe et enim fugiat molestiae.", ResumeId = 42, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { Id = 62, CompanyName = "Saul Dickinson", FinishDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Position = "Dolorem rerum sunt.", ResumeId = 44, StartDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                     );
                 });
 
@@ -266,16 +266,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("FACULTIES");
 
                     b.HasData(
-                        new { Id = 11, Name = "Software Engineering", SchoolId = 3 },
-                        new { Id = 12, Name = "Applied Mathematics", SchoolId = 2 },
-                        new { Id = 13, Name = "Software Engineering", SchoolId = 1 },
-                        new { Id = 14, Name = "Applied Mathematics", SchoolId = 2 },
-                        new { Id = 15, Name = "Computer Science", SchoolId = 3 },
-                        new { Id = 16, Name = "Applied Mathematics", SchoolId = 3 },
-                        new { Id = 17, Name = "Applied Mathematics", SchoolId = 3 },
-                        new { Id = 18, Name = "Applied Mathematics", SchoolId = 1 },
-                        new { Id = 19, Name = "Computer Science", SchoolId = 1 },
-                        new { Id = 20, Name = "Applied Mathematics", SchoolId = 1 }
+                        new { Id = 11, Name = "Computer Science", SchoolId = 3 },
+                        new { Id = 12, Name = "Software Engineering", SchoolId = 2 },
+                        new { Id = 13, Name = "Computer Science", SchoolId = 3 },
+                        new { Id = 14, Name = "Applied Mathematics", SchoolId = 1 },
+                        new { Id = 15, Name = "Software Engineering", SchoolId = 1 },
+                        new { Id = 16, Name = "Applied Mathematics", SchoolId = 2 },
+                        new { Id = 17, Name = "Software Engineering", SchoolId = 1 },
+                        new { Id = 18, Name = "Computer Science", SchoolId = 2 },
+                        new { Id = 19, Name = "Applied Mathematics", SchoolId = 1 },
+                        new { Id = 20, Name = "Software Engineering", SchoolId = 2 }
                     );
                 });
 
@@ -301,16 +301,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("FAVORITE_VACANCIES");
 
                     b.HasData(
-                        new { Id = 83, UserId = 47, VacancyId = 31 },
-                        new { Id = 84, UserId = 49, VacancyId = 35 },
-                        new { Id = 85, UserId = 48, VacancyId = 35 },
-                        new { Id = 86, UserId = 46, VacancyId = 37 },
-                        new { Id = 87, UserId = 46, VacancyId = 35 },
-                        new { Id = 88, UserId = 41, VacancyId = 37 },
-                        new { Id = 89, UserId = 45, VacancyId = 37 },
-                        new { Id = 90, UserId = 44, VacancyId = 38 },
-                        new { Id = 91, UserId = 41, VacancyId = 37 },
-                        new { Id = 92, UserId = 45, VacancyId = 32 }
+                        new { Id = 83, UserId = 47, VacancyId = 36 },
+                        new { Id = 84, UserId = 50, VacancyId = 31 },
+                        new { Id = 85, UserId = 42, VacancyId = 39 },
+                        new { Id = 86, UserId = 43, VacancyId = 34 },
+                        new { Id = 87, UserId = 44, VacancyId = 40 },
+                        new { Id = 88, UserId = 46, VacancyId = 40 },
+                        new { Id = 89, UserId = 42, VacancyId = 38 },
+                        new { Id = 90, UserId = 48, VacancyId = 40 },
+                        new { Id = 91, UserId = 45, VacancyId = 39 },
+                        new { Id = 92, UserId = 46, VacancyId = 34 }
                     );
                 });
 
@@ -399,16 +399,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("RECRUITERS");
 
                     b.HasData(
-                        new { Id = 21, CompanyId = 2, Email = "Wilhelmine_Wisozk@hotmail.com", FirstName = "Alek", LastName = "Roob", Password = "bSlOqa1uBi", Phone = "073 6554", RoleId = 2 },
-                        new { Id = 22, CompanyId = 4, Email = "Lavern.Lind80@gmail.com", FirstName = "Avis", LastName = "Brakus", Password = "bIKPgHgq0A", Phone = "073 9573", RoleId = 2 },
-                        new { Id = 23, CompanyId = 7, Email = "Ardella30@hotmail.com", FirstName = "Zena", LastName = "Howe", Password = "jf9MWiVa7q", Phone = "073 8576", RoleId = 2 },
-                        new { Id = 24, CompanyId = 4, Email = "Roberta_VonRueden@gmail.com", FirstName = "Gertrude", LastName = "Hintz", Password = "hZYb9rij99", Phone = "073 9312", RoleId = 2 },
-                        new { Id = 25, CompanyId = 6, Email = "Greg81@yahoo.com", FirstName = "Valentine", LastName = "Dietrich", Password = "L5D3sHerRY", Phone = "073 739", RoleId = 1 },
-                        new { Id = 26, CompanyId = 1, Email = "Anastacio51@hotmail.com", FirstName = "Beth", LastName = "Morissette", Password = "Gam6gUS7V1", Phone = "073 5877", RoleId = 2 },
-                        new { Id = 27, CompanyId = 9, Email = "Ron.Marvin66@yahoo.com", FirstName = "Kasey", LastName = "Nienow", Password = "L3sqVFbmdQ", Phone = "073 5791", RoleId = 2 },
-                        new { Id = 28, CompanyId = 5, Email = "Haven_Lueilwitz97@hotmail.com", FirstName = "Marielle", LastName = "D'Amore", Password = "8B4zU1f4ZA", Phone = "073 3240", RoleId = 2 },
-                        new { Id = 29, CompanyId = 10, Email = "Maudie.Rice66@yahoo.com", FirstName = "Walter", LastName = "DuBuque", Password = "gFGzc0dsUj", Phone = "073 2859", RoleId = 1 },
-                        new { Id = 30, CompanyId = 1, Email = "Dario46@gmail.com", FirstName = "Nathanial", LastName = "Lang", Password = "A0_3ozXZT6", Phone = "073 6249", RoleId = 1 }
+                        new { Id = 21, CompanyId = 6, Email = "Jessika87@yahoo.com", FirstName = "Lewis", LastName = "Ward", Password = "H9yqDZBF43", Phone = "073 8169", RoleId = 2 },
+                        new { Id = 22, CompanyId = 9, Email = "Madisen_Brekke@hotmail.com", FirstName = "Leonard", LastName = "Kozey", Password = "EdEuasUoPf", Phone = "073 1722", RoleId = 2 },
+                        new { Id = 23, CompanyId = 7, Email = "Amaya21@gmail.com", FirstName = "Don", LastName = "Lemke", Password = "2Mht3s5LdQ", Phone = "073 8631", RoleId = 2 },
+                        new { Id = 24, CompanyId = 6, Email = "Jerel_Mante83@hotmail.com", FirstName = "Fredrick", LastName = "Feeney", Password = "wiIyaLXCuA", Phone = "073 6659", RoleId = 1 },
+                        new { Id = 25, CompanyId = 9, Email = "Vincent21@yahoo.com", FirstName = "Antonina", LastName = "Nienow", Password = "_vmOr8k9Px", Phone = "073 4579", RoleId = 1 },
+                        new { Id = 26, CompanyId = 3, Email = "Cooper5@gmail.com", FirstName = "Benedict", LastName = "Sawayn", Password = "_K877bRQJm", Phone = "073 1220", RoleId = 2 },
+                        new { Id = 27, CompanyId = 6, Email = "Pamela.Lemke27@yahoo.com", FirstName = "Neil", LastName = "Mueller", Password = "xEyuYyhOar", Phone = "073 8439", RoleId = 1 },
+                        new { Id = 28, CompanyId = 3, Email = "Bryce.Leffler@hotmail.com", FirstName = "Derrick", LastName = "Metz", Password = "MjBpxgMCE3", Phone = "073 8934", RoleId = 1 },
+                        new { Id = 29, CompanyId = 1, Email = "Collin_Ledner@yahoo.com", FirstName = "Haylie", LastName = "Medhurst", Password = "DcExG2ewF1", Phone = "073 3398", RoleId = 1 },
+                        new { Id = 30, CompanyId = 5, Email = "Daniela73@yahoo.com", FirstName = "Robb", LastName = "Wehner", Password = "on9yXXCKu7", Phone = "073 8285", RoleId = 1 }
                     );
                 });
 
@@ -503,8 +503,8 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("RESUMES");
 
                     b.HasData(
-                        new { Id = 42, Courses = "Est in voluptatem aspernatur enim.", CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Facebook = "https://jermey.net", FamilyState = "Architecto.", Github = "https://cheyanne.info", Instagram = "https://loma.name", KeySkills = "Non nihil eligendi et sed quidem iusto quos molestias et.", Linkedin = "https://billie.biz", ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Skype = "http://leonel.com", SoftSkills = "Autem et impedit nihil reiciendis.", WorkAreaId = 2 },
-                        new { Id = 48, Courses = "A quas quod nostrum impedit.", CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Facebook = "http://dell.net", FamilyState = "Velit.", Github = "https://minnie.org", Instagram = "http://meda.net", KeySkills = "Vero quia illo quaerat et.", Linkedin = "https://dave.name", ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Skype = "http://jerad.net", SoftSkills = "Non corrupti officia et vero ad animi aut qui.", WorkAreaId = 3 }
+                        new { Id = 42, Courses = "Doloribus consequatur velit possimus sint qui accusamus.", CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Facebook = "http://faye.com", FamilyState = "Illum.", Github = "https://randy.biz", Instagram = "https://adelia.name", KeySkills = "Voluptatum aspernatur saepe in quaerat et natus inventore hic magnam.", Linkedin = "http://terence.biz", ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Skype = "https://jude.name", SoftSkills = "Totam tempora qui ad sint ducimus necessitatibus.", WorkAreaId = 1 },
+                        new { Id = 44, Courses = "Laboriosam cupiditate officiis.", CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Facebook = "https://rodrigo.biz", FamilyState = "Quia.", Github = "https://ellsworth.net", Instagram = "http://morris.info", KeySkills = "Possimus doloremque dolorem error inventore rem voluptatum magni.", Linkedin = "http://hilma.net", ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Skype = "https://cornell.info", SoftSkills = "Est omnis atque delectus deserunt.", WorkAreaId = 1 }
                     );
                 });
 
@@ -530,16 +530,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("RESUME_LANGUAGES");
 
                     b.HasData(
-                        new { Id = 73, LanguageId = 3, ResumeId = 42 },
-                        new { Id = 74, LanguageId = 1, ResumeId = 48 },
-                        new { Id = 75, LanguageId = 2, ResumeId = 42 },
-                        new { Id = 76, LanguageId = 1, ResumeId = 48 },
-                        new { Id = 77, LanguageId = 3, ResumeId = 48 },
-                        new { Id = 78, LanguageId = 1, ResumeId = 42 },
-                        new { Id = 79, LanguageId = 1, ResumeId = 42 },
-                        new { Id = 80, LanguageId = 1, ResumeId = 42 },
-                        new { Id = 81, LanguageId = 1, ResumeId = 42 },
-                        new { Id = 82, LanguageId = 2, ResumeId = 48 }
+                        new { Id = 73, LanguageId = 1, ResumeId = 44 },
+                        new { Id = 74, LanguageId = 3, ResumeId = 44 },
+                        new { Id = 75, LanguageId = 3, ResumeId = 44 },
+                        new { Id = 76, LanguageId = 1, ResumeId = 44 },
+                        new { Id = 77, LanguageId = 2, ResumeId = 44 },
+                        new { Id = 78, LanguageId = 1, ResumeId = 44 },
+                        new { Id = 79, LanguageId = 2, ResumeId = 42 },
+                        new { Id = 80, LanguageId = 3, ResumeId = 44 },
+                        new { Id = 81, LanguageId = 3, ResumeId = 44 },
+                        new { Id = 82, LanguageId = 1, ResumeId = 44 }
                     );
                 });
 
@@ -676,16 +676,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("USERS");
 
                     b.HasData(
-                        new { Id = 41, Address = "Kenneth Landing", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Jordan54@hotmail.com", FirstName = "Miles", LastName = "Doyle", Password = "AKCh652gdn", Phone = "073 2285", RoleId = 1, Sex = "f" },
-                        new { Id = 42, Address = "Kobe Ranch", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Noe_Jast75@gmail.com", FirstName = "Frederik", LastName = "Hyatt", Password = "kgilAcvKyB", Phone = "073 8289", RoleId = 2, Sex = "f" },
-                        new { Id = 43, Address = "Beer Isle", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 3, Email = "Princess77@hotmail.com", FirstName = "Isabelle", LastName = "Kuvalis", Password = "jZA7IOJC7M", Phone = "073 8094", RoleId = 1, Sex = "m" },
-                        new { Id = 44, Address = "Rau Trail", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Mavis_Johnson@hotmail.com", FirstName = "Cayla", LastName = "Rodriguez", Password = "MZVaa3wRne", Phone = "073 1567", RoleId = 2, Sex = "f" },
-                        new { Id = 45, Address = "Lueilwitz Flat", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Lorenzo_Hirthe@yahoo.com", FirstName = "Sophia", LastName = "Hamill", Password = "nPJ18S6685", Phone = "073 904", RoleId = 1, Sex = "m" },
-                        new { Id = 46, Address = "Janae Points", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 1, Email = "Elza_Morar@yahoo.com", FirstName = "Ella", LastName = "Stracke", Password = "Q2EIc2rDST", Phone = "073 1292", RoleId = 1, Sex = "m" },
-                        new { Id = 47, Address = "Therese Ports", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 1, Email = "Karlie_Sanford8@yahoo.com", FirstName = "Irwin", LastName = "MacGyver", Password = "Fflsg3ql6k", Phone = "073 5264", RoleId = 2, Sex = "m" },
-                        new { Id = 48, Address = "Ida Bridge", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 3, Email = "Lucienne_Hills46@gmail.com", FirstName = "Alfredo", LastName = "Purdy", Password = "By0B_k75e_", Phone = "073 5054", RoleId = 1, Sex = "f" },
-                        new { Id = 49, Address = "Torphy Villages", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Iva.Stiedemann@hotmail.com", FirstName = "Kristopher", LastName = "Roob", Password = "HCrxowzI9R", Phone = "073 2866", RoleId = 1, Sex = "m" },
-                        new { Id = 50, Address = "Josiah Inlet", BirthData = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 1, Email = "Jennings.Barrows@gmail.com", FirstName = "Ebba", LastName = "Hessel", Password = "ydHeVeqmpr", Phone = "073 2471", RoleId = 2, Sex = "m" }
+                        new { Id = 41, Address = "Talon Estate", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 1, Email = "Dora33@gmail.com", FirstName = "Leanne", LastName = "Connelly", Password = "OJKPPiroRt", Phone = "073 747", RoleId = 2, Sex = "m" },
+                        new { Id = 42, Address = "Darius Trafficway", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 1, Email = "Stevie42@hotmail.com", FirstName = "Jarrod", LastName = "Gutkowski", Password = "huDR7bjRP1", Phone = "073 222", RoleId = 1, Sex = "f" },
+                        new { Id = 43, Address = "Cole Parkways", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Kris8@gmail.com", FirstName = "Elsa", LastName = "Wisoky", Password = "ljrohDjQud", Phone = "073 6026", RoleId = 2, Sex = "m" },
+                        new { Id = 44, Address = "Marie Crossing", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 3, Email = "Karli_Hamill@gmail.com", FirstName = "Josiah", LastName = "O'Kon", Password = "QeSe7Rwun3", Phone = "073 9582", RoleId = 1, Sex = "m" },
+                        new { Id = 45, Address = "Keebler Streets", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 1, Email = "Royal70@yahoo.com", FirstName = "Rosario", LastName = "Kihn", Password = "t4EnqCfoG5", Phone = "073 4951", RoleId = 1, Sex = "m" },
+                        new { Id = 46, Address = "Guy Corners", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 3, Email = "Paul_Schaden89@hotmail.com", FirstName = "Alice", LastName = "Lubowitz", Password = "uIApO3UCYO", Phone = "073 3374", RoleId = 1, Sex = "m" },
+                        new { Id = 47, Address = "Waters Grove", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Betty.Friesen@yahoo.com", FirstName = "Jameson", LastName = "Haag", Password = "47MpFsWwl1", Phone = "073 8041", RoleId = 1, Sex = "f" },
+                        new { Id = 48, Address = "Eudora Summit", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 2, Email = "Eloise_Borer47@gmail.com", FirstName = "Noel", LastName = "Prosacco", Password = "r3Xuyu83AS", Phone = "073 202", RoleId = 1, Sex = "m" },
+                        new { Id = 49, Address = "Lexus Viaduct", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 3, Email = "Clemmie.Turner2@gmail.com", FirstName = "Aliyah", LastName = "Cummings", Password = "MF7YWFiDa3", Phone = "073 8830", RoleId = 2, Sex = "m" },
+                        new { Id = 50, Address = "Bednar Ridges", BirthData = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), CityId = 3, Email = "Marcelo.Muller37@yahoo.com", FirstName = "Raina", LastName = "Kozey", Password = "P6d5Nttho6", Phone = "073 7794", RoleId = 1, Sex = "f" }
                     );
                 });
 
@@ -765,16 +765,16 @@ namespace JobList.DataAccess.Migrations
                     b.ToTable("VACANCIES");
 
                     b.HasData(
-                        new { Id = 31, BePlus = "Totam hic itaque et dolor eaque.", CityId = 3, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Internal", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Principal Directives Producer", Offering = "Trever Rolfson", RecruiterId = 29, Requirements = "Nihil commodi officia animi amet aut.", Salary = 1000m, WorkAreaId = 2 },
-                        new { Id = 32, BePlus = "Maxime corporis ab id dolorem quisquam consequuntur velit dolorem voluptatem.", CityId = 3, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Dynamic", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Dynamic Paradigm Liaison", Offering = "Jamey Murphy", RecruiterId = 25, Requirements = "Iure itaque voluptatem ut aspernatur.", Salary = 1000m, WorkAreaId = 3 },
-                        new { Id = 33, BePlus = "Quia aperiam minus quis fugiat.", CityId = 1, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Lead", FullPartTime = "Part-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Global Solutions Facilitator", Offering = "Freeda Kub", RecruiterId = 25, Requirements = "Labore veritatis qui ea eum est alias animi neque.", Salary = 1000m, WorkAreaId = 1 },
-                        new { Id = 34, BePlus = "Animi alias dolor dolorum.", CityId = 2, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Chief", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Lead Intranet Engineer", Offering = "Zita Zulauf", RecruiterId = 23, Requirements = "Esse quod beatae est est voluptatem molestias et mollitia sed.", Salary = 1000m, WorkAreaId = 3 },
-                        new { Id = 35, BePlus = "Quam nostrum debitis cumque.", CityId = 2, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Regional", FullPartTime = "Full-time", IsChecked = false, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "International Quality Director", Offering = "Percival Berge", RecruiterId = 28, Requirements = "Et quam illum omnis.", Salary = 1000m, WorkAreaId = 2 },
-                        new { Id = 36, BePlus = "Repudiandae enim assumenda nostrum laboriosam quia.", CityId = 2, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Lead", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Corporate Infrastructure Assistant", Offering = "Alysa Bechtelar", RecruiterId = 21, Requirements = "Velit quis ipsam quas tempore.", Salary = 1000m, WorkAreaId = 2 },
-                        new { Id = 37, BePlus = "Reprehenderit eos consequatur ut sapiente.", CityId = 2, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Principal", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Central Mobility Planner", Offering = "Juliet Fisher", RecruiterId = 22, Requirements = "Omnis deserunt inventore ex non omnis similique sed provident aut.", Salary = 1000m, WorkAreaId = 1 },
-                        new { Id = 38, BePlus = "Eum quos velit.", CityId = 1, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Regional", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Human Usability Analyst", Offering = "Izaiah Ziemann", RecruiterId = 29, Requirements = "Rerum nam eligendi quia animi saepe.", Salary = 1000m, WorkAreaId = 3 },
-                        new { Id = 39, BePlus = "Ut quo repudiandae eligendi dolores nobis autem accusamus.", CityId = 2, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Customer", FullPartTime = "Full-time", IsChecked = false, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Dynamic Response Manager", Offering = "Catharine Runte", RecruiterId = 22, Requirements = "Dolorem repellendus libero et repellat vel laudantium error minima.", Salary = 1000m, WorkAreaId = 2 },
-                        new { Id = 40, BePlus = "Ut blanditiis sit sunt qui non aperiam voluptatem nesciunt qui.", CityId = 2, CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Internal", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Regional Quality Associate", Offering = "Jude Lindgren", RecruiterId = 22, Requirements = "Modi exercitationem aut.", Salary = 1000m, WorkAreaId = 3 }
+                        new { Id = 31, BePlus = "Illo quaerat eos rerum praesentium mollitia totam illo quis recusandae.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Global", FullPartTime = "Part-time", IsChecked = true, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Direct Web Manager", Offering = "Elvis Hessel", RecruiterId = 30, Requirements = "Sed cupiditate quis doloribus temporibus voluptas rerum eligendi distinctio illum.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 32, BePlus = "Consectetur eius non incidunt ipsum quidem et eos maxime deserunt.", CityId = 3, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Product", FullPartTime = "Full-time", IsChecked = false, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Investor Applications Facilitator", Offering = "Alden Walker", RecruiterId = 24, Requirements = "Tenetur dolores ut ad voluptatem voluptatem nihil soluta et amet.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 33, BePlus = "Autem et id eum nemo labore ut ab.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Senior", FullPartTime = "Full-time", IsChecked = true, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Lead Tactics Administrator", Offering = "Jamarcus Harber", RecruiterId = 26, Requirements = "Aspernatur quia a est nemo sit omnis quis similique placeat.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 34, BePlus = "Dolor nulla esse voluptate quia omnis.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Internal", FullPartTime = "Part-time", IsChecked = true, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Internal Factors Producer", Offering = "Ellsworth Gutmann", RecruiterId = 21, Requirements = "Eos consequatur sunt explicabo magnam dolorum et.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 35, BePlus = "Debitis totam minus nihil nihil corrupti omnis dignissimos recusandae non.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Chief", FullPartTime = "Part-time", IsChecked = false, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Chief Interactions Planner", Offering = "Hugh Schulist", RecruiterId = 27, Requirements = "Eius velit molestiae.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 36, BePlus = "Earum ut earum deserunt nulla.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Direct", FullPartTime = "Part-time", IsChecked = true, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Regional Accounts Representative", Offering = "General Becker", RecruiterId = 26, Requirements = "Reprehenderit aperiam et adipisci excepturi enim unde facilis saepe.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 37, BePlus = "Quibusdam ipsa omnis quas.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "National", FullPartTime = "Full-time", IsChecked = false, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Regional Configuration Agent", Offering = "Clement Dare", RecruiterId = 22, Requirements = "Qui ipsa voluptatem excepturi porro sunt atque iusto nam molestias.", Salary = 1000m, WorkAreaId = 2 },
+                        new { Id = 38, BePlus = "Pariatur tempora perspiciatis est.", CityId = 2, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Dynamic", FullPartTime = "Part-time", IsChecked = false, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "District Markets Officer", Offering = "Walton Mills", RecruiterId = 30, Requirements = "Dolores est suscipit et.", Salary = 1000m, WorkAreaId = 1 },
+                        new { Id = 39, BePlus = "Odit occaecati officiis ea ullam reiciendis quia error.", CityId = 1, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Dynamic", FullPartTime = "Part-time", IsChecked = true, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "National Quality Consultant", Offering = "Dorothea Lebsack", RecruiterId = 22, Requirements = "Officiis velit magni minima omnis.", Salary = 1000m, WorkAreaId = 3 },
+                        new { Id = 40, BePlus = "Vel dolores dolores eligendi voluptas et voluptas corrupti iusto.", CityId = 3, CreateDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Dynamic", FullPartTime = "Part-time", IsChecked = true, ModDate = new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), Name = "Lead Interactions Supervisor", Offering = "Herman Turner", RecruiterId = 23, Requirements = "Amet et inventore molestias.", Salary = 1000m, WorkAreaId = 1 }
                     );
                 });
 
