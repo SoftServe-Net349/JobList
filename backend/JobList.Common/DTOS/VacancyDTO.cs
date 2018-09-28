@@ -18,5 +18,10 @@ namespace JobList.Common.DTOS
         public DateTime? ModDate { get; set; }
         public int RecruiterId { get; set; }
         public int CityId { get; set; }
+        public int WorkAreaId { get; set; }
+
+        public CityDTO City { get; set; }
+        public RecruiterDTO Recruiter { get; set; }
+        public WorkAreaDTO WorkArea { get; set; }
     }
 }
