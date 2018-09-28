@@ -56,8 +56,6 @@ namespace JobList.DataAccess.Repositories
             }
 
             return await query.ToListAsync();
-
-            //return await _dbSet.ToListAsync();
         }
 
         public async Task<TEntity> GetEntityAsync(TKey Id, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
@@ -65,7 +63,6 @@ namespace JobList.DataAccess.Repositories
             IQueryable<TEntity> query = _dbSet;
 
             query = query.Where(e => e.Id.CompareTo(Id) == 0);
-
 
             if (query.Count() < 1)
             {
