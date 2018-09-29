@@ -20,6 +20,7 @@ import { CompanyModule } from './company/company.module';
 import { CoreModule } from './core/core.module';
 
 
+
 @NgModule({
   declarations: [
 	AppComponent
