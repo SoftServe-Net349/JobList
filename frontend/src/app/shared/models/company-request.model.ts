@@ -1,6 +1,6 @@
-import { Role } from "./role.model";
+import { Role } from './role.model';
 
-export interface CompanyRequest{
+export interface CompanyRequest {
     name: string;
     bossName: string;
     fullDescription: string;

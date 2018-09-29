@@ -22,7 +22,7 @@ import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
-	AppComponent
+  AppComponent
   ],
   imports: [
     BrowserModule,
@@ -34,8 +34,8 @@ import { CoreModule } from './core/core.module';
     UserModule,
     AdminModule,
     RecruiterModule,
-		CompanyModule,
-		CoreModule
+    CompanyModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [

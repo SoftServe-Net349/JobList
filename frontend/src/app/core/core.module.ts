@@ -3,14 +3,16 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
 import { CommonModule } from '@angular/common';
 import { CompanyService } from './services/company.service';
 import { ApiService } from './services/api.service';
+import { RecruiterService } from './services/recruiter.service';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   providers: [
-		ApiService,
-		CompanyService
+    ApiService,
+    CompanyService,
+    RecruiterService
   ],
   declarations: []
 })
