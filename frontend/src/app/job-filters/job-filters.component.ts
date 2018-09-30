@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { CompanyService } from '../core/services/company.service';
+import { CityService } from '../core/services/city.service';
+import { WorkAreaService } from '../core/services/work-area.service';
 
 @Component({
   selector: 'app-job-filters',
   templateUrl: './job-filters.component.html',
-  styleUrls: ['./job-filters.component.sass']
+  styleUrls: ['./job-filters.component.sass'],
+  providers: [CompanyService]
 })
 
 export class JobFiltersComponent implements OnInit {
@@ -19,79 +23,45 @@ export class JobFiltersComponent implements OnInit {
   companies: Company[];
   selectedCompanies: Company[];
 
-  constructor() {
-    this.companies = [
-      {name: 'SoftServe'},
-      {name: 'epam'},
-      {name: 'eleks'},
-      {name: 'Global Logic'},
-      {name: 'Inter Logic'}
-    ];
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-    ];
-    this.workAreas = [
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Software developer'},
-      {name: 'Builder'},
-      {name: 'Teacher'},
-      {name: 'Doctor'},
-      {name: 'Driver'}
-    ];
+
+  constructor(private companyService: CompanyService, private cityService: CityService,
+    private workAreaService: WorkAreaService) {
    }
 
+
   ngOnInit() {
+    this.loadCompanies();
+    this.loadCities();
+    this.loadWorkAreas();
   }
 
+
+  loadCompanies(){
+    this.companyService.getAll()
+    .subscribe((data: Company[]) => this.companies = data);
+  }
+
+  loadCities(){
+    this.cityService.getAll()
+    .subscribe((data: City[]) => this.cities = data);
+  }
+
+  loadWorkAreas(){
+    this.workAreaService.getAll()
+    .subscribe((data: WorkArea[]) => this.workAreas = data);
+  }
 }
+
 
 class City {
   name: string;
-  code: string;
-
 }
 
 class Company {
   name: string;
-
 }
 
 class WorkArea {
   name: string;
-
 }
+
