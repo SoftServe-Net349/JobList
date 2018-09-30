@@ -48,6 +48,13 @@ namespace JobList.DataAccess.Data
                 new WorkArea{ Id = 3, Name = "Medicine" }
             };
 
+            var faculties = new Faculty[]
+            {
+                new Faculty{ Id = 1, Name = "Computer Science" },
+                new Faculty{ Id = 2, Name = "Software Engineering"},
+                new Faculty{ Id = 3, Name = "Applied Mathematics"}
+            };
+
             var companyFaker = new Faker<Company>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.Name, f => f.PickRandom($"Company № {f.Random.Number(999)}"))
@@ -62,14 +69,6 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id);
 
             var companies = companyFaker.Generate(amount).ToArray();
-
-
-            var facultyFaker = new Faker<Faculty>()
-                .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.Name, f => f.PickRandom("Computer Science", "Software Engineering", "Applied Mathematics"));
-
-            var faculties = facultyFaker.Generate(amount).ToArray();
-
 
 
             var recruiterFaker = new Faker<Recruiter>()

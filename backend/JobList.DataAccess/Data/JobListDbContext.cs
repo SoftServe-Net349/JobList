@@ -219,6 +219,10 @@ namespace JobList.DataAccess.Data
             {
                 entity.ToTable("FACULTIES");
 
+                entity.HasIndex(e => e.Name)
+                    .HasName("UQ_FACULTIES_NAME")
+                    .IsUnique();
+
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .ValueGeneratedNever();
