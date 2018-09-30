@@ -66,8 +66,7 @@ namespace JobList.DataAccess.Data
 
             var facultyFaker = new Faker<Faculty>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.Name, f => f.PickRandom("Computer Science", "Software Engineering", "Applied Mathematics"))
-                .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id);
+                .RuleFor(o => o.Name, f => f.PickRandom("Computer Science", "Software Engineering", "Applied Mathematics"));
 
             var faculties = facultyFaker.Generate(amount).ToArray();
 
@@ -154,7 +153,9 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.StartDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id)
-                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id);
+                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id)
+                .RuleFor(o => o.FacultyId, f => f.PickRandom(faculties).Id);
+            
 
             var educationPeriods = educationPeriodFaker.Generate(amount).ToArray();
 

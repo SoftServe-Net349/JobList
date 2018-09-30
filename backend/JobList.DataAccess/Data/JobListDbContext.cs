@@ -155,6 +155,8 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.SchoolId).HasColumnName("SCHOOL_ID");
 
+                entity.Property(e => e.FacultyId).HasColumnName("FACULTY_ID");
+
                 entity.Property(e => e.StartDate)
                     .HasColumnName("START_DATE")
                     .HasColumnType("date");
@@ -170,6 +172,12 @@ namespace JobList.DataAccess.Data
                     .HasForeignKey(d => d.SchoolId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PK_EDUCATION_PERIODS_TO_SCHOOLS");
+
+                entity.HasOne(d => d.Faculty)
+                    .WithMany(p => p.EducationPeriods)
+                    .HasForeignKey(d => d.FacultyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PK_EDUCATION_PERIODS_TO_FACULTIES");
             });
 
             modelBuilder.Entity<Experience>(entity =>
@@ -220,14 +228,6 @@ namespace JobList.DataAccess.Data
                     .HasColumnName("NAME")
                     .HasMaxLength(200)
                     .IsUnicode(false);
-
-                entity.Property(e => e.SchoolId).HasColumnName("SCHOOL_ID");
-
-                entity.HasOne(d => d.School)
-                    .WithMany(p => p.Faculties)
-                    .HasForeignKey(d => d.SchoolId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FACULTIES_TO_SCHOOLS");
             });
 
             modelBuilder.Entity<FavoriteVacancy>(entity =>
@@ -282,6 +282,13 @@ namespace JobList.DataAccess.Data
                 entity.HasIndex(e => e.Phone)
                     .HasName("UQ_RECRUITERS_PHONE")
                     .IsUnique();
+
+                entity.Property(e => e.LogoData).HasColumnName("LOGO_DATA");
+
+                entity.Property(e => e.LogoMimetype)
+                    .HasColumnName("LOGO_MIMETYPE")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -652,7 +659,9 @@ namespace JobList.DataAccess.Data
                     .HasName("UQ_WORK_AREAS_NAME")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
