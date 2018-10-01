@@ -8,6 +8,5 @@ namespace JobList.DataAccess.Entities
         public string Name { get; set; }
 
         public IList<EducationPeriod> EducationPeriods { get; set; }
-        public IList<Faculty> Faculties { get; set; }
     }
 }
