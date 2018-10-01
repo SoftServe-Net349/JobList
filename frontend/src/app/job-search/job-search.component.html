@@ -5,78 +5,23 @@
       <app-job-filters></app-job-filters>
     </div>
     <div class="vacancy-container">
-      <article class="vacancy-block">
+      <article class="vacancy-block" *ngFor="let vacancy of vacancies">
         <div class="inform">
           <h3>
-            <a>Name of vacancy-block</a>
+            <a>{{vacancy.name}}</a>
           </h3>
           <p class="company-name">
-            <a>Company Name</a>
+            <a>{{vacancy.recruiter.company.name}}</a>
           </p>
           <p class="location">
             <i class="fa fa-map-marker"></i>
-            City Name
+            {{vacancy.city.name}}
           </p>
-          <p class="short-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus quo,
-            assumenda aspernatur quae numquam veritatis,
-            fugiat neque dolore quidem, reprehenderit illo est! Veniam consequuntur quaerat, accusantium officiis optio
-            soluta
-            quasi.
+          <p class="short-description">
+            {{vacancy.description}}
           </p>
           <p class="agotime">
-            days ago
-          </p>
-        </div>
-        <div class="logo">
-          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-        </div>
-      </article>
-      <article class="vacancy-block">
-        <div class="inform">
-          <h3>
-            <a>Name of vacancy-block</a>
-          </h3>
-          <p class="company-name">
-            <a>Company Name</a>
-          </p>
-          <p class="location">
-            <i class="fa fa-map-marker"></i>
-            City Name
-          </p>
-          <p class="short-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus quo,
-            assumenda aspernatur quae numquam veritatis,
-            fugiat neque dolore quidem, reprehenderit illo est! Veniam consequuntur quaerat, accusantium officiis optio
-            soluta
-            quasi.
-          </p>
-          <p class="agotime">
-            days ago
-          </p>
-        </div>
-        <div class="logo">
-          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-        </div>
-      </article>
-      <article class="vacancy-block">
-        <div class="inform">
-          <h3>
-            <a>Name of vacancy-block</a>
-          </h3>
-          <p class="company-name">
-            <a>Company Name</a>
-          </p>
-          <p class="location">
-            <i class="fa fa-map-marker"></i>
-            City Name
-          </p>
-          <p class="short-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus quo,
-            assumenda aspernatur quae numquam veritatis,
-            fugiat neque dolore quidem, reprehenderit illo est! Veniam consequuntur quaerat, accusantium officiis optio
-            soluta
-            quasi.
-          </p>
-          <p class="agotime">
-            days ago
+            {{vacancy.createDate | date}}
           </p>
         </div>
         <div class="logo">

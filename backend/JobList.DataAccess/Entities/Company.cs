@@ -4,11 +4,6 @@ namespace JobList.DataAccess.Entities
 {
     public class Company : Entity<int>
     {
-        public Company()
-        {
-            Recruiters = new HashSet<Recruiter>();
-        }
-
         public override int Id { get; set; }
         public string Name { get; set; }
         public string BossName { get; set; }
@@ -24,6 +19,6 @@ namespace JobList.DataAccess.Entities
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
-        public ICollection<Recruiter> Recruiters { get; set; }
+        public IList<Recruiter> Recruiters { get; set; }
     }
 }

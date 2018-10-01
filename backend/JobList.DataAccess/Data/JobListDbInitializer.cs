@@ -48,6 +48,13 @@ namespace JobList.DataAccess.Data
                 new WorkArea{ Id = 3, Name = "Medicine" }
             };
 
+            var faculties = new Faculty[]
+            {
+                new Faculty{ Id = 1, Name = "Computer Science" },
+                new Faculty{ Id = 2, Name = "Software Engineering"},
+                new Faculty{ Id = 3, Name = "Applied Mathematics"}
+            };
+
             var companyFaker = new Faker<Company>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.Name, f => f.PickRandom($"Company № {f.Random.Number(999)}"))
@@ -62,15 +69,6 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id);
 
             var companies = companyFaker.Generate(amount).ToArray();
-
-
-            var facultyFaker = new Faker<Faculty>()
-                .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.Name, f => f.PickRandom("Computer Science", "Software Engineering", "Applied Mathematics"))
-                .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id);
-
-            var faculties = facultyFaker.Generate(amount).ToArray();
-
 
 
             var recruiterFaker = new Faker<Recruiter>()
@@ -96,8 +94,8 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.IsChecked, f => f.PickRandom(true, false))
                 .RuleFor(o => o.Salary, f => f.PickRandom(1000))
                 .RuleFor(o => o.FullPartTime, f => f.PickRandom("Full-time", "Part-time"))
-                .RuleFor(o => o.CreateDate, new DateTime())
-                .RuleFor(o => o.ModDate, new DateTime())
+                .RuleFor(o => o.CreateDate, new DateTime(2017, 3, 4))
+                .RuleFor(o => o.ModDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.RecruiterId, f => f.PickRandom(recruiters).Id)
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id)
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
@@ -111,7 +109,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.LastName, f => f.Name.LastName())
                 .RuleFor(o => o.Phone, f => f.PickRandom($"073 {f.Random.Number(9999)}"))
                 .RuleFor(o => o.Sex, f => f.PickRandom("m", "f"))
-                .RuleFor(o => o.BirthData, new DateTime())
+                .RuleFor(o => o.BirthData, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.Address, f => f.Address.StreetName())
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Password, f => f.Internet.Password())
@@ -131,19 +129,19 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.SoftSkills, f => f.Lorem.Sentence())
                 .RuleFor(o => o.KeySkills, f => f.Lorem.Sentence())
                 .RuleFor(o => o.Courses, f => f.Lorem.Sentence())
-                .RuleFor(o => o.CreateDate, new DateTime())
-                .RuleFor(o => o.ModDate, new DateTime())
+                .RuleFor(o => o.CreateDate, new DateTime(2017, 3, 4))
+                .RuleFor(o => o.ModDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var resumes = resumeFaker.Generate(2).ToArray();
+            var resumes = resumeFaker.Generate(1).ToArray();
 
 
             var experienceFaker = new Faker<Experience>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.CompanyName, f => f.Name.FullName())
                 .RuleFor(o => o.Position, f => f.Lorem.Sentence())
-                .RuleFor(o => o.StartDate, new DateTime())
-                .RuleFor(o => o.FinishDate, new DateTime())
+                .RuleFor(o => o.StartDate, new DateTime(2017, 3, 4))
+                .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id);
 
             var experiences = experienceFaker.Generate(amount).ToArray();
@@ -151,10 +149,12 @@ namespace JobList.DataAccess.Data
 
             var educationPeriodFaker = new Faker<EducationPeriod>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.StartDate, new DateTime())
-                .RuleFor(o => o.FinishDate, new DateTime())
+                .RuleFor(o => o.StartDate, new DateTime(2017, 3, 4))
+                .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id)
-                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id);
+                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id)
+                .RuleFor(o => o.FacultyId, f => f.PickRandom(faculties).Id);
+            
 
             var educationPeriods = educationPeriodFaker.Generate(amount).ToArray();
 

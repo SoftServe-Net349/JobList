@@ -1,36 +1,42 @@
-<p-dialog [header]="action + ' Recruiter'" [dismissableMask]="true" [(visible)]="display" [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="200" [minY]="70" 
+<p-dialog [header]="action + ' Recruiter'" [blockScroll]="true" [dismissableMask]="true" [(visible)]="display" [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="200" [minY]="70" 
 		 [baseZIndex]="10000">   
-		<div id="recruiter-form">      
-			<div class="ui-float-label">
-				<input id="float-input" type="text" size="30" pInputText required > 
-				<label for="float-input">Firt Name</label>
-			</div>
-			<div class="ui-float-label">
-				<input id="float-input" type="text" size="30" pInputText required > 
-				<label for="float-input">Last Name</label>
-			</div>
-			<div class="ui-float-label">
-				<input id="float-input" type="text" size="30" pInputText required > 
-				<label for="float-input">Email</label>
-			</div>
-			<div class="ui-float-label">
-				<input id="float-input" type="text" size="30" pInputText required > 
-				<label for="float-input">Password</label>
-			</div>
-			<div class="ui-float-label">
-				<input id="float-input" type="text" size="30" pInputText required > 
-				<label for="float-input">Confirm Password</label>
-			</div>
+  <div id="recruiter-form"> 
+    <form [formGroup]="myForm" novalidate >    
+      <div class="ui-float-label">
+        <input id="firstName" type="text" size="30" pInputText formControlName="firstName"> 
+        <label for="firstName">Firt Name</label>
+      </div>
+      <div class="ui-float-label">
+        <input id="lastName" type="text" size="30" pInputText required formControlName="lastName"> 
+        <label for="lastName">Last Name</label>
+      </div>
+      <div class="ui-float-label">
+        <input id="email" type="text" size="30" pInputText required formControlName="email"> 
+        <label for="email">Email</label>
+      </div>
+      <div class="ui-float-label">
+        <input id="phone" type="text" size="30" pInputText required formControlName="phone"> 
+        <label for="phone">Phone</label>
+      </div>
+      <div class="ui-float-label">
+        <input id="password" type="password" size="30" pPassword required formControlName="password"> 
+        <label for="password">Password</label>
+      </div>
+      <div class="ui-float-label">
+        <input id="confirmPassword" type="password" size="30" pPassword required formControlName="confirmPassword"> 
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
 
-			<div class="ui-float-label">
-				<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
-			</div>
-		</div>
- 
-        <p-footer>
-            <button pButton type="button" icon="pi pi-check" (click)="display=false" label="Submit" class="ui-button-success"></button>
-            <button pButton type="button" icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
-          </p-footer>
+      <div class="ui-float-label">
+        <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
+      </div>
+    </form> 
+  </div>
+
+  <p-footer>
+    <button pButton type="button" icon="pi pi-check" (click)="submit()" [disabled]="myForm.invalid" label="Submit" class="ui-button-success"></button>
+    <button pButton type="button" icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
 </p-dialog>
 
 <button type="button" (click)="showRecruiterForm('Create')" pButton icon="pi pi-fw pi-plus" label="Add Recruiter"></button>

@@ -12,9 +12,8 @@ using JobList.DataAccess;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces;
 using FluentValidation.AspNetCore;
-using JobList.Common.Validators;
 using AutoMapper;
-using JobList.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobList
 {
@@ -30,6 +29,9 @@ namespace JobList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //connection to db
+            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -43,8 +45,17 @@ namespace JobList
                                 fv.ImplicitlyValidateChildProperties = true;
                                 // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                                 fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                                fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
                             })
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            services.AddMvc()
+                .AddJsonOptions(
+                 options => options.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add your services here
@@ -95,9 +106,22 @@ namespace JobList
 
             services.AddAutoMapper(cfg =>
             {
-                cfg.AddProfile<SamplesProfile>();
+                cfg.AddProfile<CitiesProfile>();
+                cfg.AddProfile<CompanyProfile>();
+                cfg.AddProfile<EducationPeriodProfile>();
+                cfg.AddProfile<ExperienceProfile>();
+                cfg.AddProfile<FacultyProfile>();
+                cfg.AddProfile<FavoriteVacancyProfile>();
+                cfg.AddProfile<LanguageProfile>();
+                cfg.AddProfile<RecruiterProfile>();
+                cfg.AddProfile<ResumeProfile>();
+                cfg.AddProfile<ResumeLanguageProfile>();
+                cfg.AddProfile<RoleProfile>();
+                cfg.AddProfile<SchoolProfile>();
+                cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<VacancyProfile>();
+                cfg.AddProfile<WorkAreaProfile>();
             }); // Scoped Lifetime!
-            // https://lostechies.com/jimmybogard/2016/07/20/integrating-automapper-with-asp-net-core-di/
 
             return services;
         }

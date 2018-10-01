@@ -42,7 +42,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if(_citiesRepository != null)
+                if(_citiesRepository == null)
                 {
                     _citiesRepository = new CitiesRepository(_context, _mapper);
                 }
@@ -55,7 +55,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_companiesRepository != null)
+                if (_companiesRepository == null)
                 {
                     _companiesRepository = new CompaniesRepository(_context, _mapper);
                 }
@@ -68,7 +68,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_educationPeriods != null)
+                if (_educationPeriods == null)
                 {
                     _educationPeriods = new EducationPeriodsRepository(_context, _mapper);
                 }
@@ -81,7 +81,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_experiencesRepository != null)
+                if (_experiencesRepository == null)
                 {
                     _experiencesRepository = new ExperiencesRepository(_context, _mapper);
                 }
@@ -94,7 +94,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_facultiesRepository != null)
+                if (_facultiesRepository == null)
                 {
                     _facultiesRepository = new FacultiesRepository(_context, _mapper);
                 }
@@ -107,7 +107,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_favoriteVacanciesRepository != null)
+                if (_favoriteVacanciesRepository == null)
                 {
                     _favoriteVacanciesRepository = new FavoriteVacanciesRepository(_context, _mapper);
                 }
@@ -120,7 +120,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_languagesRepository != null)
+                if (_languagesRepository == null)
                 {
                     _languagesRepository = new LanguagesRepository(_context, _mapper);
                 }
@@ -133,7 +133,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_recruitersRepository != null)
+                if (_recruitersRepository == null)
                 {
                     _recruitersRepository = new RecruitersRepository(_context, _mapper);
                 }
@@ -146,7 +146,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_resumeLanguagesRepository != null)
+                if (_resumeLanguagesRepository == null)
                 {
                     _resumeLanguagesRepository = new ResumeLanguagesRepository(_context, _mapper);
                 }
@@ -159,7 +159,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_resumesRepository != null)
+                if (_resumesRepository == null)
                 {
                     _resumesRepository = new ResumesRepository(_context, _mapper);
                 }
@@ -172,7 +172,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_rolesRepository != null)
+                if (_rolesRepository == null)
                 {
                     _rolesRepository = new RolesRepository(_context, _mapper);
                 }
@@ -185,7 +185,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_schoolsRepository != null)
+                if (_schoolsRepository == null)
                 {
                     _schoolsRepository = new SchoolsRepository(_context, _mapper);
                 }
@@ -198,7 +198,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_usersRepository != null)
+                if (_usersRepository == null)
                 {
                     _usersRepository = new UsersRepository(_context, _mapper);
                 }
@@ -211,7 +211,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_vacanciesRepository != null)
+                if (_vacanciesRepository == null)
                 {
                     _vacanciesRepository = new VacanciesRepository(_context, _mapper);
                 }
@@ -224,7 +224,7 @@ namespace JobList.DataAccess
         {
             get
             {
-                if (_workAreasRepository != null)
+                if (_workAreasRepository == null)
                 {
                     _workAreasRepository = new WorkAreasRepository(_context, _mapper);
                 }
