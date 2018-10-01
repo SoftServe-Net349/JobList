@@ -10,5 +10,7 @@ namespace JobList.Common.DTOS
         public DateTime FinishDate { get; set; }
         public int SchoolId { get; set; }
         public int ResumeId { get; set; }
+
+        public SchoolDTO School { get; set; }
     }
 }

@@ -1,3 +1,226 @@
-<p>
-  authorizations works!
-</p>
+<p-dialog header="Sign in" [(visible)]="display" [dismissableMask]="true" [draggable]="false" [resizable]="false" [modal]="true"
+  [responsive]="true" [width]="330" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <div id="authoruzations">
+    <h4 class="title_main">Login</h4>
+    <input id="login" type="text" size="30" pInputText>
+    <hr>
+
+    <h4 class="title_main">Password</h4>
+    <input type="password1" size="30" pPassword [(ngModel)]="property" />
+    <hr>
+
+    <button class="sign-in">Sign in</button>
+    <div class="save-forget-password-flex">
+      <div>
+        <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+        <label> Save</label>
+      </div>
+      <div>
+        <a href="">Forgot a password?</a>
+      </div>
+    </div>
+
+    <div class="or-section Login_with">
+      <hr class="fd-f1 ">
+      <p class="Login_text"> Login with </p>
+      <hr class="fd-f1 ">
+    </div>
+    <div class=fb_google>
+      <div class=fb_google1>
+        <a class="google fd-f" target="_blank" href="https://api.rabota.ua/login/google">
+          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master" alt="google">
+        </a>
+      </div>
+      <div class=fb_google1>
+        <a class="facebook fd-f" target="_blank" href="https://api.rabota.ua/login/facebook">
+          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
+            alt="facabook">
+        </a>
+      </div>
+    </div>
+    <hr>
+
+    <h4></h4>
+    <div class=fb_google>
+      <label class="title"> Don't have an account?</label>
+    </div>
+    <div class=fb_google>
+      <a (click)="openSingUpUser()" class="title">
+        Sing up
+        <i class="fa fa-sign-in icon" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="footer"></div>
+  </div>
+</p-dialog>
+
+
+<!-- <button type="button" (click)="showDialog()" pButton label="Show"></button> -->
+
+
+
+<p-dialog header="Sign up user" [(visible)]="display1" [dismissableMask]="true" [draggable]="false" [resizable]="false" [modal]="true"
+  [responsive]="true" [width]="400" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
+  <div class="toolbar-sing-up">
+  </div>
+  <div id="authoruzations">
+    <div class="toolbar-sing-up">
+      <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpUser1()" label="Sing up user" icon="fa fa-user"></button>
+      <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpCompany()" label="Sing up company"
+        icon="fa fa-users"></button>
+    </div>
+    <hr>
+    <div class="" footer1></div>
+
+    <h4>First name*</h4>
+    <input id="firstname" type="text" size="38" pInputText>
+    <hr>
+
+    <h4>Last name*</h4>
+    <input id="city" type="text" size="38" pInputText>
+    <hr>
+
+
+    <h4 class="title_main">Email*</h4>
+    <input id="email" type="text" size="38" pInputText>
+    <hr>
+
+    <h4>Password*</h4>
+    <input type="password2" size="38" pPassword [(ngModel)]="property" />
+    <hr>
+
+    <h4>Confirm the password*</h4>
+    <input type="password3" size="38" pPassword [(ngModel)]="property" />
+    <div class="footer1"></div>
+    <div class="or-section Login_with">
+      <hr class="fd-f1 ">
+      <p class="Login_text"> Login with </p>
+      <hr class="fd-f1 ">
+    </div>
+    <div class=fb_google>
+      <div class=fb_google1>
+        <a class="google fd-f" target="_blank" href="https://api.rabota.ua/login/google">
+          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master" alt="google">
+        </a>
+      </div>
+      <div class=fb_google1>
+        <a class="facebook fd-f" target="_blank" href="https://api.rabota.ua/login/facebook">
+          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
+            alt="facabook">
+        </a>
+      </div>
+    </div>
+    <div class="agreement">
+      <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+      <a (click)="openInformation()">
+        <p class=" title Login_text"> I confirm my agreement </p>
+      </a>
+    </div>
+  </div>
+  <p-footer>
+    <div class="toolbar-sing-up">
+      <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Sing up" class="ui-button-success"></button>
+      <button type="button" pButton icon="pi pi-times" (click)="CloseForm()" label="Cancel" class="ui-button-secondary"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+
+
+<p-dialog header="Sing up company" [(visible)]="display2" [modal]="true" [responsive]="true" [width]="400" [minWidth]="200"
+  [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
+  <div id="authoruzations">
+    <div class="toolbar-sing-up">
+      <button pButton type="button" class="ui-button-secondary" (click)="openSingUpUser1()" label="Sing up user" icon="fa fa-user"></button>
+      <button pButton type="button" class="ui-button-secondary" (click)="openSingUpCompany()" label="Sing up company" icon="fa fa-users"></button>
+    </div>
+    <hr>
+    <div class="" footer1></div>
+    <h4>Company name*</h4>
+    <input id="companyname" type="text" size="38" pInputText>
+    <hr>
+    <h4>Address of the head office*</h4>
+
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="country" type="text" size="38" pInputText>
+        <label for="country">Country</label>
+      </span>
+      <span class="ui-float-label">
+        <input id="city" type="text" size="38" pInputText>
+        <label for="city">City</label>
+      </span>
+    </div>
+    <span class="ui-float-label">
+      <input id="street" type="text" size="38" pInputText>
+      <label for="street">Street</label>
+    </span>
+
+    <hr>
+    <h4>Chairman*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="chairman" type="text" size="38" pInputText>
+      </span>
+    </div>
+    <hr>
+
+    <h4>Phone*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="phone" type="text" size="38" pInputText>
+      </span>
+    </div>
+    <hr>
+
+    <h4>Short information about company*</h4>
+    <textarea [rows]="5" [cols]="39" pSoftSkills style="resize:none"></textarea>
+    <hr>
+
+    <h4>Email*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="email" type="text" size="38" pInputText>
+      </span>
+    </div>
+    <hr>
+
+    <h4>Password*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="password" type="text" size="38" pInputText>
+      </span>
+    </div>
+    <hr>
+
+    <h4>Confirn the password *</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="phone" type="text" size="38" pInputText>
+      </span>
+    </div>
+
+    <div class="agreement">
+      <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+      <a (click)="openInformation()">
+        <p class="title Login_text"> I confirm my agreement </p>
+      </a>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Sing up" class="ui-button-success"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="CloseForm()" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+
+
+<p-dialog header="Information" [(visible)]="display3" [modal]="true" [responsive]="true" [width]="250" [minWidth]="200" [minY]="70"
+  [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
+  <div class="title">
+    I confirm my agreement with the Terms of Use of the site joblist.ua and the Privacy Policy
+  </div>
+ <p-footer>
+   <button type="button" pButton icon="pi pi-times" (click)="CloseForm1()" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

@@ -4,6 +4,7 @@ using JobList.Common.DTOS;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -51,7 +52,10 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<CompanyDTO>> GetAllEntitiesAsync()
         {
-            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync();
+            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync(
+                include: c => c.Include(o => o.Recruiters));
+
+            if (entities == null) return null;
 
             var dtos = _mapper.Map<List<Company>, List<CompanyDTO>>(entities);
 
@@ -60,7 +64,8 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<CompanyDTO> GetEntityByIdAsync(int id)
         {
-            var entity = await _uow.CompaniesRepository.GetEntityAsync(id);
+            var entity = await _uow.CompaniesRepository.GetEntityAsync(id,
+                include: c => c.Include(o => o.Recruiters));
 
             if (entity == null) return null;
 
