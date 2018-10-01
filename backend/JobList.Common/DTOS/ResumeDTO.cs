@@ -1,5 +1,6 @@
 ﻿using JobList.Common.Interfaces.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace JobList.Common.DTOS
 {
@@ -17,5 +18,11 @@ namespace JobList.Common.DTOS
         public string Courses { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? ModDate { get; set; }
+
+        public UserDTO User { get; set; }
+        public WorkAreaDTO WorkArea { get; set; }
+        public IList<EducationPeriodDTO> EducationPeriods { get; set; }
+        public IList<ExperienceDTO> Experiences { get; set; }
+        public IList<ResumeLanguageDTO> ResumeLanguages { get; set; }
     }
 }

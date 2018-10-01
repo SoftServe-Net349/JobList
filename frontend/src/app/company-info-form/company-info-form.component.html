@@ -4,7 +4,7 @@
 	<h4 class="info-title">Company Name</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="companyName" type="text" size="30" pInputText> 
+			<input id="companyName" type="text" size="30" pInputText [(ngModel)]="company.name"> 
 		</span>
 	</div>
 	<hr>
@@ -12,7 +12,7 @@
 	<h4 class="info-title">Short Discription</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="shortDiscription" type="text" size="30" pInputText> 
+			<input id="shortDiscription" type="text" size="30" pInputText [(ngModel)]="company.shortDescription"> 
 		</span>
 	</div>
 	<hr>
@@ -20,11 +20,11 @@
 	<h4 class="info-title">Boss Name</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="firstNmae" type="text" size="30" pInputText> 
+			<input id="firstNmae" type="text" size="30" pInputText [(ngModel)]="company.bossName"> 
 			<label for="firstNmae">First Name</label>
 		</span> 
 		<span class="ui-float-label">
-			<input id="lastName" type="text" size="30" pInputText> 
+			<input id="lastName" type="text" size="30" pInputText [(ngModel)]="company.bossName"> 
 			<label for="lastName">Last Name</label>
 		</span>
 	</div>
@@ -33,7 +33,7 @@
 	<h4 class="info-title">Email</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="email" type="text" size="30" pInputText> 
+			<input id="email" type="text" size="30" pInputText [(ngModel)]="company.email"> 
 		</span>
 	</div>
 	<hr>
@@ -42,7 +42,7 @@
 	<h4 class="info-title">Web Site</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="webSite" type="text" size="30" pInputText> 
+			<input id="webSite" type="text" size="30" pInputText [(ngModel)]="company.site"> 
 		</span>
 	</div>
 	<hr>
@@ -50,21 +50,21 @@
 	<h4 class="info-title">Address</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="country" type="text" size="30" pInputText> 
+			<input id="country" type="text" size="30" pInputText [(ngModel)]="company.address"> 
 			<label for="country">Country</label>
 		</span> 
 		<span class="ui-float-label">
-			<input id="city" type="text" size="30" pInputText> 
+			<input id="city" type="text" size="30" pInputText [(ngModel)]="company.address"> 
 			<label for="city">City</label>
 		</span>
 	</div>
 	<div>
 		<span class="ui-float-label">
-			<input id="street" type="text" size="30" pInputText> 
+			<input id="street" type="text" size="30" pInputText [(ngModel)]="company.address"> 
 			<label for="street">Street</label>
 		</span>
 		<span class="ui-float-label">
-			<input id="zip" type="text" size="30" pInputText> 
+			<input id="zip" type="text" size="30" pInputText [(ngModel)]="company.address"> 
 			<label for="zip">Zip Code</label>
 		</span>
 	</div>
@@ -73,14 +73,14 @@
 	<h4 class="info-title">Phone</h4>
 	<div>
 		<span class="ui-float-label">
-			<input id="phone" type="text" size="30" pInputText> 
+			<input id="phone" type="text" size="30" pInputText [(ngModel)]="company.phone"> 
 		</span>
 	</div>
 	<hr>
 	
-	<h4 class="info-title">Descriotion</h4>
+	<h4 class="info-title">Description</h4>
 	<div class="description-area">
-		<textarea [rows]="5" [cols]="70" pDescription style="resize:none"></textarea>
+		<textarea [rows]="5" [cols]="70" pDescription style="resize:none"  [(ngModel)]="company.fullDescription"></textarea>
 	</div>
 	<hr>
 </div>
@@ -90,6 +90,3 @@
     <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
 </p-footer>
 </p-dialog>
-
-<a class="update-info" (click)="showInformationForm('Update')">Update Info</a>
-

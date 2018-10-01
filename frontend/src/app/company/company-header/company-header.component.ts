@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
+import { Company } from '../../shared/models/company.model';
 
 @Component({
   selector: 'app-company-header',
@@ -12,6 +13,9 @@ export class CompanyHeaderComponent implements OnInit {
   visibleSidebar2;
   items: MenuItem[];
 
+  @Input()
+  company: Company;
+
   @ViewChild(CompanyInfoFormComponent)
   companyInfoForm: CompanyInfoFormComponent;
 
@@ -20,13 +24,8 @@ export class CompanyHeaderComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Find Resumes',
-        icon: 'fa fa-search-plus'
-      },
-      {
-        label: 'Update Info',
-        icon: 'fa fa-pencil-square-o',
-        command: (event) => { this.companyInfoForm.showInformationForm('Update'); }
+        label: 'Home',
+        icon: 'fa fa-home'
       },
       {
         label: 'Settings',

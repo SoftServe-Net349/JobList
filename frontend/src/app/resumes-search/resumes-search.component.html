@@ -1,0 +1,44 @@
+<div class="resumes-search">
+  <app-search-line></app-search-line>
+  <div class="container">
+    <div class="filter-container">
+      <app-company-filters></app-company-filters>
+    </div>
+    <div class="resume-container">
+      <article class="resume-block" *ngFor="let resume of resumes">
+        <div class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/33777825?s=400&u=03881b8285bcb4c26c62dd1505b8ca9a9dd7e61f&v=4">
+        </div>
+        <div class="inform">
+          <h3>
+            <a>{{resume.workArea.name}}</a>
+          </h3>
+          <p class="person-inform">
+            <span>
+              {{resume.user.firstName}} {{resume.user.lastName}}
+            </span>
+            <i class="fa fa-map-marker"></i>
+            <span>
+              {{resume.user.address}}
+            </span>
+            <i class="fa fa-user"></i>
+            <span>
+              {{resume.user.birthData | date}}
+            </span>
+          </p>
+          <p class="experiance">
+            <span>
+            {{resume.keySkills}}
+          </span>
+          </p>
+          <p class="agotime">
+            <i class="fa fa-refresh"></i>
+            <span>
+              {{resume.createDate | date}}
+            </span>
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
