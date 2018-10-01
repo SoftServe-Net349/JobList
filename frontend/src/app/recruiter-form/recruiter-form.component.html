@@ -1,4 +1,4 @@
-<p-dialog [header]="action + ' Recruiter'" [blockScroll]="true" [dismissableMask]="true" [(visible)]="display" [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="200" [minY]="70" 
+<p-dialog [header]="action + ' Recruiter'" [blockScroll]="true" [dismissableMask]="false" [(visible)]="display" [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="200" [minY]="70" 
 		 [baseZIndex]="10000">   
   <div id="recruiter-form"> 
     <form [formGroup]="myForm" novalidate >    
@@ -7,32 +7,40 @@
 				<label for="lastName">First Name<span class="required-input-symbol">*</span></label>
 				<div *ngIf="myForm.get('firstName').invalid && (myForm.get('firstName').dirty || myForm.get('firstName').touched)" class="alert alert-danger">
 					<div *ngIf="myForm.controls['firstName'].errors.required">
-						First Name is required.
+						First Name is required
 					</div>
-					<!-- <div *ngIf="eName?.value">
-							Email should have valid format.
-					</div> -->
+					<div *ngIf="myForm.controls['firstName'].errors.minlength || myForm.controls['firstName'].errors.maxlength">
+            First Name should contain (2-50) chars
+					</div>
 			</div>
 			</div>
       <div class="ui-float-label">
         <input id="lastName" type="text" size="30" pInputText formControlName="lastName"> 
         <label for="lastName">Last Name<span class="required-input-symbol">*</span></label>
+				<div *ngIf="myForm.get('lastName').invalid && (myForm.get('lastName').dirty || myForm.get('lastName').touched)" class="alert alert-danger">
+            <div *ngIf="myForm.controls['lastName'].errors.required">
+              Last Name is required
+            </div>
+            <div *ngIf="myForm.controls['lastName'].errors.minlength || myForm.controls['lastName'].errors.maxlength">
+              Last Name should contain (2-50) chars
+            </div>
+        </div>
       </div>
       <div class="ui-float-label">
         <input id="email" type="text" size="30" pInputText formControlName="email"> 
         <label for="email">Email<span class="required-input-symbol">*</span></label>
+        <div *ngIf="myForm.get('email').invalid && (myForm.get('email').dirty || myForm.get('email').touched)" class="alert alert-danger">
+          <div *ngIf="myForm.controls['email'].errors.required">
+            Email is required
+          </div>
+          <div *ngIf="myForm.controls['email'].errors.email">
+            Email should match sample@example.com
+          </div>
+        </div>
       </div>
       <div class="ui-float-label">
-        <input id="phone" type="text" size="30" pInputText formControlName="phone"> 
-        <label for="phone">Phone<span class="required-input-symbol">*</span></label>
-      </div>
-      <div class="ui-float-label">
-        <input id="password" type="password" size="30" pPassword formControlName="password"> 
-        <label for="password">Password<span class="required-input-symbol">*</span></label>
-      </div>
-      <div class="ui-float-label">
-        <input id="confirmPassword" type="password" size="30" pPassword formControlName="confirmPassword"> 
-        <label for="confirmPassword">Confirm Password<span class="required-input-symbol">*</span></label>
+        <p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
+        <label for="phone">Phone</label>
       </div>
 
       <div class="ui-float-label">

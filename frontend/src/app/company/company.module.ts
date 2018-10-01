@@ -20,7 +20,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {SidebarModule} from 'primeng/sidebar';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {PasswordModule} from 'primeng/password';
-
+import {InputMaskModule} from 'primeng/inputmask';
 
 @NgModule({
   imports: [
@@ -36,7 +36,8 @@ import {PasswordModule} from 'primeng/password';
     FormsModule,
     SharedModule,
     PasswordModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputMaskModule
   ],
   declarations: [
     CompanyComponent,

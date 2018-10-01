@@ -24,17 +24,15 @@ export class RecruiterFormComponent implements OnInit {
   uploadedFiles: any[] = [];
 
   constructor(private messageService: MessageService,
-							private formBuilder: FormBuilder,
-							private recruiterService: RecruiterService) {
-		this.recruiter = this.defaultRecruiter();
+  private formBuilder: FormBuilder,
+  private recruiterService: RecruiterService) {
+    this.recruiter = this.defaultRecruiter();
 
-		this.myForm = this.formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]]
+    this.myForm = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['']
     });
 
   }
@@ -65,8 +63,8 @@ export class RecruiterFormComponent implements OnInit {
         role: {id: 1, name: ''},
         recruiters: []
       },
-			role: {id: 1, name: ''},
-			vacancy: null
+      role: {id: 1, name: ''},
+      vacancy: null
     };
   }
 
@@ -79,27 +77,25 @@ export class RecruiterFormComponent implements OnInit {
   }
 
   showRecruiterForm(action: String, recruiter = this.defaultRecruiter()) {
-		this.recruiter = recruiter;
+    this.recruiter = recruiter;
     this.myForm.reset();
     this.display = true;
-		this.action = action;
-		if(action == 'Update'){
-			this.myForm.setValue({
-				firstName: this.recruiter.firstName,
-				lastName: this.recruiter.lastName,
-				email: this.recruiter.email,
-				phone: this.recruiter.phone,
-				password: this.recruiter.password,
-				confirmPassword: this.recruiter.password
-			});	
-		}
+    this.action = action;
+    if (action === 'Update') {
+      this.myForm.setValue({
+        firstName: this.recruiter.firstName,
+        lastName: this.recruiter.lastName,
+        email: this.recruiter.email,
+        phone: this.recruiter.phone
+      });
+    }
   }
 
   submit() {
-    if (this.action = 'Create') {
+    if (this.action === 'Create') {
       // this.createRecruiter();
     }
-    if (this.action = 'Update') {
+    if (this.action === 'Update') {
       // this.updateRecruiter();
     }
     this.display = false;

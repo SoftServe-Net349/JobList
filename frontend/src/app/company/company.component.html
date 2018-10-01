@@ -24,7 +24,12 @@
       </p-accordion>
     </div>
   </div>
-
+  <div class="filter-search">
+    <div class="wrapper">
+      <input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
+      <p-button label="Search" icon="pi pi-search" ></p-button>
+    </div>	
+  </div>
   <div class="recruiter-list">
     <div class="recruiters-text">
       <hr class="fd-f1">
