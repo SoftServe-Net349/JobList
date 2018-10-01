@@ -1,34 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import { CityService } from '../../core/services/city.service';
 
 @Component({
   selector: 'app-main-search',
   templateUrl: './main-search.component.html',
-  styleUrls: ['./main-search.component.sass']
+  styleUrls: ['./main-search.component.sass'],
+  providers: [CityService]
 })
+
 export class MainSearchComponent implements OnInit {
  
   cities: City[];
   selectedCity: City;
-
-  constructor() { 
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-    ];
+  constructor(private cityService:CityService) { 
+   
   }
   ngOnInit() {
+    this.loadCities();
   }
-  handleClick() {}
-    //execute action
+  //handleClick() {}
+  
+  loadCities(){
+      this.cityService.getAll()
+      .subscribe((data: City[]) => this.cities = data);
+    }
 
-
-
+   
 }
 class City {
   name: string;
-  code: string;
-
 }
