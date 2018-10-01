@@ -1,5 +1,7 @@
 import { City } from './city.model';
 import { Role } from './role.model';
+import { FavoriteVacancy } from './favorite-vacancy.model';
+import { Resume } from './resume.model';
 
 export interface User {
   id: number;
@@ -15,4 +17,7 @@ export interface User {
   password: string;
   city: City;
   role: Role;
+  
+  resume: Resume;
+  favoriteVacsncy: FavoriteVacancy;
 }
