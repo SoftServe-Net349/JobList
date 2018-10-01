@@ -17,3 +17,4 @@ export interface UserRequest{
     role: Role;
     resume: Resume;
 }
+

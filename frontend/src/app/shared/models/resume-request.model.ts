@@ -1,5 +1,5 @@
-import { WorkArea } from "./work-area.model";
 import { User } from "./user.model";
+
 
 export interface ResumeRequest{
     linkedin: string;
@@ -13,6 +13,8 @@ export interface ResumeRequest{
     courses: string;
     createDate: Date;
     modDate: Date;
-    workArea: WorkArea;
     user: User;
 }
+
+
+
