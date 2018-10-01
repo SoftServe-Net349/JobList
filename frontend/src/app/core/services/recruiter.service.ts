@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Company } from '../../shared/models/company.model';
+import { Recruiter } from '../../shared/models/recruiter.model';
 import { Observable } from 'rxjs';
-import { CompanyRequest } from '../../shared/models/company-request.model';
+import { RecruiterRequest } from '../../shared/models/recruiter-request.model';
 import { ApiService } from './api.service';
 
 @Injectable()
-export class CompanyService {
-  private ctrlUrl = 'companies';
+export class RecruiterService {
+  private ctrlUrl = 'recruiters';
 
   constructor(private apiService: ApiService) {
   }
 
-  getAll(): Observable<Company[]> {
+  getAll(): Observable<Recruiter[]> {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
-  getById(id: number): Observable<Company> {
+  getById(id: number): Observable<Recruiter> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
-  create(request: CompanyRequest): Observable<Company> {
+  create(request: RecruiterRequest): Observable<Recruiter> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
   }
 
-  update(id: number, request: CompanyRequest): Observable<Object> {
+  update(id: number, request: RecruiterRequest): Observable<Object> {
     return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
   }
 

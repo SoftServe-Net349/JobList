@@ -1,5 +1,5 @@
-export interface WorkAreaRequest{
-    name: string;
-    photoData: number[];
-    photoMimetype: string;
+export interface WorkAreaRequest {
+  name: string;
+  photoData: number[];
+  photoMimetype: string;
 }

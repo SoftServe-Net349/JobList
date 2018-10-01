@@ -1,4 +1,4 @@
-<app-company-header></app-company-header>
+<app-company-header [company]="company"></app-company-header>
 
 <div id="company-page">
   <div class="company-info">
@@ -13,7 +13,7 @@
         <p><span>Address:</span> {{company.address}}</p>
       </div>
       <div>
-        <app-recruiter-form #recruiterForm></app-recruiter-form>
+        <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()"></app-recruiter-form>
       </div>
     </div>
     <div class="description">
@@ -44,7 +44,7 @@
 							<p>{{recruiter.phone}}</p>
           </div>
           <div class="recruiter-modification">
-              <button pButton type="button" (click)="recruiterForm.showRecruiterForm('Update')" label="Update" class="ui-button-rounded ui-button-warning"></button>
+              <button pButton type="button" (click)="recruiterForm.showRecruiterForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>
               <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
           </div>
         </div>
