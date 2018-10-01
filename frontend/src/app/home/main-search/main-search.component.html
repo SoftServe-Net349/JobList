@@ -3,7 +3,7 @@
     <div id="search" class="wrapper">  
     
      <input id="input" type="text"  placeholder="Search"  pInputText />
-     <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [autoWidth]="false" placeholder="Select city" optionLabel="name" [showClear]="true"></p-dropdown> 
+     <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [autoWidth]="false" placeholder="Select city" optionLabel="name" filter="true" [showClear]="true"></p-dropdown> 
      <button id="srch-btn"pButton type="button" icon="fa fa-search" ></button>
     
      </div>
