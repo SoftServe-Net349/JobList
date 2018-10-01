@@ -1,3 +1,3 @@
-export interface SchoolRequest{
-    name: string
+export interface SchoolRequest {
+  name: string;
 }

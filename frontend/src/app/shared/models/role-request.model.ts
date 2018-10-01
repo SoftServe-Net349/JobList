@@ -1,3 +1,3 @@
-export interface RoleRequest{
-    name: string;
+export interface RoleRequest {
+  name: string;
 }

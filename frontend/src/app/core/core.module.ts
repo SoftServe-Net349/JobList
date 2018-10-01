@@ -8,6 +8,7 @@ import { FacultyService } from './services/faculty.service';
 import { SchoolService } from './services/school.service';
 import { LanguageService } from './services/language.service';
 import { ApiService } from './services/api.service';
+import { RecruiterService } from './services/recruiter.service';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ApiService } from './services/api.service';
     WorkAreaService, 
     SchoolService,
     FacultyService,
-    LanguageService
+    LanguageService,
+    RecruiterService
   ],
   declarations: []
 })
