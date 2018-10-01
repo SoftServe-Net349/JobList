@@ -65,7 +65,8 @@
   </div>
   <div id="authoruzations">
     <div class="toolbar-sing-up">
-      <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpUser1()" label="Sing up user" icon="fa fa-user"></button>
+      <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpUser1()" label="Sing up user"
+        icon="fa fa-user"></button>
       <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpCompany()" label="Sing up company"
         icon="fa fa-users"></button>
     </div>
@@ -73,24 +74,44 @@
     <div class="" footer1></div>
 
     <h4>First name*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
     <input id="firstname" type="text" size="38" pInputText>
+    </span>
+    </div>
     <hr>
 
     <h4>Last name*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
     <input id="city" type="text" size="38" pInputText>
+    </span>
+    </div>
     <hr>
 
 
-    <h4 class="title_main">Email*</h4>
+    <h4 >Email*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
     <input id="email" type="text" size="38" pInputText>
+    </span>
+    </div>
     <hr>
 
     <h4>Password*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
     <input type="password2" size="38" pPassword [(ngModel)]="property" />
+    </span>
+    </div>
     <hr>
 
     <h4>Confirm the password*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
     <input type="password3" size="38" pPassword [(ngModel)]="property" />
+    </span>
+    </div>
     <div class="footer1"></div>
     <div class="or-section Login_with">
       <hr class="fd-f1 ">
@@ -135,9 +156,12 @@
       <button pButton type="button" class="ui-button-secondary" (click)="openSingUpCompany()" label="Sing up company" icon="fa fa-users"></button>
     </div>
     <hr>
-    <div class="" footer1></div>
-    <h4>Company name*</h4>
-    <input id="companyname" type="text" size="38" pInputText>
+    <h4>Name company*</h4>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <input id="chairman" type="text" size="38" pInputText>
+      </span>
+    </div>
     <hr>
     <h4>Address of the head office*</h4>
 
@@ -174,7 +198,11 @@
     <hr>
 
     <h4>Short information about company*</h4>
-    <textarea [rows]="5" [cols]="39" pSoftSkills style="resize:none"></textarea>
+    <div class="sdf">
+      <span class="ui-float-label">
+        <textarea [rows]="5" [cols]="39" pSoftSkills style="resize:none"></textarea>
+      </span>
+    </div>
     <hr>
 
     <h4>Email*</h4>
@@ -220,7 +248,7 @@
   <div class="title">
     I confirm my agreement with the Terms of Use of the site joblist.ua and the Privacy Policy
   </div>
- <p-footer>
-   <button type="button" pButton icon="pi pi-times" (click)="CloseForm1()" label="Cancel" class="ui-button-secondary"></button>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" (click)="CloseForm1()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
