@@ -133,7 +133,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.ModDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var resumes = resumeFaker.Generate(2).ToArray();
+            var resumes = resumeFaker.Generate(1).ToArray();
 
 
             var experienceFaker = new Faker<Experience>()
