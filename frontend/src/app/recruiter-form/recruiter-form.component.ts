@@ -24,17 +24,19 @@ export class RecruiterFormComponent implements OnInit {
   uploadedFiles: any[] = [];
 
   constructor(private messageService: MessageService,
-  private formBuilder: FormBuilder,
-  private recruiterService: RecruiterService) {
-    this.recruiter = this.defaultRecruiter();
-    this.myForm = formBuilder.group({
-      'firstName': ['', [Validators.required]],
-      'lastName': ['', [Validators.required]],
-      'email': ['', [Validators.required]],
-      'phone': ['', [Validators.required]],
-      'password': ['', [Validators.required]],
-      'confirmPassword': ['', [Validators.required]]
+							private formBuilder: FormBuilder,
+							private recruiterService: RecruiterService) {
+		this.recruiter = this.defaultRecruiter();
+
+		this.myForm = this.formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]]
     });
+
   }
 
   ngOnInit() {
@@ -77,10 +79,20 @@ export class RecruiterFormComponent implements OnInit {
   }
 
   showRecruiterForm(action: String, recruiter = this.defaultRecruiter()) {
-    this.recruiter = recruiter;
+		this.recruiter = recruiter;
     this.myForm.reset();
     this.display = true;
-    this.action = action;
+		this.action = action;
+		if(action == 'Update'){
+			this.myForm.setValue({
+				firstName: this.recruiter.firstName,
+				lastName: this.recruiter.lastName,
+				email: this.recruiter.email,
+				phone: this.recruiter.phone,
+				password: this.recruiter.password,
+				confirmPassword: this.recruiter.password
+			});	
+		}
   }
 
   submit() {

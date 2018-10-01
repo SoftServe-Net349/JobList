@@ -3,28 +3,36 @@
   <div id="recruiter-form"> 
     <form [formGroup]="myForm" novalidate >    
       <div class="ui-float-label">
-        <input id="firstName" type="text" size="30" pInputText formControlName="firstName"> 
-        <label for="firstName">Firt Name</label>
+        <input id="firstName" type="text" size="30" pInputText formControlName="firstName" required> 
+				<label for="lastName">First Name<span class="required-input-symbol">*</span></label>
+				<div *ngIf="myForm.get('firstName').invalid && (myForm.get('firstName').dirty || myForm.get('firstName').touched)" class="alert alert-danger">
+					<div *ngIf="myForm.controls['firstName'].errors.required">
+						First Name is required.
+					</div>
+					<!-- <div *ngIf="eName?.value">
+							Email should have valid format.
+					</div> -->
+			</div>
+			</div>
+      <div class="ui-float-label">
+        <input id="lastName" type="text" size="30" pInputText formControlName="lastName"> 
+        <label for="lastName">Last Name<span class="required-input-symbol">*</span></label>
       </div>
       <div class="ui-float-label">
-        <input id="lastName" type="text" size="30" pInputText required formControlName="lastName"> 
-        <label for="lastName">Last Name</label>
+        <input id="email" type="text" size="30" pInputText formControlName="email"> 
+        <label for="email">Email<span class="required-input-symbol">*</span></label>
       </div>
       <div class="ui-float-label">
-        <input id="email" type="text" size="30" pInputText required formControlName="email"> 
-        <label for="email">Email</label>
+        <input id="phone" type="text" size="30" pInputText formControlName="phone"> 
+        <label for="phone">Phone<span class="required-input-symbol">*</span></label>
       </div>
       <div class="ui-float-label">
-        <input id="phone" type="text" size="30" pInputText required formControlName="phone"> 
-        <label for="phone">Phone</label>
+        <input id="password" type="password" size="30" pPassword formControlName="password"> 
+        <label for="password">Password<span class="required-input-symbol">*</span></label>
       </div>
       <div class="ui-float-label">
-        <input id="password" type="password" size="30" pPassword required formControlName="password"> 
-        <label for="password">Password</label>
-      </div>
-      <div class="ui-float-label">
-        <input id="confirmPassword" type="password" size="30" pPassword required formControlName="confirmPassword"> 
-        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="password" size="30" pPassword formControlName="confirmPassword"> 
+        <label for="confirmPassword">Confirm Password<span class="required-input-symbol">*</span></label>
       </div>
 
       <div class="ui-float-label">
