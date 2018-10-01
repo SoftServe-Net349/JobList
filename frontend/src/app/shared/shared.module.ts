@@ -8,22 +8,40 @@ import { SearchLineComponent } from './search-line/search-line.component';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { AuthorizationsComponent } from '../authorizations/authorizations.component';
+import { DialogModule } from 'primeng/dialog';
+import {CheckboxModule} from 'primeng/checkbox';
+import {InputTextModule} from 'primeng/inputtext';
+import {PasswordModule} from 'primeng/password';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    DialogModule,
+    CheckboxModule,
+    InputTextModule,
+    PasswordModule
   ],
-  declarations: [SomePipe, SomeDirective, HeaderComponent, FooterComponent, SearchLineComponent],
+  declarations: [
+    SomePipe,
+    SomeDirective,
+    HeaderComponent,
+    FooterComponent,
+    SearchLineComponent,
+    AuthorizationsComponent
+  ],
   exports: [
     CommonModule,
     SomePipe,
     SomeDirective,
     FooterComponent,
     HeaderComponent,
-    SearchLineComponent
+    SearchLineComponent,
+    AuthorizationsComponent
   ]
 })
 export class SharedModule { }
