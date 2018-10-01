@@ -1,5 +1,8 @@
 import { WorkArea } from './work-area.model';
 import { User } from './user.model';
+import { Experience } from './experience.model';
+import { EducationPeriod } from './education-period.model';
+import { ResumeLanguage} from './resume-language.model';
 
 export interface Resume {
   id: number;
@@ -16,4 +19,8 @@ export interface Resume {
   modDate: Date;
   workArea: WorkArea;
   user: User;
+  
+  educationPeriod: EducationPeriod[];
+  expirience: Experience;
+  resumeLanguage: ResumeLanguage[];
 }
