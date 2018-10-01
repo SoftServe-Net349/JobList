@@ -63,7 +63,8 @@ export class RecruiterFormComponent implements OnInit {
         role: {id: 1, name: ''},
         recruiters: []
       },
-      role: {id: 1, name: ''}
+			role: {id: 1, name: ''},
+			vacancy: null
     };
   }
 

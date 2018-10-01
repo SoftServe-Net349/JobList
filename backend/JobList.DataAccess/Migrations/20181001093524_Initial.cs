@@ -433,16 +433,16 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "ADDRESS", "BOSS_NAME", "EMAIL", "FULL_DESCRIPTION", "LOGO_DATA", "LOGO_MIMETYPE", "NAME", "PASSWORD", "PHONE", "ROLE_ID", "SHORT_DESCRIPTION", "SITE" },
                 values: new object[,]
                 {
-                    { 1, "253 Bianka Squares, Laneton, Kenya", "Adolfo", "Willow.Kemmer45@hotmail.com", "Ducimus vel rerum commodi ab facere recusandae.", null, null, "Company № 457", "qLI43M1j7v", "073 154", 1, "voluptatem", "https://johnathan.net" },
-                    { 2, "8308 Bernadette Hill, West Elwin, Honduras", "Kayden", "Christian_Zulauf45@gmail.com", "Corporis repudiandae magni fuga incidunt assumenda et.", null, null, "Company № 866", "KwsPlz_zxm", "073 1071", 1, "fugit", "http://vicenta.name" },
-                    { 3, "776 Bethel Hill, Lake Alan, Andorra", "Deanna", "Elissa58@gmail.com", "Velit quos et.", null, null, "Company № 430", "u81MK4oxlE", "073 7992", 1, "nam", "https://manley.org" },
-                    { 4, "814 Kira Forge, North Rozella, Azerbaijan", "Gregory", "Phyllis.Emard27@yahoo.com", "Aliquid sit sit sunt vel et.", null, null, "Company № 126", "FLoz19QAEr", "073 9278", 1, "autem", "https://elvis.info" },
-                    { 8, "0789 Ortiz Greens, Deckowhaven, Hong Kong", "Mauricio", "Heather_Will96@yahoo.com", "Sed omnis ut error nemo.", null, null, "Company № 938", "0kytZkhdVS", "073 9904", 1, "rerum", "http://baron.com" },
-                    { 10, "04091 Princess Burg, East Agustin, Jersey", "Jesse", "Kevon_Daugherty85@gmail.com", "Ab consectetur velit est.", null, null, "Company № 903", "kiu2XtItjk", "073 6098", 1, "odio", "http://chance.name" },
-                    { 9, "29031 Towne Via, North Shaniatown, Portugal", "Frederic", "Justice_Schiller@gmail.com", "Eligendi nihil fugit.", null, null, "Company № 322", "NZnX3MRb4y", "073 5637", 2, "labore", "https://dominique.com" },
-                    { 7, "7251 MacGyver Mills, Port Alisha, Syrian Arab Republic", "Boyd", "Delphine51@hotmail.com", "Adipisci pariatur fugit aut tempora aperiam dolores.", null, null, "Company № 913", "58NMB1s67V", "073 8527", 2, "nisi", "http://naomie.name" },
-                    { 5, "85056 Lessie Run, East Lucileton, Dominica", "Landen", "Erling_Rath@gmail.com", "Et nulla perferendis.", null, null, "Company № 997", "ClzhXuE43a", "073 7777", 2, "sed", "http://deion.com" },
-                    { 6, "5708 Murazik Islands, East Ramiroport, Uganda", "Ezekiel", "Bobbie18@yahoo.com", "Mollitia itaque qui vel reiciendis autem animi ut.", null, null, "Company № 944", "iCFj5O1PXp", "073 1714", 2, "voluptatem", "https://alexander.org" }
+                    { 2, "11328 Lakin Lock, West Brendanberg, Cambodia", "Dannie", "Pamela.Parker43@yahoo.com", "Velit laboriosam sequi vel delectus nisi.", null, null, "Company № 987", "tLnrsX6IgV", "073 17", 1, "aliquam", "https://adrianna.info" },
+                    { 10, "65495 Sawayn Junctions, Valentinborough, Bahrain", "Makenzie", "Tiana.Kassulke82@gmail.com", "Molestias ipsa qui dolorum molestiae pariatur molestiae.", null, null, "Company № 551", "S8ZyMQ7VAk", "073 8940", 2, "molestiae", "http://garrison.name" },
+                    { 9, "602 Friesen Manors, Hunterberg, Saint Pierre and Miquelon", "Olaf", "Teresa60@yahoo.com", "Enim neque possimus deserunt optio dolorum numquam consequatur sapiente amet.", null, null, "Company № 794", "9INhJIe6NE", "073 439", 2, "tenetur", "https://verla.name" },
+                    { 8, "382 Max Terrace, Grimeston, Antarctica (the territory South of 60 deg S)", "Jade", "Syble_Hoeger48@yahoo.com", "Fuga ad minima aliquid molestiae similique est vero sint.", null, null, "Company № 134", "ujBiZRybRw", "073 5799", 2, "facere", "http://hector.name" },
+                    { 7, "509 Jerde Camp, New Grover, Puerto Rico", "Caden", "Ubaldo.Rogahn@hotmail.com", "Consequatur quisquam ut et aperiam soluta consequuntur.", null, null, "Company № 923", "Dc31vva9Dz", "073 9956", 2, "aliquid", "https://amelia.com" },
+                    { 6, "775 Heller Crossing, New Vladimir, Afghanistan", "Abdul", "Nathanial_Hackett@yahoo.com", "Qui error non architecto dicta omnis temporibus ut.", null, null, "Company № 305", "NzHfUdT4qU", "073 6018", 2, "harum", "https://elta.info" },
+                    { 3, "100 Jeramy Run, Port Gunnershire, British Indian Ocean Territory (Chagos Archipelago)", "Ava", "Freddie78@hotmail.com", "Illo laboriosam accusantium aut.", null, null, "Company № 986", "4Soypolhwj", "073 7780", 2, "hic", "https://kaylah.org" },
+                    { 1, "25846 Dietrich Fall, Tatumfurt, Taiwan", "Albin", "Randall.Goodwin8@yahoo.com", "Assumenda quis itaque id vel.", null, null, "Company № 112", "loSLhfjjSl", "073 4882", 2, "autem", "http://marisa.name" },
+                    { 5, "9669 Ankunding Park, North Sid, Guyana", "Adrian", "Tillman_Tremblay@yahoo.com", "Aut rerum illum voluptatem blanditiis.", null, null, "Company № 692", "x1tkCzNCWl", "073 7087", 1, "ut", "https://vernie.com" },
+                    { 4, "441 Gaylord Fort, Libbyfort, Uganda", "Florencio", "Geovany.Schneider@gmail.com", "Sit dolorum numquam illum.", null, null, "Company № 961", "39KShcoB9W", "073 1427", 1, "dolorem", "https://carrie.name" }
                 });
 
             migrationBuilder.InsertData(
@@ -450,16 +450,16 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "ADDRESS", "BIRTH_DATA", "CITY_ID", "EMAIL", "FIRST_NAME", "LAST_NAME", "PASSWORD", "PHONE", "PHOTO_DATA", "PHOTO_MIME_TYPE", "ROLE_ID", "SEX" },
                 values: new object[,]
                 {
-                    { 33, "Kreiger Parks", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Selmer_Dickinson@yahoo.com", "Kristy", "Schamberger", "aHxd7qyYhl", "073 9756", null, null, 2, "m" },
-                    { 32, "Koepp Vista", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Carleton_Gulgowski@hotmail.com", "Callie", "Orn", "QDcSaxDlSZ", "073 6115", null, null, 2, "f" },
-                    { 31, "Powlowski Branch", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Chaz.Moore7@gmail.com", "Yasmeen", "Heathcote", "hQV5B7KDVN", "073 1525", null, null, 2, "m" },
-                    { 38, "Madilyn Vista", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Sheldon.Herman@yahoo.com", "Madeline", "Morar", "eSH3x1hq5E", "073 277", null, null, 1, "f" },
-                    { 37, "Maureen Tunnel", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Mellie.Buckridge@gmail.com", "Thaddeus", "Kunde", "mNLW09RpxT", "073 3138", null, null, 2, "m" },
-                    { 36, "Koss Squares", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Rosalinda.Kreiger@yahoo.com", "Jovani", "Maggio", "8to7IYon5J", "073 2910", null, null, 1, "m" },
-                    { 35, "Terry Rapid", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Ila_Beer@hotmail.com", "Kayla", "Botsford", "aeTXKnwnBH", "073 4389", null, null, 1, "f" },
-                    { 34, "Christelle Passage", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Sydney43@yahoo.com", "Emmalee", "Waters", "Aa3swtKcdl", "073 32", null, null, 1, "m" },
-                    { 39, "Botsford Club", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Deon69@yahoo.com", "Letha", "Bernhard", "nW6VkiRyxj", "073 9372", null, null, 1, "f" },
-                    { 40, "Alysha Stravenue", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Norene44@yahoo.com", "Caterina", "Conn", "6fcvNP0KXF", "073 6212", null, null, 2, "m" }
+                    { 38, "Raynor Well", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Paris75@hotmail.com", "Bartholome", "Gottlieb", "U9FyBi03Iw", "073 5555", null, null, 1, "m" },
+                    { 39, "Morar Isle", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Aiyana72@yahoo.com", "Laverne", "Corkery", "GFT_Qle_lk", "073 9044", null, null, 2, "m" },
+                    { 35, "Homenick Common", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Issac20@yahoo.com", "Salvador", "Rempel", "9n67bWkY5q", "073 1873", null, null, 1, "m" },
+                    { 33, "Hahn Neck", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Eleonore_Effertz@hotmail.com", "Bret", "Hintz", "pfdlbOo5YZ", "073 4922", null, null, 1, "f" },
+                    { 32, "Houston Fort", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Davon75@yahoo.com", "Jacey", "Corkery", "rkwGnqnazH", "073 527", null, null, 1, "m" },
+                    { 31, "Roel Via", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Katheryn78@yahoo.com", "Carlee", "Douglas", "7eMCYCFi_G", "073 9716", null, null, 1, "m" },
+                    { 34, "Reilly Dam", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Hiram_Crist@yahoo.com", "Garret", "Gusikowski", "z6jPz6A7mr", "073 3940", null, null, 2, "m" },
+                    { 36, "Leuschke Junction", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Nathanael.Fisher97@yahoo.com", "Jensen", "Simonis", "rQ4Npp_VNr", "073 6858", null, null, 2, "f" },
+                    { 37, "Emil Station", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Breanna_Prosacco91@gmail.com", "Wilford", "Collins", "clxxnyj4_i", "073 7127", null, null, 1, "f" },
+                    { 40, "Rohan Route", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Lelia.Olson@yahoo.com", "Anthony", "Considine", "RyEdhNvxxe", "073 3497", null, null, 2, "f" }
                 });
 
             migrationBuilder.InsertData(
@@ -467,42 +467,38 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "COMPANY_ID", "EMAIL", "FIRST_NAME", "LAST_NAME", "LOGO_DATA", "LOGO_MIMETYPE", "PASSWORD", "PHONE", "ROLE_ID" },
                 values: new object[,]
                 {
-                    { 16, 2, "Caterina.Huel@yahoo.com", "Chyna", "Bartoletti", null, null, "nRve9k9KGR", "073 332", 1 },
-                    { 11, 4, "Lacy.Koch88@gmail.com", "Harrison", "O'Hara", null, null, "UrGJys_llh", "073 5283", 2 },
-                    { 15, 4, "Ollie.Borer76@yahoo.com", "Mason", "Gerlach", null, null, "586_3C0e6P", "073 2077", 2 },
-                    { 17, 10, "Monroe.Weimann@hotmail.com", "Marianne", "Beer", null, null, "y6ZjGD_LIK", "073 483", 2 },
-                    { 12, 5, "Danielle47@gmail.com", "Kathlyn", "Goodwin", null, null, "h1E9EsjT7U", "073 3075", 2 },
-                    { 13, 5, "Heath82@hotmail.com", "Joanne", "Stamm", null, null, "oZmnyTYsj7", "073 2989", 2 },
-                    { 14, 5, "Oda49@hotmail.com", "Blake", "Aufderhar", null, null, "UPBU9RbeS4", "073 704", 1 },
-                    { 19, 6, "Ericka.Kulas@gmail.com", "Cristopher", "Cremin", null, null, "7qyuCQkrP7", "073 868", 1 },
-                    { 18, 7, "Kiara.Moore12@gmail.com", "Julius", "Koss", null, null, "cGtWl4ETNq", "073 4016", 2 },
-                    { 20, 7, "Judge_Marquardt50@yahoo.com", "Wendy", "Kulas", null, null, "O8sMBMMheI", "073 585", 1 }
+                    { 12, 2, "Jewel_Lemke95@gmail.com", "Garett", "Wisozk", null, null, "wQ8mKYsvAB", "073 9783", 1 },
+                    { 15, 4, "Harold_Schowalter70@hotmail.com", "Elsie", "Turcotte", null, null, "knbEPNA9Xv", "073 268", 1 },
+                    { 17, 4, "Zella63@hotmail.com", "Lilla", "Koepp", null, null, "jVrtcEfhEx", "073 9076", 2 },
+                    { 18, 5, "Linnea.Hintz@yahoo.com", "Abner", "Rowe", null, null, "324WWvpWvD", "073 2508", 2 },
+                    { 11, 1, "Oceane_Williamson@hotmail.com", "Joyce", "Sporer", null, null, "IXT5wypGML", "073 8126", 1 },
+                    { 16, 1, "Ransom17@gmail.com", "Arianna", "Murray", null, null, "v5N8o6MK8c", "073 2330", 1 },
+                    { 14, 3, "Joelle.Wehner@yahoo.com", "Gerry", "Bahringer", null, null, "6KBizBGWjz", "073 6119", 2 },
+                    { 13, 6, "Jermain.Gulgowski34@yahoo.com", "Quinton", "Maggio", null, null, "KO9GGpWXQr", "073 9981", 1 },
+                    { 20, 6, "Domenic_Kuhlman@yahoo.com", "Kamille", "Heidenreich", null, null, "PTmQPW00N4", "073 337", 2 },
+                    { 19, 9, "Devon.Paucek3@hotmail.com", "Laisha", "Runte", null, null, "WzfOFkbNUl", "073 3077", 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "RESUMES",
                 columns: new[] { "ID", "COURSES", "CREATE_DATE", "FACEBOOK", "FAMILY_STATE", "GITHUB", "INSTAGRAM", "KEY_SKILLS", "LINKEDIN", "MOD_DATE", "SKYPE", "SOFT_SKILLS", "WORK_AREA_ID" },
-                values: new object[,]
-                {
-                    { 38, "Praesentium distinctio maiores.", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://enoch.org", "Quidem.", "http://trace.com", "http://katrine.info", "Architecto repellat tenetur debitis consequatur fugit aut alias.", "http://priscilla.name", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://sheridan.org", "Velit atque et.", 1 },
-                    { 32, "Vero illo pariatur non ipsam expedita odit ipsum ea.", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "http://lonny.name", "Recusandae.", "http://dasia.org", "https://reilly.net", "Perspiciatis cum cupiditate ut et error et eligendi.", "https://sydnee.com", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://clement.net", "Voluptas nostrum distinctio quia et voluptatem quis consequatur.", 1 }
-                });
+                values: new object[] { 31, "Sit atque praesentium modi enim.", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://sigurd.com", "Qui.", "http://zola.net", "https://margie.org", "Perspiciatis laborum veniam qui at.", "https://jairo.org", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://doris.info", "Non ut eum cumque et est debitis odio et optio.", 3 });
 
             migrationBuilder.InsertData(
                 table: "EDUCATION_PERIODS",
                 columns: new[] { "ID", "FACULTY_ID", "FINISH_DATE", "RESUME_ID", "SCHOOL_ID", "START_DATE" },
                 values: new object[,]
                 {
-                    { 61, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 38, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 58, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 32, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 62, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 32, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 55, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 32, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 60, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 38, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 59, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 38, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 57, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 38, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 54, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 32, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 53, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 38, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 56, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 38, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 56, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 61, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 60, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 52, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 53, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 54, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 55, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 59, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 57, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 58, 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 31, 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -510,16 +506,16 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "COMPANY_NAME", "FINISH_DATE", "POSITION", "RESUME_ID", "START_DATE" },
                 values: new object[,]
                 {
-                    { 49, "Florence Roberts", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Voluptatibus eum corporis velit aliquam.", 32, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 51, "Mason Lang", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Laboriosam quo sit dignissimos iste suscipit quia cumque.", 32, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 52, "Manuela Kunde", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Laudantium omnis suscipit dolor et commodi.", 32, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 43, "Dusty Robel", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Commodi velit voluptatibus.", 38, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 44, "Naomie Sanford", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ut adipisci vel expedita earum voluptatem repellat aut debitis.", 38, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 45, "Agustina Harris", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eligendi quis quia delectus tempore voluptatem illum quas tempora.", 38, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 46, "Golda Goldner", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Est maxime repellendus et quo aut exercitationem eos.", 38, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 48, "Uriel Weber", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Architecto nostrum sit dolore quam.", 38, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 50, "Genesis Williamson", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aperiam nam impedit.", 38, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 47, "Marjorie Kemmer", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aperiam voluptatibus aut atque dolor voluptatem.", 32, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 48, "Otis Huel", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Quae distinctio reprehenderit eaque natus aut molestiae.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 47, "Rudolph Jerde", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Quo dolorem nostrum ea minus voluptas.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 49, "Luisa Rutherford", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "A rem ad dolor mollitia inventore cumque.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 50, "Godfrey Watsica", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Perferendis cupiditate accusamus dicta facere quia et.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 51, "Madeline Baumbach", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eos tempora odit unde.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 46, "Ida Russel", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Natus omnis enim voluptas itaque iusto tempore voluptate voluptatem.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 45, "Gardner Weber", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eveniet velit molestiae itaque impedit magnam ipsa provident.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 44, "Art Little", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Occaecati incidunt unde unde sed.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 43, "Miles Beatty", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Blanditiis dicta sit maxime vel illo sapiente.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 42, "Vernice Rowe", new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Qui quo voluptates ut quaerat.", 31, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -527,16 +523,16 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "LANGUAGE_ID", "RESUME_ID" },
                 values: new object[,]
                 {
-                    { 64, 1, 32 },
-                    { 65, 3, 32 },
-                    { 66, 3, 38 },
-                    { 69, 2, 32 },
-                    { 71, 3, 38 },
-                    { 70, 1, 38 },
-                    { 67, 1, 38 },
-                    { 68, 1, 32 },
-                    { 63, 2, 38 },
-                    { 72, 2, 38 }
+                    { 62, 3, 31 },
+                    { 63, 2, 31 },
+                    { 64, 1, 31 },
+                    { 65, 3, 31 },
+                    { 66, 2, 31 },
+                    { 67, 3, 31 },
+                    { 68, 3, 31 },
+                    { 69, 2, 31 },
+                    { 70, 1, 31 },
+                    { 71, 1, 31 }
                 });
 
             migrationBuilder.InsertData(
@@ -544,16 +540,16 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "BE_PLUS", "CITY_ID", "CREATE_DATE", "DESCRIPTION", "FULL_PART_TIME", "IS_CHECKED", "MOD_DATE", "NAME", "OFFERING", "RECRUITER_ID", "REQUIREMENTS", "SALARY", "WORK_AREA_ID" },
                 values: new object[,]
                 {
-                    { 22, "Necessitatibus quas sit provident laborum.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lead", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lead Division Coordinator", "Clementine Zieme", 13, "Occaecati odio pariatur quis praesentium et at.", 1000m, 3 },
-                    { 24, "Molestias veniam ex eum dicta voluptate aut.", 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Regional", "Part-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Future Accountability Analyst", "Samara Hartmann", 13, "Vel quia dicta dolorum placeat consequuntur omnis est eos in.", 1000m, 3 },
-                    { 25, "Optio vitae dolor vel.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "National", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human Communications Facilitator", "Horacio Bergnaum", 14, "Atque blanditiis corrupti alias.", 1000m, 3 },
-                    { 30, "Tempore voluptas optio.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Legacy", "Full-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human Web Administrator", "Eloise Hand", 14, "Qui enim voluptatibus dolore voluptas nostrum iusto sed non.", 1000m, 3 },
-                    { 23, "A voluptatem minima et.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Global", "Part-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Legacy Paradigm Associate", "Pink King", 15, "Eaque doloribus eos corrupti illum est voluptatem.", 1000m, 3 },
-                    { 21, "Id ut non vero a possimus.", 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Global", "Full-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "District Research Director", "Lukas Schoen", 15, "Repellat sit quia delectus.", 1000m, 2 },
-                    { 28, "Ex voluptatum deserunt nostrum.", 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "District", "Full-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dynamic Group Architect", "Lauryn Lockman", 11, "Laboriosam accusantium expedita qui omnis commodi.", 1000m, 3 },
-                    { 27, "Vel neque vel provident illum dolore.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Chief", "Part-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dynamic Markets Director", "Juliana Kshlerin", 11, "Molestiae corrupti praesentium voluptates aliquid tenetur velit.", 1000m, 3 },
-                    { 29, "Non quasi et dolorem doloribus id et dolor maiores est.", 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lead", "Full-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dynamic Usability Supervisor", "Alexzander Kling", 16, "Harum corrupti non veritatis sit qui.", 1000m, 1 },
-                    { 26, "Earum et dolor non excepturi voluptate.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Forward", "Full-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dynamic Paradigm Facilitator", "Lewis Schumm", 16, "Exercitationem odit rem.", 1000m, 1 }
+                    { 28, "Enim fugit quis occaecati labore sed.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Legacy", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Legacy Markets Agent", "Giles Feeney", 11, "Dolorem sed praesentium molestiae vitae.", 1000m, 3 },
+                    { 22, "Voluptate suscipit eum ipsum non aspernatur.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Direct", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "National Accounts Executive", "Lacy Marks", 16, "Et nihil recusandae.", 1000m, 3 },
+                    { 30, "Et minus aut.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Principal", "Full-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human Paradigm Engineer", "Ari Reichel", 16, "Est voluptas aut blanditiis pariatur.", 1000m, 2 },
+                    { 23, "Fugiat consequatur quia consequuntur iusto sunt quidem modi voluptatem.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Legacy", "Part-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lead Identity Orchestrator", "Willa West", 13, "Et ut consectetur accusamus quos sed qui error tenetur.", 1000m, 3 },
+                    { 21, "Est aliquam earum omnis optio eveniet et ut id adipisci.", 2, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Senior", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Internal Communications Coordinator", "Andres Bode", 12, "Veniam maxime ab ratione corrupti qui suscipit.", 1000m, 1 },
+                    { 29, "Molestiae ducimus fugiat et quaerat odit.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "National", "Part-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Principal Infrastructure Administrator", "Jerome Mayert", 18, "Incidunt enim excepturi ea expedita vel quaerat magnam nostrum vero.", 1000m, 1 },
+                    { 25, "Maxime nulla quia quas nam esse enim.", 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dynamic", "Full-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Internal Markets Producer", "Doug Halvorson", 17, "Placeat totam a libero debitis labore natus et.", 1000m, 2 },
+                    { 26, "Debitis sed cupiditate aut tempora est aut placeat.", 1, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Regional", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Corporate Applications Architect", "Leatha Weimann", 15, "Impedit nostrum eos impedit delectus dolorem nam.", 1000m, 2 },
+                    { 24, "Est in fugit explicabo sequi vitae perspiciatis.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Legacy", "Part-time", true, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human Interactions Associate", "Ted Cole", 13, "Sequi iste est et vel deserunt.", 1000m, 2 },
+                    { 27, "Eaque aut aut quo veritatis voluptatum similique modi.", 3, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Product", "Part-time", false, new DateTime(2017, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Future Operations Executive", "Kenton Bailey", 20, "Provident reprehenderit voluptas neque consequatur.", 1000m, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -561,16 +557,16 @@ namespace JobList.DataAccess.Migrations
                 columns: new[] { "ID", "USER_ID", "VACANCY_ID" },
                 values: new object[,]
                 {
-                    { 78, 39, 26 },
-                    { 79, 33, 26 },
-                    { 75, 31, 29 },
-                    { 73, 35, 21 },
-                    { 82, 37, 21 },
-                    { 77, 36, 23 },
-                    { 81, 34, 23 },
-                    { 76, 35, 22 },
-                    { 80, 32, 24 },
-                    { 74, 37, 30 }
+                    { 78, 34, 21 },
+                    { 80, 31, 21 },
+                    { 77, 35, 26 },
+                    { 72, 38, 25 },
+                    { 73, 37, 25 },
+                    { 81, 32, 29 },
+                    { 75, 36, 22 },
+                    { 79, 39, 30 },
+                    { 74, 37, 23 },
+                    { 76, 33, 27 }
                 });
 
             migrationBuilder.CreateIndex(
