@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CityService } from '../../core/services/city.service';
+import { VacancyService } from '../../core/services/vacancy.service';
 
 @Component({
   selector: 'app-main-search',
@@ -12,11 +13,14 @@ export class MainSearchComponent implements OnInit {
  
   cities: City[];
   selectedCity: City;
-  constructor(private cityService:CityService) { 
-   
+
+  vacancies: Vacancy[];
+  constructor(private cityService:CityService, private vacancyService: VacancyService) { 
+    this.vacancies = [];
   }
   ngOnInit() {
     this.loadCities();
+    this.loadVacancis();
   }
   //handleClick() {}
   
@@ -25,8 +29,14 @@ export class MainSearchComponent implements OnInit {
       .subscribe((data: City[]) => this.cities = data);
     }
 
-   
+  loadVacancis(){
+      this.vacancyService.getAll()
+      .subscribe((data:Vacancy[])=>this.vacancies = data);
+   }
 }
 class City {
+  name: string;
+}
+class Vacancy{
   name: string;
 }

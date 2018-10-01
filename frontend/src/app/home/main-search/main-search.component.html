@@ -15,15 +15,9 @@
    <hr class="red-line">
    <br/>
    <div id="professions" >
-      <div class="list-professions">
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/professions/manager.svg?v=621.1.297-83c2778-master" ><p>Менеджер</p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/professions/finance-icon.svg?v=621.1.297-83c2778-master"><p>Бухгалтер</p></a>
-        <a ><img src="https://images.cf-rabota.com.ua/2017/12/professions/marketolog.svg?v=621.1.297-83c2778-master" ><p>Маркетолог </p></a>
-        <a ><img src="https://images.cf-rabota.com.ua/2017/12/professions/director.svg?v=621.1.297-83c2778-master" ><p>&ensp;Директор</p></a>
-        <a ><img src="https://images.cf-rabota.com.ua/2017/12/professions/jurist-icon.svg?v=621.1.297-83c2778-master" ><p>&ensp;&nbsp;Юрист</p></a>
-        <a ><img src="https://images.cf-rabota.com.ua/2017/12/professions/driver.svg?v=621.1.297-83c2778-master" ><p>&emsp;Водій</p></a>
-        <a  ><img src="https://images.cf-rabota.com.ua/2017/12/professions/barista.svg?v=621.1.297-83c2778-master" ><p>&ensp;Бариста</p></a>
-        <a ><img src="https://images.cf-rabota.com.ua/2017/12/professions/waiter.svg?v=621.1.297-83c2778-master"><p>&ensp;Офіціант</p></a>
+      <div class="list-professions"  >
+        <a *ngFor="let vacancy of vacancies | slice:0:5; let i=index"><img src="https://images.cf-rabota.com.ua/2017/12/professions/manager.svg?v=621.1.297-83c2778-master" ><p>{{vacancy.name}}</p></a> 
+       
        </div>
    </div>
   
@@ -45,18 +39,7 @@
 
    <div id="cities">
      <div class="list-cities">
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities-compressed/kyiv-city.jpg?v=621.1.297-83c2778-master" ><p>Київ</p></a><a ><img src="https://images.cf-rabota.com.ua/2017/12/cities/kharkiv-city.jpg?v=621.1.297-83c2778-master" ><p>Харків</p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities/lviv-city.jpg?v=621.1.297-83c2778-master" ><p>Львів
-        </p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities/odesa-city.jpg?v=621.1.297-83c2778-master" ><p>Одеса
-        </p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities/dnipro-city.jpg?v=621.1.297-83c2778-master" ><p>Дніпро
-        </p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities/zaporizhya-city.jpg?v=621.1.297-83c2778-master" ><p>Запоріжжя
-        </p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities/kryvyi-rig-city.jpg?v=621.1.297-83c2778-master" ><p>Кривий Ріг
-        </p></a>
-        <a><img src="https://images.cf-rabota.com.ua/2017/12/cities/ternopil-city.jpg?v=621.1.297-83c2778-master"><p>Тернопіль</p></a>
+        <a *ngFor="let city of cities"><img src="https://images.cf-rabota.com.ua/2017/12/cities/kharkiv-city.jpg?v=621.1.297-83c2778-master" ><p>{{city.name}}</p></a>
       </div>
    </div>
   </div>
