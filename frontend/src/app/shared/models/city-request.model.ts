@@ -1,3 +1,3 @@
-export interface CityRequest{
-    name: string;
+export interface CityRequest {
+  name: string;
 }
