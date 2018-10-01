@@ -10,10 +10,11 @@ using JobList.Common.Interfaces.Entities;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace JobList.DataAccess.Repositories
 {
-    public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : IComparable
     {
         protected readonly JobListDbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
@@ -46,21 +47,34 @@ namespace JobList.DataAccess.Repositories
             _dbSet.Remove(entityToDelete);
         }
 
-        public async Task<List<TEntity>> GetAllEntitiesAsync()
+        public async Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
-            return await _dbSet.ToListAsync();
+            IQueryable<TEntity> query = _dbSet;
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            return await query.ToListAsync();
         }
 
-        public async Task<TEntity> GetEntityAsync(TKey Id)
+        public async Task<TEntity> GetEntityAsync(TKey Id, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
-            var entityToGet = await _dbSet.FindAsync(Id);
+            IQueryable<TEntity> query = _dbSet;
 
-            if (entityToGet == null)
+            query = query.Where(e => e.Id.CompareTo(Id) == 0);
+
+            if (query.Count() < 1)
             {
                 throw new HttpStatusCodeException(HttpStatusCode.NotFound, $"Entity with id: {Id} not found when trying to get entity.");
             }
 
-            return entityToGet;
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
