@@ -31,8 +31,7 @@ export class CompanyHeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'pi pi-fw pi-user-plus'},
-          {label: 'Change login', icon: 'pi pi-fw pi-filter'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
         ]
       },
       {

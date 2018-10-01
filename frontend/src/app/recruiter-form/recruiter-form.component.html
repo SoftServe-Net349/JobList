@@ -12,7 +12,7 @@
 					<div *ngIf="myForm.controls['firstName'].errors.minlength || myForm.controls['firstName'].errors.maxlength">
             First Name should contain (2-50) chars
 					</div>
-			</div>
+		    </div>
 			</div>
       <div class="ui-float-label">
         <input id="lastName" type="text" size="30" pInputText formControlName="lastName"> 
@@ -36,15 +36,21 @@
           <div *ngIf="myForm.controls['email'].errors.email">
             Email should match sample@example.com
           </div>
+          <div *ngIf="myForm.controls['email'].errors.maxlength">
+              Email should contain (5-150) chars
+          </div>
         </div>
       </div>
-      <div class="ui-float-label">
+      <div class="ui-float-label phone">
         <p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
         <label for="phone">Phone</label>
       </div>
 
       <div class="ui-float-label">
         <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
+      </div>
+      <div *ngIf="action=='Update'" class="ui-float-label">
+        <p-button icon="fa fa-paper-plane" label="Resend Email&nbsp;"></p-button>
       </div>
     </form> 
   </div>
