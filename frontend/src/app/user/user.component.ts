@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../shared/models/user.model';
+import { Resume } from '../shared/models/resume.model';
+import { UserService } from '../core/services/user.service';
+import { ResumeService } from '../core/services/resume.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +12,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(private userService: UserService,
+              private activatedRoute: ActivatedRoute) {
+    this.user = this.defaultUser();
+  }
+
+  defaultUser(): User {
+    return {
+      id: 0,
+      address: '',
+      birthData: new Date(),
+      city: null,
+      email: '',
+      favoriteVacancies: [],
+      firstName: '',
+      lastName: '',
+      password: '',
+      phone: '',
+      photoData: [],
+      photoMimeType: '',
+      resumes: null,
+      roleId: 0,
+      sex: ''
+    };
+  }
 
   ngOnInit() {
+    this.activatedRoute.params.forEach((params: Params) => {
+      const id = +params['id'];
+      this.loadUserById(id);
+    });
+  }
+
+  loadUserById(id: number) {
+    this.userService.getById(id)
+    .subscribe((data: User) => this.user = data);
   }
 
 }

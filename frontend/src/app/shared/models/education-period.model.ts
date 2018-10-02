@@ -1,10 +1,11 @@
 import { School } from './school.model';
-import { Resume } from './resume.model';
+import { Faculty } from './faculty.model';
 
 export interface EducationPeriod {
   id: number;
   startDate: Date;
   finishDate: Date;
-  resume: Resume;
+  resumeId: number;
   school: School;
+  faculty: Faculty;
 }

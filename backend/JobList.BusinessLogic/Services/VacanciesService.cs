@@ -52,7 +52,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
-                include: r => r.Include(o => o.City)
+                 include: r => r.Include(o => o.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.Recruiter).ThenInclude(v => v.Company));
 
