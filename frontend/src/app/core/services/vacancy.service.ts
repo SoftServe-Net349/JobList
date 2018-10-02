@@ -15,6 +15,10 @@ export class VacancyService {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
+  getBySearchString(searchString: String): Observable<Vacancy[]> {
+    return this.apiService.get(`/${this.ctrlUrl}/search/${searchString}`);
+  }
+
   getById(id: number): Observable<Vacancy> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
 }

@@ -15,6 +15,10 @@ export class ResumeService {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
+  getBySearchString(searchString: String): Observable<Resume[]> {
+    return this.apiService.get(`/${this.ctrlUrl}/search/${searchString}`);
+  }
+
   getById(id: number): Observable<Resume> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
 }
