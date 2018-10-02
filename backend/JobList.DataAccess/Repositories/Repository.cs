@@ -28,6 +28,30 @@ namespace JobList.DataAccess.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
+        public async Task<List<TEntity>> GetRangeAsync(int index = 1,
+                                                       int count = 10,
+                                                       Expression<Func<TEntity, bool>> filter = null,
+                                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+
+            if (index == 0) index = 1;
+            if (count == 0) count = 10;
+
+            return await query.Skip((index - 1) * count).Take(count).ToListAsync();
+        }
+
         public async Task<TEntity> CreateEntityAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);

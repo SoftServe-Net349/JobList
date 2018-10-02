@@ -7,6 +7,8 @@ namespace JobList.BusinessLogic.Interfaces
 {
     public interface IRecruitersService
     {
+        Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id);
+
         Task<IEnumerable<RecruiterDTO>> GetAllEntitiesAsync();
 
         Task<RecruiterDTO> GetEntityByIdAsync(int id);
