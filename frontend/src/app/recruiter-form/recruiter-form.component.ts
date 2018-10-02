@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Recruiter } from '../shared/models/recruiter.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -12,9 +12,12 @@ import { RecruiterRequest } from '../shared/models/recruiter-request.model';
 })
 export class RecruiterFormComponent implements OnInit {
 
-  myForm: FormGroup;
+  recruiterForm: FormGroup;
 
-  @Output() loadRecruiters = new EventEmitter<boolean>();
+  @Output() loadRecruiters = new EventEmitter();
+
+  @Input()
+  companyId: number;
 
   display: Boolean = false;
   action: String;
@@ -23,18 +26,18 @@ export class RecruiterFormComponent implements OnInit {
   confirmPassword: string;
   uploadedFiles: any[] = [];
 
-  constructor(private messageService: MessageService,
-							private formBuilder: FormBuilder,
-							private recruiterService: RecruiterService) {
-		this.recruiter = this.defaultRecruiter();
 
-		this.myForm = this.formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]]
+  constructor(private messageService: MessageService,
+              private formBuilder: FormBuilder,
+              private recruiterService: RecruiterService) {
+
+    this.recruiter = this.defaultRecruiter();
+
+    this.recruiterForm = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)]],
+      phone: ['']
     });
 
   }
@@ -50,23 +53,9 @@ export class RecruiterFormComponent implements OnInit {
       phone: '',
       email: '',
       password: '',
-      company: {
-        id: 0, name: '',
-        bossName: '',
-        fullDescription: '',
-        shortDescription: '',
-        address: '',
-        phone: '',
-        logoData: [],
-        logoMimetype: '',
-        site: '',
-        email: '',
-        password: '',
-        role: {id: 1, name: ''},
-        recruiters: []
-      },
-			role: {id: 1, name: ''},
-			vacancy: null
+      company: null,
+      roleId: 0,
+      vacancy: null
     };
   }
 
@@ -79,52 +68,55 @@ export class RecruiterFormComponent implements OnInit {
   }
 
   showRecruiterForm(action: String, recruiter = this.defaultRecruiter()) {
-		this.recruiter = recruiter;
-    this.myForm.reset();
+    this.recruiter = recruiter;
+    this.recruiterForm.reset();
     this.display = true;
-		this.action = action;
-		if(action == 'Update'){
-			this.myForm.setValue({
-				firstName: this.recruiter.firstName,
-				lastName: this.recruiter.lastName,
-				email: this.recruiter.email,
-				phone: this.recruiter.phone,
-				password: this.recruiter.password,
-				confirmPassword: this.recruiter.password
-			});	
-		}
+    this.action = action;
+    if (action === 'Update') {
+      this.recruiterForm.setValue({
+        firstName: this.recruiter.firstName,
+        lastName: this.recruiter.lastName,
+        email: this.recruiter.email,
+        phone: this.recruiter.phone
+      });
+    }
   }
 
   submit() {
-    if (this.action = 'Create') {
-      // this.createRecruiter();
+    if (this.action === 'Create') {
+      this.createRecruiter();
     }
-    if (this.action = 'Update') {
-      // this.updateRecruiter();
+    if (this.action === 'Update') {
+      this.updateRecruiter();
     }
     this.display = false;
-    this.loadRecruiters.emit();
   }
 
   updateRecruiter() {
     const request: RecruiterRequest = {
-      firstName: this.myForm.get('firstName').value,
-      lastName: this.myForm.get('lastName').value,
-      email: this.myForm.get('email').value,
-      phone: this.myForm.get('phone').value,
-      password: this.myForm.get('password').value
+      firstName: this.recruiterForm.get('firstName').value,
+      lastName: this.recruiterForm.get('lastName').value,
+      email: this.recruiterForm.get('email').value,
+      phone: this.recruiterForm.get('phone').value,
+      password: this.recruiter.password,
+      companyId: this.companyId,
+      roleId: this.recruiter.roleId
     };
-    this.recruiterService.update(this.recruiter.id, request);
+    this.recruiterService.update(this.recruiter.id, request)
+    .subscribe(data => this.loadRecruiters.emit());
   }
 
   createRecruiter() {
-    // const request: Recruiter = {
-    //   firstName: this.myForm.get('firstName').value,
-    //   lastName: this.myForm.get('lastName').value,
-    //   email: this.myForm.get('email').value,
-    //   phone: this.myForm.get('phone').value,
-    //   password: this.myForm.get('password').value
-    // };
-
+    const request: RecruiterRequest = {
+      firstName: this.recruiterForm.get('firstName').value,
+      lastName: this.recruiterForm.get('lastName').value,
+      email: this.recruiterForm.get('email').value,
+      phone: this.recruiterForm.get('phone').value,
+      password: 'sddsdsdsdsd',
+      companyId: this.companyId,
+      roleId: 3
+    };
+    this.recruiterService.create(request)
+    .subscribe(data => this.loadRecruiters.emit());
   }
 }
