@@ -51,4 +51,13 @@ export class UserComponent implements OnInit {
     .subscribe((data: User) => this.user = data);
   }
 
+  getLanguages(): string {
+    let languages = '';
+    if (this.user.resumes !== null) {
+      this.user.resumes.resumeLanguages.forEach(rl => {
+        languages = languages + ' ' + rl.language.name;
+      });
+    }
+    return languages;
+  }
 }
