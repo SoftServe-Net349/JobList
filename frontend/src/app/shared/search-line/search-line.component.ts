@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //import { City } from '../models/city.model'
 import { CityService } from '../../core/services/city.service';
 import { NgForm} from '@angular/forms';
+import { VacancyService } from '../../core/services/vacancy.service';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class SearchLineComponent implements OnInit {
   selectedCity: City;
   _inputText:string;
 
-  constructor(private cityService:CityService) {
+  vacancies: Vacancy[];
+
+  constructor(private cityService:CityService, private vacancyService: VacancyService) {
     }
 
   ngOnInit() {
@@ -30,10 +33,20 @@ export class SearchLineComponent implements OnInit {
 
   submit(str)
   {
-        this._inputText = str;
+    this._inputText = str;
+    this.getVacanciesBySearchString(this._inputText);
+  }
+
+  getVacanciesBySearchString(searchString: string){
+    this.vacancyService.getBySearchString(searchString)
+    .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
  
 }
 class City {
-name: string;
+  name: string;
+}
+
+class Vacancy{
+  name: string;
 }
