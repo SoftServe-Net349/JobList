@@ -10,7 +10,7 @@ export interface Recruiter {
   email: string;
   password: string;
   company: Company;
-  role: Role;
+  roleId: number;
 
   vacancy: Vacancy[];
 }
