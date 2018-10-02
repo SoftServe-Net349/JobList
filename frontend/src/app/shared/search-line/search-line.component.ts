@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-//import { City } from '../models/city.model'
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
 import { CityService } from '../../core/services/city.service';
 import { NgForm} from '@angular/forms';
 import { VacancyService } from '../../core/services/vacancy.service';
@@ -15,38 +15,34 @@ export class SearchLineComponent implements OnInit {
 
   cities: City[];
   selectedCity: City;
-  _inputText:string;
+  _inputText: String;
+  isClicked: Boolean = true;
+
+  @Output() filteredVacancies = new EventEmitter<String>();
 
   vacancies: Vacancy[];
 
-  constructor(private cityService:CityService, private vacancyService: VacancyService) {
+  constructor(private cityService: CityService, private vacancyService: VacancyService) {
     }
 
   ngOnInit() {
     this.loadCities();
   }
 
-  loadCities(){
+  loadCities() {
     this.cityService.getAll()
     .subscribe((data: City[]) => this.cities = data);
   }
 
-  submit(str)
-  {
-    this._inputText = str;
-    this.getVacanciesBySearchString(this._inputText);
-  }
+   submit() {
+    this.filteredVacancies.emit(this._inputText);
+   }
 
-  getVacanciesBySearchString(searchString: string){
-    this.vacancyService.getBySearchString(searchString)
-    .subscribe((data: Vacancy[]) => this.vacancies = data);
-  }
- 
 }
 class City {
   name: string;
 }
 
-class Vacancy{
+class Vacancy {
   name: string;
 }

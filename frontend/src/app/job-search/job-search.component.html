@@ -1,5 +1,5 @@
 <div class="jobsearch">
-  <app-search-line></app-search-line>
+  <app-search-line (filteredVacancies)="getVacanciesBySearchString($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
       <app-job-filters></app-job-filters>
