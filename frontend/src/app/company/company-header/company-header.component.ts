@@ -16,7 +16,7 @@ export class CompanyHeaderComponent implements OnInit {
   @Input()
   company: Company;
 
-  @ViewChild(CompanyInfoFormComponent)
+  @Input()
   companyInfoForm: CompanyInfoFormComponent;
 
   constructor() { }

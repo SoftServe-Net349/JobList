@@ -9,6 +9,7 @@ import { RecruiterFormComponent } from '../recruiter-form/recruiter-form.compone
 import { CompanyInfoFormComponent } from '../company-info-form/company-info-form.component';
 
 import { MessageService } from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -21,6 +22,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {PasswordModule} from 'primeng/password';
 import {InputMaskModule} from 'primeng/inputmask';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   imports: [
@@ -37,7 +39,8 @@ import {InputMaskModule} from 'primeng/inputmask';
     SharedModule,
     PasswordModule,
     ReactiveFormsModule,
-    InputMaskModule
+    InputMaskModule,
+    ConfirmDialogModule
   ],
   declarations: [
     CompanyComponent,
@@ -45,6 +48,6 @@ import {InputMaskModule} from 'primeng/inputmask';
     CompanyHeaderComponent,
     CompanyInfoFormComponent
   ],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class CompanyModule { }

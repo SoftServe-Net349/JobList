@@ -1,4 +1,4 @@
-<app-company-header [company]="company"></app-company-header>
+<app-company-header [company]="company" [companyInfoForm]="companyInfoForm"></app-company-header>
 
 <div id="company-page">
   <div class="company-info">
@@ -13,7 +13,7 @@
         <p><span>Address:</span> {{company.address}}</p>
       </div>
       <div>
-        <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()"></app-recruiter-form>
+        <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company.id"></app-recruiter-form>
       </div>
     </div>
     <div class="description">
@@ -37,8 +37,8 @@
       <hr class="fd-f1">
     </div>
     
-    <ul>
-      <li *ngFor="let recruiter of company.recruiters">
+    <ul *ngIf="recruiters.length > 0">
+      <li *ngFor="let recruiter of recruiters">
         <div class="recruiter-wrapper-flex">
           <div>
               <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
@@ -50,12 +50,17 @@
           </div>
           <div class="recruiter-modification">
               <button pButton type="button" (click)="recruiterForm.showRecruiterForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>
-              <button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-          </div>
+              <button pButton type="button" label="Delete" (click)="deleteConfirm(recruiter.id)" class="ui-button-rounded ui-button-danger"></button>      
+            </div>
         </div>
         <hr>
       </li>
     </ul>
   </div>
 </div>
+
+<app-company-info-form #companyInfoForm (loadCompanyById)=" loadCompanyById()"></app-company-info-form>
+
 <app-footer></app-footer>
+
+<p-confirmDialog></p-confirmDialog>

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Company } from '../shared/models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { CompanyRequest } from '../shared/models/company-request.model';
+import { CompanyService } from '../core/services/company.service';
 
 @Component({
   selector: 'app-company-info-form',
@@ -10,6 +12,7 @@ import { MessageService } from 'primeng/api';
 })
 export class CompanyInfoFormComponent implements OnInit {
 
+  @Output() loadCompanyById = new EventEmitter();
   companyInfoForm: FormGroup;
 
   display: Boolean = false;
@@ -20,7 +23,8 @@ export class CompanyInfoFormComponent implements OnInit {
   company: Company;
 
   constructor(private formBuilder: FormBuilder,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private companyService: CompanyService) {
 
     this.company = this.defaultCompany();
 
@@ -53,8 +57,7 @@ export class CompanyInfoFormComponent implements OnInit {
       site: '',
       email: '',
       password: '',
-      role: {id: 1, name: ''},
-      recruiters: []
+      roleId: 0
     };
   }
 
@@ -84,6 +87,33 @@ export class CompanyInfoFormComponent implements OnInit {
   }
 
   this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-}
+  }
+
+  submit() {
+    if (this.action === 'Update') {
+      this.updateCompanyInfo();
+    }
+    this.display = false;
+  }
+
+  updateCompanyInfo() {
+    const request: CompanyRequest = {
+        name: this.companyInfoForm.get('companyName').value,
+        bossName: this.companyInfoForm.get('bossName').value,
+        email: this.companyInfoForm.get('email').value,
+        phone: this.companyInfoForm.get('phone').value,
+        shortDescription: this.companyInfoForm.get('shortDescription').value,
+        site: this.companyInfoForm.get('site').value,
+        address: this.companyInfoForm.get('address').value,
+        fullDescription: this.companyInfoForm.get('fullDescription').value,
+        password: this.company.password,
+        roleId: this.company.roleId,
+        logoData: this.company.logoData,
+        logoMimetype: this.company.logoMimetype
+    };
+
+    this.companyService.update(this.company.id, request)
+    .subscribe(data => this.loadCompanyById.emit());
+  }
 
 }

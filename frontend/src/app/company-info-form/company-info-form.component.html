@@ -103,7 +103,7 @@
 </div>
 
 <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="display=false" [disabled]="companyInfoForm.invalid" label="Confirm" class="ui-button-success"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="submit()" [disabled]="companyInfoForm.invalid" label="Confirm" class="ui-button-success"></button>
     <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
 </p-footer>
 </p-dialog>
