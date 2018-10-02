@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-//import { City } from '../models/city.model'
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
 import { CityService } from '../../core/services/city.service';
-import {SelectItem} from 'primeng/api';
+import { Router } from '@angular/router';
+import { City } from '../models/city.model';
 
 
 @Component({
@@ -14,22 +15,33 @@ export class SearchLineComponent implements OnInit {
 
   cities: City[];
   selectedCity: City;
+  inputText: String;
 
-  constructor(private cityService:CityService) {
+  @Output() filteredVacancies = new EventEmitter<String>();
+  @Output() filteredResumes = new EventEmitter<String>();
 
-    }
+  currentUrl: String;
+  constructor(private cityService: CityService, router: Router) {
+    this.currentUrl = router.url;
+  }
 
   ngOnInit() {
     this.loadCities();
   }
 
-  loadCities(){
+  loadCities() {
     this.cityService.getAll()
     .subscribe((data: City[]) => this.cities = data);
   }
 
- 
+  search(){
+    if (this.currentUrl === '/jobsearch') {
+      this.filteredVacancies.emit(this.inputText);
+     } else if (this.currentUrl === '/resumessearch') {
+      this.filteredResumes.emit(this.inputText);
+     }
+  }
 }
-class City {
-name: string;
-}
+
+
+

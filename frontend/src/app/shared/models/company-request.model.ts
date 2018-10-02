@@ -12,5 +12,5 @@ export interface CompanyRequest {
     site: string;
     email: string;
     password: string;
-    role: Role;
+    roleId: number;
 }

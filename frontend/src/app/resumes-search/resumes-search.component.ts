@@ -11,16 +11,25 @@ export class ResumesSearchComponent implements OnInit {
 
   resumes: Resume[];
 
-  constructor(private resumeService:ResumeService) {
+  constructor(private resumeService: ResumeService) {
     this.resumes = [];
    }
 
   ngOnInit() {
-    this.loadResumes();
+      this.loadResumes();
   }
 
-  loadResumes(){
+  loadResumes() {
     this.resumeService.getAll()
-    .subscribe((data:Resume[])=>this.resumes = data);
+      .subscribe((data: Resume[]) => this.resumes = data);
+  }
+
+  getResumesBySearchString(searchString: String) {
+    if (searchString === '') {
+      this.loadResumes();
+    } else {
+      this.resumeService.getBySearchString(searchString)
+      .subscribe((data: Resume[]) => this.resumes = data);
+    }
   }
 }

@@ -1,7 +1,6 @@
 #company-page
   max-width: 1024px
   margin: auto
-  padding: 30px
 
   hr 
     height: 1px;
@@ -20,6 +19,8 @@
     margin-top: 100px
 
   .additional-info
+    max-width: 800px
+
     p
       margin: 10px 0
       font-size: 1.2em
@@ -35,7 +36,6 @@
     letter-spacing: .5px
 
   .recruiter-list
-    margin-top: 100px
 
     .recruiters-text
       display: flex;
@@ -87,3 +87,52 @@
 
     .recruiter-modification
       margin-top: 10px
+
+  .filter-search
+    margin: 70px 0 0 0 
+    background: none
+    border-radius: 3px
+    max-width: 1022px
+
+    /deep/ .ui-inputtext
+      padding: 1.4em !important
+      max-height: 40px
+
+
+    /deep/ .ui-button
+      padding: 15px 30px
+      border-radius: 0px
+      font-size: 16px
+      font-weight: 600
+      line-height: 16px
+      letter-spacing: 2px
+      width: 170px
+      text-align: center
+      background: #30caa0
+      cursor: pointer
+      border: none
+      color: #fff
+      background: #333
+      height: 62px
+      margin: 0
+      padding: 5px 20px
+
+    .wrapper
+      width: 1022px
+      background: white
+      display: inline-block
+      height: 62px
+      box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.27)
+
+      input
+        background: #fff
+        outline: none			
+        width: 852px
+        border-radius: none
+        border: 1px solid #DCDCDC
+        border-bottom-style: none
+        border-left-style: none
+        border-top-style: none
+        display: inline-block
+        font-size: 14px
+        height: 60px
