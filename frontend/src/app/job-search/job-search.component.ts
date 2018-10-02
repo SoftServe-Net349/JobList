@@ -10,7 +10,6 @@ import { SearchLineComponent } from '../shared/search-line/search-line.component
 })
 export class JobSearchComponent implements OnInit {
   @ViewChild(SearchLineComponent)
-  private searchLine: SearchLineComponent;
 
   vacancies: Vacancy[];
   constructor(private vacancyService: VacancyService) {

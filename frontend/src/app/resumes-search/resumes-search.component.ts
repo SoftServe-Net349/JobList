@@ -21,8 +21,9 @@ export class ResumesSearchComponent implements OnInit {
 
   loadResumes() {
     this.resumeService.getAll()
-    .subscribe((data: Resume[]) => this.resumes = data);
+      .subscribe((data: Resume[]) => this.resumes = data);
   }
+
   getResumesBySearchString(searchString: String) {
     if (searchString === '') {
       this.loadResumes();

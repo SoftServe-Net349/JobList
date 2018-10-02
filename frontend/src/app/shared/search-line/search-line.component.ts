@@ -1,9 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CityService } from '../../core/services/city.service';
-import { NgForm} from '@angular/forms';
-import { VacancyService } from '../../core/services/vacancy.service';
 import { Router } from '@angular/router';
+import { City } from '../models/city.model';
 
 
 @Component({
@@ -23,7 +22,7 @@ export class SearchLineComponent implements OnInit {
 
   currentUrl: String;
   constructor(private cityService: CityService, router: Router) {
-  this.currentUrl = router.url;
+    this.currentUrl = router.url;
   }
 
   ngOnInit() {
@@ -35,19 +34,14 @@ export class SearchLineComponent implements OnInit {
     .subscribe((data: City[]) => this.cities = data);
   }
 
-
- submit() {
-   if (this.currentUrl === '/jobsearch') {
-    this.filteredVacancies.emit(this.inputText);
-   } else if (this.currentUrl === '/resumessearch') {
-    this.filteredResumes.emit(this.inputText);
-   }
+  search(){
+    if (this.currentUrl === '/jobsearch') {
+      this.filteredVacancies.emit(this.inputText);
+     } else if (this.currentUrl === '/resumessearch') {
+      this.filteredResumes.emit(this.inputText);
+     }
   }
 }
-class City {
-  name: string;
-}
 
-class Vacancy {
-  name: string;
-}
+
+
