@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { City } from '../models/city.model'
 import { CityService } from '../../core/services/city.service';
-import {SelectItem} from 'primeng/api';
+import { NgForm} from '@angular/forms';
 
 
 @Component({
@@ -14,9 +14,9 @@ export class SearchLineComponent implements OnInit {
 
   cities: City[];
   selectedCity: City;
+  _inputText:string;
 
   constructor(private cityService:CityService) {
-
     }
 
   ngOnInit() {
@@ -28,6 +28,10 @@ export class SearchLineComponent implements OnInit {
     .subscribe((data: City[]) => this.cities = data);
   }
 
+  submit(str)
+  {
+        this._inputText = str;
+  }
  
 }
 class City {

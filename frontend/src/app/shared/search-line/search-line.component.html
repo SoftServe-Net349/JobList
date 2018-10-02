@@ -1,10 +1,20 @@
 <div class="filter-search">
 	<div class="filter-form">
 		<div class="wrapper">
-			<input type="text" pInputText [(ngModel)]="property" placeholder="Enter name or keyword" />
-			<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"></p-dropdown>
-			<p-button label="Search" icon="pi pi-search" ></p-button>
+			<form #requestForm="ngForm" novalidate>
+
+				<input type="text" pInputText [ngModel]="inputText" name="RRR" placeholder="Enter name or keyword" />
+
+
+				<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"
+				 name="dropdown"></p-dropdown>
+
+
+				<p-button label="Search" icon="pi pi-search" (click)="submit(requestForm.value.RRR)" name="Submit"></p-button>
+
+			</form>
+			{{_inputText}}
 		</div>
-		
+
 	</div>
 </div>
