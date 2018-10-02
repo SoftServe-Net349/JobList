@@ -17,11 +17,13 @@ import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
+import { CoreModule } from './core/core.module';
+
 
 
 @NgModule({
   declarations: [
-	AppComponent
+  AppComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { CompanyModule } from './company/company.module';
     UserModule,
     AdminModule,
     RecruiterModule,
-	CompanyModule
+    CompanyModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [

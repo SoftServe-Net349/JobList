@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Company } from '../shared/models/company.model';
 
 @Component({
   selector: 'app-company-info-form',
@@ -10,14 +11,37 @@ export class CompanyInfoFormComponent implements OnInit {
   display: Boolean = false;
   action: String;
 
-  constructor() { }
+  company: Company;
+
+  constructor() {
+    this.company = this.defaultCompany();
+  }
 
   ngOnInit() {
   }
 
-  showInformationForm(action: String) {
-  this.display = true;
-  this.action = action;
+  defaultCompany(): Company {
+    return {
+      id: 0, name: '',
+      bossName: '',
+      fullDescription: '',
+      shortDescription: '',
+      address: '',
+      phone: '',
+      logoData: [],
+      logoMimetype: '',
+      site: '',
+      email: '',
+      password: '',
+      role: {id: 1, name: ''},
+      recruiters: []
+    };
   }
+
+  showInformationForm(action: String, company: Company = this.defaultCompany()) {
+    this.company = company;
+    this.display = true;
+    this.action = action;
+ }
 
 }

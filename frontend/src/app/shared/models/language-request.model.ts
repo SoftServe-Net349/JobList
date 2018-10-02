@@ -1,3 +1,3 @@
-export interface LanguageRequest{
-    name: string;
+export interface LanguageRequest {
+  name: string;
 }

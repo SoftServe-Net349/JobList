@@ -1,7 +1,7 @@
-import { School } from "./school.model";
+import { School } from './school.model';
 
-export interface Faculty{
-    id: number;
-    name: string;
-    school: School;
+export interface Faculty {
+  id: number;
+  name: string;
+  school: School;
 }

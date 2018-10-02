@@ -48,6 +48,13 @@ namespace JobList.DataAccess.Data
                 new WorkArea{ Id = 3, Name = "Medicine" }
             };
 
+            var faculties = new Faculty[]
+            {
+                new Faculty{ Id = 1, Name = "Computer Science" },
+                new Faculty{ Id = 2, Name = "Software Engineering"},
+                new Faculty{ Id = 3, Name = "Applied Mathematics"}
+            };
+
             var companyFaker = new Faker<Company>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.Name, f => f.PickRandom($"Company № {f.Random.Number(999)}"))
@@ -62,15 +69,6 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id);
 
             var companies = companyFaker.Generate(amount).ToArray();
-
-
-            var facultyFaker = new Faker<Faculty>()
-                .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.Name, f => f.PickRandom("Computer Science", "Software Engineering", "Applied Mathematics"))
-                .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id);
-
-            var faculties = facultyFaker.Generate(amount).ToArray();
-
 
 
             var recruiterFaker = new Faker<Recruiter>()
@@ -135,7 +133,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.ModDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var resumes = resumeFaker.Generate(2).ToArray();
+            var resumes = resumeFaker.Generate(1).ToArray();
 
 
             var experienceFaker = new Faker<Experience>()
@@ -154,7 +152,9 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.StartDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id)
-                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id);
+                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id)
+                .RuleFor(o => o.FacultyId, f => f.PickRandom(faculties).Id);
+            
 
             var educationPeriods = educationPeriodFaker.Generate(amount).ToArray();
 

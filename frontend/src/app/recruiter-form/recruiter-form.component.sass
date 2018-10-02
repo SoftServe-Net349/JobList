@@ -19,7 +19,27 @@ h4
 
 
 	/deep/ .ui-float-label
-		margin: 30px 0
+		margin: 40px 0
+
+	.required-input-symbol
+		color: red
 
 	input 
 		width: 100%
+
+input.ng-touched.ng-invalid
+  border: 1px solid red
+  border-radius: 3px
+
+input.ng-touched.ng-valid
+  border: 1px solid green
+  border-radius: 3px
+
+.alert-danger
+	font-size: small
+	font-weight: 500
+	color: red
+	position: absolute
+	top: 35px
+	width: 100%
+	padding: 3px 2px

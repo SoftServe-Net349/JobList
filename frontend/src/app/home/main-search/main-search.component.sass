@@ -5,30 +5,32 @@
 .wrapper
   max-width: 1024px
   margin: auto
+  margin-top: 80px
 
 #search-area
   background: url('https://png2.kisspng.com/20180304/age/kisspng-businessperson-illustration-vector-business-people-talking-5a9bb59a4634d7.0942372015201540102876.png')
   background-position: 50% 100%
-  background-size: 800px 500px
+  background-size: 800px 700px
   background-repeat: no-repeat
   background-color: #ECF6F0
-  height: 500px
+  height: 700px
   width: 100%
-  
   padding: 10px
   background-color: #ECF6F0
+
 #search-area
+
  #search
     position: relative 
     dispaly: inline
-    height: 15%
-    top: 60% 
+    height: 10%
+    top: 40% 
     box-shadow: 0px 10px 10px rgba(0,0,0,0.27)
     
     
     #input
       position: relative
-      height: 99%
+      height: 99.5%
       border-radius: 0px
       width: 72%
       top: 1.2px
@@ -49,15 +51,13 @@
     /deep/ .ui-dropdown
      position: relative
      top: -1.3px
-     width: 20%
+     width: 17%
      height: 99.5%
      border: 0px
-     
-     
+  
      .ui-dropdown-label
         font-size: 20px
         
-
      .ui-inputtext 
         padding-top: 12%
         paddin-left: 2px
@@ -68,21 +68,17 @@
         overflow: hidden
         
         
-    #srch-btn
-      
-      
+    #srch-btn  
       top: -0.2px
       position: relative
       height: 99.5%
       border-radius: 0px
-      width: 8%
+      width: 11%
       font-weight: bold
       border: 0px
       border-color: grey
       background-color: #208087
-      
-      
-      
+         
     #srch-btn:hover
         background-color: #f47442
 
@@ -94,19 +90,32 @@
  
  .list-professions
    a
-     display: inline-block
-     font-size: 20px
+     display: inline-table
+     text-align: center
      width: auto
      color: #f47442
      padding: 30px
+     cursor: pointer
+     max-width: 200px
+     margin-top: 0px
+    
+     p 
+       line-height: 1.5em
+       height: 3em     
+       font-size: 15px
+      
    a:hover
      color: #208087
+  
+
+
 #companies
  .list-companies
    a
      display: inline-block
      padding: 20px
      width: auto
+     cursor: pointer
      img 
       height: 100px
       width: 100px
@@ -118,6 +127,8 @@
      padding: 20px
      width: auto
      text-align: center
+     cursor: text
+     margin-bottom: 80px
 
      img
        height: 60px
@@ -126,9 +137,9 @@
       font-size: 20px
       color: grey
       font-family: 'Roboto', sans-serif
-     p:hover
-       color: #f47442
+   
 .subTitle
+  
   font-size: 30px
   font-family: 'Roboto', sans-serif
   font-weight: bold
