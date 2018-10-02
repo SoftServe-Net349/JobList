@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CityService } from '../../core/services/city.service';
 import { NgForm} from '@angular/forms';
 import { VacancyService } from '../../core/services/vacancy.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,15 +16,15 @@ export class SearchLineComponent implements OnInit {
 
   cities: City[];
   selectedCity: City;
-  _inputText: String;
-  isClicked: Boolean = true;
+  inputText: String;
 
   @Output() filteredVacancies = new EventEmitter<String>();
+  @Output() filteredResumes = new EventEmitter<String>();
 
-  vacancies: Vacancy[];
-
-  constructor(private cityService: CityService, private vacancyService: VacancyService) {
-    }
+  currentUrl: String;
+  constructor(private cityService: CityService, router: Router) {
+  this.currentUrl = router.url;
+  }
 
   ngOnInit() {
     this.loadCities();
@@ -34,10 +35,14 @@ export class SearchLineComponent implements OnInit {
     .subscribe((data: City[]) => this.cities = data);
   }
 
-   submit() {
-    this.filteredVacancies.emit(this._inputText);
-   }
 
+ submit() {
+   if (this.currentUrl === '/jobsearch') {
+    this.filteredVacancies.emit(this.inputText);
+   } else if (this.currentUrl === '/resumessearch') {
+    this.filteredResumes.emit(this.inputText);
+   }
+  }
 }
 class City {
   name: string;

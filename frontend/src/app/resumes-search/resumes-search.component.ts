@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Resume } from '../shared/models/resume.model';
 import { ResumeService } from '../core/services/resume.service';
 
-
- 
 @Component({
   selector: 'app-resumes-search',
   templateUrl: './resumes-search.component.html',
@@ -18,12 +16,19 @@ export class ResumesSearchComponent implements OnInit {
    }
 
   ngOnInit() {
-    // if(isSubmited)
       this.loadResumes();
   }
 
   loadResumes() {
     this.resumeService.getAll()
     .subscribe((data: Resume[]) => this.resumes = data);
+  }
+  getResumesBySearchString(searchString: String) {
+    if (searchString === '') {
+      this.loadResumes();
+    } else {
+      this.resumeService.getBySearchString(searchString)
+      .subscribe((data: Resume[]) => this.resumes = data);
+    }
   }
 }
