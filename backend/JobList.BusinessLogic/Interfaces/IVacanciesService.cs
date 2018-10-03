@@ -16,5 +16,7 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> UpdateEntityByIdAsync(VacancyRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
+
+        Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id);
     }
 }
