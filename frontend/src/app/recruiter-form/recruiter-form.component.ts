@@ -54,8 +54,7 @@ export class RecruiterFormComponent implements OnInit {
       email: '',
       password: '',
       company: null,
-      roleId: 0,
-      vacancy: null
+      roleId: 0
     };
   }
 
