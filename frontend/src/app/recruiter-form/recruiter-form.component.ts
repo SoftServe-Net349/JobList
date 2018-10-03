@@ -23,7 +23,6 @@ export class RecruiterFormComponent implements OnInit {
   action: String;
 
   recruiter: Recruiter;
-  confirmPassword: string;
   uploadedFiles: any[] = [];
 
 
