@@ -15,7 +15,7 @@ export class ResumeFormComponent implements OnInit {
   languagelevel: SelectItem[];
   selectedStatus: string;
 
-  display: boolean = false;
+  display: Boolean = false;
   showDialog() {
       this.display = true;
   }

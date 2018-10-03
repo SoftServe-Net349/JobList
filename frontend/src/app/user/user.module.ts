@@ -17,7 +17,7 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {PanelModule} from 'primeng/panel';
 import { UserHeaderComponent } from './user-header/user-header.component';
 
-import { ResumeFormComponent } from '../resume-form/resume-form.component'
+import { ResumeFormComponent } from '../resume-form/resume-form.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

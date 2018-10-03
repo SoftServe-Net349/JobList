@@ -17,11 +17,10 @@ export class JobSearchComponent implements OnInit {
   ngOnInit() {
     this.loadVacancis();
   }
-  
-  loadVacancis()
-  {
+
+  loadVacancis() {
     this.vacancyService.getAll()
-    .subscribe((data:Vacancy[])=>this.vacancies = data);
+    .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
 }
