@@ -6,11 +6,10 @@
       <h2>$2000</h2>
       <h5><font color="grey">Posted </font>1.10.2018</h5>
       <hr>
-      <h3><font color="grey">City: </font>Lviv</h3>
-      <h4><font color="green"><i class="fa fa-check-circle-o" style="font-size: 1em"></i> Checked</font></h4>
+      
     </div>
     <p-dialog header="Send my CV" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
-      [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [blockScroll]="true" [resizable]="false">
+      [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [blockScroll]="true" [resizable]="false" [minHeight]="100">
       <span>Are you sure?</span>
       <p-footer>
           <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
@@ -18,6 +17,13 @@
       </p-footer>
     </p-dialog>
     <button type="text" (click)="showDialog()" pButton icon="fa fa-file-text" label="Send my CV" style="height:35px"></button>
+  </div>
+  <div class="additional-info">
+    <h3><font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>SoftServe Inc.</h3>
+    <h3><font color="grey"><i class="fa fa-map-marker" style="margin-right: 6px; margin-left: 3px; font-size: 1.1em"></i> City: </font>Lviv</h3>
+    <h3><font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>Victor Moiseychenov</h3>
+    <h3><font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a href="www.softserveinc.com">www.softserveinc.com</a></h3>
+    <h4><font color="green"><i class="fa fa-check-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Checked</font></h4>
   </div>
   <div class="additional-info">
   <p-card title="About the vacancy" [style]="{width: '100%', 'margin-bottom':'20px'}">
