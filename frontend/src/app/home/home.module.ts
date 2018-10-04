@@ -10,7 +10,7 @@ import { JobFiltersComponent } from '../job-filters/job-filters.component';
 import { CompanyFiltersComponent } from '../company-filters/company-filters.component';
 import { ResumesSearchComponent } from '../resumes-search/resumes-search.component';
 import { ResumeDetailsComponent } from '../resume-details/resume-details.component';
-
+import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.component';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -20,6 +20,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../shared/shared.module';
 import { FieldsetModule } from 'primeng/fieldset';
 import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { DialogModule } from 'primeng/dialog';
     MultiSelectModule,
     SharedModule,
     FieldsetModule,
-    DialogModule
+    DialogModule,
+    CardModule
   ],
   declarations: [
     HomeComponent,
@@ -44,7 +46,8 @@ import { DialogModule } from 'primeng/dialog';
     JobFiltersComponent,
     CompanyFiltersComponent,
     ResumesSearchComponent,
-    ResumeDetailsComponent
+    ResumeDetailsComponent,
+    VacancyDetailsComponent
   ]
 })
 export class HomeModule { }
