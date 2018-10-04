@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  Input } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Recruiter } from '../../shared/models/recruiter.model';
 
 @Component({
   selector: 'app-recruiter-header',
@@ -10,6 +11,10 @@ export class RecruiterHeaderComponent implements OnInit {
 
   visibleSidebar2;
   items: MenuItem[];
+
+
+  @Input()
+  recruiter: Recruiter
 
   constructor() { }
 

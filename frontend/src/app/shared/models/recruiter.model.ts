@@ -12,5 +12,5 @@ export interface Recruiter {
   company: Company;
   roleId: number;
 
-  vacancy: Vacancy[];
+ 
 }

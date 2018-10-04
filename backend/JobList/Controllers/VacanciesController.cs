@@ -53,6 +53,17 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
+        [HttpGet("recruiters/{id}")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id)
+        {
+            var dtos = await _vacanciesService.GetVacanciesByRectuiterId(id);
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+            return Ok(dtos);
+        }
+
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<VacancyDTO>> GetById(int id)
