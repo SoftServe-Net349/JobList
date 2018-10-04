@@ -9,6 +9,9 @@ h4
   margin-inline-end: 0px
   font-weight: bold
 
+/deep/ .ui-dialog
+    width: 650px !important
+
 #resume-form
     background: #F9F9F9
     border: 1px solid #ddd
@@ -30,29 +33,38 @@ h4
         margin-right: 20px
         display: inline-block
 
-    /deep/ .ui-float-label.education
+    .networks
+        margin-top: 15px !important
+
+    /deep/ .ui-float-label.education, /deep/ .ui-float-label.experience
         width: 100% !important
 
-    /deep/ .ui-dropdown, /deep/ .ui-multiselect
-        width: 242px !important
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect, /deep/ .ui-calendar
+        width: 250px !important
         height: 35px
         margin-right: 20px
-
-    /deep/ .ui-multiselect
-        .ui-multiselect-panel
-            max-width: 254px
 
     /deep/ .ui-dropdown .ui-inputtext, /deep/ .ui-multiselect .ui-multiselect-label
         padding: .6em
         
     /deep/ .size-input .ui-widget
-        width: 242px
+        width: 250px
+
+    .courses
+        margin-top: 20px
+
+    /deep/ textarea 
+        max-width: 100%
+        width: 100%
 
     hr 
         border: 0
         height: 1px        
         margin: 25px 0 15px 0
         background: rgba(0,0,0,.12) 
+
+    hr.email
+        margin: 35px 0 15px 0
 
     .checked-filter
         display: flex
@@ -78,7 +90,24 @@ h4
             min-width: 8.5em
 
     /deep/ .ui-button
-        margin-left: 10px
+        width: 250px
 
     .skills-area
         margin-top: 20px
+
+    input.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
+
+    input.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
+
+    .alert-danger
+        font-size: small
+        font-weight: 500
+        color: red
+        position: absolute
+        top: 35px
+        width: 100%
+        padding: 3px 2px
