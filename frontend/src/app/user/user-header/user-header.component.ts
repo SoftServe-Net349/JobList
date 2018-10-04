@@ -20,20 +20,14 @@ export class UserHeaderComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Find Vacancies',
-        icon: 'fa fa-search-plus'
+        label: 'Home',
+        icon: 'fa fa-home'
       },
-      // {
-      //   label: 'Add Recruiter',
-      //   icon: 'fa fa-plus',
-      //   command: (event) => { this.recruiterForm.showRecruiterForm('Create'); }
-      // },
       {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'pi pi-fw pi-user-plus'},
-          {label: 'Change login', icon: 'pi pi-fw pi-filter'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
         ]
       },
       {

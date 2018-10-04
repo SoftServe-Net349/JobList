@@ -20,7 +20,13 @@ export class CompanyComponent implements OnInit {
               private recruiterService: RecruiterService,
               private activatedRoute: ActivatedRoute,
               private confirmationService: ConfirmationService) {
-    this.company = {
+    this.company = this.defaultCompany();
+
+    this.recruiters = [];
+  }
+
+  defaultCompany(): Company {
+    return {
       id: 0,
       name: '',
       bossName: '',
@@ -35,8 +41,6 @@ export class CompanyComponent implements OnInit {
       password: '',
       roleId: 0
     };
-
-    this.recruiters = [];
   }
 
   ngOnInit() {

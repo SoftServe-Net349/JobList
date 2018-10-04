@@ -7,6 +7,8 @@ export interface RecruiterRequest {
   phone: string;
   email: string;
   password: string;
+  photoData: number[];
+  photoMimetype: string;
   companyId: number;
   roleId: number;
 }

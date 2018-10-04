@@ -1,82 +1,113 @@
 h1, h2, h3, h4, h5, h6 
-    font: inherit
-    color: inherit
-    margin: 10px 0 10px
+  font: inherit
+  color: inherit
+  margin: 0 0 10px
 
 h4 
-    display: block
-    margin-inline-start: 0px
-    margin-inline-end: 0px
-    font-weight: bold
+  display: block
+  margin-inline-start: 0px
+  margin-inline-end: 0px
+  font-weight: bold
 
-.cv-form
-    max-width: 580px
+/deep/ .ui-dialog
+    width: 650px !important
+
+#resume-form
+    background: #F9F9F9
+    border: 1px solid #ddd
+    box-shadow: none
+    border-radius: 0
     font-family: "Open Sans","Helvetica Neue",sans-serif
+    max-width: 100%
+    padding: 15px 25px
 
-    #resume-form
-        padding: 13px 25px
-        background: #F9F9F9
-        border: 1px solid #ddd
-        box-shadow: none
-        border-radius: 0
-        padding: auto
+    .resume-title
+        font-size: 14px;
+        margin: 0;
 
-        .resume-title
-            font-size: 14px;
+    .required-input-symbol
+        color: red
 
-        .sdf
-            margin-top: -7px
+    /deep/ .ui-float-label
+        margin-top: 20px
+        margin-right: 20px
+        display: inline-block
 
-        /deep/ .ui-float-label
-            margin-top: 20px
-            margin-right: 20px
-            display: inline-block
+    .networks
+        margin-top: 15px !important
 
-        /deep/ .ui-dropdown,/deep/ .ui-multiselect
-            width: 242px
+    /deep/ .ui-float-label.education, /deep/ .ui-float-label.experience
+        width: 100% !important
 
-        /deep/ .ui-multiselect
-            .ui-multiselect-panel
-                max-width: 254px
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect, /deep/ .ui-calendar
+        width: 250px !important
+        height: 35px
+        margin-right: 20px
 
-        /deep/ .ui-widget
-            width: 242px
+    /deep/ .ui-dropdown .ui-inputtext, /deep/ .ui-multiselect .ui-multiselect-label
+        padding: .6em
+        
+    /deep/ .size-input .ui-widget
+        width: 250px
 
-        hr 
-           border: 0
-           height: 1px        
-           margin-top: 15px
-           background: rgba(0,0,0,.12)     
+    .courses
+        margin-top: 20px
 
-        // /deep/ .ui-inputswitch.ui-inputswitch-checked.ui-inputswitch-focus .ui-inputswitch-slider
-        //     background: #00AC64
+    /deep/ textarea 
+        max-width: 100%
+        width: 100%
 
-        // /deep/ .ui-inputswitch.ui-inputswitch-checked .ui-inputswitch-slider
-        //     background-color: #00AC64
+    hr 
+        border: 0
+        height: 1px        
+        margin: 25px 0 15px 0
+        background: rgba(0,0,0,.12) 
 
-        .checked-filter
-            display: flex
+    hr.email
+        margin: 35px 0 15px 0
 
-        .approved
-            margin: 5px 0 0 20px
+    .checked-filter
+        display: flex
+
+    .approved
+        margin: 5px 0 0 20px
+        
+
+    /deep/ .ui-fluid
+        .ui-g-12
+            padding: 0 !important
+
+
+    /deep/ .ui-inputgroup
+        .ui-inputgroup-addon:first-child
+            min-width: 3.5em
+            font-size: .9em
+            padding: 0.5em
             
+            
+    /deep/ .ui-inputgroup
+        input
+            min-width: 8.5em
 
-        /deep/ .ui-fluid
-            .ui-g-12
-                padding: 0 !important
+    /deep/ .ui-button
+        width: 250px
 
+    .skills-area
+        margin-top: 20px
 
-        /deep/ .ui-inputgroup
-            .ui-inputgroup-addon:first-child
-                min-width: 3.5em
-                font-size: .9em
-                padding: 0.5em
-                
+    input.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
 
-                
-        /deep/ .ui-inputgroup
-            input
-                min-width: 8.5em
+    input.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
 
-        /deep/ .ui-button
-            margin-left: 10px
+    .alert-danger
+        font-size: small
+        font-weight: 500
+        color: red
+        position: absolute
+        top: 35px
+        width: 100%
+        padding: 3px 2px

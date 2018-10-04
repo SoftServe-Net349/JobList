@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
@@ -15,6 +15,10 @@ import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import {FieldsetModule} from 'primeng/fieldset';
 import {PanelModule} from 'primeng/panel';
+import {PasswordModule} from 'primeng/password';
+import {InputMaskModule} from 'primeng/inputmask';
+import {MultiSelectModule} from 'primeng/multiselect';
+
 import { UserHeaderComponent } from './user-header/user-header.component';
 
 import { ResumeFormComponent } from '../resume-form/resume-form.component';
@@ -36,7 +40,11 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     FieldsetModule,
     PanelModule,
-    SharedModule
+    SharedModule,
+    PasswordModule,
+    InputMaskModule,
+    ReactiveFormsModule,
+    MultiSelectModule
   ],
   declarations: [
     UserComponent,

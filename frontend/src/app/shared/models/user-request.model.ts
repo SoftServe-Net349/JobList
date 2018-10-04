@@ -6,14 +6,13 @@ export interface UserRequest {
   firstName: string;
   lastName: string;
   phone: string;
-  pphotoData: number[];
+  photoData: number[];
   photoMimeType: string;
   sex: string;
   birthData: Date;
   address: string;
   email: string;
   password: string;
-  city: City;
-  role: Role;
-  resume: Resume;
+  cityId: number;
+  roleId: number;
 }
