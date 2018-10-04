@@ -17,6 +17,6 @@ namespace JobList.Common.DTOS
         public int RoleId { get; set; }
 
         public CompanyDTO Company { get; set; }
-        public IList<VacancyDTO> Vacancies { get; set; }
+       //public IList<VacancyDTO> Vacancies { get; set; }
     }
 }
