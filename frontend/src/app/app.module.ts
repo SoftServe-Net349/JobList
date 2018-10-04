@@ -7,9 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 // PrimeNG modules
-import { FieldsetModule } from 'primeng/fieldset';
-import { DialogModule } from 'primeng/dialog';
-import { ButtonModule } from 'primeng/button';
 
 // Our created components
 
@@ -20,14 +17,12 @@ import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 import { CoreModule } from './core/core.module';
-import { ResumeDetailsComponent } from './resume-details/resume-details.component';
 
 
 
 @NgModule({
   declarations: [
-  AppComponent,
-  ResumeDetailsComponent
+  AppComponent
   ],
   imports: [
     BrowserModule,
@@ -40,10 +35,7 @@ import { ResumeDetailsComponent } from './resume-details/resume-details.componen
     AdminModule,
     RecruiterModule,
     CompanyModule,
-    CoreModule,
-    FieldsetModule,
-    DialogModule,
-    ButtonModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [

@@ -7,8 +7,9 @@ import { HomeComponent } from './home.component';
 import { MainSearchComponent } from './main-search/main-search.component';
 import { JobSearchComponent } from '../job-search/job-search.component';
 import { JobFiltersComponent } from '../job-filters/job-filters.component';
-import { CompanyFiltersComponent } from '../company-filters/company-filters.component'
-import { ResumesSearchComponent } from '../resumes-search/resumes-search.component'
+import { CompanyFiltersComponent } from '../company-filters/company-filters.component';
+import { ResumesSearchComponent } from '../resumes-search/resumes-search.component';
+import { ResumeDetailsComponent } from '../resume-details/resume-details.component';
 
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -17,6 +18,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../shared/shared.module';
+import { FieldsetModule } from 'primeng/fieldset';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   imports: [
@@ -30,7 +33,9 @@ import { SharedModule } from '../shared/shared.module';
     InputSwitchModule,
     SliderModule,
     MultiSelectModule,
-    SharedModule
+    SharedModule,
+    FieldsetModule,
+    DialogModule
   ],
   declarations: [
     HomeComponent,
@@ -38,7 +43,8 @@ import { SharedModule } from '../shared/shared.module';
     JobSearchComponent,
     JobFiltersComponent,
     CompanyFiltersComponent,
-    ResumesSearchComponent
+    ResumesSearchComponent,
+    ResumeDetailsComponent
   ]
 })
 export class HomeModule { }
