@@ -15,6 +15,5 @@ namespace JobList.Common.DTOS
         public int RoleId { get; set; }
 
         public CompanyDTO Company { get; set; }
-
     }
 }
