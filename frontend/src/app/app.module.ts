@@ -7,7 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 // PrimeNG modules
-
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 // Our created components
 
@@ -18,12 +20,14 @@ import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 import { CoreModule } from './core/core.module';
+import { VacancyDetailsComponent } from './vacancy-details/vacancy-details.component';
 
 
 
 @NgModule({
   declarations: [
-  AppComponent
+  AppComponent,
+  VacancyDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,10 @@ import { CoreModule } from './core/core.module';
     AdminModule,
     RecruiterModule,
     CompanyModule,
-    CoreModule
+    CoreModule,
+    DialogModule,
+    ButtonModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [
