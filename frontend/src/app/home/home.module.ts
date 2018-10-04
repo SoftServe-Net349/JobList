@@ -9,8 +9,8 @@ import { JobSearchComponent } from '../job-search/job-search.component';
 import { JobFiltersComponent } from '../job-filters/job-filters.component';
 import { CompanyFiltersComponent } from '../company-filters/company-filters.component';
 import { ResumesSearchComponent } from '../resumes-search/resumes-search.component';
+import { ResumeDetailsComponent } from '../resume-details/resume-details.component';
 import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.component';
-
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -18,6 +18,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../shared/shared.module';
+import { FieldsetModule } from 'primeng/fieldset';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
 
@@ -34,6 +35,7 @@ import { CardModule } from 'primeng/card';
     SliderModule,
     MultiSelectModule,
     SharedModule,
+    FieldsetModule,
     DialogModule,
     CardModule
   ],
@@ -44,6 +46,7 @@ import { CardModule } from 'primeng/card';
     JobFiltersComponent,
     CompanyFiltersComponent,
     ResumesSearchComponent,
+    ResumeDetailsComponent,
     VacancyDetailsComponent
   ]
 })

@@ -1,4 +1,4 @@
-<app-header></app-header>
+
 <div id="company-page">
   <div class="wrapper-flex">
     <img class="profile-avatar" src="https://avatars0.githubusercontent.com/u/43314300?s=400&u=1ab66ea04a1b8060af09ee83b3ba69a44a9f8710&v=4" alt="Profile Avatar">
@@ -11,7 +11,15 @@
       <p><span>Phone: </span>+380673785968</p>
       <p><span>Marital Status: </span>Unmarried</p>
     </div>
-    <app-resume-form></app-resume-form>
+    <p-dialog header="Message" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
+        [maximizable]="false" [baseZIndex]="10000" showHeader="false">
+        <span>Do you really want to send the invitation to Victor Moiseychenkov?</span>
+        <p-footer>
+            <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="display=false" label="No" class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+    <button type="button" (click)="showDialog()" pButton icon="pi pi-copy" label="Send invitation"></button>
   
   </div>
     <div class="additional-info">
@@ -56,5 +64,3 @@
         </p-fieldset>
     </div>
 </div>
-
-<app-footer></app-footer>

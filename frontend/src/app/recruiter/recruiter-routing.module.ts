@@ -3,8 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { RecruiterComponent } from './recruiter.component';
 
 const routes: Routes = [
-  { path: 'recruiter', component: RecruiterComponent }
+  { path: 'recruiters/:id', component: RecruiterComponent }
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

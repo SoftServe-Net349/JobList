@@ -1,19 +1,19 @@
 <div class="header">
   <div class="wrapper">
     <div id="left-side-menu">
-        <a id="home" href="#home">JOBLIST</a>
-        <p>Find job of your dream</p>
+      <a id="home" href="#home">JOBLIST</a>
+      <p>Find job of your dream</p>
     </div>
 
-      <div id="right-side-menu"> 
-        <a href="">Find Vacancies</a>
-        <a>Favourite Vacancies</a>
+    <div id="right-side-menu">
+      <a href="">Find Vacancies</a>
+      <a>Favourite Vacancies</a>
 
       <p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000" blockScroll="true">
-      <h1 class="company-profile">Profile</h1>
-      <hr>
-      <p-panelMenu [model]="items" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
-      </p-sidebar>	 
+        <h1 class="company-profile">Profile</h1>
+        <hr>
+        <p-panelMenu [model]="items" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
+      </p-sidebar>
 
       <a class="profile" (click)="visibleSidebar2 = true">
         <span>Profile</span>
