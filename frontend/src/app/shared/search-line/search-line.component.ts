@@ -17,7 +17,7 @@ export class SearchLineComponent implements OnInit {
   selectedCity: City;
   inputText: String;
 
-  @Output() filteredVacancies = new EventEmitter<String>();
+  @Output() filteredVacancies = new EventEmitter<object>();
   @Output() filteredResumes = new EventEmitter<String>();
 
   currentUrl: String;
@@ -34,14 +34,14 @@ export class SearchLineComponent implements OnInit {
     .subscribe((data: City[]) => this.cities = data);
   }
 
-  search(){
+  search() {
     if (this.currentUrl === '/jobsearch') {
-      this.filteredVacancies.emit(this.inputText);
+      this.filteredVacancies.emit({
+        search: this.inputText === undefined ? '' : this.inputText,
+        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name});
      } else if (this.currentUrl === '/resumessearch') {
       this.filteredResumes.emit(this.inputText);
      }
   }
+
 }
-
-
-
