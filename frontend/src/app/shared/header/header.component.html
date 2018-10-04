@@ -4,7 +4,7 @@
       <a id="home" href="#home">JOBLIST</a>
       <p>Find job of your dream</p>
     </div>
-    <div *ngIf="router.url === '/'">
+    <div *ngIf="isHomeHeader()">
       <div id="right-side-menu">
         <a>Find Job</a>
         <a href="">Resume</a>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <!-- COMANY HEADER -->
-    <div *ngIf="router.url === '/companies/'+indx">
+    <div *ngIf="isCompanyHeader()">
       <div id="right-side-menu">
         <a>Find Resumes</a>
         <a class="update-info" (click)="companyInfoForm.showInformationForm('Update', company)">Update Info</a>
@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- RECRUITER HEADER -->
-    <div *ngIf="router.url === '/recruiter' ||router.url === '/recruiter/'+indx || router.url === '/resumessearch'">
+    <div *ngIf="isRecruiterHeader()">
       <div id="right-side-menu">
         <a>Find Resumes</a>
         <p-sidebar [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
@@ -47,7 +47,7 @@
       </div>
     </div>
     <!-- USER HEADER -->
-    <div *ngIf="router.url === '/user' || router.url === '/jobsearch'">
+    <div *ngIf="isUserHeader()">
       <div id="right-side-menu">
         <a href="">Find Vacancies</a>
         <a>Favourite Vacancies</a>
