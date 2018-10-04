@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
    companyInfoForm: CompanyInfoFormComponent;
 
    ngOnInit() {
-     if (this.router.url === '/companies/' + this.indx) {
+     if (this.isCompanyHeader()) {
      this.itemsForCompany = [
        {
          label: 'Home',
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
        label: 'Sign out',
        icon: 'fa fa-sign-out'
        }
-     ]; } else if (this.router.url === '/recruiter' || this.router.url === '/recruiter/+indx' || this.router.url === '/resumessearch') {
+     ]; } else if (this.isRecruiterHeader()) {
       this.itemsForRecruiter = [
         {
           label: 'Home',
@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit {
         label: 'Sign out',
         icon: 'fa fa-sign-out'
         }
-        ]; } else if (this.router.url === '/user' || this.router.url === '/jobsearch') {
+        ]; } else if (this.isUserHeader()) {
           this.itemsForUser = [
             {
               label: 'Find Vacancies',
@@ -87,5 +87,17 @@ export class HeaderComponent implements OnInit {
             }
           ];
         }
+   }
+   isHomeHeader() {
+     return this.router.url === '/';
+   }
+   isCompanyHeader() {
+    return this.router.url === '/companies/' + this.indx;
+   }
+   isRecruiterHeader() {
+    return this.router.url === '/recruiter' || this.router.url === '/recruiter/+indx' || this.router.url === '/resumessearch';
+   }
+   isUserHeader() {
+     return this.router.url === '/user' || this.router.url === '/jobsearch';
    }
 }
