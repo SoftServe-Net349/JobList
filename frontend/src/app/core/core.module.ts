@@ -17,10 +17,10 @@ import { VacancyService } from './services/vacancy.service';
     CommonModule
   ],
   providers: [
-		ApiService,
+    ApiService,
     CompanyService,
     CityService,
-    WorkAreaService, 
+    WorkAreaService,
     SchoolService,
     FacultyService,
     LanguageService,

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { MessageService } from 'primeng/api';
+
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-vacancy-form',
@@ -11,18 +15,9 @@ export class VacancyFormComponent implements OnInit {
   display: Boolean = false;
   action: String;
 
-  cities: City[];
-  selectedCity: City;
+  vacancyForm: FormGroup;
 
-  constructor() {
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-    ];
-  }
+  @Output() loadRecruiters = new EventEmitter();
 
   ngOnInit() {
   }

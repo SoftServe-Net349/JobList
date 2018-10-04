@@ -1,10 +1,10 @@
 <div class="filter-search">
 	<div class="filter-form">
 		<div class="wrapper">
-			<input type="text" pInputText [(ngModel)]="property" placeholder="Enter name or keyword" />
-			<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"></p-dropdown>
-			<p-button label="Search" icon="pi pi-search" ></p-button>
+			<input type="text" pInputText [(ngModel)]="inputText" (keydown.enter)="search()" name="searchString" placeholder="Enter name or keyword" />
+			<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"
+				name="dropdown"></p-dropdown>
+			<p-button label="Search" icon="pi pi-search" (click)="search()" name="Submit"></p-button>
 		</div>
-		
 	</div>
 </div>

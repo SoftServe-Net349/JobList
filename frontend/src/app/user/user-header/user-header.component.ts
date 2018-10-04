@@ -23,7 +23,6 @@ export class UserHeaderComponent implements OnInit {
         label: 'Find Vacancies',
         icon: 'fa fa-search-plus'
       },
-      
       // {
       //   label: 'Add Recruiter',
       //   icon: 'fa fa-plus',

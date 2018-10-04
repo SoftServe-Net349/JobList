@@ -18,7 +18,5 @@ namespace JobList.Common.DTOS
         public string Email { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
-
-        public IList<RecruiterDTO> Recruiters { get; set; }
     }
 }

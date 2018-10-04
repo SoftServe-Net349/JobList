@@ -16,14 +16,26 @@ namespace JobList.DataAccess.Data
             var roles = new Role[]
             {
                 new Role { Id = 1, Name = "admin" },
-                new Role { Id = 2, Name = "user" }
+                new Role { Id = 2, Name = "user" },
+                new Role { Id = 3, Name = "company" },
+                new Role { Id = 4, Name = "recruiter" }
             };
 
             var cities = new City[]
             {
-                new City {Id = 1, Name = "Lviv"},
-                new City {Id = 2, Name = "Kyiv"},
-                new City {Id = 3, Name = "Dnipro"}
+                new City {Id = 1, Name = "New York City"},
+                new City {Id = 2, Name = "Jersey City"},
+                new City {Id = 3, Name = "Atlanta"},
+                new City {Id = 4, Name = "Los Angeles"},
+                new City {Id = 5, Name = "Boston"},
+                new City {Id = 6, Name = "Philadephia"},
+                new City {Id = 7, Name = "Seattle" },
+                new City {Id = 8, Name = "Washington DC"},
+                new City {Id = 9, Name = "Las Vegas"},
+                new City {Id = 10, Name = "Phoneix"},
+                new City {Id = 11, Name = "San Francisco"},
+                new City {Id = 12, Name = "Chicago"}
+
             };
 
             var languages = new Language[]
@@ -31,13 +43,27 @@ namespace JobList.DataAccess.Data
                 new Language { Id = 1, Name = "English" },
                 new Language { Id = 2, Name = "Ukrainian" },
                 new Language { Id = 3, Name = "Russian" },
+                new Language { Id = 4, Name = "Polish" },
+                new Language { Id = 5, Name = "Greek" },
+                new Language { Id = 6, Name = "Japanese" },
+                new Language { Id = 7, Name = "Spanish" },
+                new Language { Id = 8, Name = "Chinese" },
+                new Language { Id = 9, Name = "German" },
+                new Language { Id = 10, Name = "Roman" }
             };
 
             var schools = new School[]
             {
-                new School {Id = 1, Name = "NU LP" },
-                new School {Id = 2, Name = "LNU" },
-                new School {Id = 3, Name = "KPI" }
+                new School {Id = 1, Name = "Chicago State University" },
+                new School {Id = 2, Name = "Harvard University" },
+                new School {Id = 3, Name = "Prinston University" },
+                new School {Id = 4, Name = "Berklee College Of Arts" },
+                new School {Id = 5, Name = "Stanford University" },
+                new School {Id = 6, Name = "Massachusetts Institute of Technology"},
+                new School {Id = 7, Name = "Columbia University" },
+                new School {Id = 8, Name = "New York University" },
+                new School {Id = 9, Name = "University of Arizona" },
+                new School {Id = 10, Name = "Yale University" }
 
             };
 
@@ -45,14 +71,30 @@ namespace JobList.DataAccess.Data
             {
                 new WorkArea{ Id = 1, Name = "IT" },
                 new WorkArea{ Id = 2, Name = "Sales" },
-                new WorkArea{ Id = 3, Name = "Medicine" }
+                new WorkArea{ Id = 3, Name = "Medicine" },
+                new WorkArea{ Id = 4, Name = "Marketing and Advertising" },
+                new WorkArea{ Id = 5, Name = "Law and Politics" },
+                new WorkArea{ Id = 6, Name = "Science" },
+                new WorkArea{ Id = 7, Name = "Tourism" },
+                new WorkArea{ Id = 8, Name = "Arts" },
+                new WorkArea{ Id = 9, Name = "Insurance" },
+                new WorkArea{ Id = 10, Name = "Real Estate" },
+                new WorkArea{ Id = 11, Name = "Finances" },
+                new WorkArea{ Id = 12, Name = "Media" }
             };
 
             var faculties = new Faculty[]
             {
                 new Faculty{ Id = 1, Name = "Computer Science" },
                 new Faculty{ Id = 2, Name = "Software Engineering"},
-                new Faculty{ Id = 3, Name = "Applied Mathematics"}
+                new Faculty{ Id = 3, Name = "Applied Mathematics"},
+                new Faculty{ Id = 4, Name = "Foreign Languages"},
+                new Faculty{ Id = 5, Name = "International Relationships"},
+                new Faculty{ Id = 6, Name = "Economics"},
+                new Faculty{ Id = 7, Name = "Design"},
+                new Faculty{ Id = 8, Name = "Faculty of Law"},
+                new Faculty{ Id = 9, Name = "Marketing"},
+                new Faculty{ Id = 10, Name = "Journalism"}
             };
 
             var companyFaker = new Faker<Company>()
