@@ -23,12 +23,11 @@ export class RecruiterComponent implements OnInit {
   constructor(
     private recruiterService: RecruiterService,
     private vacancyService: VacancyService,
-    private activatedRoute: ActivatedRoute,
-    private confirmationService: ConfirmationService) {
+    private activatedRoute: ActivatedRoute) {
      
     this.recruiter = this.defaultRecruiter();
     this.vacancies = [];
-    }
+  }
 
 
   ngOnInit() {
@@ -62,14 +61,5 @@ export class RecruiterComponent implements OnInit {
   loadVacancy(id: number = this.recruiter.id) {
     this.vacancyService.getByRecruiterId(id)
     .subscribe((data: Vacancy[]) => this.vacancies = data);
-  }
-
-  deleteConfirm(id: number) {
-    this.confirmationService.confirm({
-        message: 'Do you want to delete this record?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        accept: () => { this.recruiterService.delete(id).subscribe(data => this.loadVacancies()); }
-    });
   }
 }

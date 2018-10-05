@@ -1,12 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { VacancyService } from '../core/services/vacancy.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Vacancy } from '../shared/models/vacancy.model';
-import { VacancyService } from '../core/services/vacancy.service';
-import { VacancyRequest } from '../shared/models/vacancy-request.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
+import { VacancyService } from '../core/services/vacancy.service';
 
 @Component({
   selector: 'app-vacancy-form',
@@ -20,9 +18,8 @@ export class VacancyFormComponent implements OnInit {
   display: Boolean = false;
   action: String;
 
-  vacancy: Vacancy;
+  vacancies: Vacancy;
   cities: City[];
-  sekectedCity: City;
 
   @Output() loadVacancy = new EventEmitter();
   @Input()
@@ -69,17 +66,12 @@ export class VacancyFormComponent implements OnInit {
       isChecked: false,
       salary: 0,
       fullPartTime: '',
-      createDate: null,
-      modDate: null,
+      createDate: new Date(),
+      modDate: new Date(),
       city: null,
       recruiter: null,
       workArea: null
     };
-  }
-
-  loadCities() {
-    this.cityService.getAll()
-    .subscribe((data: City[]) => this.cities = data);
   }
 
   showVacancyForm(action: String, vacancies = this.defaultVacancy()) {
@@ -98,56 +90,6 @@ export class VacancyFormComponent implements OnInit {
         bePlus: this.vacancies.bePlus
 
       });
-    } }}
-
-  submit() {
-    if (this.action === 'Create') {
-      this.createVacancy();
-    }
-    if (this.action === 'Update') {
-      this.updateVacancy();
-    }
-    this.display = false;
-  }
-
-  updateVacancy() {
-    const request: VacancyRequest = {
-      name: this.vacancyForm.get('name').value,
-      salary: this.vacancyForm.get('salary').value,
-      description: this.vacancyForm.get('description').value,
-      offering: this.vacancyForm.get('offering').value,
-      requirements: this.vacancyForm.get('requirements').value,
-      bePlus: this.vacancyForm.get('bePlus').value,
-      isChecked: false,
-      fullPartTime: this.vacancy.fullPartTime,
-      createDate: this.vacancy.createDate,
-      modDate: this.vacancy.modDate,
-      city: this.vacancy.city,
-      recruiter: this.vacancy.recruiter,
-      workArea: this.vacancy.workArea
-    };
-    this.recruiterService.update(this.vacancy.id, request)
-    .subscribe(data => this.loadVacancies.emit());
-  }
-
-
-  createVacancy(){
-    const request: VacancyRequest = {
-      name: this.vacancyForm.get('name').value,
-      salary: this.vacancyForm.get('salary').value,
-      description: this.vacancyForm.get('description').value,
-      offering: this.vacancyForm.get('offering').value,
-      requirements: this.vacancyForm.get('requirements').value,
-      bePlus: this.vacancyForm.get('bePlus').value,
-      isChecked: false,
-      fullPartTime: this.vacancy.fullPartTime,
-      createDate: this.vacancy.createDate,
-      modDate: this.vacancy.modDate,
-      city: this.vacancy.city,
-      recruiter: this.vacancy.recruiter,
-      workArea: this.vacancy.workArea
-    };
-    this.recruiterService.create(request)
-    .subscribe(data => this.loadVacancies.emit());
+    } 
   }
 }

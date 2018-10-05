@@ -21,11 +21,6 @@ namespace JobList.DataAccess.Repositories
 
         protected readonly IMapper _mapper;
 
-        public int Count
-        {
-            get { return _dbSet.Count(); }
-        }
-
         public Repository(JobListDbContext context, IMapper mapper)
         {
             _context = context;

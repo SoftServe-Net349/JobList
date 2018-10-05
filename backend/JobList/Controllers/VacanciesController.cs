@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
-using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -23,23 +22,13 @@ namespace JobList.Controllers
 
         // GET: /vacancies
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery] UrlQuery urlQuery)
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get()
         {
-            var dtos = await _vacanciesService.GetAllEntitiesAsync(urlQuery);
+            var dtos = await _vacanciesService.GetAllEntitiesAsync();
             if (!dtos.Any())
             {
                 return NoContent();
             }
-
-            var pageInfo = new PageInfo()
-            {
-                PageNumber = urlQuery.PageNumber,
-                PageCount = urlQuery.PageCount,
-                TotalRecords = _vacanciesService.Count
-            };
-
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
-
 
             return Ok(dtos);
         }
@@ -68,8 +57,8 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("recruiters/{id}")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id)
+        [HttpGet("recruiter/{id}")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
         {
             var dtos = await _vacanciesService.GetVacanciesByRectuiterId(id);
             if (!dtos.Any())

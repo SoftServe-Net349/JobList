@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
-using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -17,10 +15,6 @@ namespace JobList.BusinessLogic.Services
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public int Count
-        {
-            get { return _uow.VacanciesRepository.Count; }
-        }
 
         public VacanciesService(IUnitOfWork uow, IMapper mapper)
         {
@@ -56,20 +50,12 @@ namespace JobList.BusinessLogic.Services
             return result;
         }
 
-        public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync(UrlQuery urlQuery)
+        public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.Recruiter).ThenInclude(v => v.Company));
-
-            if(urlQuery != null)
-            {
-                entities = entities
-                    .Skip(urlQuery.PageCount * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageCount)
-                    .ToList();
-            }
 
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
