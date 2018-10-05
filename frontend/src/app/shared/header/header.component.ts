@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../models/company.model';
 import { MenuItem } from 'primeng/api';
 import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
@@ -10,8 +10,7 @@ import { CompanyInfoFormComponent } from '../../company-info-form/company-info-f
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
-  indx: String[];
-
+  index: string;
   visibleForCompany;
   itemsForCompany: MenuItem[];
 
@@ -21,10 +20,9 @@ export class HeaderComponent implements OnInit {
   visibleForUser;
   itemsForUser: MenuItem[];
 
-  constructor(private router: Router) {
-    console.log(router.url);
-    this.indx = router.url.split('/', 3);
-    console.log(this.indx[2]);
+  constructor(private activeRoute: ActivatedRoute,
+              private router: Router) {
+    this.activeRoute.params.subscribe( params => this.index = params.id );
    }
 
    @Input()
@@ -93,14 +91,14 @@ export class HeaderComponent implements OnInit {
      return this.router.url === '/';
    }
    isCompanyHeader() {
-    return this.router.url === '/companies/' + this.indx[2];
+    return this.router.url === '/companies/' + this.index;
    }
    isRecruiterHeader() {
-    return this.router.url === '/recruiter' || this.router.url === '/recruiter/+indx' || this.router.url === '/resumessearch'
+    return this.router.url === '/recruiters/' + this.index || this.router.url === '/resumessearch'
      || this.router.url === '/resume-details';
    }
    isUserHeader() {
-     return this.router.url === '/user/' + this.indx[2] || this.router.url === '/jobsearch' || this.router.url === '/vacancy-details'
+     return this.router.url === '/users/' + this.index || this.router.url === '/jobsearch' || this.router.url === '/vacancy-details'
      || this.router.url === '/company-details';
    }
 }
