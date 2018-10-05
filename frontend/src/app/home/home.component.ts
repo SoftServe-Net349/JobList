@@ -8,13 +8,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  public href: String = '';
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
-    this.href = this.router.url;
-    console.log(this.href);
   }
 
 }

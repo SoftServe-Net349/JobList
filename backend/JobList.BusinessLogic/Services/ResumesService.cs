@@ -52,7 +52,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
-                 include: r => r.Include(o => o.User)
+                 include: r => r.Include(o => o.User).ThenInclude(u => u.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.EducationPeriods).ThenInclude(e=>e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
@@ -67,7 +67,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<ResumeDTO> GetEntityByIdAsync(int id)
         {
             var entity = await _uow.ResumesRepository.GetEntityAsync(id,
-                 include: r => r.Include(o => o.User)
+                 include: r => r.Include(o => o.User).ThenInclude(u => u.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
