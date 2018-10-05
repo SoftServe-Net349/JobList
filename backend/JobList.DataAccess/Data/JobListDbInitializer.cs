@@ -97,6 +97,16 @@ namespace JobList.DataAccess.Data
                 new Faculty{ Id = 10, Name = "Journalism"}
             };
 
+            var user = new User { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthData = new DateTime(1995, 8, 3), Address = "London,Uk", Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
+            var resume = new Resume { Id = 46, WorkAreaId = 3, Courses = "Certification training", CreateDate = new DateTime(2018, 4, 5), KeySkills = "hardworking, persuasive", SoftSkills = "plastic surgery", Facebook = "www.facebook.com", FamilyState = "not married" };
+            var resume_language1 = new ResumeLanguage { Id = 111, ResumeId = 46, LanguageId = 10 };
+            var resume_language2 = new ResumeLanguage { Id = 112, ResumeId = 46, LanguageId = 5 };
+            var resume_language3 = new ResumeLanguage { Id = 113, ResumeId = 46, LanguageId = 7 };
+            var experience = new Experience { Id = 65, ResumeId = 46, CompanyName = "Triomed", Position = "Surgeon", StartDate = new DateTime(2008, 12, 25), FinishDate = new DateTime(2018, 9, 5) };
+            var school1 = new EducationPeriod { Id = 111, ResumeId = 46, SchoolId = 8, FacultyId = 4, StartDate = new DateTime(2002, 12, 3), FinishDate = new DateTime(2005, 6, 14) };
+            var school2 = new EducationPeriod { Id = 112, ResumeId = 46, SchoolId = 5, FacultyId = 2, StartDate = new DateTime(2004, 8, 13), FinishDate = new DateTime(2007, 1, 15) };
+
+
             var companyFaker = new Faker<Company>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.Name, f => f.PickRandom($"Company № {f.Random.Number(999)}"))
@@ -157,11 +167,15 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.Password, f => f.Internet.Password())
                 .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id)
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id);
-
-            var users = userFaker.Generate(amount).ToArray();
-
+            User[] uu = new User[10];
+            var users = userFaker.Generate(amount + 1).ToArray();
+            for (int i = 0; i < 10; i++)
+            {
+                uu[i] = users[i];
+            }
+            users[10] = user;
             var resumeFaker = new Faker<Resume>()
-                .RuleFor(o => o.Id, f => f.PickRandom(users).Id)
+                .RuleFor(o => o.Id, f => f.PickRandom(uu).Id)
                 .RuleFor(o => o.Linkedin, f => f.Internet.Url())
                 .RuleFor(o => o.Github, f => f.Internet.Url())
                 .RuleFor(o => o.Facebook, f => f.Internet.Url())
@@ -175,18 +189,23 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.ModDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var resumes = resumeFaker.Generate(1).ToArray();
+            var resumes = resumeFaker.Generate(2).ToArray();
+            resumes[1] = resume;
 
-
+            Resume[] fakeResumes = new Resume[1];
+            for (int i = 0; i < resumes.Length - 1; i++)
+            { fakeResumes[i] = resumes[i]; }
             var experienceFaker = new Faker<Experience>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.CompanyName, f => f.Name.FullName())
                 .RuleFor(o => o.Position, f => f.Lorem.Sentence())
                 .RuleFor(o => o.StartDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
-                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id);
+                .RuleFor(o => o.ResumeId, f => f.PickRandom(fakeResumes).Id);
 
-            var experiences = experienceFaker.Generate(amount).ToArray();
+            var experiences = experienceFaker.Generate(amount + 1).ToArray();
+            experiences[10] = experience;
+
 
 
             var educationPeriodFaker = new Faker<EducationPeriod>()
@@ -194,19 +213,25 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.StartDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.SchoolId, f => f.PickRandom(schools).Id)
-                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id)
+                .RuleFor(o => o.ResumeId, f => f.PickRandom(fakeResumes).Id)
                 .RuleFor(o => o.FacultyId, f => f.PickRandom(faculties).Id);
-            
 
-            var educationPeriods = educationPeriodFaker.Generate(amount).ToArray();
+
+            var educationPeriods = educationPeriodFaker.Generate(amount + 2).ToArray();
+            educationPeriods[10] = school1;
+            educationPeriods[11] = school2;
 
 
             var resumeLanguageFaker = new Faker<ResumeLanguage>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.ResumeId, f => f.PickRandom(resumes).Id)
+                .RuleFor(o => o.ResumeId, f => f.PickRandom(fakeResumes).Id)
                 .RuleFor(o => o.LanguageId, f => f.PickRandom(languages).Id);
 
-            var resumeLanguages = resumeLanguageFaker.Generate(amount).ToArray();
+            var resumeLanguages = resumeLanguageFaker.Generate(amount + 3).ToArray();
+            resumeLanguages[10] = resume_language1;
+            resumeLanguages[11] = resume_language2;
+            resumeLanguages[12] = resume_language3;
+
 
 
             var favoriteVacancyFaker = new Faker<FavoriteVacancy>()
