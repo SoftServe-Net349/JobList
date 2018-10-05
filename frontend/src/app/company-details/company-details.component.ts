@@ -13,8 +13,7 @@ export class CompanyDetailsComponent implements OnInit {
 
   company: Company;
 
-  constructor(private activatedRoute: ActivatedRoute, private companyService: CompanyService) 
-  { 
+  constructor(private activatedRoute: ActivatedRoute, private companyService: CompanyService) {
     this.company = this.defaultCompany();
   }
 

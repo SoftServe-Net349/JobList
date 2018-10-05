@@ -95,12 +95,12 @@ export class HeaderComponent implements OnInit {
    }
    isRecruiterHeader() {
     return this.router.url === '/recruiters/' + this.index || this.router.url === '/resumessearch'
-     || this.router.url === '/resume-details/' + this.index;
+     || this.router.url.includes('/resume-details/');
    }
    isUserHeader() {
      return this.router.url === '/users/' + this.index
      || this.router.url === '/jobsearch'
-     || this.router.url === '/vacancy-details/' + this.index
-     || this.router.url === '/company-details/' + this.index;
+     || this.router.url.includes('/vacancy-details/')
+     || this.router.url.includes('/company-details/');
    }
 }
