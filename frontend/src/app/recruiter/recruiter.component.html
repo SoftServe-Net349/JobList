@@ -22,11 +22,11 @@
 		</div>
 	</div>
 	<div class="filter-search">
-			<div class="wrapper">
-			  <input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
-			  <p-button label="Search" icon="pi pi-search" ></p-button>
-			</div>	
-		  </div>
+		<div class="wrapper">
+			<input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
+			<p-button label="Search" icon="pi pi-search" ></p-button>
+		</div>	
+	</div>
 	<div class="vacancy-list">
 		<div class="vacancy-text">
 			<hr class="fd-f1">
@@ -35,10 +35,10 @@
 		</div>
 
 		<div class="vacancy-container">		
-				<ul *ngIf="vacancies.length > 0">
-					<li *ngFor="let vacancy of vacancies">
-						<article class="vacancy-block">
-								<div class="vacancy">
+			<ul *ngIf="vacancies.length > 0">
+				<li *ngFor="let vacancy of vacancies">
+					<article class="vacancy-block">
+						<div class="vacancy">
 							<div class="inform">
 								<h3>
 									<a>{{vacancy.name}}</a>
@@ -66,49 +66,13 @@
 						</div>
 						<div class="vacancy-button">
 							<div class="recruiter-modification">
-								<button pButton type="button" label="Update" (click)="vacancyForm.showVacancyForm('Update', vacancy)"class="ui-button-rounded ui-button-warning"></button>
-								<button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>
+								<button pButton type="button" (click)="vacancyForm.showVacancyForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>
+								<button pButton type="button" (click)="deleteConfirm(vacancy.id)" label="Delete" class="ui-button-rounded ui-button-danger"></button>
 							</div>
 						</div>
-						</article>
-					</li>
-				</ul>
-
-		</div>
-			<ul *ngIf="vacancies.length > 0">
-				<li *ngFor="let vacancy of vacancies">
-					<article class="vacancy-block">
-						<div class="inform">
-							<h3>
-								<a>{{vacancy.name}}</a>
-							</h3>
-							<p class="company-name">
-								<a>{{recruiter.company.name}}</a>
-							</p>
-							<p class="location">
-								<i class="fa fa-map-marker"></i>
-								{{vacancy.city.name}}
-							</p>
-							<p class="short-description">
-								{{vacancy.description}}
-							</p>
-							<p class="agotime">
-								{{vacancy.createDate | date}}
-							</p>
-						</div>
-
-						<div>
-							<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-						</div>
-						<div class="vacancy-modification">
-							<button pButton type="button" (click)="vacancyForm.showVacancyForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>
-							<button pButton type="button" (click)="deleteConfirm(vacancy.id)" label="Delete" class="ui-button-rounded ui-button-danger"></button>
-						</div>
-
 					</article>
 				</li>
 			</ul>
-
 		</div>
 	</div>
 </div>

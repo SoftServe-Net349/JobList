@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CityService } from '../../core/services/city.service';
 import { VacancyService } from '../../core/services/vacancy.service';
+import { Vacancy } from '../../shared/models/vacancy.model';
+import { City } from '../../shared/models/city.model';
 
 @Component({
   selector: 'app-main-search',
@@ -10,33 +12,30 @@ import { VacancyService } from '../../core/services/vacancy.service';
 })
 
 export class MainSearchComponent implements OnInit {
- 
+
   cities: City[];
   selectedCity: City;
 
   vacancies: Vacancy[];
-  constructor(private cityService:CityService, private vacancyService: VacancyService) { 
+
+  constructor(private cityService: CityService,
+              private vacancyService: VacancyService) {
+
     this.vacancies = [];
   }
+
   ngOnInit() {
     this.loadCities();
-    this.loadVacancis();
+    this.loadVacancies();
   }
-  //handleClick() {}
-  
-  loadCities(){
+
+  loadCities() {
       this.cityService.getAll()
       .subscribe((data: City[]) => this.cities = data);
     }
 
-  loadVacancis(){
-      this.vacancyService.getAll(4, 1)
-      .subscribe((data:Vacancy[])=>this.vacancies = data);
+  loadVacancies() {
+      this.vacancyService.getAll()
+      .subscribe((data: Vacancy[]) => this.vacancies = data);
    }
-}
-class City {
-  name: string;
-}
-class Vacancy{
-  name: string;
 }

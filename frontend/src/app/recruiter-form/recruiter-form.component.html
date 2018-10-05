@@ -49,7 +49,7 @@
       <div class="ui-float-label">
         <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Avatar"></p-fileUpload>
       </div>
-      <div *ngIf="action=='Update'" class="ui-float-label">
+      <div *ngIf="action === 'Update'" class="ui-float-label">
         <p-button icon="fa fa-paper-plane" label="Resend Email&nbsp;"></p-button>
       </div>
     </form> 
