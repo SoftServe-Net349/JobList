@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import {SidebarModule} from 'primeng/sidebar';
 import {PanelMenuModule} from 'primeng/panelmenu';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 // Our created components
 import { AuthorizationsComponent } from '../authorizations/authorizations.component';
@@ -33,7 +34,8 @@ import { SearchLineComponent } from './search-line/search-line.component';
     InputTextModule,
     PasswordModule,
     SidebarModule,
-    PanelMenuModule
+    PanelMenuModule,
+    RadioButtonModule
   ],
   declarations: [
     SomePipe,

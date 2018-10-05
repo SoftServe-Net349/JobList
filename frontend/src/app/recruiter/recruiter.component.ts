@@ -44,7 +44,7 @@ export class RecruiterComponent implements OnInit {
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadRecruiterById(id);
-      this.loadVacancies(id);
+      this.loadVacancy(id);
     });
   }
 
@@ -54,12 +54,10 @@ export class RecruiterComponent implements OnInit {
     .subscribe((data: Recruiter) => this.recruiter = data);
   }
 
-  loadVacancies(id: number = this.recruiter.id) {
+  loadVacancy(id: number = this.recruiter.id) {
     this.vacancyService.getByRecruitersId(id)
     .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
-  loadVacancy() {
-    console.log('Success');
-  }
+  
 }
