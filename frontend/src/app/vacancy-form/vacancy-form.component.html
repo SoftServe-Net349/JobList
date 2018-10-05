@@ -1,59 +1,88 @@
-<p-dialog [header]="action+ ' Vacancy'" [(visible)]="display" [modal]="true" [responsive]="true" [width]="630" [minWidth]="200" [minY]="70" [focusOnShow]="false"
-[resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="false" [baseZIndex]="10000">
-<div id="vacancy-form">
-	
-	<h4 class="vacancy-title">Vacancy Name</h4>
-	<div>
-		<span class="ui-float-label">
-			<input id="vacancyName" type="text" size="30" pInputText> 
-		</span>
+<p-dialog [header]="action + ' Vacancy'" [blockScroll]="true" [dismissableMask]="false" [(visible)]="display" [resizable]="false"
+ [draggable]="false" [modal]="true" [width]="350" [minWidth]="600" [minY]="70" [baseZIndex]="10000">
+	<div id="vacancy-form">
+		<form [formGroup]="vacancyForm" novalidate>
+			<div>
+				<h4 class="vacancy-title">Vacancy Name
+					<span class="required-input-symbol">*</span>
+				</h4>
+				<div>
+					<span class="ui-float-label">
+						<input id="vacancyName" type="text" size="30" pInputText formControlName="vacancyName" required>
+						<div *ngIf="vacancyForm.get('vacancyName').invalid && (vacancyForm.get('vacancyName').dirty || vacancyForm.get('vacancyName').touched)"
+						 class="alert alert-danger">
+							<div *ngIf="vacancyForm.controls['vacancyName'].errors.required">
+								Vacancy name is required
+							</div>
+							<div *ngIf="vacancyForm.controls['vacancyName'].errors.minlength || vacancyForm.controls['vacancyName'].errors.maxlength">
+								Vacancy name should contain (2-50) chars
+							</div>
+						</div>
+					</span>
+				</div>
+				<hr>
+			</div>
+
+			<h4 class="vacancy-title">Salary</h4>
+			<div>
+				<span class="ui-float-label">
+					<input id="salary" type="text" size="30" pInputText formControlName="salary" required>
+					<div *ngIf="vacancyForm.get('salary').invalid && (vacancyForm.get('salary').dirty || vacancyForm.get('salary').touched)"
+						 class="alert alert-danger">
+							
+							<div *ngIf="vacancyForm.controls['salary'].errors.minlength || vacancyForm.controls['salary'].errors.maxlength">
+								Salary should be a number
+							</div>
+						</div>
+				</span>
+			</div>
+			<hr>
+			<h4 class="vacancy-title">City</h4>
+			<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true" formControlName="city" required></p-dropdown>
+			<hr>
+			<h4 class="vacancy-title">Description</h4>
+			<div class="text-area">
+				<textarea [rows]="10" [cols]="70" pDescription style="resize:none" formControlName="description" required></textarea>
+				<div *ngIf="vacancyForm.controls['description'].errors.required">
+					Description is required
+				</div>
+				
+			</div>
+			<hr>
+
+			<h4 class="vacancy-title">Offer</h4>
+			<div class="text-area">
+				<textarea [rows]="10" [cols]="70" pDescription style="resize:none" formControlName="offering" required></textarea>
+				<div *ngIf="vacancyForm.controls['offering'].errors.required">
+					Offer  is required
+				</div>
+				
+			</div>
+			<hr>
+			<h4 class="vacancy-title">Requirements</h4>
+			<div class="text-area">
+				<textarea [rows]="10" [cols]="70" pDescription style="resize:none" formControlName="requirements" required></textarea>
+				<div *ngIf="vacancyForm.controls['requirements'].errors.required">
+					Requirements name is required
+				</div>
+				
+			</div>
+			<hr>
+
+			<h4 class="vacancy-title">Be plus</h4>
+			<div class="text-area">
+				<textarea [rows]="10" [cols]="70" pDescription style="resize:none" formControlName="bePlus" required></textarea>
+				
+			</div>
+			<hr>
+			
+		</form>
 	</div>
-	<hr>
 
-	<h4 class="vacancy-title">Salary</h4>
-	<div>
-		<span class="ui-float-label">
-			<input id="salaryName" type="text" size="30" pInputText> 
-		</span>
-	</div>
-	<hr>
-
-	<h4 class="vacancy-title">City</h4>
-    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"></p-dropdown>
-    <hr>
-
-	<hr>
-	<h4 class="vacancy-title">Descriotion</h4>
-	<div class="text-area">
-		<textarea [rows]="10" [cols]="70" pDescription style="resize:none"></textarea>
-	</div>
-	<hr>
-
-	<h4 class="vacancy-title">Offer</h4>
-	<div class="text-area">
-		<textarea [rows]="10" [cols]="70" pDescription style="resize:none"></textarea>
-	</div>
-	<hr>
-
-	<h4 class="vacancy-title">Requirements</h4>
-	<div class="text-area">
-		<textarea [rows]="10" [cols]="70" pDescription style="resize:none"></textarea>
-	</div>
-	<hr>
-
-	<h4 class="vacancy-title">Be plus</h4>
-	<div class="text-area">
-		<textarea [rows]="10" [cols]="70" pDescription style="resize:none"></textarea>
-	</div>
-	<hr>
-</div>
-
-<p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Confirm" class="ui-button-success"></button>
-    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
-</p-footer>
+	<p-footer>
+		<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Confirm" class="ui-button-success"></button>
+		<button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+	</p-footer>
 </p-dialog>
 
-<button type="button" pButton icon="pi pi-plus" (click)="showVacancyForm('Create')" label="Add Vacancy" ></button>
-
-
+<button type="button" pButton icon="pi pi-plus" (click)="showVacancyForm('Create')" label="Add Vacancy"></button>

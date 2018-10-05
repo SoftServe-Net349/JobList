@@ -11,6 +11,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PasswordModule} from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 // Our created components
 import { AuthorizationsComponent } from '../authorizations/authorizations.component';
@@ -29,7 +30,8 @@ import { SearchLineComponent } from './search-line/search-line.component';
     DialogModule,
     CheckboxModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    RadioButtonModule
   ],
   declarations: [
     SomePipe,

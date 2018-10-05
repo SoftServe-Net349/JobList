@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
@@ -16,6 +17,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {FieldsetModule} from 'primeng/fieldset';
 import {PanelModule} from 'primeng/panel';
 import { UserHeaderComponent } from './user-header/user-header.component';
+
 
 import { ResumeFormComponent } from '../resume-form/resume-form.component'
 import { SharedModule } from '../shared/shared.module';

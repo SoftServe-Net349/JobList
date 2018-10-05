@@ -18,6 +18,7 @@ import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from '../shared/shared.module';
 
+
 @NgModule({
   imports: [
     ButtonModule,
