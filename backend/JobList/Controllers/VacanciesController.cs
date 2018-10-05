@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
@@ -22,13 +23,23 @@ namespace JobList.Controllers
 
         // GET: /vacancies
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery] UrlQuery urlQuery)
         {
-            var dtos = await _vacanciesService.GetAllEntitiesAsync();
+            var dtos = await _vacanciesService.GetAllEntitiesAsync(urlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
             }
+
+            var pageInfo = new PageInfo()
+            {
+                PageNumber = urlQuery.PageNumber,
+                PageCount = urlQuery.PageCount,
+                TotalRecords = _vacanciesService.Count
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
 
             return Ok(dtos);
         }

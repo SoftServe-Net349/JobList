@@ -30,7 +30,7 @@ export class MainSearchComponent implements OnInit {
     }
 
   loadVacancis(){
-      this.vacancyService.getAll()
+      this.vacancyService.getAll(4, 1)
       .subscribe((data:Vacancy[])=>this.vacancies = data);
    }
 }
