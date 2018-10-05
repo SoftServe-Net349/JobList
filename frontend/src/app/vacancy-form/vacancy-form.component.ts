@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { VacancyService } from '../core/services/vacancy.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Vacancy } from '../shared/models/vacancy.model';
+import { VacancyRequest } from '../shared/models/vacancy-request.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
-import { VacancyService } from '../core/services/vacancy.service';
 
 @Component({
   selector: 'app-vacancy-form',
@@ -18,8 +19,9 @@ export class VacancyFormComponent implements OnInit {
   display: Boolean = false;
   action: String;
 
-  vacancies: Vacancy;
+  vacancy: Vacancy;
   cities: City[];
+  selectedCity: City;
 
   @Output() loadVacancy = new EventEmitter();
   @Input()
@@ -30,7 +32,7 @@ export class VacancyFormComponent implements OnInit {
     private vacancyService: VacancyService,
     private cityService: CityService ) {
 
-    this.vacancies = this.defaultVacancy();
+    this.vacancy = this.defaultVacancy();
 
     this.vacancyForm = this.formBuilder.group({
       vacancyName:  ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -49,13 +51,13 @@ export class VacancyFormComponent implements OnInit {
     this.loadCities();
   }
 
-  loadCities(){
+  loadCities() {
     this.cityService.getAll()
       .subscribe((data: City[]) => this.cities = data);
   }
 
-  
-  defaultVacancy(): Vacancy{
+
+  defaultVacancy(): Vacancy {
     return {
       id: 0,
       name: '',
@@ -75,21 +77,21 @@ export class VacancyFormComponent implements OnInit {
   }
 
   showVacancyForm(action: String, vacancies = this.defaultVacancy()) {
-    this.vacancies = vacancies;
+    this.vacancy = vacancies;
     this.vacancyForm.reset();
     this.display = true;
     this.action = action;
     if (action === 'Update') {
       this.vacancyForm.setValue({
-        vacancyName: this.vacancies.name,
-        salary: this.vacancies.salary,
-        city: this.vacancies.city,
-        description: this.vacancies.description,
-        offering: this.vacancies.offering,
-        requirements: this.vacancies.requirements,
-        bePlus: this.vacancies.bePlus
+        vacancyName: this.vacancy.name,
+        salary: this.vacancy.salary,
+        city: this.vacancy.city,
+        description: this.vacancy.description,
+        offering: this.vacancy.offering,
+        requirements: this.vacancy.requirements,
+        bePlus: this.vacancy.bePlus
 
       });
-    } 
+    }
   }
 }
