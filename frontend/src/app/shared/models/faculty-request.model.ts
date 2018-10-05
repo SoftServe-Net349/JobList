@@ -1,6 +1,5 @@
-import { School } from './school.model';
 
 export interface FacultyRequest {
+  id: number;
   name: string;
-  school: School;
 }

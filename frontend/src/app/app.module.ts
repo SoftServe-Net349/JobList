@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 
 // PrimeNG modules
 
-
 // Our created components
 
 // Our created modules

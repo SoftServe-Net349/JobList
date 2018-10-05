@@ -1,14 +1,68 @@
 <div class="header">
   <div class="wrapper">
     <div id="left-side-menu">
-        <a id="home" href="#home">JOBLIST</a>
-        <p>Find job of your dream</p>
+      <a id="home" href="#home">JOBLIST</a>
+      <p>Find job of your dream</p>
     </div>
+    <div *ngIf="isHomeHeader()">
+      <div id="right-side-menu">
+        <a>Find Job</a>
+        <a href="">Resume</a>
+        <a (click)="authorizations.showDialog()">SignIn</a>
+      </div>
+    </div>
+    <!-- COMANY HEADER -->
+    <div *ngIf="isCompanyHeader()">
+      <div id="right-side-menu">
+        <a>Find Resumes</a>
+        <a class="update-info" (click)="companyInfoForm.showInformationForm('Update', company)">Update Info</a>
+        <a href="">Vacancies</a>
 
-      <div id="right-side-menu"> 
-      <a>Find Job</a>
-      <a href="">Resume</a>
-      <a (click)="authorizations.showDialog()">SignIn</a>
+        <p-sidebar [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
+          <h1 class="company-profile">Profile</h1>
+          <hr>
+          <p-panelMenu [model]="itemsForCompany" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
+        </p-sidebar>
+
+        <a class="profile" (click)="visibleForCompany = true">
+          <span>Profile</span>
+          <i class="fa fa-sort-desc"></i>
+        </a>
+      </div>
+    </div>
+    <!-- RECRUITER HEADER -->
+    <div *ngIf="isRecruiterHeader()">
+      <div id="right-side-menu">
+        <a>Find Resumes</a>
+        <p-sidebar [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
+          <h1 class="company-profile">Profile</h1>
+          <hr>
+          <p-panelMenu [model]="itemsForRecruiter" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
+        </p-sidebar>
+
+        <a class="profile" (click)="visibleForRecruiter = true">
+          <span>Profile</span>
+          <i class="fa fa-sort-desc"></i>
+        </a>
+      </div>
+    </div>
+    <!-- USER HEADER -->
+    <div *ngIf="isUserHeader()">
+      <div id="right-side-menu">
+        <a href="">Find Vacancies</a>
+        <a>Favourite Vacancies</a>
+
+        <p-sidebar [(visible)]="visibleForUser" position="right" [baseZIndex]="10000" blockScroll="true">
+          <h1 class="company-profile">Profile</h1>
+          <hr>
+          <p-panelMenu [model]="itemsForUser" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
+        </p-sidebar>
+
+        <a class="profile" (click)="visibleForUser = true">
+          <span>Profile</span>
+          <i class="fa fa-sort-desc"></i>
+        </a>
+      </div>
     </div>
   </div>
 </div>

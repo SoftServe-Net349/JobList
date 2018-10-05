@@ -18,7 +18,6 @@ namespace JobList.Common.DTOS
         public string Email { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
-        public int CityId { get; set; }
 
         public CityDTO City { get; set; }
         public ResumeDTO Resumes { get; set; }

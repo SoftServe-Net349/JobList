@@ -6,7 +6,6 @@ namespace JobList.Common.DTOS
     {
         public int Id { get; set; }
         public int ResumeId { get; set; }
-        public int LanguageId { get; set; }
 
         public LanguageDTO Language { get; set; }
     }
