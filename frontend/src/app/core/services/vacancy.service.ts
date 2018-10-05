@@ -15,7 +15,7 @@ export class VacancyService {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
-  getByRecruitersId(id: number): Observable<Vacancy[]> {
+  getByRecruiterId(id: number): Observable<Vacancy[]> {
     return this.apiService.get(`/${this.ctrlUrl}/recruiters/${id}`);
   }
 
