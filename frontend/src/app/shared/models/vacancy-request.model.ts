@@ -1,6 +1,3 @@
-import { City } from './city.model';
-import { Recruiter } from './recruiter.model';
-import { WorkArea } from './work-area.model';
 
 export interface VacancyRequest {
   name: string;
@@ -12,8 +9,7 @@ export interface VacancyRequest {
   salary: number;
   fullPartTime: string;
   createDate: Date;
-  modDate: Date;
-  city: City;
-  recruiter: Recruiter;
-  workArea: WorkArea;
+  cityId: number;
+  recruiterId: number;
+  workAreaId: number;
 }

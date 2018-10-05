@@ -1,4 +1,4 @@
-#company-page
+#user-page
   max-width: 1024px
   margin: 50px auto
   padding: 50px 60px
@@ -7,37 +7,41 @@
   box-shadow: none
   border-radius: 0
 
+  .wrapper-flex
+    display: flex
+    justify-content: space-between
+    margin-bottom: 50px
+      
+    .profile-avatar
+      height: 160px
+      border-radius: 15px
 
-.wrapper-flex
-  display: flex
-  justify-content: space-between
-    
+    .additional-info
+      width: 65%
+      margin: 0 20px
 
-.profile-avatar
-  align: right
-  height: 200px
-  margin-right: -230px
-  margin-top: 7px
-  border-radius: 15px
+      p
+        font-size: 1em
+        line-height: 1.4em
 
-.additional-info
-  p
-    margin: 10px 0
-    font-size: 1.2em
+      span
+        font-weight: 600
+        font-size: 1.1em
 
-  span
-    font-weight: 600
+  .resume-info
+    span 
+      font-weight: 600
+      font-size: 1em
 
   /deep/ legend
     font-size: 1.2em !important
     font-weight: 600 !important
-    margin-bottom: -15px !important
 
-.description
-  margin-top: 30px
+  .description
+    margin-top: 30px
 
-hr 
-  border: 0
-  height: 1px        
-  margin-top: 15px
-  background: rgba(0,0,0,.12) 
+  hr 
+    border: 0
+    height: 1px        
+    margin-top: 15px
+    background: rgba(0,0,0,.12) 

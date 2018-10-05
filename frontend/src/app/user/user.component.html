@@ -1,60 +1,71 @@
 <app-header></app-header>
-<div id="company-page">
+<div id="user-page">
   <div class="wrapper-flex">
     <img class="profile-avatar" src="https://avatars0.githubusercontent.com/u/43314300?s=400&u=1ab66ea04a1b8060af09ee83b3ba69a44a9f8710&v=4" alt="Profile Avatar">
     <div class="additional-info">
-      <p><span>Full Name: </span>Victor Moiseychenkov</p>
-      <p><span>E-Mail: </span>vmoiseychenkov@gmail.com</p>
-      <p><span>Sex: </span>Male</p>
-      <p><span>Address: </span>Ukraine, Lviv, Skhidna</p>
-      <p><span>Birth Date: </span>24.05.1999</p>
-      <p><span>Phone: </span>+380673785968</p>
+      <p><span>Full Name: </span>{{user.firstName}} {{user.lastName}}</p>
+      <p><span>E-Mail: </span>{{user.email}}</p>
+      <p><span>Sex: </span>{{user.sex ==='m'?'Male':user.sex==='f'?'Female':''}}</p>
+      <p><span>Address: </span>{{user.address}}</p>
+      <p><span>Birth Date: </span>{{user.birthDate}}</p>
+      <p><span>Phone: </span>{{user.phone}}</p>
       <p><span>Marital Status: </span>Unmarried</p>
     </div>
-    <app-resume-form></app-resume-form>
-  
-  </div>
-    <div class="additional-info">
-        <p-fieldset legend="Education">
-            <p><span>School: </span>"Prestige" Gymnasium Lviv</p><hr>
-            <p><span>School: </span>LPNU</p>
-            <p><span>Faculty: </span>IKNI</p>
-        </p-fieldset>
-        <p-fieldset legend="Experience">
-            <p><span>Company Name: </span>Intertelecom</p>
-            <p><span>Duration: </span>1 month</p><hr>
-            <p><span>Company Name: </span>McDonald's</p>
-            <p><span>Duration: </span>2 months</p>
-        </p-fieldset>
-        <p-fieldset legend="Courses">
-            <p><span>Course: </span>C# OOP, SoftServe IT-academy</p><hr>
-            <p><span>Course: </span>STEP IT-academy</p>
-        </p-fieldset>
-        <p-fieldset legend="Languages">
-            <p><span>Language: </span>English</p>
-            <p><span>Level: </span>B1</p><hr>
-            <p><span>Language: </span>German</p>
-            <p><span>Level: </span>A1</p>
-        </p-fieldset>
-        <p-fieldset legend="Soft Skills">
-            <p>The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. 
-            His beloved son Michael has just come home from the war, but does not intend to become part of his father's business. 
-            Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, 
-            kind and benevolent to those who give respect, 
-            but given to ruthless violence whenever anything stands against the good of the family.</p>
-        </p-fieldset>
-        <p-fieldset legend="Key Skills">
-            <p>The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. 
-            His beloved son Michael has just come home from the war, but does not intend to become part of his father's business. 
-            Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, 
-            kind and benevolent to those who give respect, 
-            but given to ruthless violence whenever anything stands against the good of the family.</p>
-        </p-fieldset>
-        <p-fieldset legend="Social Networks">
-            <p><span>GitHub: </span>victor-moi</p>
-            <p><span>Facebook: </span>Victor Moiseychenkov</p>
-        </p-fieldset>
+    <div>
+      <button type="button" (click)="resumeForm.showResumeForm('Update', user)" pButton icon="pi pi-copy" label="Update CV"></button>
     </div>
+  </div>
+
+  <div class="resume-info">
+    <p-fieldset legend="Intro">
+      <p>
+        Hello! I'm a young intelligent talented student. 
+        At the moment, I'm a tutor in mathematics. I extremely
+        like web-programming and would like to succeed as Full Stack Developer,
+        master different technologies, become a professional in this area.
+        And now I'm looking for a junior Full Stack Developer position.
+      </p>
+    </p-fieldset>
+    <p-fieldset legend="Social Networks">
+      <p><span>GitHub: </span>{{user.resumes?.github}}</p>
+      <p><span>Facebook: </span>{{user.resumes?.facebook}}</p>
+      <p><span>Instagram: </span>{{user.resumes?.instagram}}</p>
+      <p><span>Skype: </span>{{user.resumes?.skype}}</p>
+      <p><span>Linkedin: </span>{{user.resumes?.linkedin}}</p>
+    </p-fieldset>
+    <p-fieldset legend="Educations">
+      <div *ngFor="let ed of user.resumes?.educationPeriods">
+        <p><span>School: </span>{{ed.school}}</p>
+        <p *ngIf="ed.faculty">{{ed.faculty}}</p>
+        <p><span>Start Date: </span>{{ed.startDate}}</p>
+        <p><span>Finish Date: </span>{{ed.finishDate!=null?ed.finishDate:'present'}}</p>
+        <hr>    
+      </div>
+    </p-fieldset>
+    <p-fieldset legend="Experience">
+      <div *ngFor="let exp of user.resumes?.expiriences">
+        <p><span>Company Name: </span>{{exp.companyName}}</p>
+        <p><span>Position: </span>{{exp.position}}</p>
+        <p><span>Start Date: </span>{{exp.startDate}}</p>
+        <p><span>Finish Date: </span>{{exp.finishDate}}</p>
+        <hr>
+      </div>
+
+    </p-fieldset>
+    <p-fieldset legend="Languages">
+      <p>{{getLanguages()}}</p>
+    </p-fieldset>
+    <p-fieldset legend="Courses">
+      <p>{{user.resumes?.courses}}</p>
+    </p-fieldset>
+    <p-fieldset legend="Soft Skills">
+      <p>{{user.resumes?.softSkills}}</p>
+    </p-fieldset>
+    <p-fieldset legend="Key Skills">
+      <p>{{user.resumes?.keySkills}}</p>
+    </p-fieldset>    
+  </div>
 </div>
+<app-resume-form #resumeForm></app-resume-form> 
 
 <app-footer></app-footer>
