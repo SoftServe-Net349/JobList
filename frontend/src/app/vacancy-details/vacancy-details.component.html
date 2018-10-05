@@ -2,63 +2,71 @@
   <img class="vacancy-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Vacancy logo">
   <div class="wrapper-flex">
     <div class="additional-info">
-      <h1>.NET developer</h1>
-      <h2>$2000</h2>
-      <h5><font color="grey">Posted </font>1.10.2018</h5>
+      <h1>{{vacancy.name}}</h1>
+      <h2>{{vacancy.salary}} $</h2>
+      <h5>
+        <font color="grey">Posted </font>{{vacancy.createDate | date}}
+      </h5>
       <hr>
-      
+
     </div>
-    <p-dialog header="Send my CV" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
-      [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [blockScroll]="true" [resizable]="false" [minHeight]="100">
+    <p-dialog header="Send my CV" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+      [minY]="70" [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [blockScroll]="true" [resizable]="false"
+      [minHeight]="100">
       <span>Are you sure?</span>
       <p-footer>
-          <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
-          <button type="button" pButton icon="pi pi-times" (click)="display=false" label="No" class="ui-button-secondary"></button>
+        <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="display=false" label="No" class="ui-button-secondary"></button>
       </p-footer>
     </p-dialog>
     <button type="text" (click)="showDialog()" pButton icon="fa fa-file-text" label="Send my CV" style="height:35px"></button>
   </div>
   <div class="additional-info">
-    <h3><font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>SoftServe Inc.</h3>
-    <h3><font color="grey"><i class="fa fa-map-marker" style="margin-right: 6px; margin-left: 3px; font-size: 1.1em"></i> City: </font>Lviv</h3>
-    <h3><font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>Victor Moiseychenov</h3>
-    <h3><font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a href="www.softserveinc.com">www.softserveinc.com</a></h3>
-    <h4><font color="green"><i class="fa fa-check-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Checked</font></h4>
+    <h3>
+      <font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>{{vacancy.recruiter.company.name}}
+    </h3>
+    <h3>
+      <font color="grey"><i class="fa fa-map-marker" style="margin-right: 6px; margin-left: 3px; font-size: 1.1em"></i>
+        City: </font>{{vacancy.city.name}}
+    </h3>
+    <h3>
+      <font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>{{vacancy.recruiter.firstName}}
+      {{vacancy.recruiter.lastName}}
+    </h3>
+    <h3>
+      <font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a
+        href="www.softserveinc.com">{{vacancy.recruiter.company.site}}</a>
+    </h3>
+    <h4>
+      <font color="green"><i class="fa fa-check-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Checked</font>
+    </h4>
   </div>
   <div class="additional-info">
-  <p-card title="About the vacancy" [style]="{width: '100%', 'margin-bottom':'20px'}">
-    <div><p>Devart is one of the leading software development companies with a focus on various tools for database developers. Our flagship solution 
-      is dbForge Studio for SQL Server - a full-featured IDE for database development and administration. You will be involved in developing such 
-      features as code completion, static code analysis and much more.</p></div>
-  </p-card>
-  <p-card title="Requirements" [style]="{width: '100%', 'margin-bottom':'20px'}">
-    <ul>
-      <li><p><i class="pi pi-check"></i> Good algorithmic base</p></li>
-      <li><p><i class="pi pi-check"></i> Deep understanding of the .NET/C#, OOP</p></li>
-      <li><p><i class="pi pi-check"></i> Experience of debugging complex solutions</p></li>
-      <li><p><i class="pi pi-check"></i> Experience in using version control systems like Git, Mercurial etc</p></li>
-      <li><p><i class="pi pi-check"></i> Desire to solve software problems</p></li>
-    </ul>
-  </p-card>
-  <p-card title="Nice to have" [style]="{width: '100%', 'margin-bottom':'20px'}">
+    <p-card title="About the vacancy" [style]="{width: '100%', 'margin-bottom':'20px'}">
+      <div>
+        <p>{{vacancy.description}}</p>
+      </div>
+    </p-card>
+    <p-card title="Requirements" [style]="{width: '100%', 'margin-bottom':'20px'}">
       <ul>
-        <li><p><i class="pi pi-check"></i> Knowledge of design patterns, SOLID</p></li>
-        <li><p><i class="pi pi-check"></i> Understanding of concurrency</p></li>
-        <li><p><i class="pi pi-check"></i> Participation in development of large projects</p></li>
-        <li><p><i class="pi pi-check"></i> Experience in MS SQL or Oracle databases, ORM technologies, ADO.NET</p></li>
-        <li><p><i class="pi pi-check"></i> Experience in creating text parsers</p></li>
+        <li>
+          <p><i class="pi pi-check"></i> {{vacancy.requirements}}</p>
+        </li>
       </ul>
-  </p-card>
-  <p-card title="We offer" [style]="{width: '100%', 'margin-bottom':'20px'}">
+    </p-card>
+    <p-card title="Nice to have" [style]="{width: '100%', 'margin-bottom':'20px'}">
       <ul>
-        <li><p><i class="pi pi-check"></i> New modern office in the downtown</p></li>
-        <li><p><i class="pi pi-check"></i> Working on interesting projects with the use of the cutting-edge technologies</p></li>
-        <li><p><i class="pi pi-check"></i> High compensation</p></li>
-        <li><p><i class="pi pi-check"></i> Flexible work schedule</p></li>
-        <li><p><i class="pi pi-check"></i> Paid annual leave and sick leave</p></li>
-        <li><p><i class="pi pi-check"></i> English courses in the office</p></li>
-        <li><p><i class="pi pi-check"></i> Corporate activities</p></li>
+        <li>
+          <p><i class="pi pi-check"></i>{{vacancy.bePlus}}</p>
+        </li>
       </ul>
-  </p-card>
+    </p-card>
+    <p-card title="We offer" [style]="{width: '100%', 'margin-bottom':'20px'}">
+      <ul>
+        <li>
+          <p><i class="pi pi-check"></i> {{vacancy.offering}}</p>
+        </li>
+      </ul>
+    </p-card>
   </div>
 </div>
