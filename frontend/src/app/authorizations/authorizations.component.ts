@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-authorizations',
   templateUrl: './authorizations.component.html',
@@ -11,6 +13,9 @@ export class AuthorizationsComponent implements OnInit {
   display2=false;
   isSignIn = true;
   display3=false;
+ 
+  
+  
   
 showDialog() {
     this.display = true;

@@ -1,4 +1,3 @@
-import { Resume } from './resume.model';
 
 export interface Experience {
   id: number;
@@ -6,5 +5,5 @@ export interface Experience {
   position: string;
   startDate: Date;
   finishDate: Date;
-  resume: Resume;
+  resumeId: number;
 }

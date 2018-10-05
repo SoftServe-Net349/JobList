@@ -5,7 +5,7 @@ using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
@@ -33,23 +33,38 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("search/{searchString}")]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string searchString)
+        [HttpGet("search")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string search, string city)
         {
             var dtos = await _vacanciesService.GetAllEntitiesAsync();
-            
-            if(dtos == null)
+
+            if (dtos == null)
             {
                 return NotFound();
             }
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(search))
             {
                 dtos = dtos.Select(d => d)
                     .Where(d => d.Name.ToLower()
-                    .Contains(searchString.ToLower()));
+                    .Contains(search.ToLower()));
             }
+            if(!string.IsNullOrEmpty(city))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.City.Name == city);
+            }
+            return Ok(dtos);
+        }
 
+        [HttpGet("recruiter/{id}")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
+        {
+            var dtos = await _vacanciesService.GetVacanciesByRectuiterId(id);
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
             return Ok(dtos);
         }
 

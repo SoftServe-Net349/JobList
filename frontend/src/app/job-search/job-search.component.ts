@@ -17,20 +17,21 @@ export class JobSearchComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.loadVacancis();
+    this.loadVacancies();
   }
 
-  loadVacancis() {
+  loadVacancies() {
     this.vacancyService.getAll()
     .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
-  getVacanciesBySearchString(searchString: String) {
-    if (searchString === '') {
-      this.loadVacancis();
+  getVacanciesBySearchString(param: {search: string, city: string}) {
+    if (param.search === '' && param.city === '') {
+      this.loadVacancies();
     } else {
-      this.vacancyService.getBySearchString(searchString)
+      this.vacancyService.getBySearchString(param.search, param.city)
       .subscribe((data: Vacancy[]) => this.vacancies = data);
     }
   }
+
 }

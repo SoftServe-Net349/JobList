@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 import { RecruiterRoutingModule } from './recruiter-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 import { RecruiterComponent } from './recruiter.component';
@@ -31,7 +32,8 @@ import { DropdownModule } from 'primeng/dropdown';
     PanelMenuModule,
     FormsModule,
 		SharedModule,
-		DropdownModule
+    DropdownModule,
+    ReactiveFormsModule
   ],
   declarations: [
 		RecruiterComponent,

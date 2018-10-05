@@ -52,8 +52,7 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<CompanyDTO>> GetAllEntitiesAsync()
         {
-            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync(
-                include: c => c.Include(o => o.Recruiters));
+            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync();
 
             if (entities == null) return null;
 
@@ -64,8 +63,7 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<CompanyDTO> GetEntityByIdAsync(int id)
         {
-            var entity = await _uow.CompaniesRepository.GetEntityAsync(id,
-                include: c => c.Include(o => o.Recruiters));
+            var entity = await _uow.CompaniesRepository.GetEntityAsync(id);
 
             if (entity == null) return null;
 

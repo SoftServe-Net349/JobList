@@ -15,6 +15,7 @@ namespace JobList.BusinessLogic.Services
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
+
         public VacanciesService(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
@@ -52,9 +53,10 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
-                include: r => r.Include(o => o.City)
+                 include: r => r.Include(o => o.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.Recruiter).ThenInclude(v => v.Company));
+
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 
@@ -73,6 +75,18 @@ namespace JobList.BusinessLogic.Services
             var dto = _mapper.Map<Vacancy, VacancyDTO>(entity);
 
             return dto;
+        }
+
+        public async Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id)
+        {
+            var entities = await _uow.VacanciesRepository.GetRangeAsync(filter: r => r.RecruiterId == id,
+                include: r => r.Include(v=> v.Recruiter)
+                                .Include(v => v.City));
+
+            if (entities == null) return null;
+
+            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
+            return dtos;
         }
 
         public async Task<bool> UpdateEntityByIdAsync(VacancyRequest modelRequest, int id)

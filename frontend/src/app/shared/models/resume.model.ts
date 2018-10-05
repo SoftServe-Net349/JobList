@@ -19,8 +19,8 @@ export interface Resume {
   modDate: Date;
   workArea: WorkArea;
   user: User;
-  
-  educationPeriod: EducationPeriod[];
-  expirience: Experience;
-  resumeLanguage: ResumeLanguage[];
+
+  educationPeriods: EducationPeriod[];
+  expiriences: Experience[];
+  resumeLanguages: ResumeLanguage[];
 }

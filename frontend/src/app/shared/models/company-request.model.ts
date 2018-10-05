@@ -1,4 +1,3 @@
-import { Role } from './role.model';
 
 export interface CompanyRequest {
     name: string;

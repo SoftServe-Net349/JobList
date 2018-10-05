@@ -23,7 +23,6 @@ export class RecruiterFormComponent implements OnInit {
   action: String;
 
   recruiter: Recruiter;
-  confirmPassword: string;
   uploadedFiles: any[] = [];
 
 
@@ -55,7 +54,8 @@ export class RecruiterFormComponent implements OnInit {
       password: '',
       company: null,
       roleId: 0,
-      vacancy: null
+      photoData: [],
+      photoMimetype: ''
     };
   }
 
@@ -100,7 +100,9 @@ export class RecruiterFormComponent implements OnInit {
       phone: this.recruiterForm.get('phone').value,
       password: this.recruiter.password,
       companyId: this.companyId,
-      roleId: this.recruiter.roleId
+      roleId: this.recruiter.roleId,
+      photoData: this.recruiter.photoData,
+      photoMimetype: this.recruiter.photoMimetype
     };
     this.recruiterService.update(this.recruiter.id, request)
     .subscribe(data => this.loadRecruiters.emit());
@@ -114,7 +116,10 @@ export class RecruiterFormComponent implements OnInit {
       phone: this.recruiterForm.get('phone').value,
       password: 'sddsdsdsdsd',
       companyId: this.companyId,
-      roleId: 3
+      roleId: 3,
+      photoData: this.recruiter.photoData,
+      photoMimetype: this.recruiter.photoMimetype
+
     };
     this.recruiterService.create(request)
     .subscribe(data => this.loadRecruiters.emit());
