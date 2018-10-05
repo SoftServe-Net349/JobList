@@ -2,9 +2,9 @@
   <img class="vacancy-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Vacancy logo">
   <div class="wrapper-flex">
     <div class="additional-info">
-      <h1>.NET developer</h1>
-      <h2>$2000</h2>
-      <h5><font color="grey">Posted </font>1.10.2018</h5>
+      <h1>{{vacancy.name}}</h1>
+      <h2>{{vacancy.salary}}</h2>
+      <h5><font color="grey">Posted </font>{{vacancy.createDate}}</h5>
       <hr>
       
     </div>
@@ -19,7 +19,7 @@
     <button type="text" (click)="showDialog()" pButton icon="fa fa-file-text" label="Send my CV" style="height:35px"></button>
   </div>
   <div class="additional-info">
-    <h3><font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>SoftServe Inc.</h3>
+    <h3><font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>{{vacancy.company.name}}</h3>
     <h3><font color="grey"><i class="fa fa-map-marker" style="margin-right: 6px; margin-left: 3px; font-size: 1.1em"></i> City: </font>Lviv</h3>
     <h3><font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>Victor Moiseychenov</h3>
     <h3><font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a href="www.softserveinc.com">www.softserveinc.com</a></h3>
