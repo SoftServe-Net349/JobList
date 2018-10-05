@@ -10,7 +10,7 @@ import { CompanyInfoFormComponent } from '../../company-info-form/company-info-f
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
-  indx: String;
+  indx: String[];
 
   visibleForCompany;
   itemsForCompany: MenuItem[];
@@ -23,7 +23,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router) {
     console.log(router.url);
-    this.indx = router.url.substr(-1);
+    this.indx = router.url.split('/', 3);
+    console.log(this.indx[2]);
    }
 
    @Input()
@@ -92,12 +93,14 @@ export class HeaderComponent implements OnInit {
      return this.router.url === '/';
    }
    isCompanyHeader() {
-    return this.router.url === '/companies/' + this.indx;
+    return this.router.url === '/companies/' + this.indx[2];
    }
    isRecruiterHeader() {
-    return this.router.url === '/recruiter' || this.router.url === '/recruiter/+indx' || this.router.url === '/resumessearch';
+    return this.router.url === '/recruiter' || this.router.url === '/recruiter/+indx' || this.router.url === '/resumessearch'
+     || this.router.url === '/resume-details';
    }
    isUserHeader() {
-     return this.router.url === '/user' || this.router.url === '/jobsearch';
+     return this.router.url === '/user/' + this.indx[2] || this.router.url === '/jobsearch' || this.router.url === '/vacancy-details'
+     || this.router.url === '/company-details';
    }
 }
