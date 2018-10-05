@@ -11,6 +11,7 @@ import { ApiService } from './services/api.service';
 import { RecruiterService } from './services/recruiter.service';
 import { ResumeService } from './services/resume.service';
 import { VacancyService } from './services/vacancy.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { VacancyService } from './services/vacancy.service';
     LanguageService,
     RecruiterService,
     ResumeService,
-    VacancyService
+    VacancyService,
+    UserService
   ],
   declarations: []
 })

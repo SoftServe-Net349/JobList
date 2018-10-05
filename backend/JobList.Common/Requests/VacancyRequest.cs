@@ -4,7 +4,6 @@ namespace JobList.Common.Requests
 {
     public class VacancyRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Offering { get; set; }
@@ -14,7 +13,6 @@ namespace JobList.Common.Requests
         public decimal? Salary { get; set; }
         public string FullPartTime { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime? ModDate { get; set; }
         public int RecruiterId { get; set; }
         public int CityId { get; set; }
     }

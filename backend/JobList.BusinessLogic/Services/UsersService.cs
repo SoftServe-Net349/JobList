@@ -52,8 +52,9 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<UserDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.UsersRepository.GetAllEntitiesAsync(
-                include: r => r.Include(o => o.City)
-                                .Include(o => o.FavoriteVacancies));
+                 include: r => r.Include(o => o.City)
+                                .Include(o => o.FavoriteVacancies)
+                                .Include(o => o.Resumes));
 
             var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
 
@@ -62,7 +63,10 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<UserDTO> GetEntityByIdAsync(int id)
         {
-            var entity = await _uow.UsersRepository.GetEntityAsync(id);
+            var entity = await _uow.UsersRepository.GetEntityAsync(id,
+                 include: r => r.Include(o => o.City)
+                                .Include(o => o.FavoriteVacancies)
+                                .Include(o => o.Resumes));
 
             if (entity == null) return null;
 

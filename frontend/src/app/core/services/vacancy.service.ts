@@ -3,6 +3,7 @@ import { Vacancy } from '../../shared/models/vacancy.model';
 import { Observable } from 'rxjs';
 import { VacancyRequest } from '../../shared/models/vacancy-request.model';
 import { ApiService } from './api.service';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class VacancyService {
@@ -19,8 +20,12 @@ export class VacancyService {
     return this.apiService.get(`/${this.ctrlUrl}/recruiters/${id}`);
   }
 
-  getBySearchString(searchString: String): Observable<Vacancy[]> {
-    return this.apiService.get(`/${this.ctrlUrl}/search/${searchString}`);
+  getBySearchString(search: string, city: string): Observable<Vacancy[]> {
+    const params = new HttpParams()
+    .set('search', search)
+    .set('city', city);
+    return this.apiService.get(`/${this.ctrlUrl}/search`, params);
+
   }
 
   getById(id: number): Observable<Vacancy> {

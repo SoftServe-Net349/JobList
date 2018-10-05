@@ -25,11 +25,11 @@ export class JobSearchComponent implements OnInit {
     .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
-  getVacanciesBySearchString(searchString: String) {
-    if (searchString === '') {
+  getVacanciesBySearchString(param: {search: string, city: string}) {
+    if (param.search === '' && param.city === '') {
       this.loadVacancis();
     } else {
-      this.vacancyService.getBySearchString(searchString)
+      this.vacancyService.getBySearchString(param.search, param.city)
       .subscribe((data: Vacancy[]) => this.vacancies = data);
     }
   }

@@ -9,7 +9,6 @@ import { Vacancy } from '../shared/models/vacancy.model';
 
 @Component({
   selector: 'app-recruiter',
-
   templateUrl: './recruiter.component.html',
   styleUrls: ['./recruiter.component.sass']
 })
@@ -26,30 +25,10 @@ export class RecruiterComponent implements OnInit {
     private vacancyService: VacancyService,
     private activatedRoute: ActivatedRoute) {
 
-      this.recruiter = {
-      id: 0,
-      firstName: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      password: '',
-
-      company: {id: 0, name: '',
-                bossName: '',
-                fullDescription: '',
-                shortDescription: '',
-                address: '',
-                phone: '',
-                logoData: [],
-                logoMimetype: '',
-                site: '',
-                email: '',
-                password: '',
-                roleId: 0},
-      roleId: 0,
-    };
+    this.recruiter = this.defaultRecruiter();
     this.vacancies = [];
-      }
+    }
+
 
   ngOnInit() {
     this.activatedRoute.params.forEach((params: Params) => {
@@ -57,9 +36,22 @@ export class RecruiterComponent implements OnInit {
       this.loadRecruiterById(id);
       this.loadVacancy(id);
     });
-
   }
 
+  defaultRecruiter(): Recruiter {
+    return {
+      id: 0,
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      password: '',
+      company: null,
+      roleId: 0,
+      photoData: [],
+      photoMimetype: ''
+    };
+  }
 
   loadRecruiterById(id: number) {
     this.recruiterService.getById(id)

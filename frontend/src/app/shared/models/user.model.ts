@@ -1,5 +1,4 @@
 import { City } from './city.model';
-import { Role } from './role.model';
 import { FavoriteVacancy } from './favorite-vacancy.model';
 import { Resume } from './resume.model';
 
@@ -8,7 +7,7 @@ export interface User {
   firstName: string;
   lastName: string;
   phone: string;
-  pphotoData: number[];
+  photoData: number[];
   photoMimeType: string;
   sex: string;
   birthData: Date;
@@ -16,8 +15,8 @@ export interface User {
   email: string;
   password: string;
   city: City;
-  role: Role;
-  
-  resume: Resume;
-  favoriteVacsncy: FavoriteVacancy;
+  roleId: number;
+
+  resumes: Resume;
+  favoriteVacancies: FavoriteVacancy[];
 }
