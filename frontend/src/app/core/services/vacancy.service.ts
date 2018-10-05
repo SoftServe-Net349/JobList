@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { VacancyRequest } from '../../shared/models/vacancy-request.model';
 import { ApiService } from './api.service';
 import { HttpParams } from '@angular/common/http';
-import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class VacancyService {
@@ -13,12 +12,12 @@ export class VacancyService {
   constructor(private apiService: ApiService) {
   }
 
-  getAll(pageCount: number, pageNumber: number): Observable<Vacancy[]> {
-      return this.apiService.get(`/${this.ctrlUrl}?pageCount=${pageCount}&pageNumber=${pageNumber}`);
+  getAll(): Observable<Vacancy[]> {
+      return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
   getByRecruiterId(id: number): Observable<Vacancy[]> {
-    return this.apiService.get(`/${this.ctrlUrl}/recruiters/${id}`);
+    return this.apiService.get(`/${this.ctrlUrl}/recruiter/${id}`);
   }
 
   getBySearchString(search: string, city: string): Observable<Vacancy[]> {

@@ -25,7 +25,7 @@ export class RecruiterComponent implements OnInit {
     private vacancyService: VacancyService,
     private activatedRoute: ActivatedRoute,
     private confirmationService: ConfirmationService) {
-     
+
     this.recruiter = this.defaultRecruiter();
     this.vacancies = [];
     }
