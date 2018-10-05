@@ -33,8 +33,8 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("search/{searchString}")]
-        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get(string searchString)
+        [HttpGet("search")]
+        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get(string search, string city)
         {
             var dtos = await _resumesService.GetAllEntitiesAsync();
 
@@ -43,11 +43,16 @@ namespace JobList.Controllers
                 return NotFound();
             }
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(search))
             {
                 dtos = dtos.Select(d => d)
                     .Where(d => d.WorkArea.Name.ToLower()
-                    .Contains(searchString.ToLower()));
+                    .Contains(search.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(city))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.User.City?.Name == city);
             }
 
             return Ok(dtos);

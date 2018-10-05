@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { ResumeRequest } from '../../shared/models/resume-request.model';
 import { Resume } from '../../shared/models/resume.model';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class ResumeService {
@@ -10,13 +11,14 @@ export class ResumeService {
 
   constructor(private apiService: ApiService) {
   }
-
   getAll(): Observable<Resume[]> {
-      return this.apiService.get(`/${this.ctrlUrl}`);
-  }
-
-  getBySearchString(searchString: String): Observable<Resume[]> {
-    return this.apiService.get(`/${this.ctrlUrl}/search/${searchString}`);
+    return this.apiService.get(`/${this.ctrlUrl}`);
+}
+  getBySearchString(search: string, city: string): Observable<Resume[]> {
+    const params = new HttpParams()
+    .set('search', search)
+    .set('city', city);
+    return this.apiService.get(`/${this.ctrlUrl}/search`, params);
   }
 
   getById(id: number): Observable<Resume> {

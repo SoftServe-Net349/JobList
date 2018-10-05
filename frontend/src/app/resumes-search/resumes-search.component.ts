@@ -24,11 +24,11 @@ export class ResumesSearchComponent implements OnInit {
       .subscribe((data: Resume[]) => this.resumes = data);
   }
 
-  getResumesBySearchString(searchString: String) {
-    if (searchString === '') {
+  getResumesBySearchString(param: {search: string, city: string}) {
+    if (param.search === '' && param.city === '') {
       this.loadResumes();
     } else {
-      this.resumeService.getBySearchString(searchString)
+      this.resumeService.getBySearchString(param.search, param.city)
       .subscribe((data: Resume[]) => this.resumes = data);
     }
   }
