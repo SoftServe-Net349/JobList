@@ -17,11 +17,11 @@ export class JobSearchComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.loadVacancis();
+    this.loadVacancis(4, 1);
   }
 
-  loadVacancis() {
-    this.vacancyService.getAll()
+  loadVacancis(pageCount: number, pageNumber: number) {
+    this.vacancyService.getAll(pageCount, pageNumber)
     .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
@@ -32,5 +32,10 @@ export class JobSearchComponent implements OnInit {
       this.vacancyService.getBySearchString(param.search, param.city)
       .subscribe((data: Vacancy[]) => this.vacancies = data);
     }
+  }
+
+  paginate(event){
+    this.vacancyService.getAll(event.rows, event.page + 1)
+      .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 }

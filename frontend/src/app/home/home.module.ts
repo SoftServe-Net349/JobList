@@ -19,6 +19,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
+import {PaginatorModule} from 'primeng/paginator';
 import { SharedModule } from '../shared/shared.module';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -40,7 +41,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     SharedModule,
     FieldsetModule,
     DialogModule,
-    CardModule
+    CardModule,
+    PaginatorModule
   ],
   declarations: [
     HomeComponent,
