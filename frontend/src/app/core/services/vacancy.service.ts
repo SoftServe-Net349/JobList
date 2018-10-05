@@ -16,11 +16,13 @@ export class VacancyService {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
+
   getBySearchString(search: string, city: string): Observable<Vacancy[]> {
     const params = new HttpParams()
     .set('search', search)
     .set('city', city);
     return this.apiService.get(`/${this.ctrlUrl}/search`, params);
+
   }
 
   getById(id: number): Observable<Vacancy> {

@@ -1,6 +1,4 @@
 import { Company } from './company.model';
-import { Role } from './role.model';
-import { Vacancy } from './vacancy.model';
 
 export interface Recruiter {
   id: number;
@@ -9,8 +7,8 @@ export interface Recruiter {
   phone: string;
   email: string;
   password: string;
+  photoData: number[];
+  photoMimetype: string;
   company: Company;
   roleId: number;
-
-  vacancy: Vacancy[];
 }

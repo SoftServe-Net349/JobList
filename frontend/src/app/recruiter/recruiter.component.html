@@ -1,128 +1,91 @@
-<app-recruiter-header></app-recruiter-header>
+<app-header></app-header>
 
 <div id="recruiter-page">
-  <div class="recruiter-info">
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="recruiter logo">
-		
+	<div class="recruiter-info">
+		<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="recruiter logo">
+
 		<div class="wrapper-grid">
 			<div>
 				<img class="recruiter-avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
-			</div>	  
+			</div>
 			<div class="recruiter-additional-info">
-				<p><span>Name:</span> Pavlo Paitak</p>
-				<p><span>Email:</span> pavlopaitak@gmail.com</p>
-				<p><span>Phone:</span> 0936977685</p>
+				<p>
+					<span>Name:</span> {{recruiter.firstName}} {{recruiter.lastName}}</p>
+				<p>
+					<span>Email:</span> {{recruiter.email}}</p>
+				<p>
+					<span>Phone:</span> {{recruiter.phone}}</p>
 			</div>
 			<div class="vacancy-modification">
-				<app-vacancy-form #vacancyForm></app-vacancy-form>
-			</div>
-    </div>
-  </div>
+				<app-vacancy-form #vacancyForm (loadVacancy)="loadVacancy()" [recruiterId]="recruiter.id"></app-vacancy-form>
 
-  <div class="vacancy-list">
-    <div class="vacancy-text">
-      <hr class="fd-f1">
-      <p>Vacancies</p>
-      <hr class="fd-f1">
+				
+			</div>
 		</div>
-		
+	</div>
+	<div class="filter-search">
+			<div class="wrapper">
+			  <input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
+			  <p-button label="Search" icon="pi pi-search" ></p-button>
+			</div>	
+		  </div>
+	<div class="vacancy-list">
+		<div class="vacancy-text">
+			<hr class="fd-f1">
+			<p>Vacancies</p>
+			<hr class="fd-f1">
+		</div>
+
 		<div class="vacancy-container">
 
-				<article class="vacancy-block">
-					<div class="inform">
-						<h3>
-							<a>Name of vacancy-block</a>
-						</h3>
-						<p class="company-name">
-							<a>Company Name</a>
-						</p>
-						<p class="location">
-							<i class="fa fa-map-marker"></i>
-							City Name
-						</p>
-						<p class="short-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus quo,
-							assumenda aspernatur quae numquam veritatis,
-							fugiat neque dolore quidem, reprehenderit illo est! Veniam consequuntur quaerat, accusantium officiis optio
-							soluta
-							quasi.
-						</p>
-						<p class="agotime">
-							days ago
-						</p>
-					</div>
-					<div >
-						<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-					</div>
-					<div class="recruiter-modification">
-							<button pButton type="button" label="Update" (click)="vacancyForm.showVacancyForm('Update')" class="ui-button-rounded ui-button-warning"></button>
-							<button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-					</div>
-				</article>
+		
+				<ul *ngIf="vacancies.length > 0">
+					<li *ngFor="let vacancy of vacancies">
+						<article class="vacancy-block">
+								<div class="vacancy">
+							<div class="inform">
+								<h3>
+									<a>{{vacancy.name}}</a>
+								</h3>
+								<p class="company-name">
+									<a>{{recruiter.company.name}}</a>
+								</p>
+								<p class="location">
+									<i class="fa fa-map-marker"></i>
+									{{vacancy.city.name}}
+								</p>
+								<p class="short-description">
+									{{vacancy.description}}
+								</p>
+								<p class="agotime">
+									{{vacancy.createDate | date}}
+								</p>
+							</div>
+						</div>
 
-				<article class="vacancy-block">
-					<div class="inform">
-						<h3>
-							<a>Name of vacancy-block</a>
-						</h3>
-						<p class="company-name">
-							<a>Company Name</a>
-						</p>
-						<p class="location">
-							<i class="fa fa-map-marker"></i>
-							City Name
-						</p>
-						<p class="short-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus quo,
-							assumenda aspernatur quae numquam veritatis,
-							fugiat neque dolore quidem, reprehenderit illo est! Veniam consequuntur quaerat, accusantium officiis optio
-							soluta
-							quasi.
-						</p>
-						<p class="agotime">
-							days ago
-						</p>
-					</div>
-					<div>
-						<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-					</div>
-					<div class="recruiter-modification">
-							<button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-							<button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-					</div>
-				</article>
+						<div class="vacancy-logo">
+							<div class="vacancy-container">
+								<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
+							</div>
+						</div>
+						<div class="vacancy-button">
+							<div class="recruiter-modification">
+								<button pButton type="button" label="Update" (click)="vacancyForm.showVacancyForm('Update', vacancy)"class="ui-button-rounded ui-button-warning"></button>
+								<button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>
+							</div>
+						</div>
+						</article>
+					</li>
+				</ul>
 
-				<article class="vacancy-block">
-					<div class="inform">
-						<h3>
-							<a>Name of vacancy-block</a>
-						</h3>
-						<p class="company-name">
-							<a>Company Name</a>
-						</p>
-						<p class="location">
-							<i class="fa fa-map-marker"></i>
-							City Name
-						</p>
-						<p class="short-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus quo,
-							assumenda aspernatur quae numquam veritatis,
-							fugiat neque dolore quidem, reprehenderit illo est! Veniam consequuntur quaerat, accusantium officiis optio
-							soluta
-							quasi.
-						</p>
-						<p class="agotime">
-							days ago
-						</p>
-					</div>
-					<div>
-						<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-					</div>
-					<div class="recruiter-modification">
-							<button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-							<button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>      
-					</div>
-				</article>
+		</div>
 
-			</div>
-	
-  </div>
+
+
+
+	</div>
+
+
 </div>
+
 <app-footer></app-footer>
