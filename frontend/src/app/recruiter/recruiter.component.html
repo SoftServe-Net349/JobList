@@ -17,7 +17,7 @@
 					<span>Phone:</span> {{recruiter.phone}}</p>
 			</div>
 			<div class="vacancy-modification">
-				<app-vacancy-form #vacancyForm></app-vacancy-form>
+				<app-vacancy-form #vacancyForm (loadVacancies)="loadVacancies()"></app-vacancy-form>
 			</div>
 		</div>
 	</div>
@@ -31,49 +31,44 @@
 
 		<div class="vacancy-container">
 
-		
-				<ul *ngIf="vacancies.length > 0">
-					<li *ngFor="let vacancy of vacancies">
-						<article class="vacancy-block">
-							<div class="inform">
-								<h3>
-									<a>{{vacancy.name}}</a>
-								</h3>
-								<p class="company-name">
-									<a>{{recruiter.company.name}}</a>
-								</p>
-								<p class="location">
-									<i class="fa fa-map-marker"></i>
-									{{vacancy.city.name}}
-								</p>
-								<p class="short-description">
-									{{vacancy.description}}
-								</p>
-								<p class="agotime">
-									{{vacancy.createDate | date}}
-								</p>
-							</div>
 
-							<div>
-								<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
-							</div>
-							<div class="recruiter-modification">
-								<button pButton type="button" label="Update" class="ui-button-rounded ui-button-warning"></button>
-								<button pButton type="button" label="Delete" class="ui-button-rounded ui-button-danger"></button>
-							</div>
+			<ul *ngIf="vacancies.length > 0">
+				<li *ngFor="let vacancy of vacancies">
+					<article class="vacancy-block">
+						<div class="inform">
+							<h3>
+								<a>{{vacancy.name}}</a>
+							</h3>
+							<p class="company-name">
+								<a>{{recruiter.company.name}}</a>
+							</p>
+							<p class="location">
+								<i class="fa fa-map-marker"></i>
+								{{vacancy.city.name}}
+							</p>
+							<p class="short-description">
+								{{vacancy.description}}
+							</p>
+							<p class="agotime">
+								{{vacancy.createDate | date}}
+							</p>
+						</div>
 
-						</article>
-					</li>
-				</ul>
+						<div>
+							<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
+						</div>
+						<div class="vacancy-modification">
+							<button pButton type="button" (click)="vacancyForm.showVacancyForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>
+							<button pButton type="button" (click)="deleteConfirm(vacancy.id)" label="Delete" class="ui-button-rounded ui-button-danger"></button>
+						</div>
+
+					</article>
+				</li>
+			</ul>
 
 		</div>
-
-
-
-
 	</div>
-
-
 </div>
 
 <app-footer></app-footer>
+

@@ -8,7 +8,7 @@ export interface VacancyRequest {
   offering: string;
   requirements: string;
   bePlus: string;
-  isChecked: string;
+  isChecked: boolean;
   salary: number;
   fullPartTime: string;
   createDate: Date;

@@ -16,6 +16,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
+import {PaginatorModule} from 'primeng/paginator';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SharedModule } from '../shared/shared.module';
     InputSwitchModule,
     SliderModule,
     MultiSelectModule,
-    SharedModule
+    SharedModule,
+    PaginatorModule
   ],
   declarations: [
     HomeComponent,
