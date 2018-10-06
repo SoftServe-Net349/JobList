@@ -80,7 +80,8 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id)
         {
             var entities = await _uow.VacanciesRepository.GetRangeAsync(filter: r => r.RecruiterId == id,
-                include: r => r.Include(v=> v.Recruiter)
+                include: r => r.Include(v => v.Recruiter)
+                                .Include(v => v.WorkArea)
                                 .Include(v => v.City));
 
             if (entities == null) return null;
