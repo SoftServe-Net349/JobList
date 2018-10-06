@@ -13,8 +13,7 @@ export class VacancyDetailsComponent implements OnInit {
   vacancy: Vacancy;
   display: Boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private vacancyService: VacancyService) 
-  {
+  constructor(private activatedRoute: ActivatedRoute, private vacancyService: VacancyService) {
     this.vacancy = this.defaultVacany();
   }
 
@@ -30,7 +29,7 @@ export class VacancyDetailsComponent implements OnInit {
     .subscribe((data: Vacancy) => this.vacancy = data);
   }
 
-  defaultVacany(): Vacancy{
+  defaultVacany(): Vacancy {
     return {
       id: 0,
       name: '',
@@ -46,7 +45,7 @@ export class VacancyDetailsComponent implements OnInit {
       city: null,
       recruiter: null,
       workArea: null
-    }
+    };
   }
 
   showDialog() {

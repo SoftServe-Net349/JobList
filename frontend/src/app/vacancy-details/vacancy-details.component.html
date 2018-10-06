@@ -23,19 +23,19 @@
   </div>
   <div class="additional-info">
     <h3>
-      <font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>{{vacancy.recruiter.company.name}}
+      <font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>{{vacancy.recruiter?.company?.name}}
     </h3>
     <h3>
       <font color="grey"><i class="fa fa-map-marker" style="margin-right: 6px; margin-left: 3px; font-size: 1.1em"></i>
-        City: </font>{{vacancy.city.name}}
+        City: </font>{{vacancy.city?.name}}
     </h3>
     <h3>
-      <font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>{{vacancy.recruiter.firstName}}
-      {{vacancy.recruiter.lastName}}
+      <font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>{{vacancy.recruiter?.firstName}}
+      {{vacancy.recruiter?.lastName}}
     </h3>
     <h3>
       <font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a
-        href="www.softserveinc.com">{{vacancy.recruiter.company.site}}</a>
+        href="www.softserveinc.com">{{vacancy.recruiter?.company?.site}}</a>
     </h3>
     <h4>
       <font color="green"><i class="fa fa-check-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Checked</font>

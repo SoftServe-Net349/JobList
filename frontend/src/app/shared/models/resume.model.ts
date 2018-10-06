@@ -21,6 +21,6 @@ export interface Resume {
   user: User;
 
   educationPeriods: EducationPeriod[];
-  expiriences: Experience[];
+  experiences: Experience[];
   resumeLanguages: ResumeLanguage[];
 }

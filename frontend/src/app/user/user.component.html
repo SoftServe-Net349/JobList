@@ -9,7 +9,7 @@
       <p><span>Address: </span>{{user.address}}</p>
       <p><span>Birth Date: </span>{{user.birthDate}}</p>
       <p><span>Phone: </span>{{user.phone}}</p>
-      <p><span>Marital Status: </span>Unmarried</p>
+      <p><span>Family state: </span>{{user.resumes?.familyState}}</p>
     </div>
     <div>
       <button type="button" (click)="resumeForm.showResumeForm('Update', user)" pButton icon="pi pi-copy" label="Update CV"></button>
