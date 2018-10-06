@@ -18,6 +18,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { VacancyFormComponent } from '../vacancy-form/vacancy-form.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
 		SharedModule,
     DropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ConfirmDialogModule
   ],
   declarations: [
 		RecruiterComponent,

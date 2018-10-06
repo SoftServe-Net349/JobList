@@ -49,7 +49,6 @@ export class CompanyComponent implements OnInit {
       this.loadCompanyById(id);
       this.loadRecruiters(id);
     });
-
   }
 
   loadCompanyById(id: number = this.company.id) {
@@ -69,5 +68,5 @@ export class CompanyComponent implements OnInit {
         icon: 'pi pi-info-circle',
         accept: () => { this.recruiterService.delete(id).subscribe(data => this.loadRecruiters()); }
     });
-}
+  }
 }

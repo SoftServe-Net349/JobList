@@ -17,15 +17,17 @@
 					<span>Phone:</span> {{recruiter.phone}}</p>
 			</div>
 			<div class="vacancy-modification">
-				<app-vacancy-form #vacancyForm (loadVacancy)="loadVacancy()" [recruiterId]="recruiter.id"></app-vacancy-form>
+				<app-vacancy-form #vacancyForm (loadVacancy)="loadVacancies()" [recruiterId]="recruiter.id"></app-vacancy-form>
+
+
 			</div>
 		</div>
 	</div>
 	<div class="filter-search">
 		<div class="wrapper">
 			<input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
-			<p-button label="Search" icon="pi pi-search" ></p-button>
-		</div>	
+			<p-button label="Search" icon="pi pi-search"></p-button>
+		</div>
 	</div>
 	<div class="vacancy-list">
 		<div class="vacancy-text">
@@ -34,7 +36,9 @@
 			<hr class="fd-f1">
 		</div>
 
-		<div class="vacancy-container">		
+		<div class="vacancy-container">
+
+
 			<ul *ngIf="vacancies.length > 0">
 				<li *ngFor="let vacancy of vacancies">
 					<article class="vacancy-block">
@@ -48,7 +52,7 @@
 								</p>
 								<p class="location">
 									<i class="fa fa-map-marker"></i>
-									{{vacancy.city.name}}
+									{{vacancy.city?.name}}
 								</p>
 								<p class="short-description">
 									{{vacancy.description}}
@@ -66,8 +70,8 @@
 						</div>
 						<div class="vacancy-button">
 							<div class="recruiter-modification">
-								<button pButton type="button" (click)="vacancyForm.showVacancyForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>
-								<button pButton type="button" (click)="deleteConfirm(vacancy.id)" label="Delete" class="ui-button-rounded ui-button-danger"></button>
+								<button pButton type="button" label="Update" (click)="vacancyForm.showVacancyForm('Update', vacancy)" class="ui-button-rounded ui-button-warning"></button>
+								<button pButton type="button" label="Delete" (click)="deleteConfirm(vacancy.id)" class="ui-button-rounded ui-button-danger"></button>
 							</div>
 						</div>
 					</article>
@@ -79,3 +83,4 @@
 
 <app-footer></app-footer>
 
+<p-confirmDialog></p-confirmDialog>

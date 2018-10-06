@@ -18,6 +18,8 @@ a
 	width: 30px
 	padding: 10px
 
+
+
 .update-vacancy:hover
 	color: #f47442
 
@@ -31,9 +33,31 @@ a
     max-width: 100%
     padding: 13px 25px
 
+	input.ng-touched.ng-invalid
+  		border: 1px solid red
+  		border-radius: 3px
+
+	textarea.ng-touched.ng-invalid
+  		border: 1px solid red
+  		border-radius: 3px
+	.alert-danger
+		font-size: small
+		font-weight: 500
+		color: red
+		top: 35px
+		width: 100%
+		padding: 3px 2px
+
+	input.ng-touched.ng-valid
+  		border: 1px solid green
+  		border-radius: 3px
+
 	.vacancy-title
 		font-size: 14px
-		margin: 0;
+		margin: 0
+
+	.required-input-symbol
+		color: red
 
 	.text-area
 		margin-top: 20px
