@@ -12,8 +12,11 @@ export class VacancyService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(pageCount: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>>{
-    return this.apiService.getFullResponse(`/${this.ctrlUrl}?pageCount=${pageCount}&pageNumber=${pageNumber}`);
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>>{
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
   }
 
   getAll(): Observable<Vacancy[]> {
@@ -24,11 +27,14 @@ export class VacancyService {
     return this.apiService.get(`/${this.ctrlUrl}/recruiter/${id}`);
   }
 
-  getBySearchString(search: string, city: string, pageCount: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
+  getBySearchString(search: string, city: string, pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
-    .set('search', search)
-    .set('city', city);
-    return this.apiService.getFullResponse(`/${this.ctrlUrl}/search?pageCount=${pageCount}&pageNumber=${pageNumber}`, params);
+      .set('search', search)
+      .set('city', city)
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/search`, params);
   }
 
   getById(id: number): Observable<Vacancy> {

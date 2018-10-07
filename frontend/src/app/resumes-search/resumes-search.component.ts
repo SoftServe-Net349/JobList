@@ -13,7 +13,7 @@ export class ResumesSearchComponent implements OnInit {
 
   totalRecords: number = 0;
 
-  pageCount: number = 1;
+  pageSize: number = 1;
   pageNumber: number = 1;
 
   search: string = '';
@@ -21,10 +21,10 @@ export class ResumesSearchComponent implements OnInit {
 
   constructor(private resumeService: ResumeService) {
     this.resumes = [];
-   }
+  }
 
   ngOnInit() {
-      this.loadResumes(this.pageCount, this.pageNumber);
+    this.loadResumes(this.pageSize, this.pageNumber);
   }
 
   getResumesBySearchString(param: { search: string, city: string }) {
@@ -32,11 +32,9 @@ export class ResumesSearchComponent implements OnInit {
     this.city = param.city;
 
     if (param.search === '' && param.city === '') {
-      this.loadResumes(this.pageCount, this.pageNumber);
+      this.loadResumes(this.pageSize, this.pageNumber);
     } else {
-      // this.paginate({first: 0, page: 0, rows: 4, pageCount: this.pageCount});
-
-      this.resumeService.getBySearchString(this.search, this.city, this.pageCount, this.pageNumber)
+      this.resumeService.getBySearchString(this.search, this.city, this.pageSize, this.pageNumber)
         .subscribe((response) => {
           this.resumes = response.body;
           this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
@@ -57,11 +55,11 @@ export class ResumesSearchComponent implements OnInit {
     }
   }
 
-  loadResumes(pageCount: number, pageNumber: number) {
-    this.resumeService.getFullResponse(pageCount, pageNumber)
+  loadResumes(pageSize: number, pageNumber: number) {
+    this.resumeService.getFullResponse(pageSize, pageNumber)
       .subscribe((response) => {
-        this.resumes = response.body; 
-        this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords; 
-    });
+        this.resumes = response.body;
+        this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+      });
   }
 }

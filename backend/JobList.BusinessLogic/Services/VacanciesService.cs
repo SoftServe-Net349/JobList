@@ -53,14 +53,26 @@ namespace JobList.BusinessLogic.Services
             return result;
         }
 
-        public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync(UrlQuery urlQuery = null)
+        public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.City)
                                 .Include(o => o.WorkArea)
-                                .Include(o => o.Recruiter).ThenInclude(v => v.Company),
-                 urlQuery: urlQuery);
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company));
 
+
+            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<IEnumerable<VacancyDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null)
+        {
+            var entities = await _uow.VacanciesRepository.GetRangeAsync(
+                include: r => r.Include(o => o.City)
+                    .Include(o => o.WorkArea)
+                    .Include(o => o.Recruiter).ThenInclude(v => v.Company),
+                urlQuery: urlQuery);
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 
