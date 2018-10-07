@@ -1,4 +1,5 @@
 ﻿using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace JobList.BusinessLogic.Interfaces
 {
     public interface IVacanciesService
     {
-        Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync();
+        Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync(UrlQuery urlQuery = null);
 
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 
@@ -18,5 +19,7 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> DeleteEntityByIdAsync(int id);
 
         Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id);
+
+        int Count { get; }
     }
 }

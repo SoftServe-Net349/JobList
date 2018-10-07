@@ -23,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
+import {PaginatorModule} from 'primeng/paginator';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     SharedModule,
     FieldsetModule,
     DialogModule,
-    CardModule
+    CardModule,
+    PaginatorModule
   ],
   declarations: [
     HomeComponent,

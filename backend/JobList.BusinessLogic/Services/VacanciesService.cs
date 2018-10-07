@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
@@ -21,6 +22,8 @@ namespace JobList.BusinessLogic.Services
             _uow = uow;
             _mapper = mapper;
         }
+
+        public int Count { get { return _uow.VacanciesRepository.Count; } }
 
 
         public async Task<VacancyDTO> CreateEntityAsync(VacancyRequest modelRequest)
@@ -50,18 +53,20 @@ namespace JobList.BusinessLogic.Services
             return result;
         }
 
-        public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync()
+        public async Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync(UrlQuery urlQuery = null)
         {
             var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.City)
                                 .Include(o => o.WorkArea)
-                                .Include(o => o.Recruiter).ThenInclude(v => v.Company));
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company),
+                 urlQuery: urlQuery);
 
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 
             return dtos;
         }
+
 
         public async Task<VacancyDTO> GetEntityByIdAsync(int id)
         {

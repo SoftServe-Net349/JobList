@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -22,19 +24,28 @@ namespace JobList.Controllers
 
         // GET: /vacancies
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery] UrlQuery urlQuery = null)
         {
-            var dtos = await _vacanciesService.GetAllEntitiesAsync();
+            var dtos = await _vacanciesService.GetAllEntitiesAsync(urlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
             }
 
+            var pageInfo = new PageInfo()
+            {
+                PageNumber = urlQuery.PageNumber,
+                PageCount = urlQuery.PageCount,
+                TotalRecords = _vacanciesService.Count
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
             return Ok(dtos);
         }
 
         [HttpGet("search")]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string search, string city)
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string search, string city, [FromQuery]UrlQuery urlQuery = null)
         {
             var dtos = await _vacanciesService.GetAllEntitiesAsync();
 
@@ -54,6 +65,23 @@ namespace JobList.Controllers
                 dtos = dtos.Select(d => d)
                     .Where(d => d.City.Name == city);
             }
+
+            if(urlQuery != null)
+            {
+                int count = dtos.Count();
+                dtos = dtos.Skip(urlQuery.PageCount * (urlQuery.PageNumber - 1))
+                    .Take(urlQuery.PageCount);
+
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = urlQuery.PageNumber,
+                    PageCount = urlQuery.PageCount,
+                    TotalRecords = count
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+            }
+
             return Ok(dtos);
         }
 

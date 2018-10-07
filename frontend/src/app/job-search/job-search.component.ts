@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
 import { SearchLineComponent } from '../shared/search-line/search-line.component';
@@ -11,27 +11,59 @@ import { SearchLineComponent } from '../shared/search-line/search-line.component
 export class JobSearchComponent implements OnInit {
   @ViewChild(SearchLineComponent)
 
+  totalRecords: number = 0;
   vacancies: Vacancy[];
+
+  pageCount: number = 4;
+  pageNumber: number = 1;
+
+  search: string = '';
+  city: string = '';
+
   constructor(private vacancyService: VacancyService) {
     this.vacancies = [];
-   }
+  }
 
   ngOnInit() {
-    this.loadVacancies();
+      this.loadVacancies(this.pageCount, this.pageNumber);
   }
 
-  loadVacancies() {
-    this.vacancyService.getAll()
-    .subscribe((data: Vacancy[]) => this.vacancies = data);
-  }
+  getVacanciesBySearchString(param: { search: string, city: string }) {
+    this.search = param.search;
+    this.city = param.city;
 
-  getVacanciesBySearchString(param: {search: string, city: string}) {
     if (param.search === '' && param.city === '') {
-      this.loadVacancies();
+      this.loadVacancies(this.pageCount, this.pageNumber);
     } else {
-      this.vacancyService.getBySearchString(param.search, param.city)
-      .subscribe((data: Vacancy[]) => this.vacancies = data);
+      // this.paginate({first: 0, page: 0, rows: 4, pageCount: this.pageCount});
+
+      this.vacancyService.getBySearchString(this.search, this.city, this.pageCount, this.pageNumber)
+        .subscribe((response) => {
+          this.vacancies = response.body;
+          this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+        });
     }
   }
 
+  paginate(event) {
+    console.log(event.class);
+    this.pageNumber = event.page + 1;
+
+    if (this.search === '' && this.city === '') {
+      this.loadVacancies(event.rows, this.pageNumber);
+    } else {
+      this.vacancyService.getBySearchString(this.search, this.city, event.rows, this.pageNumber)
+        .subscribe((response) => {
+          this.vacancies = response.body;
+        });
+    }
+  }
+
+  loadVacancies(pageCount: number, pageNumber: number) {
+    this.vacancyService.getFullResponse(pageCount, pageNumber)
+      .subscribe((response) => {
+        this.vacancies = response.body; 
+        this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords; 
+    });
+  }
 }

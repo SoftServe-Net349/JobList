@@ -14,6 +14,7 @@ using JobList.DataAccess.Interfaces;
 using FluentValidation.AspNetCore;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace JobList
 {
@@ -37,8 +38,11 @@ namespace JobList
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
                        .AllowAnyHeader()
-                       .AllowCredentials();
+                       .AllowCredentials()
+                       .WithExposedHeaders("X-Pagination");
             }));
+
+
             services.AddMvc()
                             .AddFluentValidation(fv =>
                             {
@@ -55,6 +59,7 @@ namespace JobList
                 .AddJsonOptions(
                  options => options.SerializerSettings.ReferenceLoopHandling
                 = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -74,6 +79,8 @@ namespace JobList
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             InitializeAutomapper(services);
         }

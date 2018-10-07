@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JobList.Common.Errors;
 using JobList.Common.Interfaces.Entities;
+using JobList.Common.Pagination;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,8 @@ namespace JobList.DataAccess.Repositories
         protected readonly DbSet<TEntity> _dbSet;
 
         protected readonly IMapper _mapper;
+
+        public int Count { get { return _dbSet.Count(); } }
 
         public Repository(JobListDbContext context, IMapper mapper)
         {
@@ -71,12 +74,19 @@ namespace JobList.DataAccess.Repositories
             _dbSet.Remove(entityToDelete);
         }
 
-        public async Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        public async Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                             UrlQuery urlQuery = null)
         {
             IQueryable<TEntity> query = _dbSet;
             if (include != null)
             {
                 query = include(query);
+            }
+            
+            if(urlQuery != null)
+            {
+                query = query.Skip(urlQuery.PageCount * (urlQuery.PageNumber - 1))
+                    .Take(urlQuery.PageCount);
             }
 
             return await query.ToListAsync();
