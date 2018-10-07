@@ -8,7 +8,9 @@ namespace JobList.BusinessLogic.Interfaces
 {
     public interface IResumesService
     {
-        Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync(UrlQuery urlQuery = null);
+        Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync();
+
+        Task<IEnumerable<ResumeDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null);
 
         Task<ResumeDTO> GetEntityByIdAsync(int id);
 

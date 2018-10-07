@@ -23,9 +23,9 @@ namespace JobList.Controllers
 
         // GET: /resumes
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get([FromQuery] UrlQuery urlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get([FromQuery] PaginationUrlQuery urlQuery = null)
         {
-            var dtos = await _resumesService.GetAllEntitiesAsync(urlQuery);
+            var dtos = await _resumesService.GetRangeOfEntitiesAsync(urlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
@@ -34,7 +34,7 @@ namespace JobList.Controllers
             var pageInfo = new PageInfo()
             {
                 PageNumber = urlQuery.PageNumber,
-                PageCount = urlQuery.PageCount,
+                PageSize = urlQuery.PageSize,
                 TotalRecords = _resumesService.Count
             };
 
@@ -44,7 +44,7 @@ namespace JobList.Controllers
         }
 
         [HttpGet("search")]
-        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get(string search, string city, [FromQuery] UrlQuery urlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get(string search, string city, [FromQuery] PaginationUrlQuery urlQuery = null)
         {
             var dtos = await _resumesService.GetAllEntitiesAsync();
 
@@ -68,13 +68,13 @@ namespace JobList.Controllers
             if (urlQuery != null)
             {
                 int count = dtos.Count();
-                dtos = dtos.Skip(urlQuery.PageCount * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageCount);
+                dtos = dtos.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
+                    .Take(urlQuery.PageSize);
 
                 var pageInfo = new PageInfo()
                 {
                     PageNumber = urlQuery.PageNumber,
-                    PageCount = urlQuery.PageCount,
+                    PageSize = urlQuery.PageSize,
                     TotalRecords = count
                 };
 

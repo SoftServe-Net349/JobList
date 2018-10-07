@@ -8,7 +8,9 @@ namespace JobList.BusinessLogic.Interfaces
 {
     public interface IVacanciesService
     {
-        Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync(UrlQuery urlQuery = null);
+        Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync();
+
+        Task<IEnumerable<VacancyDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null);
 
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 

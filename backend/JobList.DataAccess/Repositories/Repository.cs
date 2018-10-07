@@ -31,10 +31,9 @@ namespace JobList.DataAccess.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetRangeAsync(int index = 1,
-                                                       int count = 10,
-                                                       Expression<Func<TEntity, bool>> filter = null,
-                                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        public async Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                       PaginationUrlQuery urlQuery = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -48,11 +47,13 @@ namespace JobList.DataAccess.Repositories
                 query = include(query);
             }
 
+            if(urlQuery != null)
+            {
+                query = query.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
+                    .Take(urlQuery.PageSize);
+            }
 
-            if (index == 0) index = 1;
-            if (count == 0) count = 10;
-
-            return await query.Skip((index - 1) * count).Take(count).ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<TEntity> CreateEntityAsync(TEntity entity)
@@ -74,19 +75,12 @@ namespace JobList.DataAccess.Repositories
             _dbSet.Remove(entityToDelete);
         }
 
-        public async Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                             UrlQuery urlQuery = null)
+        public async Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
         {
             IQueryable<TEntity> query = _dbSet;
             if (include != null)
             {
                 query = include(query);
-            }
-            
-            if(urlQuery != null)
-            {
-                query = query.Skip(urlQuery.PageCount * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageCount);
             }
 
             return await query.ToListAsync();
