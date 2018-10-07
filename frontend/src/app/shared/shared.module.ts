@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SomePipe } from './pipes/some.pipe';
 import { SomeDirective } from './directives/some.directive';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // PrimeNG modules
 import { DialogModule } from 'primeng/dialog';
@@ -35,7 +35,8 @@ import { SearchLineComponent } from './search-line/search-line.component';
     PasswordModule,
     SidebarModule,
     PanelMenuModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ReactiveFormsModule
   ],
   declarations: [
     SomePipe,
