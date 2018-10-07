@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpEvent, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpEvent, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
@@ -7,6 +7,13 @@ import {environment} from '../../../environments/environment';
 @Injectable()
 export class ApiService {
   constructor(private http: HttpClient) { }
+
+  public getFullResponse(path: string, params: HttpParams = new HttpParams()): Observable<HttpResponse<any>> {
+    const url = `${environment.server_url}${path}`;
+    return this.http.get(url, {params, observe: 'response'})
+      .pipe(map(this.extractData),
+            catchError(this.handleError));
+  }
 
   public get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     const url = `${environment.server_url}${path}`;
