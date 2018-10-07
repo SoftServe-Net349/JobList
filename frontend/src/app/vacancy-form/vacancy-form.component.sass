@@ -18,8 +18,6 @@ a
 	width: 30px
 	padding: 10px
 
-
-
 .update-vacancy:hover
 	color: #f47442
 
@@ -33,31 +31,9 @@ a
     max-width: 100%
     padding: 13px 25px
 
-	input.ng-touched.ng-invalid
-  		border: 1px solid red
-  		border-radius: 3px
-
-	textarea.ng-touched.ng-invalid
-  		border: 1px solid red
-  		border-radius: 3px
-	.alert-danger
-		font-size: small
-		font-weight: 500
-		color: red
-		top: 35px
-		width: 100%
-		padding: 3px 2px
-
-	input.ng-touched.ng-valid
-  		border: 1px solid green
-  		border-radius: 3px
-
 	.vacancy-title
 		font-size: 14px
-		margin: 0
-
-	.required-input-symbol
-		color: red
+		margin: 0;
 
 	.text-area
 		margin-top: 20px
@@ -73,7 +49,7 @@ a
 	hr 
 		border: 0
 		height: 1px        
-		margin: 15px 0
+		margin: 25px 0 15px 0
 		background: rgba(0,0,0,.12)  
 
 	/deep/ .ui-dropdown, /deep/ .ui-multiselect
@@ -82,3 +58,27 @@ a
 
 	/deep/ .ui-dropdown
 		margin-top: 20px	
+
+	/deep/ textarea 
+		max-width: 100%
+		width: 100%
+
+	.alert-danger
+		font-size: small
+		font-weight: 500
+		color: red
+		position: absolute
+		top: 35px
+		width: 100%
+		padding: 3px 2px
+
+	.required-input-symbol
+		color: red
+
+	textarea.ng-touched.ng-invalid
+  		border: 1px solid red
+  		border-radius: 3px
+
+	input.ng-touched.ng-valid
+  		border: 1px solid green
+  		border-radius: 3px

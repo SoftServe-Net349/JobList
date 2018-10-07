@@ -11,6 +11,7 @@ import { Language } from '../shared/models/language.model';
 import { City } from '../shared/models/city.model';
 import { School } from '../shared/models/school.model';
 import { Faculty } from '../shared/models/faculty.model';
+import { Resume } from '../shared/models/resume.model';
 
 @Component({
   selector: 'app-resume-form',
@@ -25,6 +26,7 @@ export class ResumeFormComponent implements OnInit {
   action: String;
 
   user: User;
+  resume: Resume;
 
   workAreas: WorkArea[];
   languages: Language[];
@@ -51,7 +53,7 @@ export class ResumeFormComponent implements OnInit {
               private facultyService: FacultyService) {
 
     this.user = this.defaultUser();
-
+    this.resume = this.defaultResume();
   }
 
   ngOnInit() {
@@ -103,9 +105,30 @@ export class ResumeFormComponent implements OnInit {
       phone: '',
       photoData: [],
       photoMimeType: '',
-      resumes: null,
       roleId: 0,
       sex: ''
+    };
+  }
+
+  defaultResume(): Resume {
+    return {
+      id: 0,
+      courses: '',
+      createDate: new Date(),
+      educationPeriods: [],
+      experiences: [],
+      facebook: '',
+      familyState: '',
+      github: '',
+      instagram: '',
+      keySkills: '',
+      linkedin: '',
+      modDate: new Date(),
+      resumeLanguages: [],
+      skype: '',
+      softSkills: '',
+      user: null,
+      workArea: null
     };
   }
 
@@ -128,8 +151,9 @@ export class ResumeFormComponent implements OnInit {
     });
   }
 
-  showResumeForm(action: String, user = this.defaultUser()) {
+  showResumeForm(action: String, user = this.defaultUser(), resume = this.defaultResume()) {
     this.user = user;
+    this.resume = resume;
     this.resumeForm.reset();
     this.display = true;
     this.action = action;
@@ -142,14 +166,14 @@ export class ResumeFormComponent implements OnInit {
         phone: this.user.phone,
         companyName: 'SoftServe',
         position: '.NET DEVELOPER',
-        courses: this.user.resumes.courses,
-        familyState: this.user.resumes.familyState,
-        softSkills: this.user.resumes.softSkills,
-        keySkills: this.user.resumes.keySkills,
-        facebook: this.user.resumes.facebook,
-        skype: this.user.resumes.skype,
-        linkedIn: this.user.resumes.linkedin,
-        gitHub: this.user.resumes.github
+        courses: this.resume.courses,
+        familyState: this.resume.familyState,
+        softSkills: this.resume.softSkills,
+        keySkills: this.resume.keySkills,
+        facebook: this.resume.facebook,
+        skype: this.resume.skype,
+        linkedIn: this.resume.linkedin,
+        gitHub: this.resume.github
       });
       this.selectedWorkArea = this.workAreas[1];
       this.selectedCity = this.cities[1];

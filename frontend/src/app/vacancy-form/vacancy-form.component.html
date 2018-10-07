@@ -1,4 +1,4 @@
-<p-dialog [header]="action + ' Vacancy'" [blockScroll]="true" [dismissableMask]="false" [(visible)]="display"
+<p-dialog [header]="action + ' Vacancy'" [blockScroll]="true" [dismissableMask]="false" [(visible)]="display" [width]="630" [minWidth]="200"
  [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="470" [minY]="70" [baseZIndex]="10000">
 	<div id="vacancy-form">
 		<form [formGroup]="vacancyForm" novalidate>
@@ -39,7 +39,7 @@
 			<hr>
 			<h4 class="vacancy-title">Description<span class="required-input-symbol">*</span></h4>
 			<div class="text-area">
-				<textarea [rows]="10" [cols]="50" pDescription style="resize:none" formControlName="description" required></textarea>
+				<textarea [rows]="10" pDescription style="resize:none" formControlName="description" required></textarea>
 
 				<div *ngIf="vacancyForm.get('description').invalid && (vacancyForm.get('description').dirty || vacancyForm.get('description').touched)"
 				 class="alert alert-danger">
@@ -55,7 +55,7 @@
 
 			<h4 class="vacancy-title">Offer<span class="required-input-symbol">*</span></h4>
 			<div class="text-area">
-				<textarea [rows]="10" [cols]="50" pDescription style="resize:none" formControlName="offering" required></textarea>
+				<textarea [rows]="10" pDescription style="resize:none" formControlName="offering" required></textarea>
 				<div *ngIf="vacancyForm.get('offering').invalid && (vacancyForm.get('offering').dirty || vacancyForm.get('offering').touched)"
 				 class="alert alert-danger">
 					<div *ngIf="vacancyForm.controls['offering'].errors.required">
@@ -70,16 +70,15 @@
 
 			<h4 class="vacancy-title">Full-time/part-time</h4>
 			<div class="text-area">
-				<textarea [rows]="10" [cols]="50" pFullPartTime style="resize:none" formControlName="fullPartTime"></textarea>
+				<input id="fullPartTime" type="text" size="30" pInputText formControlName="fullPartTime">
 			</div>
 			<hr>
 
 			<h4 class="vacancy-title">Requirements<span class="required-input-symbol">*</span></h4>
 			<div class="text-area">
-				<textarea [rows]="10" [cols]="50" pDescription style="resize:none" formControlName="requirements" required></textarea>
+				<textarea [rows]="10" pDescription style="resize:none" formControlName="requirements" required></textarea>
 				<div *ngIf="vacancyForm.get('requirements').invalid && (vacancyForm.get('requirements').dirty || vacancyForm.get('requirements').touched)"
 				 class="alert alert-danger">
-
 					<div *ngIf="vacancyForm.controls['requirements'].errors.required">
 						Requirements name is required
 					</div>
@@ -92,8 +91,7 @@
 
 			<h4 class="vacancy-title">Be plus</h4>
 			<div class="text-area">
-				<textarea [rows]="10" [cols]="50" pDescription style="resize:none" formControlName="bePlus"></textarea>
-
+				<textarea [rows]="10" pDescription style="resize:none" formControlName="bePlus"></textarea>
 			</div>
 			<hr>
 
