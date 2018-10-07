@@ -17,6 +17,5 @@ export interface User {
   city: City;
   roleId: number;
 
-  resumes: Resume;
   favoriteVacancies: FavoriteVacancy[];
 }

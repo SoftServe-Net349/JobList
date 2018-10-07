@@ -20,7 +20,6 @@ namespace JobList.Common.DTOS
         public int RoleId { get; set; }
 
         public CityDTO City { get; set; }
-        public ResumeDTO Resumes { get; set; }
         public IList<FavoriteVacancyDTO> FavoriteVacancies { get; set; }
     }
 }

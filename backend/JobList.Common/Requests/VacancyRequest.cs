@@ -14,6 +14,7 @@ namespace JobList.Common.Requests
         public string FullPartTime { get; set; }
         public DateTime CreateDate { get; set; }
         public int RecruiterId { get; set; }
+        public int WorkAreaId { get; set; }
         public int CityId { get; set; }
     }
 }

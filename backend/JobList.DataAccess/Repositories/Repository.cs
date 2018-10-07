@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JobList.Common.Errors;
 using JobList.Common.Interfaces.Entities;
+using JobList.Common.Pagination;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ namespace JobList.DataAccess.Repositories
 
         protected readonly IMapper _mapper;
 
+        public int Count { get { return _dbSet.Count(); } }
+
         public Repository(JobListDbContext context, IMapper mapper)
         {
             _context = context;
@@ -28,10 +31,9 @@ namespace JobList.DataAccess.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetRangeAsync(int index = 1,
-                                                       int count = 10,
-                                                       Expression<Func<TEntity, bool>> filter = null,
-                                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        public async Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                       Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                       PaginationUrlQuery urlQuery = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -45,11 +47,13 @@ namespace JobList.DataAccess.Repositories
                 query = include(query);
             }
 
+            if(urlQuery != null)
+            {
+                query = query.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
+                    .Take(urlQuery.PageSize);
+            }
 
-            if (index == 0) index = 1;
-            if (count == 0) count = 10;
-
-            return await query.Skip((index - 1) * count).Take(count).ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<TEntity> CreateEntityAsync(TEntity entity)

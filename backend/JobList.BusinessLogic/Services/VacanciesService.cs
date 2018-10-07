@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
@@ -21,6 +22,8 @@ namespace JobList.BusinessLogic.Services
             _uow = uow;
             _mapper = mapper;
         }
+
+        public int Count { get { return _uow.VacanciesRepository.Count; } }
 
 
         public async Task<VacancyDTO> CreateEntityAsync(VacancyRequest modelRequest)
@@ -63,6 +66,20 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
+        public async Task<IEnumerable<VacancyDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null)
+        {
+            var entities = await _uow.VacanciesRepository.GetRangeAsync(
+                include: r => r.Include(o => o.City)
+                    .Include(o => o.WorkArea)
+                    .Include(o => o.Recruiter).ThenInclude(v => v.Company),
+                urlQuery: urlQuery);
+
+            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
+
+            return dtos;
+        }
+
+
         public async Task<VacancyDTO> GetEntityByIdAsync(int id)
         {
             var entity = await _uow.VacanciesRepository.GetEntityAsync(id,
@@ -80,7 +97,8 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id)
         {
             var entities = await _uow.VacanciesRepository.GetRangeAsync(filter: r => r.RecruiterId == id,
-                include: r => r.Include(v=> v.Recruiter)
+                include: r => r.Include(v => v.Recruiter)
+                                .Include(v => v.WorkArea)
                                 .Include(v => v.City));
 
             if (entities == null) return null;

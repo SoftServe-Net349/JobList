@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
@@ -20,6 +21,8 @@ namespace JobList.BusinessLogic.Services
             _uow = uow;
             _mapper = mapper;
         }
+
+        public int Count { get { return _uow.ResumesRepository.Count; } }
 
 
         public async Task<ResumeDTO> CreateEntityAsync(ResumeRequest modelRequest)
@@ -58,6 +61,22 @@ namespace JobList.BusinessLogic.Services
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
                                 .Include(o => o.Experiences)
                                 .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
+
+            var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<IEnumerable<ResumeDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null)
+        {
+            var entities = await _uow.ResumesRepository.GetRangeAsync(
+                include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
+                                .Include(o => o.Experiences)
+                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language),
+                urlQuery: urlQuery);
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
 

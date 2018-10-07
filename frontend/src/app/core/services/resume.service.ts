@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { ResumeRequest } from '../../shared/models/resume-request.model';
 import { Resume } from '../../shared/models/resume.model';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class ResumeService {
@@ -11,14 +11,26 @@ export class ResumeService {
 
   constructor(private apiService: ApiService) {
   }
+
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>>{
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
+  }
+
   getAll(): Observable<Resume[]> {
     return this.apiService.get(`/${this.ctrlUrl}`);
-}
-  getBySearchString(search: string, city: string): Observable<Resume[]> {
+  }
+  getBySearchString(search: string, city: string, pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     const params = new HttpParams()
-    .set('search', search)
-    .set('city', city);
-    return this.apiService.get(`/${this.ctrlUrl}/search`, params);
+      .set('search', search)
+      .set('city', city)
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/search`, params);
   }
 
   getById(id: number): Observable<Resume> {
