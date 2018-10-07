@@ -52,7 +52,7 @@ namespace JobList.BusinessLogic.Services
             return result;
         }
 
-        public async Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync(UrlQuery urlQuery = null)
+        public async Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.User).ThenInclude(u => u.City)
@@ -60,8 +60,23 @@ namespace JobList.BusinessLogic.Services
                                 .Include(o => o.EducationPeriods).ThenInclude(e=>e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
                                 .Include(o => o.Experiences)
+                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
+
+            var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<IEnumerable<ResumeDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null)
+        {
+            var entities = await _uow.ResumesRepository.GetRangeAsync(
+                include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
+                                .Include(o => o.Experiences)
                                 .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language),
-                 urlQuery: urlQuery);
+                urlQuery: urlQuery);
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
 

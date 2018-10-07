@@ -14,7 +14,7 @@ export class JobSearchComponent implements OnInit {
   totalRecords: number = 0;
   vacancies: Vacancy[];
 
-  pageCount: number = 4;
+  pageSize: number = 4;
   pageNumber: number = 1;
 
   search: string = '';
@@ -25,7 +25,7 @@ export class JobSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.loadVacancies(this.pageCount, this.pageNumber);
+    this.loadVacancies(this.pageSize, this.pageNumber);
   }
 
   getVacanciesBySearchString(param: { search: string, city: string }) {
@@ -33,11 +33,9 @@ export class JobSearchComponent implements OnInit {
     this.city = param.city;
 
     if (param.search === '' && param.city === '') {
-      this.loadVacancies(this.pageCount, this.pageNumber);
+      this.loadVacancies(this.pageSize, this.pageNumber);
     } else {
-      // this.paginate({first: 0, page: 0, rows: 4, pageCount: this.pageCount});
-
-      this.vacancyService.getBySearchString(this.search, this.city, this.pageCount, this.pageNumber)
+      this.vacancyService.getBySearchString(this.search, this.city, this.pageSize, this.pageNumber)
         .subscribe((response) => {
           this.vacancies = response.body;
           this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
@@ -58,11 +56,11 @@ export class JobSearchComponent implements OnInit {
     }
   }
 
-  loadVacancies(pageCount: number, pageNumber: number) {
-    this.vacancyService.getFullResponse(pageCount, pageNumber)
+  loadVacancies(pageSize: number, pageNumber: number) {
+    this.vacancyService.getFullResponse(pageSize, pageNumber)
       .subscribe((response) => {
-        this.vacancies = response.body; 
-        this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords; 
-    });
+        this.vacancies = response.body;
+        this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+      });
   }
 }
