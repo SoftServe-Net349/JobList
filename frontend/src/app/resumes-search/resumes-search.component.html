@@ -44,4 +44,5 @@
       </article>
     </div>
   </div>
+  <p-paginator [rows]="pageCount" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[pageCount, pageCount + 1]"></p-paginator>
 </div>

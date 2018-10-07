@@ -46,7 +46,6 @@ export class JobSearchComponent implements OnInit {
   }
 
   paginate(event) {
-    console.log(event.class);
     this.pageNumber = event.page + 1;
 
     if (this.search === '' && this.city === '') {
