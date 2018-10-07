@@ -13,10 +13,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 export class UserComponent implements OnInit {
 
   user: User;
+  resume: Resume;
 
   constructor(private userService: UserService,
+              private resumeService: ResumeService,
               private activatedRoute: ActivatedRoute) {
     this.user = this.defaultUser();
+    this.resume = this.defaultResume();
   }
 
   defaultUser(): User {
@@ -33,9 +36,30 @@ export class UserComponent implements OnInit {
       phone: '',
       photoData: [],
       photoMimeType: '',
-      resumes: null,
       roleId: 0,
       sex: ''
+    };
+  }
+
+  defaultResume(): Resume {
+    return {
+      id: 0,
+      courses: '',
+      createDate: new Date(),
+      educationPeriods: [],
+      experiences: [],
+      facebook: '',
+      familyState: '',
+      github: '',
+      instagram: '',
+      keySkills: '',
+      linkedin: '',
+      modDate: new Date(),
+      resumeLanguages: [],
+      skype: '',
+      softSkills: '',
+      user: null,
+      workArea: null
     };
   }
 
@@ -43,6 +67,7 @@ export class UserComponent implements OnInit {
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadUserById(id);
+      this.loadResumeById(id);
     });
   }
 
@@ -51,13 +76,16 @@ export class UserComponent implements OnInit {
     .subscribe((data: User) => this.user = data);
   }
 
+  loadResumeById(id: number) {
+    this.resumeService.getById(id)
+    .subscribe((data: Resume) => this.resume = data);
+  }
+
   getLanguages(): string {
     let languages = '';
-    if (this.user.resumes !== null) {
-      this.user.resumes.resumeLanguages.forEach(rl => {
-        languages = languages + ' ' + rl.language.name;
-      });
-    }
-    return languages;
+    this.resume.resumeLanguages.forEach(rl => {
+      languages =  rl.language.name + ', ' + languages;
+    });
+    return languages.slice(0, languages.length - 2); // to delete the last ,
   }
 }

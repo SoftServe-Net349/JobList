@@ -7,12 +7,12 @@
       <p><span>E-Mail: </span>{{user.email}}</p>
       <p><span>Sex: </span>{{user.sex ==='m'?'Male':user.sex==='f'?'Female':''}}</p>
       <p><span>Address: </span>{{user.address}}</p>
-      <p><span>Birth Date: </span>{{user.birthDate}}</p>
+      <p><span>Birth Date: </span>{{user.birthDate | date}}</p>
       <p><span>Phone: </span>{{user.phone}}</p>
-      <p><span>Family state: </span>{{user.resumes?.familyState}}</p>
+      <p><span>Family state: </span>{{resume.familyState}}</p>
     </div>
     <div>
-      <button type="button" (click)="resumeForm.showResumeForm('Update', user)" pButton icon="pi pi-copy" label="Update CV"></button>
+      <button type="button" (click)="resumeForm.showResumeForm('Update', user, resume)" pButton icon="pi pi-copy" label="Update CV"></button>
     </div>
   </div>
 
@@ -27,27 +27,27 @@
       </p>
     </p-fieldset>
     <p-fieldset legend="Social Networks">
-      <p><span>GitHub: </span>{{user.resumes?.github}}</p>
-      <p><span>Facebook: </span>{{user.resumes?.facebook}}</p>
-      <p><span>Instagram: </span>{{user.resumes?.instagram}}</p>
-      <p><span>Skype: </span>{{user.resumes?.skype}}</p>
-      <p><span>Linkedin: </span>{{user.resumes?.linkedin}}</p>
+      <p><span>GitHub: </span>{{resume.github}}</p>
+      <p><span>Facebook: </span>{{resume.facebook}}</p>
+      <p><span>Instagram: </span>{{resume.instagram}}</p>
+      <p><span>Skype: </span>{{resume.skype}}</p>
+      <p><span>Linkedin: </span>{{resume.linkedin}}</p>
     </p-fieldset>
     <p-fieldset legend="Educations">
-      <div *ngFor="let ed of user.resumes?.educationPeriods">
-        <p><span>School: </span>{{ed.school}}</p>
-        <p *ngIf="ed.faculty">{{ed.faculty}}</p>
-        <p><span>Start Date: </span>{{ed.startDate}}</p>
-        <p><span>Finish Date: </span>{{ed.finishDate!=null?ed.finishDate:'present'}}</p>
+      <div *ngFor="let ed of resume.educationPeriods">
+        <p><span>School: </span>{{ed.school?.name}}</p>
+        <p *ngIf="ed.faculty">{{ed.faculty?.name}}</p>
+        <p><span>Start Date: </span>{{ed.startDate | date}}</p>
+        <p><span>Finish Date: </span>{{ed.finishDate | date}}</p>
         <hr>    
       </div>
     </p-fieldset>
     <p-fieldset legend="Experience">
-      <div *ngFor="let exp of user.resumes?.expiriences">
+      <div *ngFor="let exp of resume.experiences">
         <p><span>Company Name: </span>{{exp.companyName}}</p>
         <p><span>Position: </span>{{exp.position}}</p>
-        <p><span>Start Date: </span>{{exp.startDate}}</p>
-        <p><span>Finish Date: </span>{{exp.finishDate}}</p>
+        <p><span>Start Date: </span>{{exp.startDate | date}}</p>
+        <p><span>Finish Date: </span>{{exp.finishDate | date}}</p>
         <hr>
       </div>
 
@@ -56,13 +56,13 @@
       <p>{{getLanguages()}}</p>
     </p-fieldset>
     <p-fieldset legend="Courses">
-      <p>{{user.resumes?.courses}}</p>
+      <p>{{resume.courses}}</p>
     </p-fieldset>
     <p-fieldset legend="Soft Skills">
-      <p>{{user.resumes?.softSkills}}</p>
+      <p>{{resume.softSkills}}</p>
     </p-fieldset>
     <p-fieldset legend="Key Skills">
-      <p>{{user.resumes?.keySkills}}</p>
+      <p>{{resume.keySkills}}</p>
     </p-fieldset>    
   </div>
 </div>

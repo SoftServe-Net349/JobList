@@ -53,8 +53,7 @@ namespace JobList.BusinessLogic.Services
         {
             var entities = await _uow.UsersRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.City)
-                                .Include(o => o.FavoriteVacancies)
-                                .Include(o => o.Resumes));
+                                .Include(o => o.FavoriteVacancies));
 
             var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
 
@@ -65,8 +64,7 @@ namespace JobList.BusinessLogic.Services
         {
             var entity = await _uow.UsersRepository.GetEntityAsync(id,
                  include: r => r.Include(o => o.City)
-                                .Include(o => o.FavoriteVacancies)
-                                .Include(o => o.Resumes));
+                                .Include(o => o.FavoriteVacancies));
 
             if (entity == null) return null;
 
