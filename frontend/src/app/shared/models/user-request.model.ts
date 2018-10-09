@@ -10,7 +10,6 @@ export interface UserRequest {
   photoMimeType: string;
   sex: string;
   birthData: Date;
-  address: string;
   email: string;
   password: string;
   cityId: number;

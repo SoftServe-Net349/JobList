@@ -13,7 +13,6 @@ namespace JobList.DataAccess.Entities
         public string PhotoMimeType { get; set; }
         public string Sex { get; set; }
         public DateTime BirthData { get; set; }
-        public string Address { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }

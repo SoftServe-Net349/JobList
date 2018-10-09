@@ -33,11 +33,11 @@ export class CompanyInfoFormComponent implements OnInit {
       bossName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)]],
       phone: [''],
-      shortDescription: ['', [Validators.minLength(2), Validators.maxLength(25)]],
+      shortDescription: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       site: ['', [Validators.minLength(2), Validators.maxLength(100),
         Validators.pattern('^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$')]],
       address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      fullDescription: ['']
+      fullDescription: ['', [Validators.required]]
     });
   }
 

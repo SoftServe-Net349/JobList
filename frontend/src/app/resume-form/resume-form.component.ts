@@ -94,7 +94,6 @@ export class ResumeFormComponent implements OnInit {
   defaultUser(): User {
     return {
       id: 0,
-      address: '',
       birthData: new Date(),
       city: null,
       email: '',
@@ -147,7 +146,10 @@ export class ResumeFormComponent implements OnInit {
       linkedIn: ['', [Validators.minLength(2), Validators.maxLength(200)]],
       gitHub: ['', [Validators.minLength(2), Validators.maxLength(200)]],
       facebook: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      skype: ['', [Validators.minLength(2), Validators.maxLength(200)]]
+      skype: ['', [Validators.minLength(2), Validators.maxLength(200)]],
+      workArea: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      birthDate: ['', [Validators.required]]
     });
   }
 
@@ -173,10 +175,13 @@ export class ResumeFormComponent implements OnInit {
         facebook: this.resume.facebook,
         skype: this.resume.skype,
         linkedIn: this.resume.linkedin,
-        gitHub: this.resume.github
+        gitHub: this.resume.github,
+        workArea: this.resume.workArea,
+        city: this.user.city,
+        birthDate: ''
       });
-      this.selectedWorkArea = this.workAreas[1];
-      this.selectedCity = this.cities[1];
+      // this.selectedWorkArea = this.workAreas[1];
+      // this.selectedCity = this.cities[1];
       this.birthDate = new Date();
       this.selectedShool1 = this.schools[1];
       this.selectedFaculty1 = this.faculties[1];

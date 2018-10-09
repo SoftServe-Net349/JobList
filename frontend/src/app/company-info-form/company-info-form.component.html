@@ -30,7 +30,7 @@
 		</div> 
 		<hr>
 
-		<h4 class="info-title">Email<span class="required-input-symbol">*</span></h4>
+		<h4 class="info-title">E-Mail<span class="required-input-symbol">*</span></h4>
 		<div class="ui-float-label">
 			<input id="email" type="text"  pInputText formControlName="email"> 
 			<div *ngIf="companyInfoForm.get('email').invalid && (companyInfoForm.get('email').dirty || companyInfoForm.get('email').touched)" class="alert alert-danger">
@@ -61,11 +61,27 @@
 		</div> 
 		<hr>
 
-		<h4 class="info-title">Short Description</h4>
+		<h4 class="info-title">Short Description<span class="required-input-symbol">*</span></h4>
 		<div class="ui-float-label">
 			<input id="shortDescription" type="text"  pInputText formControlName="shortDescription"> 
-			<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
-				ShortDiscription contains (2-25) chars
+			<div *ngIf="companyInfoForm.get('shortDescription').invalid && (companyInfoForm.get('shortDescription').dirty || companyInfoForm.get('shortDescription').touched)" class="alert alert-danger">
+				<div *ngIf="companyInfoForm.controls['shortDescription'].errors.required">
+					Short Description is required
+				</div>
+				<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
+					ShortDiscription contains (2-25) chars
+				</div>
+			</div>
+		</div>
+		<hr>
+
+		<h4 class="info-title">Description<span class="required-input-symbol">*</span></h4>
+		<div class="description-area">
+			<textarea [rows]="5" pDescription style="resize:none"  formControlName="fullDescription"></textarea>
+			<div *ngIf="companyInfoForm.get('fullDescription').invalid && (companyInfoForm.get('fullDescription').dirty || companyInfoForm.get('fullDescription').touched)" class="alert alert-danger">
+				<div *ngIf="companyInfoForm.controls['fullDescription'].errors.required">
+					Full Description is required
+				</div>
 			</div>
 		</div>
 		<hr>
@@ -86,13 +102,7 @@
 
 		<h4 class="info-title">Phone</h4>
 		<div class="ui-float-label">
-			<p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
-		</div>
-		<hr>
-
-		<h4 class="info-title">Description</h4>
-		<div class="description-area">
-			<textarea [rows]="5" [cols]="70" pDescription style="resize:none"  formControlName="fullDescription"></textarea>
+			<p-inputMask id="phone" mask="(999) 999-9999" formControlName="phone"></p-inputMask>
 		</div>
 		<hr>
 

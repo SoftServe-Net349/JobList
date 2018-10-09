@@ -28,8 +28,8 @@ a
 	box-shadow: none
 	border-radius: 0
 	font-family: "Open Sans","Helvetica Neue",sans-serif
-    max-width: 100%
-    padding: 13px 25px
+	max-width: 100%
+	padding: 13px 25px
 
 	.vacancy-title
 		font-size: 14px
@@ -43,8 +43,12 @@ a
 		margin-right: 15px
 		display: inline-block
 
-	/deep/ .ui-widget
-		max-width: 250px
+	/deep/ .size-input .ui-widget
+		width: 270px
+
+	/deep/ textarea 
+		max-width: 100%
+		width: 100%
 
 	hr 
 		border: 0
@@ -53,32 +57,35 @@ a
 		background: rgba(0,0,0,.12)  
 
 	/deep/ .ui-dropdown, /deep/ .ui-multiselect
-		width: 100% !important
+		width: 270px !important
 		height: 33.2px
 
 	/deep/ .ui-dropdown
 		margin-top: 20px	
-
-	/deep/ textarea 
-		max-width: 100%
-		width: 100%
 
 	.alert-danger
 		font-size: small
 		font-weight: 500
 		color: red
 		position: absolute
-		top: 35px
 		width: 100%
 		padding: 3px 2px
 
 	.required-input-symbol
 		color: red
 
-	textarea.ng-touched.ng-invalid
-  		border: 1px solid red
-  		border-radius: 3px
+	input.ng-touched.ng-invalid
+		border: 1px solid red
+		border-radius: 3px
 
 	input.ng-touched.ng-valid
-  		border: 1px solid green
-  		border-radius: 3px
+		border: 1px solid green
+		border-radius: 3px
+
+	textarea.ng-touched.ng-invalid
+		border: 1px solid red
+		border-radius: 3px
+
+	textarea.ng-touched.ng-valid
+		border: 1px solid green
+		border-radius: 3px
