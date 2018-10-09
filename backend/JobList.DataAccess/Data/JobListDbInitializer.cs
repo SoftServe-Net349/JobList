@@ -95,7 +95,7 @@ namespace JobList.DataAccess.Data
                 new Faculty{ Id = 10, Name = "Journalism"}
             };
 
-            var user = new User { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthData = new DateTime(1995, 8, 3), Address = "London,Uk", Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
+            var user = new User { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthData = new DateTime(1995, 8, 3), Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
             var resume = new Resume { Id = 46, WorkAreaId = 3, Courses = "Certification training", CreateDate = new DateTime(2018, 4, 5), KeySkills = "hardworking, persuasive", SoftSkills = "plastic surgery", Facebook = "www.facebook.com", FamilyState = "not married" };
             var resume_language1 = new ResumeLanguage { Id = 111, ResumeId = 46, LanguageId = 10 };
             var resume_language2 = new ResumeLanguage { Id = 112, ResumeId = 46, LanguageId = 5 };
@@ -160,7 +160,6 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.Phone, f => f.PickRandom($"073 {f.Random.Number(9999)}"))
                 .RuleFor(o => o.Sex, f => f.PickRandom("m", "f"))
                 .RuleFor(o => o.BirthData, new DateTime(2017, 3, 4))
-                .RuleFor(o => o.Address, f => f.Address.StreetName())
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Password, f => f.Internet.Password())
                 .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id)

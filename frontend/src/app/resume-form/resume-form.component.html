@@ -48,9 +48,9 @@
         </div>
         <hr class="email">
 
-        <h4 class="resume-title">Work Area</h4>
+        <h4 class="resume-title">Work Area<span class="required-input-symbol">*</span></h4>
         <div class="ui-float-label">
-            <p-dropdown [options]="workAreas" optionLabel="name" [(ngModel)]="selectedWorkArea" [ngModelOptions]="{standalone: true}" placeholder="Select Work Area"></p-dropdown>
+            <p-dropdown [options]="workAreas" optionLabel="name" [(ngModel)]="selectedWorkArea" placeholder="Select Work Area" formControlName="workArea"></p-dropdown>
         </div>
         <hr>
 
@@ -97,15 +97,15 @@
         </div>
         <hr>
  
-        <h4 class="resume-title">City</h4>
+        <h4 class="resume-title">City<span class="required-input-symbol">*</span></h4>
         <div class="ui-float-label">
-            <p-dropdown [options]="cities" optionLabel="name" [(ngModel)]="selectedCity" [ngModelOptions]="{standalone: true}"  placeholder="Select a City"></p-dropdown>
+            <p-dropdown [options]="cities" optionLabel="name" [(ngModel)]="selectedCity" placeholder="Select a City" formControlName="city"></p-dropdown>
         </div>
         <hr>
 
-        <h4 class="resume-title">Birth Date</h4>
+        <h4 class="resume-title">Birth Date<span class="required-input-symbol">*</span></h4>
         <div class="ui-float-label size-input">
-            <p-calendar [(ngModel)]="birthDate" [ngModelOptions]="{standalone: true}" dateFormat="D d, M yy"></p-calendar>
+            <p-calendar [(ngModel)]="birthDate" dateFormat="D d, M yy" formControlName="birthDate"></p-calendar>
         </div>
         <hr>
         

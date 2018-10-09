@@ -25,7 +25,6 @@ export class UserComponent implements OnInit {
   defaultUser(): User {
     return {
       id: 0,
-      address: '',
       birthData: new Date(),
       city: null,
       email: '',

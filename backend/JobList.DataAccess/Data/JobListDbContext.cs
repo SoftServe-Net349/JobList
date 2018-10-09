@@ -56,10 +56,6 @@ namespace JobList.DataAccess.Data
             {
                 entity.ToTable("COMPANIES");
 
-                entity.HasIndex(e => e.Address)
-                    .HasName("UQ_COMPANIES_ADDRESS")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Email)
                     .HasName("UQ_COMPANIES_EMAIL")
                     .IsUnique();
@@ -117,7 +113,6 @@ namespace JobList.DataAccess.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
-                    .IsRequired()
                     .HasColumnName("PHONE")
                     .HasMaxLength(15)
                     .IsUnicode(false);
@@ -323,7 +318,6 @@ namespace JobList.DataAccess.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.Phone)
-                    .IsRequired()
                     .HasColumnName("PHONE")
                     .HasMaxLength(15)
                     .IsUnicode(false);
@@ -511,10 +505,6 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Address)
-                    .HasColumnName("ADDRESS")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.BirthData)
                     .HasColumnName("BIRTH_DATA")

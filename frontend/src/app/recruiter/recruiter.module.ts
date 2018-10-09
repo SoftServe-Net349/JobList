@@ -19,6 +19,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { VacancyFormComponent } from '../vacancy-form/vacancy-form.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 @NgModule({
   imports: [
@@ -32,15 +33,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     SidebarModule,
     PanelMenuModule,
     FormsModule,
-		SharedModule,
+    SharedModule,
     DropdownModule,
     ReactiveFormsModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    KeyFilterModule
   ],
   declarations: [
-		RecruiterComponent,
-		RecruiterHeaderComponent,
-		VacancyFormComponent
-	]
+    RecruiterComponent,
+    RecruiterHeaderComponent,
+    VacancyFormComponent
+  ]
 })
 export class RecruiterModule { }

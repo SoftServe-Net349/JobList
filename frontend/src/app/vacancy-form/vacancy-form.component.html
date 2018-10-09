@@ -2,41 +2,43 @@
  [resizable]="false" [draggable]="false" [modal]="true" [width]="350" [minWidth]="470" [minY]="70" [baseZIndex]="10000">
 	<div id="vacancy-form">
 		<form [formGroup]="vacancyForm" novalidate>
-			<div>
-				<h4 class="vacancy-title">Vacancy Name<span class="required-input-symbol">*</span>
-				</h4>
-				<div>
-					<span class="ui-float-label">
-						<input id="vacancyName" type="text" size="30" pInputText formControlName="vacancyName" required>
-						<div *ngIf="vacancyForm.get('vacancyName').invalid && (vacancyForm.get('vacancyName').dirty || vacancyForm.get('vacancyName').touched)"
-						 class="alert alert-danger">
-							<div *ngIf="vacancyForm.controls['vacancyName'].errors.required">
-								Vacancy name is required
-							</div>
-							<div *ngIf="vacancyForm.controls['vacancyName'].errors.minlength || vacancyForm.controls['vacancyName'].errors.maxlength">
-								Vacancy name should contain (2-50) chars
-							</div>
+			<h4 class="vacancy-title">Vacancy Name<span class="required-input-symbol">*</span></h4>
+				<div class="ui-float-label size-input">
+					<input id="vacancyName" type="text"  pInputText formControlName="vacancyName" required>
+					<div *ngIf="vacancyForm.get('vacancyName').invalid && (vacancyForm.get('vacancyName').dirty || vacancyForm.get('vacancyName').touched)"
+						class="alert alert-danger">
+						<div *ngIf="vacancyForm.controls['vacancyName'].errors.required">
+							Vacancy name is required
 						</div>
-					</span>
+						<div *ngIf="vacancyForm.controls['vacancyName'].errors.minlength || vacancyForm.controls['vacancyName'].errors.maxlength">
+							Vacancy name should contain (2-50) chars
+						</div>
+					</div>
 				</div>
-				<hr>
-			</div>
-
-			<h4 class="vacancy-title">Salary</h4>
-			<div>
-				<span class="ui-float-label">
-					<input id="salary" type="text" size="30" pInputText formControlName="salary">
-				</span>
-			</div>
 			<hr>
+
 			<h4 class="vacancy-title">City<span class="required-input-symbol">*</span></h4>
 			<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"
-			 formControlName="city" required></p-dropdown>
+			 formControlName="city"></p-dropdown>
 			<hr>
+
 			<h4 class="vacancy-title">Work Area<span class="required-input-symbol">*</span></h4>
 			<p-dropdown [options]="workAreas" [(ngModel)]="selectedWorkArea" placeholder="Select a Work Area" optionLabel="name"
-			 filter="true" formControlName="workArea" required></p-dropdown>
+			 filter="true" formControlName="workArea"></p-dropdown>
 			<hr>
+
+			<h4 class="vacancy-title">Salary</h4>
+			<div class="ui-float-label size-input">
+				<input type="text" pInputText pKeyFilter="money" placeholder="Money" formControlName="salary">
+				<div *ngIf="vacancyForm.get('salary').invalid && (vacancyForm.get('salary').dirty || vacancyForm.get('salary').touched)"
+				class="alert alert-danger">
+					<div *ngIf="vacancyForm.controls['salary'].errors.pattern">
+						Salary must match 999.00
+					</div>
+				</div>
+			</div>
+			<hr>
+
 			<h4 class="vacancy-title">Description<span class="required-input-symbol">*</span></h4>
 			<div class="text-area">
 				<textarea [rows]="10" pDescription style="resize:none" formControlName="description" required></textarea>
@@ -46,8 +48,8 @@
 					<div *ngIf="vacancyForm.controls['description'].errors.required">
 						Description is required
 					</div>
-					<div *ngIf="vacancyForm.controls['description'].errors.minlength || vacancyForm.controls['description'].errors.maxlength">
-						Description should contain (10-400) chars
+					<div *ngIf="vacancyForm.controls['description'].errors.minlength">
+						Description should contain at least 2 chars
 					</div>
 				</div>
 			</div>
@@ -61,16 +63,10 @@
 					<div *ngIf="vacancyForm.controls['offering'].errors.required">
 						Offer is required
 					</div>
-					<div *ngIf="vacancyForm.controls['offering'].errors.minlength || vacancyForm.controls['offering'].errors.maxlength">
-						Offer should contain (10-400) chars
+					<div *ngIf="vacancyForm.controls['offering'].errors.minlength">
+						Offer should contain contain at least 2 chars
 					</div>
 				</div>
-			</div>
-			<hr>
-
-			<h4 class="vacancy-title">Full-time/part-time</h4>
-			<div class="text-area">
-				<input id="fullPartTime" type="text" size="30" pInputText formControlName="fullPartTime">
 			</div>
 			<hr>
 
@@ -82,8 +78,8 @@
 					<div *ngIf="vacancyForm.controls['requirements'].errors.required">
 						Requirements name is required
 					</div>
-					<div *ngIf="vacancyForm.controls['requirements'].errors.minlength || vacancyForm.controls['requirements'].errors.maxlength">
-						Requirements should contain (10-400) chars
+					<div *ngIf="vacancyForm.controls['requirements'].errors.minlength">
+						Requirements should contain at least 2 chars
 					</div>
 				</div>
 			</div>
@@ -95,6 +91,12 @@
 			</div>
 			<hr>
 
+			<h4 class="vacancy-title">Full-time/part-time</h4>
+			<div class="ui-float-label size-input">
+				<input id="fullPartTime" type="text"  pInputText formControlName="fullPartTime">
+			</div>
+			<hr>
+		
 		</form>
 	</div>
 

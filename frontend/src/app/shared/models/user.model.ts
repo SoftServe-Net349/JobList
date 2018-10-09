@@ -11,7 +11,6 @@ export interface User {
   photoMimeType: string;
   sex: string;
   birthData: Date;
-  address: string;
   email: string;
   password: string;
   city: City;
