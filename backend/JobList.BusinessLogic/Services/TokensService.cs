@@ -28,11 +28,16 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<TokenDTO> CreateTokenAsync(UserLoginRequest request)
         {
-            var userDTO = await usersService.GetAuthenticatedUserAsync(request.Email, request.Password);
+            var userDTO = await usersService.GetAuthenticatedUserAsync(request.Email);
 
             if (userDTO == null)
             {
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "User with such E-Mail not registered yet!");
+            }
+
+            if (userDTO.Password != request.Password)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Password is uncorrect!");
             }
 
             return CreateTokenDTO(userDTO);
@@ -44,7 +49,7 @@ namespace JobList.BusinessLogic.Services
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userDTO.Id.ToString()),
                 new Claim(ClaimTypes.Email, userDTO.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, userDTO.RoleId.ToString())
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, userDTO.Role.Name)
             };
 
             var now = DateTime.UtcNow;

@@ -31,6 +31,7 @@ namespace JobList.Controllers
             }
 
             var tokenResponse = await tokensService.CreateTokenAsync(request);
+
             if (tokenResponse == null)
             {
                 return BadRequest("User with such E-Mail not registered yet!");

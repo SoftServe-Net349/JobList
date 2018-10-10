@@ -57,7 +57,8 @@ namespace JobList.BusinessLogic.Services
         {
             var entities = await _uow.UsersRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.City)
-                                .Include(o => o.FavoriteVacancies));
+                                .Include(o => o.FavoriteVacancies)
+                                .Include(o => o.Role));
 
             var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
 
@@ -68,7 +69,8 @@ namespace JobList.BusinessLogic.Services
         {
             var entity = await _uow.UsersRepository.GetEntityAsync(id,
                  include: r => r.Include(o => o.City)
-                                .Include(o => o.FavoriteVacancies));
+                                .Include(o => o.FavoriteVacancies)
+                                .Include(o => o.Role));
 
             if (entity == null) return null;
 
@@ -77,9 +79,11 @@ namespace JobList.BusinessLogic.Services
             return dto;
         }
 
-        public async Task<UserDTO> GetAuthenticatedUserAsync(string email, string password)
+        public async Task<UserDTO> GetAuthenticatedUserAsync(string email)
         {
-            var entity = await _uow.UsersRepository.GetFirstOrDefaultAsync(filter: u => u.Email == email && u.Password == password);
+            var entity = await _uow.UsersRepository.GetFirstOrDefaultAsync(
+                filter: u => u.Email == email,
+                include: r => r.Include(o => o.Role));
 
             if (entity == null) return null;
 

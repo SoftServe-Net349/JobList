@@ -35,7 +35,7 @@ namespace JobList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //connection to db
+            // Connection to db
             services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
@@ -48,6 +48,8 @@ namespace JobList
             }));
 
             var tokensSection = Configuration.GetSection("Tokens");
+
+            // Configuring JobListTokenOptions
             services.Configure<JobListTokenOptions>(o => 
                 {
                     o.Issuer = tokensSection["Issuer"];
@@ -90,7 +92,7 @@ namespace JobList
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = tokensSection["Issuer"],
                         ValidAudience = tokensSection["Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokensSection["Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"]))
                     };
                 });
 
@@ -99,7 +101,7 @@ namespace JobList
                 {
                     fv.ImplicitlyValidateChildProperties = true;
                                 // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                                fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
                 })
