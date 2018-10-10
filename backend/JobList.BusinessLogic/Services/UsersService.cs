@@ -5,7 +5,11 @@ using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -65,6 +69,17 @@ namespace JobList.BusinessLogic.Services
             var entity = await _uow.UsersRepository.GetEntityAsync(id,
                  include: r => r.Include(o => o.City)
                                 .Include(o => o.FavoriteVacancies));
+
+            if (entity == null) return null;
+
+            var dto = _mapper.Map<User, UserDTO>(entity);
+
+            return dto;
+        }
+
+        public async Task<UserDTO> GetAuthenticatedUserAsync(string email, string password)
+        {
+            var entity = await _uow.UsersRepository.GetFirstOrDefaultAsync(filter: u => u.Email == email && u.Password == password);
 
             if (entity == null) return null;
 

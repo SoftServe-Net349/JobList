@@ -15,6 +15,11 @@ using FluentValidation.AspNetCore;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using JobList.Common.Options;
+using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace JobList
 {
@@ -42,24 +47,15 @@ namespace JobList
                        .WithExposedHeaders("X-Pagination");
             }));
 
-
-            services.AddMvc()
-                            .AddFluentValidation(fv =>
-                            {
-                                fv.ImplicitlyValidateChildProperties = true;
-                                // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                                fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
-                                fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
-                                fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
-                            })
-                            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
-            services.AddMvc()
-                .AddJsonOptions(
-                 options => options.SerializerSettings.ReferenceLoopHandling
-                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            var tokensSection = Configuration.GetSection("Tokens");
+            services.Configure<JobListTokenOptions>(o => 
+                {
+                    o.Issuer = tokensSection["Issuer"];
+                    o.Audience = tokensSection["Audience"];
+                    o.Access_Token_Lifetime = Convert.ToInt32(tokensSection["Access_Token_Lifetime"]);
+                    o.Refresh_Token_Lifetime = Convert.ToInt32(tokensSection["Refresh_Token_Lifetime"]);
+                    o.Security_Key = tokensSection["Key"];
+                });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -79,8 +75,41 @@ namespace JobList
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
+            services.AddTransient<ITokensService, TokensService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokensSection["Issuer"],
+                        ValidAudience = tokensSection["Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokensSection["Key"]))
+                    };
+                });
+
+            services.AddMvc()
+                .AddFluentValidation(fv =>
+                {
+                    fv.ImplicitlyValidateChildProperties = true;
+                                // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                                fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            services.AddMvc()
+                .AddJsonOptions(
+                 options => options.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             InitializeAutomapper(services);
         }
@@ -103,6 +132,7 @@ namespace JobList
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvc();
         }
 
