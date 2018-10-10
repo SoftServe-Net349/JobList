@@ -15,8 +15,6 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<UserDTO> GetEntityByIdAsync(int id);
 
-        Task<UserDTO> GetAuthenticatedUserAsync(string email);
-
         Task<UserDTO> CreateEntityAsync(UserRequest modelRequest);
 
         Task<bool> UpdateEntityByIdAsync(UserRequest modelRequest, int id);

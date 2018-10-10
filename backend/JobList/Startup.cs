@@ -81,9 +81,14 @@ namespace JobList
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
                 {
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -92,7 +97,8 @@ namespace JobList
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = tokensSection["Issuer"],
                         ValidAudience = tokensSection["Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
 

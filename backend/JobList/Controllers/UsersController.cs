@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -33,7 +34,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [Authorize]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<UserDTO>> GetById(int id)
         {

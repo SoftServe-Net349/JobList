@@ -10,7 +10,8 @@ namespace JobList.BusinessLogic.Interfaces
     public interface ITokensService
     {
         Task<TokenDTO> CreateTokenAsync(UserLoginRequest request);
-        TokenDTO CreateTokenDTO(UserDTO userDTO);
+        string GenerateJWT(UserDTO userDTO);
+        string GenerateRefreshToken();
         Task<TokenDTO> RefreshTokenAsync(RefreshTokenRequest request);
     }
 }

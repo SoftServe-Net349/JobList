@@ -39,5 +39,25 @@ namespace JobList.Controllers
 
             return Ok(tokenResponse);
         }
+
+        [AllowAnonymous]
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var tokenResponse = await tokensService.RefreshTokenAsync(request);
+
+            if (tokenResponse == null)
+            {
+                return BadRequest("User with such Id not registered yet!");
+            }
+
+            return Ok(tokenResponse);
+        }
+
     }
 }

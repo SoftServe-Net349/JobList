@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Company } from '../models/company.model';
 import { MenuItem } from 'primeng/api';
 import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
+import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
 
 @Component({
   selector: 'app-header',
@@ -20,18 +21,30 @@ export class HeaderComponent implements OnInit {
   visibleForUser;
   itemsForUser: MenuItem[];
 
+  signInItems: MenuItem[];
+
+  @Input()
+  company: Company;
+  @Input()
+  companyInfoForm: CompanyInfoFormComponent;
+
+  @ViewChild(AuthorizationsComponent)
+  authorizations: AuthorizationsComponent;
+
+
   constructor(private activeRoute: ActivatedRoute,
               private router: Router) {
 
    }
 
-   @Input()
-   company: Company;
-   @Input()
-   companyInfoForm: CompanyInfoFormComponent;
-
    ngOnInit() {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
+
+    this.signInItems = [
+      {label: 'SignIn for User', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('User'); }},
+      {label: 'SignIn for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
+      {label: 'SignIn for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
+    ];
 
     if (this.isCompanyHeader()) {
     this.itemsForCompany = [

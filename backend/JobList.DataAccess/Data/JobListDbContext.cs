@@ -503,6 +503,10 @@ namespace JobList.DataAccess.Data
                     .HasName("UQ_USERS_PHONE")
                     .IsUnique();
 
+                entity.HasIndex(e => e.RefreshToken)
+                    .HasName("UQ_USERS_REFRESH_TOKEN")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
 
@@ -516,6 +520,11 @@ namespace JobList.DataAccess.Data
                     .IsRequired()
                     .HasColumnName("EMAIL")
                     .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RefreshToken)
+                    .HasColumnName("REFRESH_TOKEN")
+                    .HasMaxLength(70)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)

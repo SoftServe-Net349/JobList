@@ -79,19 +79,6 @@ namespace JobList.BusinessLogic.Services
             return dto;
         }
 
-        public async Task<UserDTO> GetAuthenticatedUserAsync(string email)
-        {
-            var entity = await _uow.UsersRepository.GetFirstOrDefaultAsync(
-                filter: u => u.Email == email,
-                include: r => r.Include(o => o.Role));
-
-            if (entity == null) return null;
-
-            var dto = _mapper.Map<User, UserDTO>(entity);
-
-            return dto;
-        }
-
         public async Task<bool> UpdateEntityByIdAsync(UserRequest modelRequest, int id)
         {
             var entity = _mapper.Map<UserRequest, User>(modelRequest);

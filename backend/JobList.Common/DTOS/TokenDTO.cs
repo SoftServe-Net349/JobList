@@ -8,14 +8,13 @@ namespace JobList.Common.DTOS
 
         }
 
-        public TokenDTO(string jwt, UserDTO user)
+        public TokenDTO(string _jwt, string _refreshToken)
         {
-            Jwt = jwt;
-            User = user;
+            Jwt = _jwt;
+            RefreshToken = _refreshToken;
         }
 
         public string Jwt { get; set; }
-
-        public UserDTO User { get; set; }
+        public string RefreshToken { get; set; }
     }
 }
