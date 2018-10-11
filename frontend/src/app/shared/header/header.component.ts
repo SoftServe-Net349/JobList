@@ -4,6 +4,8 @@ import { Company } from '../models/company.model';
 import { MenuItem } from 'primeng/api';
 import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
 import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
+import { AuthHelper } from '../helpers/auth-helper';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -11,14 +13,18 @@ import { AuthorizationsComponent } from '../../authorizations/authorizations.com
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
+
   index: string;
-  visibleForCompany;
+  role = '';
+  uId = 0;
+
+  visibleForCompany = false;
   itemsForCompany: MenuItem[];
 
-  visibleForRecruiter;
+  visibleForRecruiter = false;
   itemsForRecruiter: MenuItem[];
 
-  visibleForUser;
+  visibleForUser = false;
   itemsForUser: MenuItem[];
 
   signInItems: MenuItem[];
@@ -33,11 +39,13 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(private activeRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private authHelper: AuthHelper,
+              private jwtHelper: JwtHelperService) {
 
-   }
+  }
 
-   ngOnInit() {
+  ngOnInit() {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
     this.signInItems = [
@@ -46,8 +54,15 @@ export class HeaderComponent implements OnInit {
       {label: 'SignIn for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
     ];
 
-    if (this.isCompanyHeader()) {
-    this.itemsForCompany = [
+    this.itemsForCompany = this.getItemsForCompany();
+    this.itemsForRecruiter = this.getItemsForRecruiter();
+    this.itemsForUser = this.getItemsForUser();
+
+    this.chengeAuthenticatedStatus();
+  }
+
+  getItemsForCompany(): MenuItem[] {
+     return [
       {
         label: 'Home',
         icon: 'fa fa-home'
@@ -63,8 +78,11 @@ export class HeaderComponent implements OnInit {
       label: 'Sign out',
       icon: 'fa fa-sign-out'
       }
-    ]; } else if (this.isRecruiterHeader()) {
-    this.itemsForRecruiter = [
+    ];
+  }
+
+  getItemsForRecruiter(): MenuItem[] {
+    return [
       {
         label: 'Home',
         icon: 'fa fa-home'
@@ -80,40 +98,42 @@ export class HeaderComponent implements OnInit {
       label: 'Sign out',
       icon: 'fa fa-sign-out'
       }
-      ]; } else if (this.isUserHeader()) {
-        this.itemsForUser = [
-          {
-            label: 'Home',
-            icon: 'fa fa-home'
-          },
-          {
-            label: 'Settings',
-            icon: 'fa fa-cog',
-            items: [
-              {label: 'Change password', icon: 'fa fa-pencil-square-o'}
-            ]
-          },
-          {
-          label: 'Sign out',
-          icon: 'fa fa-sign-out'
-          }
-        ];
+    ];
+  }
+
+  getItemsForUser(): MenuItem[] {
+    return [
+      {
+        label: 'Home',
+        icon: 'fa fa-home',
+        command: (event) => { this.router.navigate(['/users', this.uId]); }
+      },
+      {
+        label: 'Settings',
+        icon: 'fa fa-cog',
+        items: [
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+        ]
+      },
+      {
+      label: 'Sign out',
+      icon: 'fa fa-sign-out',
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
-   }
-   isHomeHeader() {
-     return this.router.url === '/';
-   }
-   isCompanyHeader() {
-    return this.router.url === '/companies/' + this.index;
-   }
-   isRecruiterHeader() {
-    return this.router.url === '/recruiters/' + this.index || this.router.url === '/resumessearch'
-     || this.router.url.includes('/resume-details/');
-   }
-   isUserHeader() {
-     return this.router.url === '/users/' + this.index
-     || this.router.url === '/jobsearch'
-     || this.router.url.includes('/vacancy-details/')
-     || this.router.url.includes('/company-details/');
-   }
+    ];
+  }
+
+  chengeAuthenticatedStatus() {
+    if (this.authHelper.isAuthenticated()) {
+      const token = this.authHelper.getToken();
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      this.role = decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    } else {
+      this.role = '';
+      this.uId = 0;
+    }
+
+  }
+
 }

@@ -41,13 +41,14 @@ namespace JobList.BusinessLogic.Services
 
             if (entity == null)
             {
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "User with such E-Mail not registered yet!");
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Login is uncorrect!");
             }
 
             if (entity.Password != request.Password)
             {
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Password is uncorrect!");
             }
+
             var refreshToken = GenerateRefreshToken();
 
             entity.RefreshToken = refreshToken;

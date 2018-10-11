@@ -4,7 +4,7 @@
       <a id="home" href="#home">JOBLIST</a>
       <p>Find job of your dream</p>
     </div>
-    <div *ngIf="isHomeHeader()">
+    <div *ngIf="role === ''">
       <div id="right-side-menu">
         <a>Find Job</a>
         <a href="">Resume</a>
@@ -13,7 +13,7 @@
       </div>
     </div>
     <!-- COMANY HEADER -->
-    <div *ngIf="isCompanyHeader()">
+    <div *ngIf="role === 'company'">
       <div id="right-side-menu">
         <a>Find Resumes</a>
         <a class="update-info" (click)="companyInfoForm.showInformationForm('Update', company)">Update Info</a>
@@ -32,7 +32,7 @@
       </div>
     </div>
     <!-- RECRUITER HEADER -->
-    <div *ngIf="isRecruiterHeader()">
+    <div *ngIf="role === 'recruiter'">
       <div id="right-side-menu">
         <a>Find Resumes</a>
         <p-sidebar [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
@@ -48,7 +48,7 @@
       </div>
     </div>
     <!-- USER HEADER -->
-    <div *ngIf="isUserHeader()">
+    <div *ngIf="role === 'user'">
       <div id="right-side-menu">
         <a href="">Find Vacancies</a>
         <a>Invitation</a>
@@ -69,4 +69,4 @@
   </div>
 </div>
 
-<app-authorizations></app-authorizations>
+<app-authorizations (chengeAuthenticatedStatus)="chengeAuthenticatedStatus($event)"></app-authorizations>

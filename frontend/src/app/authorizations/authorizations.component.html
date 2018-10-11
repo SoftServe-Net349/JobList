@@ -12,9 +12,6 @@
           <div *ngIf="authoruzationsForm.controls['login'].errors.required">
             Login is required
           </div>
-          <div *ngIf="authoruzationsForm.controls['login'].errors.email">
-            Login should match sample@ex.com
-          </div>
         </div>
       </div>
       <hr>
@@ -27,15 +24,14 @@
           <div *ngIf="authoruzationsForm.controls['password'].errors.required">
             Password is required
           </div>
-          <div *ngIf="authoruzationsForm.controls['password'].errors.minlength || authoruzationsForm.controls['password'].errors.maxlength">
-            Password contains (8-20) chars
-          </div>
         </div>
       </div>
       <hr>
     </form>
-
-    <button class="sign-in" pButton [disabled]="authoruzationsForm.invalid">Sign in</button>
+    <div class="error-message" *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
+    <button class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign In</button>
     <div class="save-forget-password-flex">
       <div>
         <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>

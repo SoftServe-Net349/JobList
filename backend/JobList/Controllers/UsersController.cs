@@ -34,7 +34,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<UserDTO>> GetById(int id)
         {

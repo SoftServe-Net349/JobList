@@ -12,6 +12,9 @@ import { RecruiterService } from './services/recruiter.service';
 import { ResumeService } from './services/resume.service';
 import { VacancyService } from './services/vacancy.service';
 import { UserService } from './services/user.service';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthService } from './services/auth.service';
+import { TokenService } from './services/token.service';
 
 @NgModule({
   imports: [
@@ -28,7 +31,10 @@ import { UserService } from './services/user.service';
     RecruiterService,
     ResumeService,
     VacancyService,
-    UserService
+    UserService,
+    AuthGuard,
+    AuthService,
+    TokenService
   ],
   declarations: []
 })

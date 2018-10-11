@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
+using JobList.Common.Errors;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,22 +23,23 @@ namespace JobList.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
+        [HttpPost()]
+        public async Task<IActionResult> Token([FromBody] UserLoginRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var tokenResponse = await tokensService.CreateTokenAsync(request);
-
-            if (tokenResponse == null)
+            try
             {
-                return BadRequest("User with such E-Mail not registered yet!");
-            }
+                var tokenResponse = await tokensService.CreateTokenAsync(request);
+                return Ok(tokenResponse);
 
-            return Ok(tokenResponse);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [AllowAnonymous]
