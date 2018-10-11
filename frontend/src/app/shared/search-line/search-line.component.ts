@@ -17,7 +17,7 @@ export class SearchLineComponent implements OnInit {
   selectedCity: City;
   inputText: String;
 
-  @Output() filteredVacancies = new EventEmitter<object>();
+  @Output() foundVacancies = new EventEmitter<object>();
   @Output() filteredResumes = new EventEmitter<object>();
 
   currentUrl: String;
@@ -36,7 +36,7 @@ export class SearchLineComponent implements OnInit {
 
   search() {
     if (this.currentUrl === '/jobsearch') {
-      this.filteredVacancies.emit({
+      this.foundVacancies.emit({
         search: this.inputText === undefined ? '' : this.inputText,
         city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name});
      } else if (this.currentUrl === '/resumessearch') {

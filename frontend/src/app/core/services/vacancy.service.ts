@@ -36,6 +36,19 @@ export class VacancyService {
 
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/search`, params);
   }
+  getByFilter(workArea: string, city: string, namesOfCompanies: string[], typeOfEmployment:string, isChecked: boolean, salary: number): Observable<Vacancy[]> {
+    let params = new HttpParams()
+    .set('workArea', workArea)
+    .set('city', city)
+    .set('typeOfEmployment', typeOfEmployment)
+    .set('isChecked', isChecked.toString())
+    .set('salary', salary.toString());
+    namesOfCompanies.forEach(name => {
+      console.log(name);
+      params = params.append('namesOfCompanies', name)
+    })
+    return this.apiService.get(`/${this.ctrlUrl}/filter`, params);
+  }
 
   getById(id: number): Observable<Vacancy> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);

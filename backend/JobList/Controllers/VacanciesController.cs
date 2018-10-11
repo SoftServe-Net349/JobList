@@ -83,6 +83,51 @@ namespace JobList.Controllers
 
             return Ok(dtos);
         }
+        [HttpGet("filter")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByFilter([FromQuery]Vacancy vacancy)
+        {
+            var dtos = await _vacanciesService.GetAllEntitiesAsync();
+
+            if (dtos == null)
+            {
+                return NotFound();
+            }
+
+            if (!string.IsNullOrEmpty(vacancy.workArea))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.WorkArea.Name == vacancy.workArea);
+            }
+            if (!(vacancy.namesOfCompanies == null))
+            {
+                dtos = from x in dtos
+                       where vacancy.namesOfCompanies.Contains(x.Recruiter.Company.Name)
+                       select x;
+            }
+            if (!(vacancy == null))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.IsChecked == vacancy.isChecked);
+            }
+            if (!string.IsNullOrEmpty(vacancy.typeOfEmployment))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.FullPartTime == vacancy.typeOfEmployment);
+            }
+            if(!(vacancy == null))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.Salary >= vacancy.salary);
+            }
+            if (!string.IsNullOrEmpty(vacancy.city))
+            {
+                dtos = dtos.Select(d => d)
+                    .Where(d => d.City.Name == vacancy.city);
+            }
+            
+
+            return Ok(dtos);
+        }
 
         [HttpGet("recruiter/{id}")]
         public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
@@ -156,5 +201,14 @@ namespace JobList.Controllers
 
             return NoContent();
         }
+    }
+    public class Vacancy
+    {
+        public string workArea { get; set; }
+        public string[] namesOfCompanies { get; set; }
+        public bool isChecked { get; set; }
+        public string typeOfEmployment { get; set; }
+        public decimal salary { get; set; }
+        public string city { get; set; }
     }
 }

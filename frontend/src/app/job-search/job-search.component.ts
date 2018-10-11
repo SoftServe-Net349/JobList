@@ -9,7 +9,6 @@ import { SearchLineComponent } from '../shared/search-line/search-line.component
   styleUrls: ['./job-search.component.sass']
 })
 export class JobSearchComponent implements OnInit {
-  @ViewChild(SearchLineComponent)
 
   totalRecords: number = 0;
   vacancies: Vacancy[];
@@ -31,7 +30,6 @@ export class JobSearchComponent implements OnInit {
   getVacanciesBySearchString(param: { search: string, city: string }) {
     this.search = param.search;
     this.city = param.city;
-
     if (param.search === '' && param.city === '') {
       this.loadVacancies(this.pageSize, this.pageNumber);
     } else {
@@ -54,6 +52,11 @@ export class JobSearchComponent implements OnInit {
           this.vacancies = response.body;
         });
     }
+  }
+  getVacanciesByFilter(param: {wArea: string, city: string, namesOfCompanies: string[],
+                              typeOfEmployment: string, isChecked: boolean, salary: number}) {
+    this.vacancyService.getByFilter(param.wArea, param.city, param.namesOfCompanies, param.typeOfEmployment, param.isChecked, param.salary)
+    .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
   loadVacancies(pageSize: number, pageNumber: number) {

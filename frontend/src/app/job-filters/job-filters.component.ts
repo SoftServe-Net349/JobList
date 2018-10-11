@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CompanyService } from '../core/services/company.service';
 import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
@@ -16,6 +16,7 @@ import { Company } from '../shared/models/company.model';
 export class JobFiltersComponent implements OnInit {
 
   checked: Boolean = false;
+  salary: number;
 
   workAreas: WorkArea[];
   selectedWorkArea: WorkArea;
@@ -26,6 +27,9 @@ export class JobFiltersComponent implements OnInit {
   companies: Company[];
   selectedCompanies: Company[];
 
+  selectedTypeOfEmployment: string;
+
+  @Output() filteredVacancies = new EventEmitter<object>();
 
   constructor(private companyService: CompanyService, private cityService: CityService,
     private workAreaService: WorkAreaService) {
@@ -38,19 +42,30 @@ export class JobFiltersComponent implements OnInit {
     this.loadWorkAreas();
   }
 
-
-  loadCompanies(){
+  loadCompanies() {
     this.companyService.getAll()
       .subscribe((data: Company[]) => this.companies = data);
   }
 
-  loadCities(){
+  loadCities() {
     this.cityService.getAll()
       .subscribe((data: City[]) => this.cities = data);
   }
 
-  loadWorkAreas(){
+  loadWorkAreas() {
     this.workAreaService.getAll()
       .subscribe((data: WorkArea[]) => this.workAreas = data);
+  }
+  filter() {
+    this.filteredVacancies.emit({
+     wArea: this.selectedWorkArea === undefined ? '' : this.selectedWorkArea.name,
+     city: this.selectedCity === undefined ? '' : this.selectedCity.name,
+     namesOfCompanies: this.selectedCompanies === undefined ||
+                       this.selectedCompanies === null ? [] : this.selectedCompanies.map(a => a.name),
+     typeOfEmployment: this.selectedTypeOfEmployment === undefined ||
+                       this.selectedTypeOfEmployment === null ? '' : this.selectedTypeOfEmployment,
+     isChecked: this.checked,
+     salary: this.salary === undefined || this.salary === null ? 0 : this.salary
+    });
   }
 }
