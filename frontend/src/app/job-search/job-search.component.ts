@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
 import { SearchLineComponent } from '../shared/search-line/search-line.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-job-search',
@@ -20,12 +21,20 @@ export class JobSearchComponent implements OnInit {
   search: string = '';
   city: string = '';
 
-  constructor(private vacancyService: VacancyService) {
+  constructor(private vacancyService: VacancyService, private router: Router) {
     this.vacancies = [];
   }
 
   ngOnInit() {
     this.loadVacancies(this.pageSize, this.pageNumber);
+  }
+
+  goToVacancyDetails(id: number) {
+    this.router.navigate(['/vacancy-details/', id]);
+  }
+
+  goToCompanyDetails(id: number) {
+    this.router.navigate(['/company-details/', id]);
   }
 
   getVacanciesBySearchString(param: { search: string, city: string }) {
