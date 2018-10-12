@@ -18,7 +18,11 @@ import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 import { CoreModule } from './core/core.module';
 
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -35,7 +39,14 @@ import { CoreModule } from './core/core.module';
     AdminModule,
     RecruiterModule,
     CompanyModule,
-    CoreModule
+    CoreModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:56681'],
+        blacklistedRoutes: ['localhost:56681/tokens/']
+      }
+    })
   ],
   providers: [],
   bootstrap: [

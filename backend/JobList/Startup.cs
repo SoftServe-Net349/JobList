@@ -15,6 +15,12 @@ using FluentValidation.AspNetCore;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using JobList.Common.Options;
+using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using JobList.Common.DTOS;
 
 namespace JobList
 {
@@ -30,7 +36,7 @@ namespace JobList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //connection to db
+            // Connection to db
             services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
@@ -42,24 +48,17 @@ namespace JobList
                        .WithExposedHeaders("X-Pagination");
             }));
 
+            var tokensSection = Configuration.GetSection("Tokens");
 
-            services.AddMvc()
-                            .AddFluentValidation(fv =>
-                            {
-                                fv.ImplicitlyValidateChildProperties = true;
-                                // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                                fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
-                                fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
-                                fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
-                            })
-                            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
-            services.AddMvc()
-                .AddJsonOptions(
-                 options => options.SerializerSettings.ReferenceLoopHandling
-                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            // Configuring JobListTokenOptions
+            services.Configure<JobListTokenOptions>(o => 
+                {
+                    o.Issuer = tokensSection["Issuer"];
+                    o.Audience = tokensSection["Audience"];
+                    o.Access_Token_Lifetime = Convert.ToInt32(tokensSection["Access_Token_Lifetime"]);
+                    o.Refresh_Token_Lifetime = Convert.ToInt32(tokensSection["Refresh_Token_Lifetime"]);
+                    o.Security_Key = tokensSection["Key"];
+                });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -79,8 +78,49 @@ namespace JobList
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
+            services.AddTransient<ITokensService<UserDTO>, UserTokensService>();
+            services.AddTransient<ITokensService<CompanyDTO>, CompanyTokensService>();
+            services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokensSection["Issuer"],
+                        ValidAudience = tokensSection["Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddMvc()
+                .AddFluentValidation(fv =>
+                {
+                    fv.ImplicitlyValidateChildProperties = true;
+                                // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                    fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            services.AddMvc()
+                .AddJsonOptions(
+                 options => options.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             InitializeAutomapper(services);
         }
@@ -103,6 +143,7 @@ namespace JobList
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvc();
         }
 
