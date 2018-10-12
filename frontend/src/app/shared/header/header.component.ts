@@ -49,9 +49,9 @@ export class HeaderComponent implements OnInit {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
     this.signInItems = [
-      {label: 'SignIn for User', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('User'); }},
-      {label: 'SignIn for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
-      {label: 'SignIn for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
+      {label: 'Sign In for User', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('User'); }},
+      {label: 'Sign In for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
+      {label: 'Sign In for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
     ];
 
     this.itemsForCompany = this.getItemsForCompany();
@@ -65,7 +65,8 @@ export class HeaderComponent implements OnInit {
      return [
       {
         label: 'Home',
-        icon: 'fa fa-home'
+        icon: 'fa fa-home',
+        command: (event) => { this.router.navigate(['/companies', this.uId]); }
       },
       {
         label: 'Settings',
@@ -76,7 +77,8 @@ export class HeaderComponent implements OnInit {
       },
       {
       label: 'Sign out',
-      icon: 'fa fa-sign-out'
+      icon: 'fa fa-sign-out',
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
   }
@@ -85,7 +87,8 @@ export class HeaderComponent implements OnInit {
     return [
       {
         label: 'Home',
-        icon: 'fa fa-home'
+        icon: 'fa fa-home',
+        command: (event) => { this.router.navigate(['/recruiters', this.uId]); }
       },
       {
         label: 'Settings',
@@ -96,7 +99,8 @@ export class HeaderComponent implements OnInit {
       },
       {
       label: 'Sign out',
-      icon: 'fa fa-sign-out'
+      icon: 'fa fa-sign-out',
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
   }

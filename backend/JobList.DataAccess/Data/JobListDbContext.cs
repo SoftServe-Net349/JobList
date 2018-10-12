@@ -82,10 +82,19 @@ namespace JobList.DataAccess.Data
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.HasIndex(e => e.RefreshToken)
+                    .HasName("UQ_COMPANIES_REFRESH_TOKEN")
+                    .IsUnique();
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("EMAIL")
                     .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RefreshToken)
+                    .HasColumnName("REFRESH_TOKEN")
+                    .HasMaxLength(70)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FullDescription)
@@ -289,6 +298,10 @@ namespace JobList.DataAccess.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.HasIndex(e => e.RefreshToken)
+                    .HasName("UQ_RECRUITERS_REFRESH_TOKEN")
+                    .IsUnique();
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
@@ -309,6 +322,11 @@ namespace JobList.DataAccess.Data
                     .IsRequired()
                     .HasColumnName("LAST_NAME")
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RefreshToken)
+                    .HasColumnName("REFRESH_TOKEN")
+                    .HasMaxLength(70)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)

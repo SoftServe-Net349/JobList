@@ -129,6 +129,11 @@ namespace JobList.DataAccess.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().AnyAsync(predicate);
+        }
+
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             var entityToUpdate = await _dbSet.FindAsync(entity.Id);

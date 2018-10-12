@@ -2,14 +2,14 @@
 
 namespace JobList.Common.Requests
 {
-    public class UserLoginRequest
+    public class LoginRequest
     {
-        public UserLoginRequest()
+        public LoginRequest()
         {
 
         }
 
-        public UserLoginRequest(string email, string password)
+        public LoginRequest(string email, string password)
         {
             Email = email;
             Password = password;

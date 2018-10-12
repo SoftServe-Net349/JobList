@@ -23,7 +23,7 @@ namespace JobList.DataAccess.Interfaces.Repositories
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<TEntity> CreateEntityAsync(TEntity entity);
         Task DeleteAsync(TKey Id);
-
+        Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
         int Count { get; }
     }
 }

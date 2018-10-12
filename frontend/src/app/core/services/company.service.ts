@@ -19,8 +19,9 @@ export class CompanyService {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
 }
 
-  create(request: CompanyRequest): Observable<Company> {
-    return this.apiService.post(`/${this.ctrlUrl}`, request);
+  register(request: CompanyRequest): Observable<Company> {
+    console.log(request);
+    return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 
   update(id: number, request: CompanyRequest): Observable<Object> {

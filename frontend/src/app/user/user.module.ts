@@ -24,6 +24,7 @@ import { UserHeaderComponent } from './user-header/user-header.component';
 
 import { ResumeFormComponent } from '../resume-form/resume-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { SharedModule } from '../shared/shared.module';
     PasswordModule,
     InputMaskModule,
     ReactiveFormsModule,
-    MultiSelectModule
+    MultiSelectModule,
+    CoreModule
   ],
   declarations: [
     UserComponent,

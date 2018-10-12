@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
+using JobList.Common.DTOS;
 using JobList.Common.Errors;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokensController : ControllerBase
+    public class UserTokensController : ControllerBase
     {
-        private readonly ITokensService tokensService;
+        private readonly ITokensService<UserDTO> tokensService;
 
-        public TokensController(ITokensService _tokensService)
+        public UserTokensController(ITokensService<UserDTO> _tokensService)
         {
             tokensService = _tokensService;
         }
 
         [AllowAnonymous]
-        [HttpPost()]
-        public async Task<IActionResult> Token([FromBody] UserLoginRequest request)
+        [HttpPost("token")]
+        public async Task<IActionResult> Token([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
             {

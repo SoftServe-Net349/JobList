@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,21 +60,28 @@ namespace JobList.Controllers
         }
 
         // POST: /recruiters
-        [HttpPost]
-        public virtual async Task<ActionResult<RecruiterDTO>> Create([FromBody] RecruiterRequest request)
+        [HttpPost("register")]
+        public virtual async Task<ActionResult<RecruiterDTO>> Register([FromBody] RecruiterRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var dtos = await _recruitersService.CreateEntityAsync(request);
-            if (dtos == null)
+            try
             {
-                return StatusCode(500);
-            }
+                var dtos = await _recruitersService.CreateEntityAsync(request);
 
-            return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+                if (dtos == null)
+                {
+                    return StatusCode(500);
+                }
+
+                return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: /recruiters/:id

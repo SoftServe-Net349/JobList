@@ -20,22 +20,22 @@ using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
 {
-    public class TokensService : ITokensService
+    public class RecruiterTokensService: ITokensService<RecruiterDTO>
     {
         private readonly IOptions<JobListTokenOptions> tokenOptions;
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
 
-        public TokensService(IUnitOfWork _uow, IMapper _mapper, IOptions<JobListTokenOptions> _tokenOptions)
+        public RecruiterTokensService(IUnitOfWork _uow, IMapper _mapper, IOptions<JobListTokenOptions> _tokenOptions)
         {
             uow = _uow;
             mapper = _mapper;
             tokenOptions = _tokenOptions;
         }
 
-        public async Task<TokenDTO> CreateTokenAsync(UserLoginRequest request)
+        public async Task<TokenDTO> CreateTokenAsync(LoginRequest request)
         {
-            var entity = await uow.UsersRepository.GetFirstOrDefaultAsync(
+            var entity = await uow.RecruitersRepository.GetFirstOrDefaultAsync(
                 filter: u => u.Email == request.Email,
                 include: r => r.Include(o => o.Role));
 
@@ -59,20 +59,20 @@ namespace JobList.BusinessLogic.Services
                 return null;
             }
 
-            var dto = mapper.Map<User, UserDTO>(entity);
+            var dto = mapper.Map<Recruiter, RecruiterDTO>(entity);
 
             var jwt = GenerateJWT(dto);
 
             return new TokenDTO(jwt, refreshToken);
         }
 
-        public string GenerateJWT(UserDTO userDTO)
+        public string GenerateJWT(RecruiterDTO recruiterDTO)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userDTO.Id.ToString()),
-                new Claim(ClaimTypes.Email, userDTO.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, userDTO.Role.Name)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, recruiterDTO.Id.ToString()),
+                new Claim(ClaimTypes.Email, recruiterDTO.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, recruiterDTO.Role.Name)
             };
 
             var now = DateTime.UtcNow;
@@ -91,13 +91,13 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<TokenDTO> RefreshTokenAsync(RefreshTokenRequest request)
         {
-            var entity = await uow.UsersRepository.GetEntityAsync(
+            var entity = await uow.RecruitersRepository.GetEntityAsync(
                 request.UId,
                 include: r => r.Include(o => o.Role));
 
             if (entity == null)
             {
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "User with such Id not registered yet!");
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Recruiter with such Id not registered yet!");
             }
 
             if (entity.RefreshToken != request.RefreshToken)
@@ -115,7 +115,7 @@ namespace JobList.BusinessLogic.Services
                 return null;
             }
 
-            var dto = mapper.Map<User, UserDTO>(entity);
+            var dto = mapper.Map<Recruiter, RecruiterDTO>(entity);
 
             var jwt = GenerateJWT(dto);
 
@@ -131,5 +131,6 @@ namespace JobList.BusinessLogic.Services
                 return Convert.ToBase64String(randomNumber);
             }
         }
+
     }
 }

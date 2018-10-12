@@ -156,10 +156,6 @@ h4
     .required-input-symbol
         color: red
 
-    textarea.ng-touched.ng-invalid
-        border: 1px solid red
-        border-radius: 3px
-
     .alert-danger
         font-size: small
         font-weight: 500
@@ -169,10 +165,12 @@ h4
         padding: 3px 2px
 
     .error-message
+        position: absolute
         font-size: small
-        font-weight: 600
+        font-weight: 500
         color: red
-         
+        padding: 3px 2px
+        
     input.ng-touched.ng-invalid
         border: 1px solid red
         border-radius: 3px
@@ -181,7 +179,16 @@ h4
         border: 1px solid green
         border-radius: 3px
 
+    textarea.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
 
+    textarea.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
+
+    .hr-email
+        margin: 35px 0 15px 0
 	
 #company-authoruzations
     /deep/ .ui-float-label

@@ -21,6 +21,7 @@ export class RecruiterFormComponent implements OnInit {
 
   display: Boolean = false;
   action: String;
+  errorMessage: string;
 
   recruiter: Recruiter;
   uploadedFiles: any[] = [];
@@ -114,14 +115,17 @@ export class RecruiterFormComponent implements OnInit {
       lastName: this.recruiterForm.get('lastName').value,
       email: this.recruiterForm.get('email').value,
       phone: this.recruiterForm.get('phone').value,
-      password: 'sddsdsdsdsd',
+      password: '12345678',
       companyId: this.companyId,
-      roleId: 3,
+      roleId: 4,
       photoData: this.recruiter.photoData,
       photoMimetype: this.recruiter.photoMimetype
 
     };
-    this.recruiterService.create(request)
-    .subscribe(data => this.loadRecruiters.emit());
+    this.recruiterService.register(request)
+    .subscribe((data: Recruiter) => {
+      this.errorMessage = '';
+      this.loadRecruiters.emit(); },
+    error => { this.errorMessage = error.error; });
   }
 }

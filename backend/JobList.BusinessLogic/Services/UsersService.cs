@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -28,6 +26,11 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<UserDTO> CreateEntityAsync(UserRequest modelRequest)
         {
+            if (await _uow.UsersRepository.ExistAsync(u => u.Email == modelRequest.Email))
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "This email already exists!");
+            }
+
             var entity = _mapper.Map<UserRequest, User>(modelRequest);
 
             entity = await _uow.UsersRepository.CreateEntityAsync(entity);

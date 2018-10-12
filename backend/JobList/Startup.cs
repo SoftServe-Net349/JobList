@@ -20,6 +20,7 @@ using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using JobList.Common.DTOS;
 
 namespace JobList
 {
@@ -77,7 +78,9 @@ namespace JobList
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
-            services.AddTransient<ITokensService, TokensService>();
+            services.AddTransient<ITokensService<UserDTO>, UserTokensService>();
+            services.AddTransient<ITokensService<CompanyDTO>, CompanyTokensService>();
+            services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
