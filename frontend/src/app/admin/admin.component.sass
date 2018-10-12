@@ -1,0 +1,56 @@
+h1 
+    padding: 20px 0
+    font-size: 1.2em
+    font-weight: 600
+
+hr
+    height: 2px
+    margin: 15px 0 15px
+    border: none
+    background-color: rgba(0,0,0,0.12)
+    
+    
+
+.container
+    margin: 0
+    padding: 0
+    display: grid
+    width: 100%
+    grid-template-columns: 16% 82%
+    grid-template-rows: auto
+    grid-column-gap: 10px
+    grid-template-areas: "left-side-menu right-side-menu"
+
+
+    .right-side-menu
+        margin-left: 8%
+        margin-right: 5%
+        margin-top: 82px
+        grid-area: right-side-menu
+
+    #left-side-menu
+        grid-area: left-side-menu
+        padding: 15px 0
+        text-align: left
+        display: flex
+        justify-content: space-between
+        position: relative
+
+    /deep/ .ui-sidebar
+        i 
+            position: absolute
+            left: 0
+            top: 4px
+
+        a
+            background-color: #fff
+            font-size: 16px
+            margin: 0 -14px 
+            color: #7C898B
+            border: none 
+
+/deep/ body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a,
+/deep/ body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a:hover
+    border: none
+    background-color: #7C898B
+    color: #ffffff

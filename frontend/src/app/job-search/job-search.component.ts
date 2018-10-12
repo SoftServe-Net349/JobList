@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
 import { SearchLineComponent } from '../shared/search-line/search-line.component';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-job-search',
@@ -10,7 +11,7 @@ import { SearchLineComponent } from '../shared/search-line/search-line.component
 })
 export class JobSearchComponent implements OnInit {
   @ViewChild(SearchLineComponent)
-
+  
   totalRecords: number = 0;
   vacancies: Vacancy[];
 
@@ -45,6 +46,7 @@ export class JobSearchComponent implements OnInit {
 
   paginate(event) {
     this.pageNumber = event.page + 1;
+    this.pageSize = event.rows;
 
     if (this.search === '' && this.city === '') {
       this.loadVacancies(event.rows, this.pageNumber);

@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router) {
-
+                
+    console.log(router.url);
    }
 
    @Input()
@@ -32,7 +33,6 @@ export class HeaderComponent implements OnInit {
 
    ngOnInit() {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
-
     if (this.isCompanyHeader()) {
     this.itemsForCompany = [
       {
@@ -97,6 +97,11 @@ export class HeaderComponent implements OnInit {
     return this.router.url === '/recruiters/' + this.index || this.router.url === '/resumessearch'
      || this.router.url.includes('/resume-details/');
    }
+
+   isAdminHeader(){
+     return this.router.url === '/admin';
+   }
+
    isUserHeader() {
      return this.router.url === '/users/' + this.index
      || this.router.url === '/jobsearch'

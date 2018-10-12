@@ -13,7 +13,7 @@ const childRoutes: Routes = [
   { path: 'resumessearch', component: ResumesSearchComponent },
   { path: 'company-details/:id', component: CompanyDetailsComponent},
   { path: 'resume-details/:id', component: ResumeDetailsComponent },
-  { path: 'vacancy-details/:id', component: VacancyDetailsComponent},
+  { path: 'vacancy-details/:id', component: VacancyDetailsComponent}
 ];
 
 const routes: Routes = [

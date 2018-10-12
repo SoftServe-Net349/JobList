@@ -1,3 +1,15 @@
-<p>
-  admin works!
-</p>
+<app-admin-header></app-admin-header>
+<div class="container">
+    <div id="left-side-menu">
+        <p-sidebar [(visible)]="visibleForUser" [baseZIndex]="10000" blockScroll="true" [fullScreen]="false" position="left"
+            modal="" showCloseIcon="">
+            <h1>Admin panel</h1>
+            <hr>
+            <p-panelMenu [model]="itemsForUser" [multiple]="false"></p-panelMenu>
+        </p-sidebar>
+    </div>
+
+    <div class="right-side-menu">
+        <router-outlet></router-outlet>
+    </div>
+</div>

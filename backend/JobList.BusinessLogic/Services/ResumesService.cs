@@ -76,7 +76,7 @@ namespace JobList.BusinessLogic.Services
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
                                 .Include(o => o.Experiences)
                                 .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language),
-                urlQuery: urlQuery);
+                paginationUrlQuery: urlQuery);
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
 

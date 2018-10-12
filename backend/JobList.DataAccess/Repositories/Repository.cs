@@ -8,6 +8,7 @@ using AutoMapper;
 using JobList.Common.Errors;
 using JobList.Common.Interfaces.Entities;
 using JobList.Common.Pagination;
+using JobList.Common.Sorting;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace JobList.DataAccess.Repositories
 
         public async Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
                                                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                       PaginationUrlQuery urlQuery = null)
+                                                       PaginationUrlQuery paginationUrlQuery = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -47,10 +48,10 @@ namespace JobList.DataAccess.Repositories
                 query = include(query);
             }
 
-            if(urlQuery != null)
+            if(paginationUrlQuery != null)
             {
-                query = query.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageSize);
+                query = query.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
+                    .Take(paginationUrlQuery.PageSize);
             }
 
             return await query.ToListAsync();
