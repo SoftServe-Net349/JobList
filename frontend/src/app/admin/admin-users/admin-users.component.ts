@@ -1,7 +1,9 @@
-import { OnInit, Component } from "@angular/core";
+import { OnInit, Component, ViewChild } from "@angular/core";
 import { User } from "src/app/shared/models/user.model";
 import { UserService } from "src/app/core/services/user.service";
 import { SelectItem, ConfirmationService } from "primeng/api";
+import { isNullOrUndefined } from "util";
+import { Paginator } from "primeng/primeng";
 
 @Component({
     selector: 'app-admin-users',
@@ -26,8 +28,9 @@ export class AdminUsersComponent implements OnInit {
     totalRecords: number = 0;
 
     searchString: string = '';
+    searchedUser: User = null;
 
-
+    
     constructor(private confirmationService: ConfirmationService, private userService: UserService) {
         this.users = [];
     }
@@ -66,16 +69,42 @@ export class AdminUsersComponent implements OnInit {
         this.loadUsers();
     }
 
-    search() {
+    filterUsers(event) {
+        this.searchString = event.query;
         this.pageNumber = 1;
         this.loadUsers();
     }
 
+    select(event) {
+        this.searchString = event.email;
+        this.pageNumber = 1;
+        this.loadUsers();
+    }
+
+    search(event) {
+        if(isNullOrUndefined(this.searchedUser)){
+            this.searchString = '';
+        }
+        else if(isNullOrUndefined(this.searchedUser.email)){
+            this.searchString = this.searchedUser.toString();
+        }
+
+        this.pageNumber = 1;
+        this.loadUsers();
+    }
+
+
     loadUsers() {
         this.userService.getFullResponse(this.searchString, this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
             .subscribe((response) => {
-                this.users = response.body;
-                this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+                if (response.body !== null) {
+                    this.users = response.body;
+                    this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+                }
+                else {
+                    this.users = null;
+                    this.totalRecords = 0;
+                }
             });
     }
 

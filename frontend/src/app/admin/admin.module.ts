@@ -12,7 +12,7 @@ import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { AdminCompaniesComponent } from './admin-companies/admin-companies.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {InputTextModule} from 'primeng/inputtext';
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -30,7 +30,8 @@ import {InputTextModule} from 'primeng/inputtext';
     PaginatorModule,
     SharedModule,
     ConfirmDialogModule,
-    InputTextModule
+    InputTextModule,
+    AutoCompleteModule
   ],
   declarations: [AdminComponent, AdminCompaniesComponent, AdminUsersComponent, AdminHeaderComponent]
 })
