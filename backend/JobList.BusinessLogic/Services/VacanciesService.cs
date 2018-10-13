@@ -3,10 +3,13 @@ using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -79,6 +82,51 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
+        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        {
+            var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
+                 include: r => r.Include(o => o.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company));
+
+            if (!string.IsNullOrEmpty(vacancyUrlQuery.Name))
+            {
+                entities = entities.Where(е => е.Name.ToLower()
+                    .Contains(vacancyUrlQuery.Name.ToLower())).ToList();
+            }
+            if (!string.IsNullOrEmpty(vacancyUrlQuery.City))
+            {
+                entities = entities.Where(е => е.City.Name == vacancyUrlQuery.City).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(vacancyUrlQuery.WorkArea))
+            {
+                entities = entities.Where(е => е.WorkArea.Name == vacancyUrlQuery.WorkArea).ToList();
+            }
+            if (!(vacancyUrlQuery.NamesOfCompanies == null))
+            {
+                entities = (from x in entities
+                           where vacancyUrlQuery.NamesOfCompanies.Contains(x.Recruiter.Company.Name)
+                           select x).ToList();
+            }
+            if (!(vacancyUrlQuery.IsChecked == false))
+            {
+                entities = entities.Where(е => е.IsChecked == vacancyUrlQuery.IsChecked).ToList();
+            }
+            if (!string.IsNullOrEmpty(vacancyUrlQuery.TypeOfEmployment))
+            {
+                entities = entities.Where(е => е.FullPartTime == vacancyUrlQuery.TypeOfEmployment).ToList();
+            }
+            if (!(vacancyUrlQuery.Salary == 0))
+            {
+                entities = entities.Where(е => е.Salary >= vacancyUrlQuery.Salary).ToList();
+            }
+
+
+            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
+
+            return dtos;
+        }
 
         public async Task<VacancyDTO> GetEntityByIdAsync(int id)
         {

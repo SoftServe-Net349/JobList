@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { VacancyRequest } from '../../shared/models/vacancy-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
+import { JobSearchQuery } from '../../shared/filterQueries/JobsearchQuery';
 
 @Injectable()
 export class VacancyService {
@@ -12,7 +13,7 @@ export class VacancyService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>>{
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
@@ -27,14 +28,20 @@ export class VacancyService {
     return this.apiService.get(`/${this.ctrlUrl}/recruiter/${id}`);
   }
 
-  getBySearchString(search: string, city: string, pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
-    const params = new HttpParams()
-      .set('search', search)
-      .set('city', city)
+  getByFilter(param: JobSearchQuery, pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
+    let params = new HttpParams()
+      .set('name', param.name)
+      .set('city', param.city)
+      .set('workArea', param.workArea)
+      .set('typeOfEmployment', param.typeOfEmployment)
+      .set('isChecked', param.isChecked.toString())
+      .set('salary', param.salary.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
-
-    return this.apiService.getFullResponse(`/${this.ctrlUrl}/search`, params);
+      param.namesOfCompanies.forEach(nameOfCompany => {
+        params = params.append('namesOfCompanies', nameOfCompany);
+      });
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
   getById(id: number): Observable<Vacancy> {
