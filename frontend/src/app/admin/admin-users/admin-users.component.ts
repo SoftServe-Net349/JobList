@@ -30,7 +30,8 @@ export class AdminUsersComponent implements OnInit {
     searchString: string = '';
     searchedUser: User = null;
 
-    
+    @ViewChild('p') paginator: Paginator;
+
     constructor(private confirmationService: ConfirmationService, private userService: UserService) {
         this.users = [];
     }
@@ -71,12 +72,14 @@ export class AdminUsersComponent implements OnInit {
 
     filterUsers(event) {
         this.searchString = event.query;
+        this.paginator.changePageToFirst(event);
         this.pageNumber = 1;
         this.loadUsers();
     }
 
     select(event) {
         this.searchString = event.email;
+        this.paginator.changePageToFirst(event);
         this.pageNumber = 1;
         this.loadUsers();
     }
@@ -89,6 +92,7 @@ export class AdminUsersComponent implements OnInit {
             this.searchString = this.searchedUser.toString();
         }
 
+        this.paginator.changePageToFirst(event);
         this.pageNumber = 1;
         this.loadUsers();
     }
