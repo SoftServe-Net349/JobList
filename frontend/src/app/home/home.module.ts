@@ -24,6 +24,8 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import {PaginatorModule} from 'primeng/paginator';
+import {KeyFilterModule} from 'primeng/keyfilter';
+
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import {PaginatorModule} from 'primeng/paginator';
     FieldsetModule,
     DialogModule,
     CardModule,
-    PaginatorModule
+    PaginatorModule,
+    KeyFilterModule
   ],
   declarations: [
     HomeComponent,

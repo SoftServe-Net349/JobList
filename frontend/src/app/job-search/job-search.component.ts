@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
-import { SearchLineComponent } from '../shared/search-line/search-line.component';
+import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 
 @Component({
   selector: 'app-job-search',
@@ -10,30 +10,48 @@ import { SearchLineComponent } from '../shared/search-line/search-line.component
 })
 export class JobSearchComponent implements OnInit {
 
-  totalRecords: number = 0;
+  totalRecords = 0;
   vacancies: Vacancy[];
 
-  pageSize: number = 4;
-  pageNumber: number = 1;
+  pageSize = 4;
+  pageNumber = 1;
 
-  search: string = '';
-  city: string = '';
+  param: JobSearchQuery;
+
 
   constructor(private vacancyService: VacancyService) {
     this.vacancies = [];
+    this.param = this.getDefaultParam();
   }
 
   ngOnInit() {
     this.loadVacancies(this.pageSize, this.pageNumber);
   }
 
-  getVacanciesBySearchString(param: { search: string, city: string }) {
-    this.search = param.search;
-    this.city = param.city;
-    if (param.search === '' && param.city === '') {
+  getDefaultParam(): JobSearchQuery {
+    return {
+      name: '',
+      city: '',
+      isChecked: false,
+      namesOfCompanies: [],
+      salary: 0,
+      workArea: '',
+      typeOfEmployment: ''
+    };
+  }
+
+  getVacanciesByFilter(param: JobSearchQuery) {
+    this.param.name = param.name !== null ? param.name : this.param.name;
+    this.param.city = param.city !== null ? param.city : this.param.city;
+    this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
+    this.param.namesOfCompanies = param.namesOfCompanies !== null ? param.namesOfCompanies : this.param.namesOfCompanies;
+    this.param.typeOfEmployment = param.typeOfEmployment !== null ? param.typeOfEmployment : this.param.typeOfEmployment;
+    this.param.isChecked = param.isChecked !== false ? true : false;
+    this.param.salary = param.salary !== null ? param.salary : this.param.salary;
+    if (param === this.getDefaultParam()) {
       this.loadVacancies(this.pageSize, this.pageNumber);
     } else {
-      this.vacancyService.getBySearchString(this.search, this.city, this.pageSize, this.pageNumber)
+      this.vacancyService.getByFilter(this.param, this.pageSize, this.pageNumber)
         .subscribe((response) => {
           this.vacancies = response.body;
           this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
@@ -44,19 +62,14 @@ export class JobSearchComponent implements OnInit {
   paginate(event) {
     this.pageNumber = event.page + 1;
 
-    if (this.search === '' && this.city === '') {
+    if (this.param === this.getDefaultParam()) {
       this.loadVacancies(event.rows, this.pageNumber);
     } else {
-      this.vacancyService.getBySearchString(this.search, this.city, event.rows, this.pageNumber)
+      this.vacancyService.getByFilter(this.param, event.rows, this.pageNumber)
         .subscribe((response) => {
           this.vacancies = response.body;
         });
     }
-  }
-  getVacanciesByFilter(param: {wArea: string, city: string, namesOfCompanies: string[],
-                              typeOfEmployment: string, isChecked: boolean, salary: number}) {
-    this.vacancyService.getByFilter(param.wArea, param.city, param.namesOfCompanies, param.typeOfEmployment, param.isChecked, param.salary)
-    .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
   loadVacancies(pageSize: number, pageNumber: number) {

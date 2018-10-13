@@ -5,6 +5,7 @@ import { WorkAreaService } from '../core/services/work-area.service';
 import { WorkArea } from '../shared/models/work-area.model';
 import { City } from '../shared/models/city.model';
 import { Company } from '../shared/models/company.model';
+import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 
 @Component({
   selector: 'app-job-filters',
@@ -15,21 +16,17 @@ import { Company } from '../shared/models/company.model';
 
 export class JobFiltersComponent implements OnInit {
 
-  checked: Boolean = false;
+  checked: boolean;
   salary: number;
 
   workAreas: WorkArea[];
   selectedWorkArea: WorkArea;
 
-  cities: City[];
-  selectedCity: City;
-
   companies: Company[];
   selectedCompanies: Company[];
 
   selectedTypeOfEmployment: string;
-
-  @Output() filteredVacancies = new EventEmitter<object>();
+  @Output() filteredVacancies = new EventEmitter<JobSearchQuery>();
 
   constructor(private companyService: CompanyService, private cityService: CityService,
     private workAreaService: WorkAreaService) {
@@ -38,7 +35,6 @@ export class JobFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.loadCompanies();
-    this.loadCities();
     this.loadWorkAreas();
   }
 
@@ -47,25 +43,22 @@ export class JobFiltersComponent implements OnInit {
       .subscribe((data: Company[]) => this.companies = data);
   }
 
-  loadCities() {
-    this.cityService.getAll()
-      .subscribe((data: City[]) => this.cities = data);
-  }
-
   loadWorkAreas() {
     this.workAreaService.getAll()
       .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
   filter() {
     this.filteredVacancies.emit({
-     wArea: this.selectedWorkArea === undefined ? '' : this.selectedWorkArea.name,
-     city: this.selectedCity === undefined ? '' : this.selectedCity.name,
-     namesOfCompanies: this.selectedCompanies === undefined ||
+      workArea: this.selectedWorkArea === undefined ? '' : this.selectedWorkArea.name,
+      namesOfCompanies: this.selectedCompanies === undefined ||
                        this.selectedCompanies === null ? [] : this.selectedCompanies.map(a => a.name),
-     typeOfEmployment: this.selectedTypeOfEmployment === undefined ||
+      typeOfEmployment: this.selectedTypeOfEmployment === undefined ||
                        this.selectedTypeOfEmployment === null ? '' : this.selectedTypeOfEmployment,
-     isChecked: this.checked,
-     salary: this.salary === undefined || this.salary === null ? 0 : this.salary
+      isChecked: this.checked === undefined || this.checked === null ? false : this.checked,
+      salary: this.salary === undefined || this.salary === null ||
+      this.salary.toString() === '' ? 0 : this.salary,
+      city: null,
+      name: null
     });
   }
 }

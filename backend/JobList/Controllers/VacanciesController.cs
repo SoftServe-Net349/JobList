@@ -5,6 +5,7 @@ using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.UrlQuery;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -43,88 +44,31 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("search")]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string search, string city, [FromQuery]PaginationUrlQuery urlQuery = null)
+        [HttpGet("filtered")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]VacancyUrlQuery vacancyUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _vacanciesService.GetAllEntitiesAsync();
+            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(vacancyUrlQuery, paginationUrlQuery);
 
             if (dtos == null)
             {
                 return NotFound();
             }
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.Name.ToLower()
-                    .Contains(search.ToLower()));
-            }
-            if(!string.IsNullOrEmpty(city))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.City.Name == city);
-            }
-
-            if(urlQuery != null)
+            if (paginationUrlQuery != null)
             {
                 int count = dtos.Count();
-                dtos = dtos.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageSize);
+                dtos = dtos.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
+                    .Take(paginationUrlQuery.PageSize).ToList();
 
                 var pageInfo = new PageInfo()
                 {
-                    PageNumber = urlQuery.PageNumber,
-                    PageSize = urlQuery.PageSize,
-                    TotalRecords = count
+                    PageNumber = paginationUrlQuery.PageNumber,
+                    PageSize = paginationUrlQuery.PageSize,
+                    TotalRecords = dtos.Count()
                 };
 
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
             }
-
-            return Ok(dtos);
-        }
-        [HttpGet("filter")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByFilter([FromQuery]Vacancy vacancy)
-        {
-            var dtos = await _vacanciesService.GetAllEntitiesAsync();
-
-            if (dtos == null)
-            {
-                return NotFound();
-            }
-
-            if (!string.IsNullOrEmpty(vacancy.workArea))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.WorkArea.Name == vacancy.workArea);
-            }
-            if (!(vacancy.namesOfCompanies == null))
-            {
-                dtos = from x in dtos
-                       where vacancy.namesOfCompanies.Contains(x.Recruiter.Company.Name)
-                       select x;
-            }
-            if (!(vacancy == null))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.IsChecked == vacancy.isChecked);
-            }
-            if (!string.IsNullOrEmpty(vacancy.typeOfEmployment))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.FullPartTime == vacancy.typeOfEmployment);
-            }
-            if(!(vacancy == null))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.Salary >= vacancy.salary);
-            }
-            if (!string.IsNullOrEmpty(vacancy.city))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.City.Name == vacancy.city);
-            }
-            
 
             return Ok(dtos);
         }
@@ -202,13 +146,5 @@ namespace JobList.Controllers
             return NoContent();
         }
     }
-    public class Vacancy
-    {
-        public string workArea { get; set; }
-        public string[] namesOfCompanies { get; set; }
-        public bool isChecked { get; set; }
-        public string typeOfEmployment { get; set; }
-        public decimal salary { get; set; }
-        public string city { get; set; }
-    }
+
 }

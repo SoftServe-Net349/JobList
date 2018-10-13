@@ -1,5 +1,5 @@
 <div class="jobsearch">
-  <app-search-line (foundVacancies)="getVacanciesBySearchString($event)"></app-search-line>
+  <app-search-line (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
       <app-job-filters (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
@@ -12,7 +12,7 @@
           </h3>
           <p class="company-name">
             <a>{{vacancy.recruiter.company.name}}</a>
-            {{vacancy.workArea.name}}
+            {{vacancy.workArea.name}} {{vacancy.isChecked}} {{vacancy.fullPartTime}} {{vacancy.salary}}
           </p>
           <p class="location">
             <i class="fa fa-map-marker"></i>

@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CityService } from '../../core/services/city.service';
 import { Router } from '@angular/router';
 import { City } from '../models/city.model';
+import { JobSearchQuery } from '../filterQueries/JobsearchQuery';
 
 
 @Component({
@@ -15,9 +16,9 @@ export class SearchLineComponent implements OnInit {
 
   cities: City[];
   selectedCity: City;
-  inputText: String;
+  inputText: string;
 
-  @Output() foundVacancies = new EventEmitter<object>();
+  @Output() foundVacancies = new EventEmitter<JobSearchQuery>();
   @Output() filteredResumes = new EventEmitter<object>();
 
   currentUrl: String;
@@ -37,11 +38,16 @@ export class SearchLineComponent implements OnInit {
   search() {
     if (this.currentUrl === '/jobsearch') {
       this.foundVacancies.emit({
-        search: this.inputText === undefined ? '' : this.inputText,
+        workArea: null,
+        namesOfCompanies: null,
+        typeOfEmployment: null,
+        isChecked: false,
+        salary: null,
+        name: this.inputText === undefined ? '' : this.inputText,
         city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name});
      } else if (this.currentUrl === '/resumessearch') {
       this.filteredResumes.emit({
-        search: this.inputText === undefined ? '' : this.inputText,
+        name: this.inputText === undefined ? '' : this.inputText,
         city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name});
      }
   }

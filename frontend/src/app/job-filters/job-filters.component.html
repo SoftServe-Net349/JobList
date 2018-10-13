@@ -10,15 +10,16 @@
 
     <h4 class="filter-title">Checked</h4>
     <div class="checked-filter">
-      <p-inputSwitch [(ngModel)]="checked"(onChange) = "filter()"></p-inputSwitch>
+      <p-inputSwitch [(ngModel)]="checked" (onChange)="filter()"></p-inputSwitch>
       <div class="approved">Checked Vacancies</div>
     </div>
     <hr>
 
     <h4 class="filter-title">Type of Employment</h4>
     <div class="ui-g" style="width:200px;margin-bottom:10px">
-      <div class="ui-g-12"><p-radioButton name="group1" value="Part-time" label="Part time" [(ngModel)]="selectedTypeOfEmployment" inputId="opt1" (onChange) = "filter()"></p-radioButton></div>
-      <div class="ui-g-12"><p-radioButton name="group1" value="Full-time" label="Full time" [(ngModel)]="selectedTypeOfEmployment" inputId="opt2" (onChange) = "filter()"></p-radioButton></div>
+      <div class="ui-g-12"><p-radioButton name="groupname" label="Part time" value="Part-time" [(ngModel)]="selectedTypeOfEmployment" (click)="filter()"></p-radioButton></div>
+      <div class="ui-g-12"><p-radioButton name="groupname" label="Full time" value="Full-time" [(ngModel)]="selectedTypeOfEmployment" (click)="filter()"></p-radioButton></div>
+      {{selectedTypeOfEmployment}}
     </div>
     <hr>
 
@@ -27,17 +28,11 @@
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
             <span class="ui-inputgroup-addon">from</span>
-            <input type="text" [(ngModel)] = "salary" pInputText placeholder="  Price">   
+            <input type="text" pKeyFilter="money" [(ngModel)] = "salary" pInputText placeholder="   Price $">  
             <span class="ui-inputgroup-addon">$</span>
             <p-button label="Ok" (click)="filter()"></p-button>      
         </div>
       </div>
     </div>
-    <hr>
-
-    <h4 class="filter-title">Cities</h4>
-    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"(onChange) = "filter()"></p-dropdown>
-    <hr>
-
   </div>
 </aside>
