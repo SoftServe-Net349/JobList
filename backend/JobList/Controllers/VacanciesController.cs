@@ -64,7 +64,7 @@ namespace JobList.Controllers
                 {
                     PageNumber = paginationUrlQuery.PageNumber,
                     PageSize = paginationUrlQuery.PageSize,
-                    TotalRecords = dtos.Count()
+                    TotalRecords = count
                 };
 
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
