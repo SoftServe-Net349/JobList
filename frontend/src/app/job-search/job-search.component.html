@@ -8,11 +8,10 @@
       <article class="vacancy-block" *ngFor="let vacancy of vacancies">
         <div class="inform">
           <h3>
-            <a>{{vacancy.name}}</a>
+            <a (click)="goToVacancyDetails(vacancy.id)">{{vacancy.name}}</a>
           </h3>
           <p class="company-name">
-            <a>{{vacancy.recruiter.company.name}}</a>
-            {{vacancy.workArea.name}} {{vacancy.isChecked}} {{vacancy.fullPartTime}} {{vacancy.salary}}
+            <a (click)="goToCompanyDetails(vacancy.recruiter.company.id)">{{vacancy.recruiter.company.name}}</a>
           </p>
           <p class="location">
             <i class="fa fa-map-marker"></i>

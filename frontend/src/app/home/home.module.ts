@@ -27,6 +27,7 @@ import {PaginatorModule} from 'primeng/paginator';
 import {KeyFilterModule} from 'primeng/keyfilter';
 
 
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     DialogModule,
     CardModule,
     PaginatorModule,
+    CoreModule,
     KeyFilterModule
   ],
   declarations: [

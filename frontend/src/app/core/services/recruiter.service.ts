@@ -22,8 +22,8 @@ export class RecruiterService {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
   }
 
-  create(request: RecruiterRequest): Observable<Recruiter> {
-    return this.apiService.post(`/${this.ctrlUrl}`, request);
+  register(request: RecruiterRequest): Observable<Recruiter> {
+    return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 
   update(id: number, request: RecruiterRequest): Observable<Object> {

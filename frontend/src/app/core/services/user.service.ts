@@ -19,8 +19,8 @@ export class UserService {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
 }
 
-  create(request: UserRequest): Observable<User> {
-    return this.apiService.post(`/${this.ctrlUrl}`, request);
+  register(request: UserRequest): Observable<User> {
+    return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 
   update(id: number, request: UserRequest): Observable<Object> {

@@ -14,12 +14,14 @@ import { DropdownModule } from 'primeng/dropdown';
 import {SidebarModule} from 'primeng/sidebar';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {MenuModule} from 'primeng/menu';
 
 // Our created components
 import { AuthorizationsComponent } from '../authorizations/authorizations.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchLineComponent } from './search-line/search-line.component';
+import { AuthHelper } from './helpers/auth-helper';
 
 // Our created modules
 
@@ -36,7 +38,8 @@ import { SearchLineComponent } from './search-line/search-line.component';
     SidebarModule,
     PanelMenuModule,
     RadioButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MenuModule
   ],
   declarations: [
     SomePipe,
@@ -46,6 +49,7 @@ import { SearchLineComponent } from './search-line/search-line.component';
     SearchLineComponent,
     AuthorizationsComponent
   ],
+  providers: [AuthHelper],
   exports: [
     CommonModule,
     SomePipe,

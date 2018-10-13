@@ -56,6 +56,30 @@ namespace JobList.DataAccess.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                          Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).FirstOrDefaultAsync();
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<TEntity> CreateEntityAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
@@ -103,6 +127,11 @@ namespace JobList.DataAccess.Repositories
             }
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().AnyAsync(predicate);
         }
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
