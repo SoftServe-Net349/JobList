@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
   visibleForUser = false;
   itemsForUser: MenuItem[];
 
-  signInItems: MenuItem[];
 
   @Input()
   company: Company;
@@ -139,5 +138,4 @@ export class HeaderComponent implements OnInit {
     }
 
   }
-
 }

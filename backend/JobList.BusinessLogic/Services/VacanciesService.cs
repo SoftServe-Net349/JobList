@@ -75,7 +75,7 @@ namespace JobList.BusinessLogic.Services
                 include: r => r.Include(o => o.City)
                     .Include(o => o.WorkArea)
                     .Include(o => o.Recruiter).ThenInclude(v => v.Company),
-                urlQuery: urlQuery);
+                paginationUrlQuery: urlQuery);
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 

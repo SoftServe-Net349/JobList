@@ -1,0 +1,49 @@
+<p-dataView [value]="vacancies">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4">
+                </div>
+            </div>
+        </div>
+    </p-header>
+    <ng-template let-vacancy pTemplate="listItem">
+        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+            <div class="ui-g-12 ui-md-3" style="text-align:left">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" width="120"
+                    height="140">
+            </div>
+            <div class="ui-g-12 ui-md-8 user-details">
+                <div class="ui-g">
+                    <div class="ui-g-2 ui-sm-6">Name: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.name}}</b></div>
+
+                    <div class="ui-g-2 ui-sm-6">Description: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.description}}</b></div>
+
+                    <div class="ui-g-2 ui-sm-6">Is checked: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.isChecked}}</b></div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-1">
+
+                <div *ngIf="vacancy.isChecked else uncheckedBlock">
+                    <label> Checked</label>
+                    <div class="admin-button">
+                        <button pButton type="button" label="Uncheck?" class="ui-button-rounded ui-button-danger"></button>
+                    </div>
+                </div>
+
+
+                <ng-template #uncheckedBlock>
+                    <label> UnChecked</label>
+                    <div class="admin-button">
+                        <button pButton type="button" label="Check?" class="ui-button-rounded ui-button-success" (click)="checkConfirm(vacancy)"></button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</p-dataView>
+
+<p-confirmDialog></p-confirmDialog>

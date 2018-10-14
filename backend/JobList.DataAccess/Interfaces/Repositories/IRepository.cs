@@ -1,5 +1,6 @@
 ﻿using JobList.Common.Interfaces.Entities;
 using JobList.Common.Pagination;
+using JobList.Common.Sorting;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace JobList.DataAccess.Interfaces.Repositories
     {
         Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
                                           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                          PaginationUrlQuery urlQuery = null);
+                                          PaginationUrlQuery paginationUrlQuery = null);
 
         Task<TEntity> GetEntityAsync(TKey Id, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
         Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);

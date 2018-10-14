@@ -3,6 +3,8 @@ import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
 import { Router } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
+import { SearchLineComponent } from '../shared/search-line/search-line.component';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-job-search',
@@ -10,8 +12,10 @@ import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
   styleUrls: ['./job-search.component.sass']
 })
 export class JobSearchComponent implements OnInit {
-
-  totalRecords = 0;
+  
+  @ViewChild(SearchLineComponent)
+  
+  totalRecords: number = 0;
   vacancies: Vacancy[];
 
   pageSize = 4;
@@ -70,6 +74,7 @@ export class JobSearchComponent implements OnInit {
 
   paginate(event) {
     this.pageNumber = event.page + 1;
+    this.pageSize = event.rows;
 
     if (this.param === this.getDefaultParam()) {
       this.loadVacancies(event.rows, this.pageNumber);
