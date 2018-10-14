@@ -24,7 +24,8 @@ namespace JobList.Controllers
 
         // GET: /users
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
             var dtos = await _usersService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery);
             if (!dtos.Any())

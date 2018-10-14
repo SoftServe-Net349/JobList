@@ -72,29 +72,32 @@ export class AdminUsersComponent implements OnInit {
 
     filterUsers(event) {
         this.searchString = event.query;
-        this.paginator.changePageToFirst(event);
         this.pageNumber = 1;
         this.loadUsers();
+        
+        this.paginator.changePage(0);
     }
 
     select(event) {
         this.searchString = event.email;
-        this.paginator.changePageToFirst(event);
         this.pageNumber = 1;
         this.loadUsers();
+
+        this.paginator.changePage(0);
     }
 
-    search(event) {
-        if(isNullOrUndefined(this.searchedUser)){
+    search() {
+        if (isNullOrUndefined(this.searchedUser)) {
             this.searchString = '';
         }
-        else if(isNullOrUndefined(this.searchedUser.email)){
+        else if (isNullOrUndefined(this.searchedUser.email)) {
             this.searchString = this.searchedUser.toString();
         }
 
-        this.paginator.changePageToFirst(event);
         this.pageNumber = 1;
         this.loadUsers();
+
+        this.paginator.changePage(0);
     }
 
 
