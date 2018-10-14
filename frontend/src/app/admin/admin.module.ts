@@ -13,6 +13,7 @@ import { AdminCompaniesComponent } from './admin-companies/admin-companies.compo
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import { AdminVacanciesComponent } from './admin-vacancies/admin-vacancies.component';
 
 
 @NgModule({
@@ -33,6 +34,6 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     InputTextModule,
     AutoCompleteModule
   ],
-  declarations: [AdminComponent, AdminCompaniesComponent, AdminUsersComponent, AdminHeaderComponent]
+  declarations: [AdminComponent, AdminCompaniesComponent, AdminUsersComponent, AdminVacanciesComponent, AdminHeaderComponent]
 })
 export class AdminModule { }

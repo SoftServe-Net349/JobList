@@ -35,7 +35,8 @@ export class AdminComponent implements OnInit {
       },
       {
         label: 'Vacancies',
-        icon: 'fa fa-address-card'
+        icon: 'fa fa-address-card',
+        routerLink: '/admin/admin-vacancies'
       },
       {
         label: 'Settings',
