@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace JobList.Common.UrlQuery
+﻿namespace JobList.Common.UrlQuery
 {
     public class VacancyUrlQuery
     {

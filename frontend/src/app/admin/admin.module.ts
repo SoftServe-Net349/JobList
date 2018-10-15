@@ -14,7 +14,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { AdminVacanciesComponent } from './admin-vacancies/admin-vacancies.component';
-
+import { AdminRecruitersComponent } from './admin-recruiters/admin-recruiters.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import {ChartModule} from 'primeng/chart';
 
 @NgModule({
   imports: [
@@ -32,8 +34,9 @@ import { AdminVacanciesComponent } from './admin-vacancies/admin-vacancies.compo
     SharedModule,
     ConfirmDialogModule,
     InputTextModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ChartModule
   ],
-  declarations: [AdminComponent, AdminCompaniesComponent, AdminUsersComponent, AdminVacanciesComponent, AdminHeaderComponent]
+  declarations: [AdminComponent, AdminCompaniesComponent, AdminRecruitersComponent, AdminUsersComponent, AdminVacanciesComponent, AdminDashboardComponent, AdminHeaderComponent]
 })
 export class AdminModule { }

@@ -121,14 +121,14 @@ namespace JobList.BusinessLogic.Services
             {
                 switch (sortingUrlQuery.SortField)
                 {
-                    case "email":
+                    case "Email":
                         if (sortingUrlQuery.SortOrder)
                             entities = entities.OrderBy(e => e.Email).ToList();
                         else
                             entities = entities.OrderByDescending(e => e.Email).ToList();
                         break;
 
-                    case "birthdate":
+                    case "Birthdate":
                         if (sortingUrlQuery.SortOrder)
                             entities = entities.OrderBy(e => e.BirthData).ToList();
                         else

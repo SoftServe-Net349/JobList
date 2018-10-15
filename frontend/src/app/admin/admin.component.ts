@@ -17,7 +17,8 @@ export class AdminComponent implements OnInit {
     this.itemsForUser = [
       {
         label: 'Dashboard',
-        icon: 'fa fa-home'
+        icon: 'fa fa-home',
+        routerLink: '/admin/admin-dashboard'
       },
       {
         label: 'Users',
@@ -31,7 +32,8 @@ export class AdminComponent implements OnInit {
       },
       {
         label: 'Recruiters',
-        icon: 'fa fa-user-secret'
+        icon: 'fa fa-user-secret',
+        routerLink: '/admin/admin-recruiters'
       },
       {
         label: 'Vacancies',
@@ -40,7 +42,7 @@ export class AdminComponent implements OnInit {
       },
       {
         label: 'Settings',
-        icon: 'fa fa-cog'
+        icon: 'fa fa-cog',
       }
     ];
   }

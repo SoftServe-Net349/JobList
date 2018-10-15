@@ -3,10 +3,12 @@ using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -77,6 +79,52 @@ namespace JobList.BusinessLogic.Services
                                 .Include(o => o.Experiences)
                                 .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language),
                 paginationUrlQuery: urlQuery);
+
+            var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<IEnumerable<ResumeDTO>> GetFilteredEntitiesAsync(ResumeUrlQuery resumeUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        {
+            var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
+                 include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
+                                .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
+                                .Include(o => o.Experiences)
+                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
+
+            if (!string.IsNullOrEmpty(resumeUrlQuery.Name))
+            {
+                entities = entities.Where(е => е.WorkArea.Name.ToLower()
+                    .Contains(resumeUrlQuery.Name.ToLower())).ToList();
+            }
+            if (!string.IsNullOrEmpty(resumeUrlQuery.City))
+            {
+                entities = entities.Where(е => е.User.City.Name == resumeUrlQuery.City).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(resumeUrlQuery.WorkArea))
+            {
+                entities = entities.Where(е => е.WorkArea.Name == resumeUrlQuery.WorkArea).ToList();
+            }
+            if (!(resumeUrlQuery.Scools == null))
+            {
+                //entities = (from x in entities
+                //            where resumeUrlQuery.Scools.Contains(x.Company.Name)
+                //            select x).ToList();
+            }
+            if (!(resumeUrlQuery.Faculties == null))
+            {
+            }
+
+            if (!(resumeUrlQuery.Languages == null))
+            {
+            }
+            if (!(resumeUrlQuery.Age == 0))
+            {
+            }
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
 

@@ -3,6 +3,7 @@ using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.Sorting;
 using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
@@ -82,7 +83,7 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null)
         {
             var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
                  include: r => r.Include(o => o.City)
@@ -122,6 +123,51 @@ namespace JobList.BusinessLogic.Services
                 entities = entities.Where(е => е.Salary >= vacancyUrlQuery.Salary).ToList();
             }
 
+
+            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
+
+            return dtos;
+        }
+
+
+        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null)
+        {
+            var entities = await _uow.VacanciesRepository.GetAllEntitiesAsync(
+                 include: r => r.Include(o => o.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company));
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                entities = entities.Select(e => e)
+                    .Where(d => d.Name.ToLower()
+                    .Contains(searchString.ToLower()))
+                    .ToList();
+            }
+
+
+            if (!string.IsNullOrEmpty(sortingUrlQuery.SortField))
+            {
+                switch (sortingUrlQuery.SortField)
+                {
+                    case "Name":
+                        if (sortingUrlQuery.SortOrder)
+                            entities = entities.OrderBy(e => e.Name).ToList();
+                        else
+                            entities = entities.OrderByDescending(e => e.Name).ToList();
+                        break;
+
+                    case "CreateDate":
+                        if (sortingUrlQuery.SortOrder)
+                            entities = entities.OrderBy(e => e.CreateDate).ToList();
+                        else
+                            entities = entities.OrderByDescending(e => e.CreateDate).ToList();
+                        break;
+
+                    default: break;
+                }
+            }
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 

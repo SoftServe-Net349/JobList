@@ -15,7 +15,7 @@
     <ng-template let-user pTemplate="listItem">
         <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
             <div class="ui-g-12 ui-md-3" style="text-align:left">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" width="120"
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Stevejobs.jpg" width="140"
                     height="140">
             </div>
             <div class="ui-g-12 ui-md-8 user-details">
@@ -32,16 +32,12 @@
                     <div class="ui-g-2 ui-sm-6">Birthdate: </div>
                     <div class="ui-g-10 ui-sm-6"><b>{{user.birthData | date}}</b></div>
 
-                    <div class="ui-g-2 ui-sm-6">Address: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{user.address}}</b></div>
-
                     <div class="ui-g-2 ui-sm-6">Email: </div>
                     <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-1">
                 <div class="admin-button">
-                    <button pButton type="button" label="Check" class="ui-button-rounded ui-button-success"></button>
                     <button pButton type="button" label="Delete" (click)="deleteConfirm(user.id)" class="ui-button-rounded ui-button-danger"></button>
                 </div>
             </div>
