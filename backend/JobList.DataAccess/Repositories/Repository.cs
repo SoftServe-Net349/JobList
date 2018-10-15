@@ -145,5 +145,15 @@ namespace JobList.DataAccess.Repositories
 
             return _mapper.Map(entity, entityToUpdate);
         }
+
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            if (predicate == null)
+            {
+                return _dbSet.AsNoTracking().CountAsync();
+            }
+
+            return _dbSet.AsNoTracking().CountAsync(predicate);
+        }
     }
 }

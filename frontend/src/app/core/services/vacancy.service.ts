@@ -12,7 +12,7 @@ export class VacancyService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>>{
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());

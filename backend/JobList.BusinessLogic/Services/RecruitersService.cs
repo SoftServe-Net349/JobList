@@ -2,11 +2,14 @@
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -23,10 +26,35 @@ namespace JobList.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id)
+        public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id, PaginationUrlQuery urlQuery = null)
         {
-            var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r=> r.CompanyId ==Id,
-                include: r => r.Include(o => o.Company));
+            var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
+              include: r => r.Include(o => o.Company),
+              urlQuery: urlQuery);
+
+            if (entities == null) return null;
+
+            var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<IEnumerable<RecruiterDTO>> GetFilteredRecruiters(int Id, string recruiterName = null, PaginationUrlQuery urlQuery = null)
+        {
+            List<Recruiter> entities;
+
+            if (recruiterName != null)
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id && r.FirstName.Contains(recruiterName),
+                    include: r => r.Include(o => o.Company),
+                    urlQuery: urlQuery);
+            }
+            else
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
+                include: r => r.Include(o => o.Company),
+                urlQuery: urlQuery);
+            }
 
             if (entities == null) return null;
 
@@ -100,6 +128,11 @@ namespace JobList.BusinessLogic.Services
             var result = await _uow.SaveAsync();
 
             return result;
+        }
+
+        public Task<int> CountAsync(Expression<Func<Recruiter, bool>> predicate = null)
+        {
+            return _uow.RecruitersRepository.CountAsync(predicate);
         }
     }
 }

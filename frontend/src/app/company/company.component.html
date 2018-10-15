@@ -26,8 +26,8 @@
   </div>
   <div class="filter-search">
     <div class="wrapper">
-      <input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
-      <p-button label="Search" icon="pi pi-search"></p-button>
+      <input type="text" pInputText [(ngModel)]="searchString" placeholder="Enter recruiter name" />
+      <p-button label="Search" icon="pi pi-search" (click)="search()"></p-button>
     </div>
   </div>
   <!-- <div class="add-new-recruiter">
@@ -62,6 +62,7 @@
         <hr>
       </li>
     </ul>
+    <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[pageSize-2, pageSize, pageSize+2]"></p-paginator>
   </div>
 </div>
 
