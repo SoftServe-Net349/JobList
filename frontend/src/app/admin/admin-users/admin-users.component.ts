@@ -13,7 +13,6 @@ import { Paginator } from "primeng/primeng";
 export class AdminUsersComponent implements OnInit {
 
     users: User[];
-    selectedUser: User;
 
     displayDialog: boolean = false;
 
@@ -40,9 +39,9 @@ export class AdminUsersComponent implements OnInit {
         this.loadUsers();
 
         this.sortOptions = [
-            { label: 'Newest First', value: '!birthdate' },
-            { label: 'Oldest First', value: 'birthdate' },
-            { label: 'Email', value: 'email' }
+            { label: 'Newest First', value: '!Birthdate' },
+            { label: 'Oldest First', value: 'Birthdate' },
+            { label: 'Email', value: 'Email' }
         ];
     }
 

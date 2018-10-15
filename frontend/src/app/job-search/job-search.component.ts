@@ -4,7 +4,6 @@ import { VacancyService } from '../core/services/vacancy.service';
 import { Router } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { SearchLineComponent } from '../shared/search-line/search-line.component';
-import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-job-search',
