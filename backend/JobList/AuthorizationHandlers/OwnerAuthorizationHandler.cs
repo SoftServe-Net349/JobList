@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace JobList.AuthorizationHandlers
 {
-    public class IsOwnerAuthorizationHandler : AuthorizationHandler<SameUserRequirement, UserDTO>
+    public class OwnerAuthorizationHandler : AuthorizationHandler<SameOwnerRequirement, int>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
-                                                       SameUserRequirement requirement,
-                                                       UserDTO userDTO)
+                                                       SameOwnerRequirement requirement,
+                                                       int id)
         {
             if (context.User == null)
             {
                 return Task.CompletedTask;
             }
 
-            if (context.User.Identity.Name == userDTO.Id.ToString())
+            if (context.User.Identity.Name == id.ToString())
             {
                 context.Succeed(requirement);
             }
@@ -27,5 +27,5 @@ namespace JobList.AuthorizationHandlers
         }
     }
 
-    public class SameUserRequirement : IAuthorizationRequirement { }
+    public class SameOwnerRequirement : IAuthorizationRequirement { }
 }

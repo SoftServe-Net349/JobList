@@ -37,22 +37,22 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        [Authorize(Roles = "user")]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<UserDTO>> GetById(int id)
         {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, "OwnerPolicy");
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var dto = await _usersService.GetEntityByIdAsync(id);
             if (dto == null)
             {
                 return NotFound();
-            }
-
-            var isAuthorized = await _authorizationService
-            .AuthorizeAsync(User, dto, "OwnerPolicy");
-
-            if (!isAuthorized.Succeeded)
-            {
-                return Unauthorized();
             }
 
             return Ok(dto);

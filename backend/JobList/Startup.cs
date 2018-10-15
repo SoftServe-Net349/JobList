@@ -86,14 +86,15 @@ namespace JobList
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // Authorization is user the owner
+            // Authorization User as an Owner
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("OwnerPolicy", policy =>
-                    policy.Requirements.Add(new SameUserRequirement()));
+                    policy.Requirements.Add(new SameOwnerRequirement()));
             });
 
-            services.AddSingleton<IAuthorizationHandler, IsOwnerAuthorizationHandler>();
+            // Add your authorization handlers here
+            services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
