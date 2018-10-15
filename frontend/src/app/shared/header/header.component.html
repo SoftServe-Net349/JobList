@@ -67,25 +67,6 @@
       </div>
     </div>
 
-    <!--ADMIN HEADER-->
-    <div *ngIf="isAdminHeader()">
-      <div id="right-side-menu">
-        <a>Find Resumes</a>
-        <a class="update-info" (click)="companyInfoForm.showInformationForm('Update', company)">Update Info</a>
-        <a href="">Vacancies</a>
-
-        <p-sidebar [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
-          <h1 class="company-profile">Profile</h1>
-          <hr>
-          <p-panelMenu [model]="itemsForCompany" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
-        </p-sidebar>
-
-        <a class="profile" (click)="visibleForCompany = true">
-          <span>Profile</span>
-          <i class="fa fa-sort-desc"></i>
-        </a>
-      </div>
-    </div>
   </div>
 </div>
 
