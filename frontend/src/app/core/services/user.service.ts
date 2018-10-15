@@ -3,6 +3,7 @@ import { User } from '../../shared/models/user.model';
 import { Observable } from 'rxjs';
 import { UserRequest } from '../../shared/models/user-request.model';
 import { ApiService } from './api.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
@@ -16,8 +17,8 @@ export class UserService {
   }
 
   getById(id: number): Observable<User> {
-    return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+    return this.apiService.getById(`/${this.ctrlUrl}`, id);
+  }
 
   register(request: UserRequest): Observable<User> {
     return this.apiService.post(`/${this.ctrlUrl}/register`, request);

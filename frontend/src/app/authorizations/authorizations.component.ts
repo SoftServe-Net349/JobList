@@ -39,6 +39,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.authoruzationsForm = this.getAuthoruzationForm();
     this.signUpUserForm = this.getSignUpUserForm();
     this.signUpCompanyForm = this.getSignUpCompanyForm();
@@ -46,13 +47,16 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   getAuthoruzationForm(): FormGroup {
+
     return this.formBuilder.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
+
   }
 
   getSignUpUserForm(): FormGroup {
+
     return this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -60,9 +64,11 @@ export class AuthorizationsComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
     });
+
   }
 
   getSignUpCompanyForm(): FormGroup {
+
     return this.formBuilder.group({
       companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
       bossName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -72,43 +78,57 @@ export class AuthorizationsComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
     });
+
   }
 
   showSignIn(_role: string, _login = '', _password = '') {
+
     this.authoruzationsForm.reset();
     this.role = _role;
     this.authoruzationsForm.setValue({login: _login, password: _password});
     this.signInDialog = true;
+
   }
 
   showSignUpUser() {
+
     this.signUpUserForm.reset();
     this.signInDialog = false;
     this.signUpUser = true;
+
   }
 
   showSignUpCompany() {
+
     this.signUpCompanyForm.reset();
     this.signInDialog = false;
     this.signUpCompany = true;
+
   }
 
   closeForm() {
+
     this.signUpCompany = false;
     this.signUpUser = false;
     this.information = false;
+
   }
 
   openInformation() {
+
     this.information = true;
+
   }
 
   submitSignIn() {
+
     const request: LoginRequest = {
       email: this.authoruzationsForm.get('login').value,
       password: this.authoruzationsForm.get('password').value
     };
+
     if (this.role === 'User') {
+
       this.authService.userLogin(request)
       .subscribe(token => {
         this.authHelper.setToken(token);
@@ -118,8 +138,9 @@ export class AuthorizationsComponent implements OnInit {
       },
       error => { this.errorMessage = error.error; }
       );
-    }
-    if (this.role === 'Company') {
+
+    } else if (this.role === 'Company') {
+
       this.authService.companyLogin(request)
       .subscribe(token => {
         this.authHelper.setToken(token);
@@ -129,8 +150,9 @@ export class AuthorizationsComponent implements OnInit {
       },
       error => { this.errorMessage = error.error; }
       );
-    }
-    if (this.role === 'Recruiter') {
+
+    } else if (this.role === 'Recruiter') {
+
       this.authService.recruiterLogin(request)
       .subscribe(token => {
         this.authHelper.setToken(token);
@@ -140,10 +162,13 @@ export class AuthorizationsComponent implements OnInit {
       },
       error => { this.errorMessage = error.error; }
       );
+
     }
+
   }
 
   submitUserSignUp() {
+
     const request: UserRequest = this.getUserRequest();
 
     this.authService.userSignUp(request).subscribe(
@@ -153,9 +178,11 @@ export class AuthorizationsComponent implements OnInit {
         this.showSignIn('User', data.email, data.password); },
       error => { this.errorMessage = error.error; }
       );
+
   }
 
   getUserRequest(): UserRequest {
+
     return {
       firstName: this.signUpUserForm.get('firstName').value,
       lastName: this.signUpUserForm.get('lastName').value,
@@ -167,11 +194,12 @@ export class AuthorizationsComponent implements OnInit {
       photoData: null,
       photoMimeType: null,
       roleId: 2,
-      sex: null
-    };
+      sex: null };
+
   }
 
   submitCompanySignUp() {
+
     const request: CompanyRequest = this.getCompanyRequest();
 
     this.authService.companySignUp(request).subscribe(
@@ -181,9 +209,11 @@ export class AuthorizationsComponent implements OnInit {
         this.showSignIn('Company', data.email, data.password); },
       error => { this.errorMessage = error.error; }
       );
+
   }
 
   getCompanyRequest(): CompanyRequest {
+
     return {
       name: this.signUpCompanyForm.get('companyName').value,
       bossName: this.signUpCompanyForm.get('bossName').value,
@@ -196,8 +226,8 @@ export class AuthorizationsComponent implements OnInit {
       phone: null,
       roleId: 3,
       shortDescription: null,
-      site: null
-    };
+      site: null };
+
   }
 
 }

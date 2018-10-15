@@ -15,6 +15,10 @@ import { UserService } from './services/user.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { TokenService } from './services/token.service';
+import { AdminGuard } from './guards/admin.guard';
+import { UserGuard } from './guards/user.guard';
+import { CompanyGuard } from './guards/company.guard';
+import { RecruiterGuard } from './guards/recruiter.guard';
 
 @NgModule({
   imports: [
@@ -34,7 +38,11 @@ import { TokenService } from './services/token.service';
     UserService,
     AuthGuard,
     AuthService,
-    TokenService
+    TokenService,
+    AdminGuard,
+    UserGuard,
+    CompanyGuard,
+    RecruiterGuard
   ],
   declarations: []
 })

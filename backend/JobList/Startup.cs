@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using JobList.Common.DTOS;
+using Microsoft.AspNetCore.Authorization;
+using JobList.AuthorizationHandlers;
 
 namespace JobList
 {
@@ -83,6 +85,15 @@ namespace JobList
             services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Authorization is user the owner
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("OwnerPolicy", policy =>
+                    policy.Requirements.Add(new SameUserRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, IsOwnerAuthorizationHandler>();
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

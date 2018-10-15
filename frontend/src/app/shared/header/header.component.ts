@@ -29,11 +29,6 @@ export class HeaderComponent implements OnInit {
 
   signInItems: MenuItem[];
 
-  @Input()
-  company: Company;
-  @Input()
-  companyInfoForm: CompanyInfoFormComponent;
-
   @ViewChild(AuthorizationsComponent)
   authorizations: AuthorizationsComponent;
 
@@ -46,6 +41,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
     this.signInItems = [
@@ -59,9 +55,11 @@ export class HeaderComponent implements OnInit {
     this.itemsForUser = this.getItemsForUser();
 
     this.chengeAuthenticatedStatus();
+
   }
 
   getItemsForCompany(): MenuItem[] {
+
      return [
       {
         label: 'Home',
@@ -81,9 +79,11 @@ export class HeaderComponent implements OnInit {
       command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
+
   }
 
   getItemsForRecruiter(): MenuItem[] {
+
     return [
       {
         label: 'Home',
@@ -103,9 +103,11 @@ export class HeaderComponent implements OnInit {
       command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
+
   }
 
   getItemsForUser(): MenuItem[] {
+
     return [
       {
         label: 'Home',
@@ -125,17 +127,23 @@ export class HeaderComponent implements OnInit {
       command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
+
   }
 
   chengeAuthenticatedStatus() {
+
     if (this.authHelper.isAuthenticated()) {
+
       const token = this.authHelper.getToken();
       const decodeToken = this.jwtHelper.decodeToken(token);
       this.role = decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+
     } else {
+
       this.role = '';
       this.uId = 0;
+
     }
 
   }

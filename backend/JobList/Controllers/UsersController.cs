@@ -15,10 +15,12 @@ namespace JobList.Controllers
     [ApiController]
     public class UsersController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IUsersService _usersService;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _usersService = usersService;
         }
 
@@ -35,7 +37,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<UserDTO>> GetById(int id)
         {
@@ -43,6 +45,14 @@ namespace JobList.Controllers
             if (dto == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = await _authorizationService
+            .AuthorizeAsync(User, dto, "OwnerPolicy");
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Unauthorized();
             }
 
             return Ok(dto);
