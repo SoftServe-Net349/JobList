@@ -8,7 +8,6 @@ using AutoMapper;
 using JobList.Common.Errors;
 using JobList.Common.Interfaces.Entities;
 using JobList.Common.Pagination;
-using JobList.Common.Sorting;
 using JobList.DataAccess.Data;
 using JobList.DataAccess.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +22,11 @@ namespace JobList.DataAccess.Repositories
 
         protected readonly IMapper _mapper;
 
-        public int Count { get { return _dbSet.Count(); } }
+        public int TotalRecords
+        {
+            private set;
+            get;
+        }
 
         public Repository(JobListDbContext context, IMapper mapper)
         {
@@ -34,6 +37,8 @@ namespace JobList.DataAccess.Repositories
 
         public async Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
                                                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                       Expression<Func<TEntity, string>> sorting = null,
+                                                       bool? sortOrder = null,
                                                        PaginationUrlQuery paginationUrlQuery = null)
         {
             IQueryable<TEntity> query = _dbSet;
@@ -48,6 +53,16 @@ namespace JobList.DataAccess.Repositories
                 query = include(query);
             }
 
+            TotalRecords = await query.CountAsync();
+
+            if (sorting != null)
+            {
+                if (sortOrder.Value)
+                    query = query.OrderBy(sorting);
+                else
+                    query = query.OrderByDescending(sorting);
+            }
+
             if(paginationUrlQuery != null)
             {
                 query = query.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
@@ -56,6 +71,7 @@ namespace JobList.DataAccess.Repositories
 
             return await query.ToListAsync();
         }
+
 
         public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
                                                           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -145,6 +161,16 @@ namespace JobList.DataAccess.Repositories
             }
 
             return _mapper.Map(entity, entityToUpdate);
+        }
+
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            if (predicate == null)
+            {
+                return _dbSet.AsNoTracking().CountAsync();
+            }
+
+            return _dbSet.AsNoTracking().CountAsync(predicate);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace JobList.Controllers
             {
                 PageNumber = urlQuery.PageNumber,
                 PageSize = urlQuery.PageSize,
-                TotalRecords = _resumesService.Count
+                TotalRecords = await _resumesService.CountAsync()
             };
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));

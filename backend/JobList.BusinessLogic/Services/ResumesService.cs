@@ -7,8 +7,10 @@ using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -24,8 +26,10 @@ namespace JobList.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public int Count { get { return _uow.ResumesRepository.Count; } }
-
+        public Task<int> CountAsync(Expression<Func<Resume, bool>> predicate = null)
+        {
+            return _uow.ResumesRepository.CountAsync(predicate);
+        }
 
         public async Task<ResumeDTO> CreateEntityAsync(ResumeRequest modelRequest)
         {

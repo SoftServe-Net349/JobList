@@ -10,8 +10,9 @@ using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System;
 
 namespace JobList.BusinessLogic.Services
 {
@@ -26,8 +27,15 @@ namespace JobList.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public int Count { get { return _uow.UsersRepository.Count; } }
+        public int TotalRecords
+        {
+            get { return _uow.UsersRepository.TotalRecords; }
+        }
 
+        public Task<int> CountAsync(Expression<Func<User, bool>> predicate = null)
+        {
+            return _uow.UsersRepository.CountAsync(predicate);
+        }
 
         public async Task<UserDTO> CreateEntityAsync(UserRequest modelRequest)
         {
@@ -100,48 +108,45 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null)
+        public async Task<IEnumerable<UserDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            var entities = await _uow.UsersRepository.GetAllEntitiesAsync(
-                include: r => r.Include(o => o.City)
-                    .Include(o => o.FavoriteVacancies)
-                    .Include(o => o.Resumes));
-
+            List<User> entities = null;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                entities = entities.Select(e => e)
-                    .Where(d => d.Email.ToLower()
-                    .Contains(searchString.ToLower()))
-                    .ToList();
+                entities = await _uow.UsersRepository.GetRangeAsync(
+                    filter: e => e.Email.ToLower().Contains(searchString.ToLower()),
+                    include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
-
-
-            if (!string.IsNullOrEmpty(sortingUrlQuery.SortField))
+            else
             {
-                switch (sortingUrlQuery.SortField)
-                {
-                    case "Email":
-                        if (sortingUrlQuery.SortOrder)
-                            entities = entities.OrderBy(e => e.Email).ToList();
-                        else
-                            entities = entities.OrderByDescending(e => e.Email).ToList();
-                        break;
-
-                    case "Birthdate":
-                        if (sortingUrlQuery.SortOrder)
-                            entities = entities.OrderBy(e => e.BirthData).ToList();
-                        else
-                            entities = entities.OrderByDescending(e => e.BirthData).ToList();
-                        break;
-
-                    default: break;
-                }
+                entities = await _uow.UsersRepository.GetRangeAsync(
+                    include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
 
             var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
 
             return dtos;
+        }
+
+
+        private Expression<Func<User, string>> GetSortField(string field)
+        {
+            switch (field)
+            {
+                case "Birthdate":
+                    return e => e.BirthData.ToString();
+                case "Email":
+                    return e => e.Email;
+
+                default: return null;
+            }
         }
 
 

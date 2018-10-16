@@ -24,7 +24,7 @@ export class UserService {
       .set('pageNumber', pageNumber.toString())
       .set('searchString', searchString);
       
-    return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
 
