@@ -40,14 +40,14 @@
 
                 <div *ngIf="vacancy.isChecked else uncheckedBlock">
                     <div class="admin-button">
-                        <button pButton type="button" label="Uncheck" class="ui-button-rounded ui-button-danger" (click)="checkConfirm(vacancy, !vacancy.isChecked)"></button>
+                        <button pButton type="button" label="Uncheck" class="ui-button-rounded ui-button-danger" (click)="checkConfirm(vacancy, vacancy.isChecked)"></button>
                     </div>
                 </div>
 
 
                 <ng-template #uncheckedBlock>
                     <div class="admin-button">
-                        <button pButton type="button" label="Check" class="ui-button-rounded ui-button-success" (click)="checkConfirm(vacancy, !vacancy.isChecked)"></button>
+                        <button pButton type="button" label="Check" class="ui-button-rounded ui-button-success" (click)="checkConfirm(vacancy, vacancy.isChecked)"></button>
                     </div>
                 </ng-template>
             </div>
