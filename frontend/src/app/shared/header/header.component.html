@@ -16,7 +16,6 @@
     <div *ngIf="role === 'company'">
       <div id="right-side-menu">
         <a>Find Resumes</a>
-        <a class="update-info" (click)="companyInfoForm.showInformationForm('Update', company)">Update Info</a>
         <a href="">Vacancies</a>
 
         <p-sidebar [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">

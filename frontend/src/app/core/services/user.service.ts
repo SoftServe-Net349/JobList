@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserRequest } from '../../shared/models/user-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
@@ -27,9 +28,8 @@ export class UserService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
-
   getById(id: number): Observable<User> {
-    return this.apiService.get(`/${this.ctrlUrl}/${id}`);
+    return this.apiService.getById(`/${this.ctrlUrl}`, id);
   }
 
   register(request: UserRequest): Observable<User> {
