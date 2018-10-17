@@ -1,4 +1,4 @@
-<app-header [company]="company" [companyInfoForm]="companyInfoForm"></app-header>
+<app-header></app-header>
 
 <div id="company-page">
   <div class="company-info">
@@ -13,7 +13,7 @@
         <p><span>Address:</span> {{company.address}}</p>
       </div>
       <div>
-        <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company.id"></app-recruiter-form>
+        <app-company-info-form #companyInfoForm (loadCompanyById)=" loadCompanyById()" [company]="company"></app-company-info-form>
       </div>
     </div>
     <div class="description">
@@ -26,15 +26,21 @@
   </div>
   <div class="filter-search">
     <div class="wrapper">
-      <input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
-      <p-button label="Search" icon="pi pi-search"></p-button>
+      <input type="text" pInputText [(ngModel)]="searchString" placeholder="Enter recruiter name" />
+      <p-button label="Search" icon="pi pi-search" (click)="search()"></p-button>
     </div>
   </div>
+  <!-- <div class="add-new-recruiter">
+    <div class="position-right">
+      <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company.id"></app-recruiter-form>
+    </div>
+  </div> -->
   <div class="recruiter-list">
     <div class="recruiters-text">
       <hr class="fd-f1">
       <p>Recruiters</p>
       <hr class="fd-f1">
+      <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company.id"></app-recruiter-form>
     </div>
 
     <ul *ngIf="recruiters.length > 0">
@@ -56,10 +62,9 @@
         <hr>
       </li>
     </ul>
+    <p-paginator #recruitersPaginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
   </div>
 </div>
-
-<app-company-info-form #companyInfoForm (loadCompanyById)=" loadCompanyById()"></app-company-info-form>
 
 <app-footer></app-footer>
 

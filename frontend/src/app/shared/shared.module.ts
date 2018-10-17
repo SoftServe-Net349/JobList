@@ -21,7 +21,6 @@ import { AuthorizationsComponent } from '../authorizations/authorizations.compon
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchLineComponent } from './search-line/search-line.component';
-import { AuthHelper } from './helpers/auth-helper';
 
 // Our created modules
 
@@ -49,7 +48,7 @@ import { AuthHelper } from './helpers/auth-helper';
     SearchLineComponent,
     AuthorizationsComponent
   ],
-  providers: [AuthHelper],
+  providers: [],
   exports: [
     CommonModule,
     SomePipe,

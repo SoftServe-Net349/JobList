@@ -25,6 +25,7 @@ namespace JobList.DataAccess.Interfaces.Repositories
         Task<TEntity> CreateEntityAsync(TEntity entity);
         Task DeleteAsync(TKey Id);
         Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
         int Count { get; }
     }
 }

@@ -68,17 +68,57 @@ namespace JobList.Controllers
         }
 
         [HttpGet("company/{id}")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id)
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id, [FromQuery] PaginationUrlQuery urlQuery = null)
         {
-            var dtos = await _recruitersService.GetRecruitersByCompanyId(id);
+            var dtos = await _recruitersService.GetRecruitersByCompanyId(id, urlQuery);
 
             if (!dtos.Any())
             {
                 return NoContent();
             }
 
+            if (urlQuery != null)
+            {
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = urlQuery.PageNumber,
+                    PageSize = urlQuery.PageSize,
+                    TotalRecords = await _recruitersService.CountAsync(r => r.CompanyId == id)
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+            }
+
             return Ok(dtos);
         }
+
+        [HttpGet("company/{id}/filtered")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> GetFilteredRecruiters(int id, string recruiterName, [FromQuery]PaginationUrlQuery urlQuery = null)
+        {
+            var dtos = await _recruitersService.GetFilteredRecruiters(id, recruiterName, urlQuery);
+
+            if (dtos == null)
+            {
+                return NotFound();
+            }
+
+
+            if (urlQuery != null)
+            {
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = urlQuery.PageNumber,
+                    PageSize = urlQuery.PageSize,
+                    TotalRecords = await _recruitersService.CountAsync(r => r.CompanyId == id && r.FirstName == recruiterName)
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+            }
+
+            return Ok(dtos);
+        }
+
+
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<RecruiterDTO>> GetById(int id)

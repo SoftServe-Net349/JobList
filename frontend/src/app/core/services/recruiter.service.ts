@@ -30,8 +30,25 @@ export class RecruiterService {
   getByCompanyId(id: number): Observable<Recruiter[]> {
     return this.apiService.get(`/${this.ctrlUrl}/company/${id}`);
   }
+
   getById(id: number): Observable<Recruiter> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
+  }
+
+  getByCompanyIdWithPagination(id: number, pageSize: number, pageNumber: number): Observable<HttpResponse<Recruiter[]>> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/company/${id}`, params);
+  }
+
+  getByCompanyIdSearchStringWithPagination(id: number, search: string, pageSize: number, pageNumber: number)
+  : Observable<HttpResponse<Recruiter[]>> {
+    const params = new HttpParams()
+      .set('recruiterName', search)
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/company/${id}/filtered`, params);
   }
 
   register(request: RecruiterRequest): Observable<Recruiter> {
