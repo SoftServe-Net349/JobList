@@ -21,6 +21,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {KeyFilterModule} from 'primeng/keyfilter';
 
+import { CoreModule } from '../core/core.module';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import {KeyFilterModule} from 'primeng/keyfilter';
     DropdownModule,
     ReactiveFormsModule,
     ConfirmDialogModule,
-    KeyFilterModule
+    KeyFilterModule,
+    CoreModule
   ],
   declarations: [
     RecruiterComponent,

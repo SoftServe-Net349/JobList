@@ -1,7 +1,6 @@
 h1, h2, h3, h4, h5, h6 
     font: inherit
     color: inherit
-    margin: 0 0 10px
 
 h4 
     display: block
@@ -9,32 +8,7 @@ h4
     margin-inline-end: 0px
     font-weight: bold
 
-
-.required-input-symbol
-		color: red
-
-textarea.ng-touched.ng-invalid
-        border: 1px solid red
-        border-radius: 3px
-
-.alert-danger
-        font-size: small
-        font-weight: 500
-        color: red
-            //position: absolute
-        top: 35px
-        width: 100%
-        padding: 3px 2px
-        
-input.ng-touched.ng-invalid
-        border: 1px solid red
-        border-radius: 3px
-
-
-input.ng-touched.ng-valid
-        border: 1px solid green
-        border-radius: 3px
-#authoruzations
+#authoruzations, #company-authoruzations
     max-width: 100%
     font-family: "Open Sans","Helvetica Neue",sans-serif
     padding: 15px 25px
@@ -43,16 +17,16 @@ input.ng-touched.ng-valid
     box-shadow: none
     border-radius: 0
     position: relative
+   
+    /deep/ .ui-inputtext
+        width: 100% !important
 
-    
-
-    /deep/ .ui-widget
-		    max-width: 100% !important
     .save-forget-password-flex
         font-size: 11px
         padding: 30px 0
         display: flex
         justify-content: space-between
+
         .icon
             font-size: 11px
             display: flex
@@ -82,6 +56,7 @@ input.ng-touched.ng-valid
         display: flex
         justify-content: center
         padding: 2px 6px
+
     .title
         font-size: 11px
         display: flex
@@ -97,9 +72,7 @@ input.ng-touched.ng-valid
         padding-top: 10px 10px 10px
         margin-left: 0
         margin-right: 0
-
    
-    
     .fd-btn-block
         display: flex
         justify-content: center
@@ -108,27 +81,13 @@ input.ng-touched.ng-valid
         font-family: "Open Sans","Helvetica Neue",sans-serif
         padding-bottom: 20px 20px
         margin-left: 10
-        margin-right: 10
-
-    
+        margin-right: 10 
 
     /deep/ .ui-float-label
+        width: 100%
         margin-top: 20px
         margin-right: 20px
         display: inline-block
-
-        /deep/ .ui-dropdown, /deep/ .ui-multiselect
-            width: 242px
-             
-        /deep/ .ui-dropdown
-            height: 34px
-            max-width: 239px !important
-            width: 239px !important
-            
-            
-        /deep/ .ui-multiselect
-                .ui-multiselect-panel
-                max-width: 254px
 
     .fb_google1
         display: flex
@@ -139,7 +98,6 @@ input.ng-touched.ng-valid
     
     .fb_google2
         display: flex
-     
         justify-content: center
         margin-left: 10px
         margin-right: 10px
@@ -148,7 +106,7 @@ input.ng-touched.ng-valid
     hr 
         border: 0
         height: 1px        
-        margin-top: 15px
+        margin: 25px 0 15px 0
         background: rgba(0,0,0,.12)     
 
     /deep/ .ui-fluid
@@ -182,7 +140,6 @@ input.ng-touched.ng-valid
         margin-top: 25px
         height: 40px
 
-
     .agreement
         font-size: 11px
         display: flex
@@ -195,9 +152,70 @@ input.ng-touched.ng-valid
 
     .footer
         height: 50px
+   
+    .required-input-symbol
+        color: red
 
+    .alert-danger
+        font-size: small
+        font-weight: 500
+        color: red
+        position: absolute
+        width: 100%
+        padding: 3px 2px
+
+    .error-message
+        position: absolute
+        font-size: small
+        font-weight: 500
+        color: red
+        padding: 3px 2px
         
+    input.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
 
+    input.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
 
+    textarea.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
 
+    textarea.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
+
+    .hr-email
+        margin: 35px 0 15px 0
 	
+#company-authoruzations
+    /deep/ .ui-float-label
+        width: auto
+        margin-top: 20px
+        margin-right: 20px
+        display: inline-block
+
+    input
+        width: 248px !important
+
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect
+        width: 248px !important
+            
+    /deep/ .ui-dropdown
+        height: 34px
+        width: 248px !important
+        
+    .address
+        width: 100%
+
+        input
+            width: 100% !important
+    
+    .text-area
+        margin-top: 25px
+
+    /deep/ textarea 
+        max-width: 100%
+        width: 100%

@@ -12,7 +12,5 @@ namespace JobList.Common.Pagination
             get { return _pageCount; }
             set { _pageCount = (value > maxPageSize) ? maxPageSize : value; }
         }
-
-        public string Query { get; set; }
     }
 }

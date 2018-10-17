@@ -1,11 +1,18 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.Sorting;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Services
@@ -21,10 +28,42 @@ namespace JobList.BusinessLogic.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id, PaginationUrlQuery urlQuery = null)
+        
+        public int TotalRecords
+        {
+            get { return _uow.RecruitersRepository.TotalRecords; }
+        }
+
         public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id)
         {
-            var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r=> r.CompanyId ==Id,
-                include: r => r.Include(o => o.Company));
+            var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
+              include: r => r.Include(o => o.Company),
+              paginationUrlQuery: urlQuery);
+
+            if (entities == null) return null;
+
+            var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
+
+            return dtos;
+        }
+
+        public async Task<IEnumerable<RecruiterDTO>> GetFilteredRecruiters(int Id, string recruiterName = null, PaginationUrlQuery urlQuery = null)
+        {
+            List<Recruiter> entities;
+
+            if (recruiterName != null)
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id && r.FirstName.Contains(recruiterName),
+                    include: r => r.Include(o => o.Company),
+                    paginationUrlQuery: urlQuery);
+            }
+            else
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
+                include: r => r.Include(o => o.Company),
+                paginationUrlQuery: urlQuery);
+            }
 
             if (entities == null) return null;
 
@@ -35,6 +74,11 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<RecruiterDTO> CreateEntityAsync(RecruiterRequest modelRequest)
         {
+            if (await _uow.RecruitersRepository.ExistAsync(u => u.Email == modelRequest.Email))
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "This email already exists!");
+            }
+
             var entity = _mapper.Map<RecruiterRequest, Recruiter>(modelRequest);
 
             entity = await _uow.RecruitersRepository.CreateEntityAsync(entity);
@@ -70,6 +114,45 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
+
+        public async Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        {
+            List<Recruiter> entities = null;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    filter: e => e.Email.ToLower().Contains(searchString.ToLower()),
+                    include: e => e.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
+            }
+            else
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    include: e => e.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
+            }
+
+            var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
+
+            return dtos;
+        }
+
+        private Expression<Func<Recruiter, string>> GetSortField(string field)
+        {
+            switch (field)
+            {
+                case "Email":
+                    return e => e.Email;
+
+                default: return null;
+            }
+        }
+
         public async Task<RecruiterDTO> GetEntityByIdAsync(int id)
         {
             var entity = await _uow.RecruitersRepository.GetEntityAsync(id,
@@ -93,6 +176,11 @@ namespace JobList.BusinessLogic.Services
             var result = await _uow.SaveAsync();
 
             return result;
+        }
+
+        public Task<int> CountAsync(Expression<Func<Recruiter, bool>> predicate = null)
+        {
+            return _uow.RecruitersRepository.CountAsync(predicate);
         }
     }
 }

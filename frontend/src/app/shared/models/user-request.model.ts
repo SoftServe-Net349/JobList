@@ -9,9 +9,9 @@ export interface UserRequest {
   photoData: number[];
   photoMimeType: string;
   sex: string;
-  birthData: Date;
+  birthData?: Date;
   email: string;
   password: string;
-  cityId: number;
+  cityId?: number;
   roleId: number;
 }
