@@ -38,7 +38,8 @@ export class AdminRecruitersComponent implements OnInit {
     ngOnInit() {    
         
         this.sortOptions = [
-            { label: 'Email', value: 'Email' }
+            { label: 'Email by descending', value: '!Email' },
+            { label: 'Email by ascending', value: 'Email' }
         ];
 
         this.loadRecruiters();

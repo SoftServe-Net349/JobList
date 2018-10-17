@@ -16,7 +16,7 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<RecruiterDTO>> GetAllEntitiesAsync();
 
-        Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null);
+        Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
         Task<RecruiterDTO> GetEntityByIdAsync(int id);
 
@@ -27,7 +27,9 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> DeleteEntityByIdAsync(int id);
 
         Task<IEnumerable<RecruiterDTO>> GetFilteredRecruiters(int Id, string recruiterName = null, PaginationUrlQuery urlQuery = null);
-
+        
         Task<int> CountAsync(Expression<Func<Recruiter, bool>> predicate = null);
+        
+        int TotalRecords { get; }
     }
 }

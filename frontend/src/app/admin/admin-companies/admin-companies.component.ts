@@ -38,7 +38,9 @@ export class AdminCompaniesComponent implements OnInit {
     ngOnInit() {    
         
         this.sortOptions = [
-            { label: 'Name', value: 'Name' }
+            { label: 'Name by ascending', value: 'Name' },
+            { label: 'Name by decending', value: '!Name' }
+
         ];
 
         this.loadCompanies();

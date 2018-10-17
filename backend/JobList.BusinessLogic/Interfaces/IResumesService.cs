@@ -2,7 +2,10 @@
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.UrlQuery;
+using JobList.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Interfaces
@@ -23,6 +26,6 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<bool> DeleteEntityByIdAsync(int id);
 
-        int Count { get; }
+        Task<int> CountAsync(Expression<Func<Resume, bool>> predicate = null);
     }
 }

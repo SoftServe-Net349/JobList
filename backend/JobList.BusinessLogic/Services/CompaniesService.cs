@@ -2,13 +2,14 @@
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -24,6 +25,16 @@ namespace JobList.BusinessLogic.Services
         {
             _uow = uow;
             _mapper = mapper;
+        }
+
+        public int TotalRecords
+        {
+            get { return _uow.CompaniesRepository.TotalRecords; }
+        }
+
+        public Task<int> CountAsync(Expression<Func<Company, bool>> predicate = null)
+        {
+            return _uow.CompaniesRepository.CountAsync(predicate);
         }
 
 
@@ -70,37 +81,44 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<CompanyDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null)
+        public async Task<IEnumerable<CompanyDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync();
-
+            List<Company> entities = null;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                entities = entities.Select(e => e)
-                    .Where(d => d.Name.ToLower()
-                    .Contains(searchString.ToLower()))
-                    .ToList();
+                entities = await _uow.CompaniesRepository.GetRangeAsync(
+                    filter: e => e.Name.ToLower().Contains(searchString.ToLower()),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
 
-            if (!string.IsNullOrEmpty(sortingUrlQuery.SortField))
+            else
             {
-                switch (sortingUrlQuery.SortField)
-                {
-                    case "Name":
-                        if (sortingUrlQuery.SortOrder)
-                            entities = entities.OrderBy(e => e.Name).ToList();
-                        else
-                            entities = entities.OrderByDescending(e => e.Name).ToList();
-                        break;
-
-                    default: break;
-                }
+                entities = await _uow.CompaniesRepository.GetRangeAsync(
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
 
             var dtos = _mapper.Map<List<Company>, List<CompanyDTO>>(entities);
 
             return dtos;
+        }
+
+
+        private Expression<Func<Company, string>> GetSortField(string field)
+        {
+            switch (field)
+            {
+                case "Name":
+                    return e => e.Name;
+                case "Email":
+                    return e => e.Email;
+            }
+
+            return null;
         }
 
 

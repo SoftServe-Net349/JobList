@@ -5,7 +5,6 @@ using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
 using JobList.Common.Requests;
-using Microsoft.AspNetCore.Authorization;
 using JobList.Common.Pagination;
 using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,32 +27,37 @@ namespace JobList.Controllers
 
         // GET: /users
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get()
+        {
+            var dtos = await _usersService.GetAllEntitiesAsync();
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+      
+            return Ok(dtos);
+        }
+
+
+        [HttpGet("filtered")]
+        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> GetFiltered(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _usersService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery);
+            var dtos = await _usersService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
             }
 
-            if (paginationUrlQuery != null)
+
+            var pageInfo = new PageInfo()
             {
-                int count = dtos.Count();
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _usersService.TotalRecords
+            };
 
-                dtos = dtos.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
-                    .Take(paginationUrlQuery.PageSize)
-                    .ToList();
-
-                var pageInfo = new PageInfo()
-                {
-                    PageNumber = paginationUrlQuery.PageNumber,
-                    PageSize = paginationUrlQuery.PageSize,
-                    TotalRecords = count
-                };
-
-                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
-            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
 
             return Ok(dtos);
         }

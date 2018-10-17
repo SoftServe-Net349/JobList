@@ -1,6 +1,5 @@
 ﻿using JobList.Common.Interfaces.Entities;
 using JobList.Common.Pagination;
-using JobList.Common.Sorting;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -14,18 +13,23 @@ namespace JobList.DataAccess.Interfaces.Repositories
     {
         Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
                                           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                          Expression<Func<TEntity, string>> sorting = null,
+                                          bool? sortOrder = null,
                                           PaginationUrlQuery paginationUrlQuery = null);
 
         Task<TEntity> GetEntityAsync(TKey Id, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
         Task<List<TEntity>> GetAllEntitiesAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
+
         Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
                                              Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                              Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
+
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<TEntity> CreateEntityAsync(TEntity entity);
         Task DeleteAsync(TKey Id);
         Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
-        int Count { get; }
+        
+        int TotalRecords {  get; }
     }
 }

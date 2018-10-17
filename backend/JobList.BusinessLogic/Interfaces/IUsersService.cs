@@ -1,11 +1,10 @@
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
-using Microsoft.EntityFrameworkCore.Query;
-using System;
 using JobList.Common.Sorting;
+using JobList.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<UserDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery paginationUrlQuery = null);
 
-        Task<IEnumerable<UserDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null);
+        Task<IEnumerable<UserDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
         Task<UserDTO> GetEntityByIdAsync(int id);
 
@@ -27,6 +26,8 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<bool> DeleteEntityByIdAsync(int id);
 
-        int Count { get; }
+        Task<int> CountAsync(Expression<Func<User, bool>> predicate = null);
+
+        int TotalRecords { get; }
     }
 }

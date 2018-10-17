@@ -24,7 +24,7 @@ export class RecruiterService {
       .set('pageNumber', pageNumber.toString())
       .set('searchString', searchString);
       
-    return this.apiService.getFullResponse(`/${this.ctrlUrl}/admin`, params);
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
   getByCompanyId(id: number): Observable<Recruiter[]> {

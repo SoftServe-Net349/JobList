@@ -104,13 +104,13 @@ export class AdminVacanciesComponent implements OnInit {
     checkConfirm(vacancy: Vacancy, isChecked: boolean) {
         const request: VacancyRequest = this.getRequest(vacancy, isChecked);
 
-        if (isChecked) {
+        if (!isChecked) {
             this.confirmationService.confirm({
                 message: 'Do you want to check this record?',
                 header: 'Check Confirmation',
                 icon: 'pi pi-info-circle',
                 accept: () => {
-                    this.vacancyService.update(vacancy.id, request);
+                    this.vacancyService.update(vacancy.id, request).subscribe();
                     vacancy.isChecked = true;
                 }
             });
@@ -120,7 +120,7 @@ export class AdminVacanciesComponent implements OnInit {
                 header: 'Uncheck Confirmation',
                 icon: 'pi pi-info-circle',
                 accept: () => {
-                    this.vacancyService.update(vacancy.id, request);
+                    this.vacancyService.update(vacancy.id, request).subscribe();
                     vacancy.isChecked = false;
                 }
             });
@@ -135,7 +135,7 @@ export class AdminVacanciesComponent implements OnInit {
             offering: vacancy.offering,
             requirements: vacancy.requirements,
             bePlus: vacancy.bePlus,
-            isChecked: isChecked,
+            isChecked: !isChecked,
             salary: vacancy.salary,
             fullPartTime: vacancy.fullPartTime,
             createDate: vacancy.createDate,

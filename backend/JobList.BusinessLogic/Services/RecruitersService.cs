@@ -29,6 +29,13 @@ namespace JobList.BusinessLogic.Services
         }
 
         public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id, PaginationUrlQuery urlQuery = null)
+        
+        public int TotalRecords
+        {
+            get { return _uow.RecruitersRepository.TotalRecords; }
+        }
+
+        public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id)
         {
             var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
               include: r => r.Include(o => o.Company),
@@ -108,38 +115,42 @@ namespace JobList.BusinessLogic.Services
         }
 
 
-        public async Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null)
+        public async Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            var entities = await _uow.RecruitersRepository.GetAllEntitiesAsync(
-                include: r => r.Include(o => o.Company));
-
+            List<Recruiter> entities = null;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                entities = entities.Select(e => e)
-                    .Where(d => d.Email.ToLower()
-                    .Contains(searchString.ToLower()))
-                    .ToList();
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    filter: e => e.Email.ToLower().Contains(searchString.ToLower()),
+                    include: e => e.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
-
-            if (!string.IsNullOrEmpty(sortingUrlQuery.SortField))
+            else
             {
-                switch (sortingUrlQuery.SortField)
-                {
-                    case "Email":
-                        if (sortingUrlQuery.SortOrder)
-                            entities = entities.OrderBy(e => e.Email).ToList();
-                        else
-                            entities = entities.OrderByDescending(e => e.Email).ToList();
-                        break;
-
-                    default: break;
-                }
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    include: e => e.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
 
             var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
 
             return dtos;
+        }
+
+        private Expression<Func<Recruiter, string>> GetSortField(string field)
+        {
+            switch (field)
+            {
+                case "Email":
+                    return e => e.Email;
+
+                default: return null;
+            }
         }
 
         public async Task<RecruiterDTO> GetEntityByIdAsync(int id)
