@@ -71,7 +71,9 @@ export class HeaderComponent implements OnInit {
         this.itemsForUser = [
           {
             label: 'Home',
-            icon: 'fa fa-home'
+            icon: 'fa fa-home',
+            routerLink: '/users/42',
+            routerLinkActiveOptions: 'active'
           },
           {
             label: 'Settings',
