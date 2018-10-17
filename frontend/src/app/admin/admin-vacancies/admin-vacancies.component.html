@@ -1,0 +1,60 @@
+<p-dataView [value]="vacancies">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4">
+                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
+                        [autoWidth]="false" [style]="{'min-width':'15em'}"></p-dropdown>
+                </div>
+
+                <p-autoComplete [(ngModel)]="searchedVacancy" [suggestions]="vacancies" (onSelect)="select($event)"
+                    (completeMethod)="filterVacancies($event)" (keyup.enter)="search($event)" field="name"></p-autoComplete>
+            </div>
+        </div>
+    </p-header>
+    <ng-template let-vacancy pTemplate="listItem">
+        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+            <div class="ui-g-12 ui-md-3" style="text-align:left">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" width="120"
+                    height="140">
+            </div>
+            <div class="ui-g-12 ui-md-8 user-details">
+                <div class="ui-g">
+                    <div class="ui-g-2 ui-sm-6">Name: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.name}}</b></div>
+
+                    <div class="ui-g-2 ui-sm-6">Description: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.description}}</b></div>
+
+                    <div class="ui-g-2 ui-sm-6">Create Date: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.createDate | date}}</b></div>
+
+                    <div class="ui-g-2 ui-sm-6">City: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.city.name}}</b></div>
+
+                    <div class="ui-g-2 ui-sm-6">Company: </div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{vacancy.recruiter.company.name}}</b></div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-1">
+
+                <div *ngIf="vacancy.isChecked else uncheckedBlock">
+                    <div class="admin-button">
+                        <button pButton type="button" label="Uncheck" class="ui-button-rounded ui-button-danger" (click)="checkConfirm(vacancy, !vacancy.isChecked)"></button>
+                    </div>
+                </div>
+
+
+                <ng-template #uncheckedBlock>
+                    <div class="admin-button">
+                        <button pButton type="button" label="Check" class="ui-button-rounded ui-button-success" (click)="checkConfirm(vacancy, !vacancy.isChecked)"></button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</p-dataView>
+
+<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
+
+<p-confirmDialog></p-confirmDialog>

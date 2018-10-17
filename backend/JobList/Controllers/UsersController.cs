@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
@@ -6,8 +6,11 @@ using JobList.Common.DTOS;
 using JobList.Common.Errors;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
+using JobList.Common.Pagination;
+using JobList.Common.Requests;
+using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
@@ -26,12 +29,31 @@ namespace JobList.Controllers
 
         // GET: /users
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _usersService.GetAllEntitiesAsync();
+            var dtos = await _usersService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
+            }
+
+            if (paginationUrlQuery != null)
+            {
+                int count = dtos.Count();
+
+                dtos = dtos.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
+                    .Take(paginationUrlQuery.PageSize)
+                    .ToList();
+
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = paginationUrlQuery.PageNumber,
+                    PageSize = paginationUrlQuery.PageSize,
+                    TotalRecords = count
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
             }
 
             return Ok(dtos);

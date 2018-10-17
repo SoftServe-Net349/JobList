@@ -1,6 +1,7 @@
 ﻿using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.UrlQuery;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace JobList.BusinessLogic.Interfaces
         Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync();
 
         Task<IEnumerable<ResumeDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null);
+
+        Task<IEnumerable<ResumeDTO>> GetFilteredEntitiesAsync(ResumeUrlQuery resumeUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
         Task<ResumeDTO> GetEntityByIdAsync(int id);
 

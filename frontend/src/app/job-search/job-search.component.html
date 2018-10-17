@@ -1,8 +1,8 @@
 <div class="jobsearch">
-  <app-search-line (filteredVacancies)="getVacanciesBySearchString($event)"></app-search-line>
+  <app-search-line (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
-      <app-job-filters></app-job-filters>
+      <app-job-filters (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
     </div>
     <div class="vacancy-container">
       <article class="vacancy-block" *ngFor="let vacancy of vacancies">
@@ -31,5 +31,5 @@
     </div>
   </div>
 
-  <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[pageSize-2, pageSize, pageSize+2]"></p-paginator>
+  <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 </div>

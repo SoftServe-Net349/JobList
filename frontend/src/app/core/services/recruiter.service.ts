@@ -16,6 +16,17 @@ export class RecruiterService {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
+  getFullResponse(searchString: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number): Observable<HttpResponse<Recruiter[]>> {
+    const params = new HttpParams()
+      .set('sortField', sortField)
+      .set('sortOrder', sortOrder.toString())
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString())
+      .set('searchString', searchString);
+      
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/admin`, params);
+  }
+
   getByCompanyId(id: number): Observable<Recruiter[]> {
     return this.apiService.get(`/${this.ctrlUrl}/company/${id}`);
   }

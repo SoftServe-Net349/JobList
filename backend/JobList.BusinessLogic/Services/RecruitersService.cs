@@ -4,11 +4,13 @@ using JobList.Common.DTOS;
 using JobList.Common.Errors;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.Sorting;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
@@ -99,6 +101,41 @@ namespace JobList.BusinessLogic.Services
         {
             var entities = await _uow.RecruitersRepository.GetAllEntitiesAsync(
                 include: r => r.Include(o => o.Company));
+
+            var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
+
+            return dtos;
+        }
+
+
+        public async Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null)
+        {
+            var entities = await _uow.RecruitersRepository.GetAllEntitiesAsync(
+                include: r => r.Include(o => o.Company));
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                entities = entities.Select(e => e)
+                    .Where(d => d.Email.ToLower()
+                    .Contains(searchString.ToLower()))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrEmpty(sortingUrlQuery.SortField))
+            {
+                switch (sortingUrlQuery.SortField)
+                {
+                    case "Email":
+                        if (sortingUrlQuery.SortOrder)
+                            entities = entities.OrderBy(e => e.Email).ToList();
+                        else
+                            entities = entities.OrderByDescending(e => e.Email).ToList();
+                        break;
+
+                    default: break;
+                }
+            }
 
             var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
 
