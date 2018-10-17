@@ -50,7 +50,6 @@ export class CompanyComponent implements OnInit {
       logoMimetype: '',
       site: '',
       email: '',
-      password: '',
       roleId: 0 };
 
   }

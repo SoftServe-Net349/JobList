@@ -43,7 +43,6 @@ export class CompanyDetailsComponent implements OnInit {
       logoMimetype: '',
       site: '',
       email: '',
-      password: '',
       roleId: 0
     };
   }

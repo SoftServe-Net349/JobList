@@ -9,6 +9,7 @@ using JobList.Common.Pagination;
 using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobList.Controllers
 {

@@ -10,6 +10,5 @@ export interface Company {
   logoMimetype: string;
   site: string;
   email: string;
-  password: string;
   roleId: number;
 }

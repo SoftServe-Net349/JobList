@@ -46,7 +46,6 @@ export class RecruiterComponent implements OnInit {
       lastName: '',
       phone: '',
       email: '',
-      password: '',
       company: null,
       roleId: 0,
       photoData: [],

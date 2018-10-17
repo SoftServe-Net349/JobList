@@ -12,24 +12,25 @@ namespace JobList.BusinessLogic.Interfaces
 {
     public interface IRecruitersService
     {
-        Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyId(int Id, PaginationUrlQuery urlQuery = null);
+        Task<IEnumerable<RecruiterDTO>> GetAllRecruitersAsync();
 
-        Task<IEnumerable<RecruiterDTO>> GetAllEntitiesAsync();
+        Task<RecruiterDTO> GetRecruiterByIdAsync(int id);
 
-        Task<IEnumerable<RecruiterDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
+        Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyIdAsync(int companyId, PaginationUrlQuery urlQuery = null);
 
-        Task<RecruiterDTO> GetEntityByIdAsync(int id);
+        Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(int? companyId = null,
+                                                                   string searchString = null,
+                                                                   SortingUrlQuery sortingUrlQuery = null,
+                                                                   PaginationUrlQuery paginationUrlQuery = null);
 
-        Task<RecruiterDTO> CreateEntityAsync(RecruiterRequest modelRequest);
+        Task<RecruiterDTO> CreateRecruiterAsync(RecruiterRequest modelRequest);
 
-        Task<bool> UpdateEntityByIdAsync(RecruiterRequest modelRequest, int id);
+        Task<bool> UpdateRecruiterByIdAsync(RecruiterRequest modelRequest, int id);
 
-        Task<bool> DeleteEntityByIdAsync(int id);
-
-        Task<IEnumerable<RecruiterDTO>> GetFilteredRecruiters(int Id, string recruiterName = null, PaginationUrlQuery urlQuery = null);
+        Task<bool> DeleteRecruiterByIdAsync(int id);
         
         Task<int> CountAsync(Expression<Func<Recruiter, bool>> predicate = null);
-        
+
         int TotalRecords { get; }
     }
 }

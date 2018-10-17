@@ -7,7 +7,6 @@
     <div *ngIf="role === ''">
       <div id="right-side-menu">
         <a routerLink="/jobsearch" routerLinkActive="active">Find Job</a>
-        <a href="">Resume</a>
         <a class="signIn" (click)="menu.toggle($event)">SignIn</a>
         <p-menu #menu [popup]="true" [model]="signInItems"></p-menu>
       </div>

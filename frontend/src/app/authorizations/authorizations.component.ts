@@ -81,11 +81,11 @@ export class AuthorizationsComponent implements OnInit {
 
   }
 
-  showSignIn(_role: string, _login = '', _password = '') {
+  showSignIn(_role: string, _login = '') {
 
     this.authoruzationsForm.reset();
     this.role = _role;
-    this.authoruzationsForm.setValue({login: _login, password: _password});
+    this.authoruzationsForm.setValue({login: _login, password: ''});
     this.signInDialog = true;
 
   }
@@ -175,7 +175,7 @@ export class AuthorizationsComponent implements OnInit {
       (data: User) => {
         this.errorMessage = '';
         this.signUpUser = false;
-        this.showSignIn('User', data.email, data.password); },
+        this.showSignIn('User', data.email); },
       error => { this.errorMessage = error.error; }
       );
 
@@ -206,7 +206,7 @@ export class AuthorizationsComponent implements OnInit {
       (data: Company) => {
         this.errorMessage = '';
         this.signUpCompany = false;
-        this.showSignIn('Company', data.email, data.password); },
+        this.showSignIn('Company', data.email); },
       error => { this.errorMessage = error.error; }
       );
 
