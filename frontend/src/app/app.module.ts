@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
@@ -18,7 +18,15 @@ import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
 import { CoreModule } from './core/core.module';
 
+import { JwtModule } from '@auth0/angular-jwt';
 
+import { AuthHelper } from './shared/helpers/auth-helper';
+
+export function tokenGetter() {
+
+  return  window.localStorage.getItem('token');
+
+}
 
 @NgModule({
   declarations: [
@@ -35,9 +43,16 @@ import { CoreModule } from './core/core.module';
     AdminModule,
     RecruiterModule,
     CompanyModule,
-    CoreModule
+    CoreModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:56681'],
+        blacklistedRoutes: ['localhost:56681/tokens/']
+      }
+    })
   ],
-  providers: [],
+  providers: [AuthHelper],
   bootstrap: [
     AppComponent
   ]

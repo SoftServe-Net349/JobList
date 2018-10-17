@@ -1,8 +1,13 @@
 ﻿using JobList.Common.DTOS;
 using JobList.Common.Pagination;
+using JobList.Common.UrlQuery;
 using JobList.Common.Requests;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JobList.Common.Sorting;
+using JobList.DataAccess.Entities;
+using System;
+using System.Linq.Expressions;
 
 namespace JobList.BusinessLogic.Interfaces
 {
@@ -11,6 +16,10 @@ namespace JobList.BusinessLogic.Interfaces
         Task<IEnumerable<VacancyDTO>> GetAllEntitiesAsync();
 
         Task<IEnumerable<VacancyDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null);
+
+        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null);
+
+        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 
@@ -22,6 +31,8 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id);
 
-        int Count { get; }
+        Task<int> CountAsync(Expression<Func<Vacancy, bool>> predicate = null);
+
+        int TotalRecords { get; }
     }
 }

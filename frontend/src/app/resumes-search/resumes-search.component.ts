@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Resume } from '../shared/models/resume.model';
 import { ResumeService } from '../core/services/resume.service';
+import { ResumessearchQuery } from '../shared/filterQueries/ResumessearchQuery';
 
 @Component({
   selector: 'app-resumes-search',
@@ -19,6 +20,8 @@ export class ResumesSearchComponent implements OnInit {
   search: string = '';
   city: string = '';
 
+  param: ResumessearchQuery;
+
   constructor(private resumeService: ResumeService) {
     this.resumes = [];
   }
@@ -35,6 +38,38 @@ export class ResumesSearchComponent implements OnInit {
       this.loadResumes(this.pageSize, this.pageNumber);
     } else {
       this.resumeService.getBySearchString(this.search, this.city, this.pageSize, this.pageNumber)
+        .subscribe((response) => {
+          this.resumes = response.body;
+          this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+        });
+    }
+  }
+
+  getDefaultParam(): ResumessearchQuery {
+    return {
+      name: '',
+      city: '',
+      workArea: '',
+      schools: [],
+      faculties: [],
+      age: 0,
+      languages: []
+    };
+  }
+
+  getResumesByFilter(param: ResumessearchQuery) {
+    this.param.name = param.name !== null ? param.name : this.param.name;
+    this.param.city = param.city !== null ? param.city : this.param.city;
+    this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
+    this.param.schools = param.schools !== null ? param.schools : this.param.schools;
+    this.param.faculties = param.faculties !== null ? param.faculties : this.param.faculties;
+    this.param.age = param.age !== null ? param.age : this.param.age;
+    this.param.languages = param.languages !== null ? param.languages : this.param.languages;
+
+    if (param === this.getDefaultParam()) {
+      this.loadResumes(this.pageSize, this.pageNumber);
+    } else {
+      this.resumeService.getByFilter(this.param, this.pageSize, this.pageNumber)
         .subscribe((response) => {
           this.resumes = response.body;
           this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;

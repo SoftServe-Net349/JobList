@@ -40,6 +40,9 @@
               Email should contain (5-150) chars
           </div>
         </div>
+        <div class="error-message" *ngIf="errorMessage">
+          {{errorMessage}}
+        </div>      
       </div>
       <div class="ui-float-label phone">
         <p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
