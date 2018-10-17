@@ -29,7 +29,7 @@ namespace JobList.DataAccess.Interfaces.Repositories
         Task DeleteAsync(TKey Id);
         Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
-
+        
         int TotalRecords {  get; }
     }
 }

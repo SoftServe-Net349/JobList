@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
@@ -20,8 +20,12 @@ import { CoreModule } from './core/core.module';
 
 import { JwtModule } from '@auth0/angular-jwt';
 
+import { AuthHelper } from './shared/helpers/auth-helper';
+
 export function tokenGetter() {
-  return localStorage.getItem('token');
+
+  return  window.localStorage.getItem('token');
+
 }
 
 @NgModule({
@@ -48,7 +52,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [],
+  providers: [AuthHelper],
   bootstrap: [
     AppComponent
   ]

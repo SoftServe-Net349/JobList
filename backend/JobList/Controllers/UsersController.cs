@@ -16,10 +16,12 @@ namespace JobList.Controllers
     [ApiController]
     public class UsersController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IUsersService _usersService;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _usersService = usersService;
         }
 
@@ -60,11 +62,18 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
-        //[Authorize]
+        [Authorize(Roles = "user")]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<UserDTO>> GetById(int id)
         {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, "OwnerPolicy");
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var dto = await _usersService.GetEntityByIdAsync(id);
             if (dto == null)
             {
