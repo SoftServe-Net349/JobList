@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {CompanyService} from '../core/services/company.service';
 import { Company } from '../shared/models/company.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Recruiter } from '../shared/models/recruiter.model';
 import { RecruiterService } from '../core/services/recruiter.service';
 import { ConfirmationService } from 'primeng/api';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-company',
@@ -21,6 +22,9 @@ export class CompanyComponent implements OnInit {
   totalRecords = 0;
   pageSize = 4;
   pageNumber = 1;
+
+  @ViewChild('recruitersPaginator')
+  recruitersPaginator: Paginator;
 
   constructor(private companyService: CompanyService,
               private recruiterService: RecruiterService,
@@ -92,6 +96,7 @@ export class CompanyComponent implements OnInit {
   }
 
   search() {
+    this.pageNumber = 1;
     if (this.searchString === '') {
       this.loadRecruiters(this.company.id, this.pageSize, this.pageNumber);
     } else {
@@ -103,7 +108,8 @@ export class CompanyComponent implements OnInit {
         .subscribe((response) => {
           this.recruiters = response.body;
           this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-    });
+          this.recruitersPaginator.changePage(0);
+        });
     }
   }
 
