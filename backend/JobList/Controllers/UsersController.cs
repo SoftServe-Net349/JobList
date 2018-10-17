@@ -7,7 +7,6 @@ using JobList.Common.Errors;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
 using JobList.Common.Pagination;
-using JobList.Common.Requests;
 using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

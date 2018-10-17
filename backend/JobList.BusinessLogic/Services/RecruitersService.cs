@@ -32,7 +32,7 @@ namespace JobList.BusinessLogic.Services
         {
             var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
               include: r => r.Include(o => o.Company),
-              urlQuery: urlQuery);
+              paginationUrlQuery: urlQuery);
 
             if (entities == null) return null;
 
@@ -49,13 +49,13 @@ namespace JobList.BusinessLogic.Services
             {
                 entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id && r.FirstName.Contains(recruiterName),
                     include: r => r.Include(o => o.Company),
-                    urlQuery: urlQuery);
+                    paginationUrlQuery: urlQuery);
             }
             else
             {
                 entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == Id,
                 include: r => r.Include(o => o.Company),
-                urlQuery: urlQuery);
+                paginationUrlQuery: urlQuery);
             }
 
             if (entities == null) return null;
