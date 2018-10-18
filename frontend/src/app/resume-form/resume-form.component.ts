@@ -100,7 +100,6 @@ export class ResumeFormComponent implements OnInit {
       favoriteVacancies: [],
       firstName: '',
       lastName: '',
-      password: '',
       phone: '',
       photoData: [],
       photoMimeType: '',

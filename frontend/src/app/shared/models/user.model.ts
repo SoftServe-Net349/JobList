@@ -12,7 +12,6 @@ export interface User {
   sex: string;
   birthData?: Date;
   email: string;
-  password: string;
   city: City;
   roleId: number;
 

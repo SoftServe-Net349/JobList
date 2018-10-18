@@ -16,14 +16,15 @@ export class RecruiterService {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
-  getFullResponse(searchString: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number): Observable<HttpResponse<Recruiter[]>> {
+  getFullResponse(searchString: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number)
+  : Observable<HttpResponse<Recruiter[]>> {
     const params = new HttpParams()
       .set('sortField', sortField)
       .set('sortOrder', sortOrder.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString())
       .set('searchString', searchString);
-      
+
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
@@ -45,7 +46,7 @@ export class RecruiterService {
   getByCompanyIdSearchStringWithPagination(id: number, search: string, pageSize: number, pageNumber: number)
   : Observable<HttpResponse<Recruiter[]>> {
     const params = new HttpParams()
-      .set('recruiterName', search)
+      .set('searchString', search)
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/company/${id}/filtered`, params);

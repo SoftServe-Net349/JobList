@@ -1,13 +1,12 @@
 <div class="header">
   <div class="wrapper">
     <div id="left-side-menu">
-      <a id="home" href="#home">JOBLIST</a>
+      <a routerLink="/" routerLinkActive="active">JOBLIST</a>
       <p>Find job of your dream</p>
     </div>
     <div *ngIf="role === ''">
       <div id="right-side-menu">
-        <a>Find Job</a>
-        <a href="">Resume</a>
+        <a routerLink="/jobsearch" routerLinkActive="active">Find Job</a>
         <a class="signIn" (click)="menu.toggle($event)">SignIn</a>
         <p-menu #menu [popup]="true" [model]="signInItems"></p-menu>
       </div>
@@ -49,7 +48,7 @@
     <!-- USER HEADER -->
     <div *ngIf="role === 'user'">
       <div id="right-side-menu">
-        <a href="">Find Vacancies</a>
+        <a routerLink="/" routerLinkActive="active">Find Vacancies</a>
         <a>Invitation</a>
         <a>Favourite Vacancies</a>
 

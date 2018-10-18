@@ -26,7 +26,7 @@
   </div>
   <div class="filter-search">
     <div class="wrapper">
-      <input type="text" pInputText [(ngModel)]="searchString" placeholder="Enter recruiter name" />
+      <input type="text" pInputText [(ngModel)]="searchString" placeholder="Enter Recruiter name or email" />
       <p-button label="Search" icon="pi pi-search" (click)="search()"></p-button>
     </div>
   </div>
@@ -47,7 +47,7 @@
       <li *ngFor="let recruiter of recruiters">
         <div class="recruiter-wrapper-flex">
           <div>
-            <img class="avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
+            <img class="avatar" [src]="sanitizeImg('data:image/jbeg;base64,'+recruiter.photoData)" alt="Recruiter avatar">
           </div>
           <div class="recruiter-info">
             <p>{{recruiter.firstName}} {{recruiter.lastName}}</p>

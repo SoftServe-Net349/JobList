@@ -67,7 +67,6 @@ export class CompanyInfoFormComponent implements OnInit {
       logoMimetype: '',
       site: '',
       email: '',
-      password: '',
       roleId: 0 };
 
   }
@@ -129,7 +128,7 @@ export class CompanyInfoFormComponent implements OnInit {
       site: this.companyInfoForm.get('site').value,
       address: this.companyInfoForm.get('address').value,
       fullDescription: this.companyInfoForm.get('fullDescription').value,
-      password: this.company.password,
+      password: '',
       roleId: this.company.roleId,
       logoData: this.company.logoData,
       logoMimetype: this.company.logoMimetype

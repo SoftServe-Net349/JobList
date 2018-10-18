@@ -31,7 +31,6 @@ export class UserComponent implements OnInit {
       favoriteVacancies: [],
       firstName: '',
       lastName: '',
-      password: '',
       phone: '',
       photoData: [],
       photoMimeType: '',
