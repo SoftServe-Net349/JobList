@@ -76,8 +76,7 @@ export class RecruiterFormComponent implements OnInit {
     }
     reader.readAsDataURL(file);  
     this.type=file.type.toString().split('/')[1];
-    console.log(this.base64);
-    console.log(this.type);
+    
    }
   }
 
