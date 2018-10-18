@@ -6,6 +6,7 @@ import { Recruiter } from '../shared/models/recruiter.model';
 import { RecruiterService } from '../core/services/recruiter.service';
 import { ConfirmationService } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-company',
@@ -29,7 +30,8 @@ export class CompanyComponent implements OnInit {
   constructor(private companyService: CompanyService,
               private recruiterService: RecruiterService,
               private activatedRoute: ActivatedRoute,
-              private confirmationService: ConfirmationService) {
+              private confirmationService: ConfirmationService,
+              private _sanitizer: DomSanitizer) {
 
     this.company = this.defaultCompany();
     this.recruiters = [];
@@ -126,5 +128,7 @@ export class CompanyComponent implements OnInit {
         });
     }
   }
-
+  sanitizeImg(url): SafeUrl{ 
+    return this._sanitizer.bypassSecurityTrustUrl(url);
+  }
 }

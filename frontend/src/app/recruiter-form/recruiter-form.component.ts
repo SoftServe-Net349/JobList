@@ -24,8 +24,12 @@ export class RecruiterFormComponent implements OnInit {
   errorMessage: string;
 
   recruiter: Recruiter;
+  
+  type:string;
   uploadedFiles: any[] = [];
-
+  dataString: string|ArrayBuffer;
+  base64: string;
+  
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
@@ -54,17 +58,27 @@ export class RecruiterFormComponent implements OnInit {
       email: '',
       company: null,
       roleId: 0,
-      photoData: [],
+      photoData: '',
       photoMimetype: ''
     };
   }
 
-  onUpload(event) {
-    for (const file of event.files) {
-      this.uploadedFiles.push(file);
-    }
+  
 
-    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+  onUpload(event) {
+    for(let file of event.files) {
+    this.uploadedFiles.push(file);
+     var reader = new FileReader();
+     reader.onload = (event:any) => {
+     this.dataString=reader.result;
+     this.base64=this.dataString.toString().split(',')[1];
+
+    }
+    reader.readAsDataURL(file);  
+    this.type=file.type.toString().split('/')[1];
+    console.log(this.base64);
+    console.log(this.type);
+   }
   }
 
   showRecruiterForm(action: String, recruiter = this.defaultRecruiter()) {
@@ -101,8 +115,8 @@ export class RecruiterFormComponent implements OnInit {
       password: '',
       companyId: this.companyId,
       roleId: this.recruiter.roleId,
-      photoData: this.recruiter.photoData,
-      photoMimetype: this.recruiter.photoMimetype
+      photoData: this.base64,
+      photoMimetype: this.type
     };
     this.recruiterService.update(this.recruiter.id, request)
     .subscribe(data => this.loadRecruiters.emit());
@@ -117,8 +131,8 @@ export class RecruiterFormComponent implements OnInit {
       password: '12345678',
       companyId: this.companyId,
       roleId: 4,
-      photoData: this.recruiter.photoData,
-      photoMimetype: this.recruiter.photoMimetype
+      photoData: this.base64,
+      photoMimetype: this.type
 
     };
     this.recruiterService.register(request)
