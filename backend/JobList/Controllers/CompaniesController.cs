@@ -3,9 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
@@ -34,6 +37,29 @@ namespace JobList.Controllers
         }
 
 
+        [HttpGet("filtered")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        {
+            var dtos = await _companiesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+
+            var pageInfo = new PageInfo()
+            {
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _companiesService.TotalRecords
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
+            return Ok(dtos);
+        }
+
+
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<CompanyDTO>> GetById(int id)
         {
@@ -47,21 +73,28 @@ namespace JobList.Controllers
         }
 
         // POST: /companies
-        [HttpPost]
-        public virtual async Task<ActionResult<CompanyDTO>> Create([FromBody] CompanyRequest request)
+        [HttpPost("register")]
+        public virtual async Task<ActionResult<CompanyDTO>> Register([FromBody] CompanyRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var dtos = await _companiesService.CreateEntityAsync(request);
-            if (dtos == null)
+            try
             {
-                return StatusCode(500);
-            }
+                var dtos = await _companiesService.CreateEntityAsync(request);
 
-            return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+                if (dtos == null)
+                {
+                    return StatusCode(500);
+                }
+
+                return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: /companies/:id

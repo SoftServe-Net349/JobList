@@ -1,5 +1,3 @@
-import { Role } from './role.model';
-
 export interface Company {
   id: number;
   name: string;
@@ -12,6 +10,5 @@ export interface Company {
   logoMimetype: string;
   site: string;
   email: string;
-  password: string;
   roleId: number;
 }

@@ -4,6 +4,7 @@ import { ApiService } from './api.service';
 import { ResumeRequest } from '../../shared/models/resume-request.model';
 import { Resume } from '../../shared/models/resume.model';
 import { HttpParams, HttpResponse } from '@angular/common/http';
+import { ResumessearchQuery } from 'src/app/shared/filterQueries/ResumessearchQuery';
 
 @Injectable()
 export class ResumeService {
@@ -19,6 +20,27 @@ export class ResumeService {
 
     return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
   }
+
+  getByFilter(param: ResumessearchQuery, pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
+    let params = new HttpParams()
+      .set('name', param.name)
+      .set('city', param.city)
+      .set('workArea', param.workArea)
+      .set('age', param.age.toString())
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+      param.schools.forEach(school => {
+        params = params.append('schools', school);
+      });
+      param.schools.forEach(faculty => {
+        params = params.append('faculties', faculty);
+      });
+      param.schools.forEach(language => {
+        params = params.append('languages', language);
+      });
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
+  }
+
 
   getAll(): Observable<Resume[]> {
     return this.apiService.get(`/${this.ctrlUrl}`);

@@ -24,6 +24,9 @@ import {PasswordModule} from 'primeng/password';
 import {InputMaskModule} from 'primeng/inputmask';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
+import { CoreModule } from '../core/core.module';
+import { PaginatorModule } from 'primeng/paginator';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -40,7 +43,9 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     PasswordModule,
     ReactiveFormsModule,
     InputMaskModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CoreModule,
+    PaginatorModule
   ],
   declarations: [
     CompanyComponent,

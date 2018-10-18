@@ -22,7 +22,11 @@ namespace JobList.DataAccess.Repositories
 
         protected readonly IMapper _mapper;
 
-        public int Count { get { return _dbSet.Count(); } }
+        public int TotalRecords
+        {
+            private set;
+            get;
+        }
 
         public Repository(JobListDbContext context, IMapper mapper)
         {
@@ -33,7 +37,9 @@ namespace JobList.DataAccess.Repositories
 
         public async Task<List<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> filter = null,
                                                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-                                                       PaginationUrlQuery urlQuery = null)
+                                                       Expression<Func<TEntity, string>> sorting = null,
+                                                       bool? sortOrder = null,
+                                                       PaginationUrlQuery paginationUrlQuery = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -47,13 +53,48 @@ namespace JobList.DataAccess.Repositories
                 query = include(query);
             }
 
-            if(urlQuery != null)
+            TotalRecords = await query.CountAsync();
+
+            if (sorting != null)
             {
-                query = query.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageSize);
+                if (sortOrder.Value)
+                    query = query.OrderBy(sorting);
+                else
+                    query = query.OrderByDescending(sorting);
+            }
+
+            if(paginationUrlQuery != null)
+            {
+                query = query.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
+                    .Take(paginationUrlQuery.PageSize);
             }
 
             return await query.ToListAsync();
+        }
+
+
+        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                          Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).FirstOrDefaultAsync();
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<TEntity> CreateEntityAsync(TEntity entity)
@@ -105,6 +146,11 @@ namespace JobList.DataAccess.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().AnyAsync(predicate);
+        }
+
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             var entityToUpdate = await _dbSet.FindAsync(entity.Id);
@@ -115,6 +161,16 @@ namespace JobList.DataAccess.Repositories
             }
 
             return _mapper.Map(entity, entityToUpdate);
+        }
+
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            if (predicate == null)
+            {
+                return _dbSet.AsNoTracking().CountAsync();
+            }
+
+            return _dbSet.AsNoTracking().CountAsync(predicate);
         }
     }
 }
