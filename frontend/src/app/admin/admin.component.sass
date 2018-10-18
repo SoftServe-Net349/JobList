@@ -1,80 +1,63 @@
-h1 
-    padding: 20px 0
-    font-size: 1.2em
-    font-weight: 600
-
-hr
-    height: 2px
-    margin: 15px 0 15px
-    border: none
-    background-color: rgba(0,0,0,0.12)
-    
-    
-
 .container
-    margin: 0
-    padding: 0
     display: grid
-    width: 100%
-    grid-template-columns: 16% 82%
-    grid-template-rows: auto
-    grid-column-gap: 10px
-    grid-template-areas: "left-side-menu right-side-menu"
+    grid-template-columns: 400px 1980px
+    grid-template-areas: "left-side-menu content"
 
 
-    .right-side-menu
-        margin-left: 8%
-        margin-right: 5%
-        margin-top: 82px
-        grid-area: right-side-menu
-
-    #left-side-menu
+    .left-side-menu
+        margin: 0
+        width: 400px
+        height: 100%
+        font-family: "Open Sans", "Helvetica Neue", sans-serif
+        border: 1px solid #c8c8c8
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16)
+        position: fixed
         grid-area: left-side-menu
-        padding: 15px 0
-        text-align: left
-        display: flex
-        justify-content: space-between
-        position: relative
 
-    /deep/ .ui-sidebar
-        i 
-            position: absolute
-            left: 0
-            top: 4px
 
-        a
+        a 
             background-color: #fff
-            font-size: 16px
-            margin: 0 -14px 
             color: #7C898B
-            border: none 
+            display: block
+            text-decoration: none
+            padding: 20px
 
-/deep/ body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a,
-/deep/ body .ui-panelmenu .ui-panelmenu-header.ui-state-active > a:hover
-    border: none
+            i
+                margin-right: 5px 
+
+        a:nth-child(1)
+            margin-top: 80px
+
+        a:hover 
+            background-color: #eaeaea
+            
+        a.active 
+            background-color: #208087
+            color: white
+
+    .content
+        width: 100%
+        margin: 70px 10px
+        grid-area: content
+
+
+/deep/ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active,
+/deep/ body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item.ui-state-highlight
     background-color: #208087
-    color: #ffffff
-
-/deep/ body .ui-panelmenu .ui-panelmenu-header:not(.ui-state-active) > a:hover
-    outline: 0 none
-    border: none
-    background-color: #eaeaea
 
 
-
-// Main Content
     
 /deep/ .ui-autocomplete .ui-inputtext
     font-size: 14px
-    margin: 7px
-    width: 840px
+    width: 935px
     height: 27px
-
+    margin-left: 96px
 
 /deep/ .ui-autocomplete .ui-autocomplete-panel
-    min-width: 98.5%
-    left: 7px !important
-    top: 34px !important
+    min-width: 90.5%
+    left: 96.5px !important
+    top: 31px !important
+    text-transform: none
 
     /deep/.ui-autocomplete-items .ui-autocomplete-list-item.ui-state-highlight
         background-color: #208087
@@ -88,11 +71,18 @@ hr
 /deep/ body .ui-dropdown:not(.ui-state-disabled):hover
     border-color: #208087
 
+/deep/ p-dropdown .ui-dropdown
+    margin-top: -22px
+    margin-left: -15px
+    height: 27px
+    width: 200px
+    z-index: 99999
 
-/deep/ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active,
-/deep/ body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item.ui-state-highlight
-    background-color: #208087
-    
+/deep/ p-paginator .ui-dropdown
+    margin-top: 0px
+    margin-left: 0px
+    width: auto
+
 
 /deep/ .ui-md-4
-    width: 22%
+    width: 10%

@@ -13,6 +13,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
+using JobList.Common.Extensions;
 
 namespace JobList.BusinessLogic.Services
 {
@@ -95,40 +96,24 @@ namespace JobList.BusinessLogic.Services
             return dto;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery paginationUrlQuery = null)
-        {
-            var entities = await _uow.UsersRepository.GetRangeAsync(
-                include: u => u.Include(c => c.City),
-                paginationUrlQuery: paginationUrlQuery);
-
-            if (entities == null) return null;
-
-            var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
-
-            return dtos;
-        }
 
         public async Task<IEnumerable<UserDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            List<User> entities = null;
+
+            Expression<Func<User, bool>> filter = e => true;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                entities = await _uow.UsersRepository.GetRangeAsync(
-                    filter: e => e.Email.ToLower().Contains(searchString.ToLower()),
-                    include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
-                    sorting: GetSortField(sortingUrlQuery.SortField),
-                    sortOrder: sortingUrlQuery.SortOrder,
-                    paginationUrlQuery: paginationUrlQuery);
+                filter = filter.And(e => e.Email.ToLower().Contains(searchString.ToLower()));
             }
-            else
-            {
-                entities = await _uow.UsersRepository.GetRangeAsync(
-                    include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
-                    sorting: GetSortField(sortingUrlQuery.SortField),
-                    sortOrder: sortingUrlQuery.SortOrder,
-                    paginationUrlQuery: paginationUrlQuery);
-            }
+
+            var entities = await _uow.UsersRepository.GetRangeAsync(
+                filter: filter,
+                include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
+                sorting: GetSortField(sortingUrlQuery.SortField),
+                sortOrder: sortingUrlQuery.SortOrder,
+                paginationUrlQuery: paginationUrlQuery);
+            
 
             var dtos = _mapper.Map<List<User>, List<UserDTO>>(entities);
 

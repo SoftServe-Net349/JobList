@@ -40,7 +40,7 @@
       <hr class="fd-f1">
       <p>Recruiters</p>
       <hr class="fd-f1">
-      <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company.id"></app-recruiter-form>
+      <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company?.id"></app-recruiter-form>
     </div>
 
     <ul *ngIf="recruiters.length > 0">
