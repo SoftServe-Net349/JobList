@@ -2,13 +2,13 @@
     <div class="wrapper-flex">
         <img class="profile-avatar" src="https://avatars0.githubusercontent.com/u/43314300?s=400&u=1ab66ea04a1b8060af09ee83b3ba69a44a9f8710&v=4" alt="Profile Avatar">
         <div class="additional-info">
-        <p><span>Full Name: </span>{{resume.user?.firstName}} {{resume.user?.lastName}}</p>
-        <p><span>E-Mail: </span>{{resume.user?.email}}</p>
-        <p><span>Sex: </span>{{resume.user?.sex ==='m'?'Male':resume.user?.sex==='f'?'Female':''}}</p>
-        <p><span>City: </span>{{resume.user?.city?.name}}</p>
-        <p><span>Birth Date: </span>{{resume.user?.birthData | date }}</p>
-        <p><span>Phone: </span>{{resume.user?.phone}}</p>
-        <p><span>Family state: </span>{{resume.familyState}}</p>
+        <p><span>Full Name: </span>{{resume?.employee?.firstName}} {{resume?.employee?.lastName}}</p>
+        <p><span>E-Mail: </span>{{resume?.employee?.email}}</p>
+        <p><span>Sex: </span>{{resume?.employee?.sex ==='m'?'Male':resume?.employee?.sex==='f'?'Female':''}}</p>
+        <p><span>City: </span>{{resume?.employee?.city?.name}}</p>
+        <p><span>Birth Date: </span>{{resume?.employee?.birthData | date }}</p>
+        <p><span>Phone: </span>{{resume?.employee?.phone}}</p>
+        <p><span>Family state: </span>{{resume?.familyState}}</p>
         </div>
         <p-dialog header="Message" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
             [maximizable]="false" [baseZIndex]="10000" showHeader="false">
@@ -31,14 +31,14 @@
             </p>
         </p-fieldset>
         <p-fieldset legend="Social Networks">
-            <p><span>GitHub: </span>{{resume.github}}</p>
-            <p><span>Facebook: </span>{{resume.facebook}}</p>
-            <p><span>Instagram: </span>{{resume.instagram}}</p>
-            <p><span>Skype: </span>{{resume.skype}}</p>
-            <p><span>Linkedin: </span>{{resume.linkedin}}</p>
+            <p><span>GitHub: </span>{{resume?.github}}</p>
+            <p><span>Facebook: </span>{{resume?.facebook}}</p>
+            <p><span>Instagram: </span>{{resume?.instagram}}</p>
+            <p><span>Skype: </span>{{resume?.skype}}</p>
+            <p><span>Linkedin: </span>{{resume?.linkedin}}</p>
         </p-fieldset>
         <p-fieldset legend="Educations">
-            <div *ngFor="let ed of resume.educationPeriods">
+            <div *ngFor="let ed of resume?.educationPeriods">
             <p><span>School: </span>{{ed.school?.name}}</p>
             <p *ngIf="ed.faculty"><span>Facylty: </span>{{ed.faculty?.name}}</p>
             <p><span>Start Date: </span>{{ed.startDate | date}}</p>
@@ -47,7 +47,7 @@
             </div>
         </p-fieldset>
         <p-fieldset legend="Experience">
-            <div *ngFor="let exp of resume.experiences">
+            <div *ngFor="let exp of resume?.experiences">
             <p><span>Company Name: </span>{{exp.companyName}}</p>
             <p><span>Position: </span>{{exp.position}}</p>
             <p><span>Start Date: </span>{{exp.startDate | date}}</p>
@@ -60,13 +60,13 @@
             <p>{{getLanguages()}}</p>
         </p-fieldset>
         <p-fieldset legend="Courses">
-            <p>{{resume.courses}}</p>
+            <p>{{resume?.courses}}</p>
         </p-fieldset>
         <p-fieldset legend="Soft Skills">
-            <p>{{resume.softSkills}}</p>
+            <p>{{resume?.softSkills}}</p>
         </p-fieldset>
         <p-fieldset legend="Key Skills">
-            <p>{{resume.keySkills}}</p>
+            <p>{{resume?.keySkills}}</p>
         </p-fieldset>    
     </div>     
 </div>

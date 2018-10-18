@@ -76,7 +76,7 @@ namespace JobList.Controllers
 
         
         [HttpGet("admin")]
-        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
             var dtos = await _vacanciesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);

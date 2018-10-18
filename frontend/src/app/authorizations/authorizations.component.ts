@@ -3,10 +3,12 @@ import { FormGroup,  FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 import { LoginRequest } from '../shared/models/login-request.model';
 import { AuthHelper } from '../shared/helpers/auth-helper';
-import { UserRequest } from '../shared/models/user-request.model';
-import { User } from '../shared/models/user.model';
+import { EmployeeRequest } from '../shared/models/employee-request.model';
+import { Employee } from '../shared/models/employee.model';
 import { CompanyRequest } from '../shared/models/company-request.model';
 import { Company } from '../shared/models/company.model';
+import { City } from '../shared/models/city.model';
+import { CityService } from '../core/services/city.service';
 
 @Component({
   selector: 'app-authorizations',
@@ -18,15 +20,18 @@ export class AuthorizationsComponent implements OnInit {
 
   signInDialog = false;
 
-  signUpUser = false;
+  signUpEmployee = false;
   signUpCompany = false;
   information = false;
 
   role: string;
   errorMessage: string;
+  cities: City[];
+  selectedCity: City;
+  birthDate: Date;
 
   authoruzationsForm: FormGroup;
-  signUpUserForm: FormGroup;
+  signUpEmployeeForm: FormGroup;
   signUpCompanyForm: FormGroup;
 
   @Output()
@@ -34,16 +39,24 @@ export class AuthorizationsComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private authHelper: AuthHelper) {
+              private authHelper: AuthHelper,
+              private cityService: CityService) {
 
   }
 
   ngOnInit() {
 
+    this.loadCities();
+
     this.authoruzationsForm = this.getAuthoruzationForm();
-    this.signUpUserForm = this.getSignUpUserForm();
+    this.signUpEmployeeForm = this.getSignUpEmployeeForm();
     this.signUpCompanyForm = this.getSignUpCompanyForm();
 
+  }
+
+  loadCities() {
+    this.cityService.getAll()
+    .subscribe((data: City[]) => this.cities = data);
   }
 
   getAuthoruzationForm(): FormGroup {
@@ -55,12 +68,14 @@ export class AuthorizationsComponent implements OnInit {
 
   }
 
-  getSignUpUserForm(): FormGroup {
+  getSignUpEmployeeForm(): FormGroup {
 
     return this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(150)]],
+      birthDate: ['', [Validators.required]],
+      city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
     });
@@ -74,6 +89,7 @@ export class AuthorizationsComponent implements OnInit {
       bossName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
       fullDescription: ['', [Validators.required]],
+      shortDescription: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(150)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
@@ -90,11 +106,11 @@ export class AuthorizationsComponent implements OnInit {
 
   }
 
-  showSignUpUser() {
+  showSignUpEmployee() {
 
-    this.signUpUserForm.reset();
+    this.signUpEmployeeForm.reset();
     this.signInDialog = false;
-    this.signUpUser = true;
+    this.signUpEmployee = true;
 
   }
 
@@ -109,7 +125,7 @@ export class AuthorizationsComponent implements OnInit {
   closeForm() {
 
     this.signUpCompany = false;
-    this.signUpUser = false;
+    this.signUpEmployee = false;
     this.information = false;
 
   }
@@ -127,9 +143,9 @@ export class AuthorizationsComponent implements OnInit {
       password: this.authoruzationsForm.get('password').value
     };
 
-    if (this.role === 'User') {
+    if (this.role === 'Employee') {
 
-      this.authService.userLogin(request)
+      this.authService.employeeLogin(request)
       .subscribe(token => {
         this.authHelper.setToken(token);
         this.chengeAuthenticatedStatus.emit();
@@ -167,29 +183,29 @@ export class AuthorizationsComponent implements OnInit {
 
   }
 
-  submitUserSignUp() {
+  submitEmployeeSignUp() {
 
-    const request: UserRequest = this.getUserRequest();
+    const request: EmployeeRequest = this.getEmployeeRequest();
 
-    this.authService.userSignUp(request).subscribe(
-      (data: User) => {
+    this.authService.employeeSignUp(request).subscribe(
+      (data: Employee) => {
         this.errorMessage = '';
-        this.signUpUser = false;
-        this.showSignIn('User', data.email); },
+        this.signUpEmployee = false;
+        this.showSignIn('Employee', data.email); },
       error => { this.errorMessage = error.error; }
       );
 
   }
 
-  getUserRequest(): UserRequest {
+  getEmployeeRequest(): EmployeeRequest {
 
     return {
-      firstName: this.signUpUserForm.get('firstName').value,
-      lastName: this.signUpUserForm.get('lastName').value,
-      email: this.signUpUserForm.get('email').value,
-      password: this.signUpUserForm.get('password').value,
-      birthData: null,
-      cityId: null,
+      firstName: this.signUpEmployeeForm.get('firstName').value,
+      lastName: this.signUpEmployeeForm.get('lastName').value,
+      email: this.signUpEmployeeForm.get('email').value,
+      password: this.signUpEmployeeForm.get('password').value,
+      birthData: this.birthDate,
+      cityId: this.selectedCity.id,
       phone: null,
       photoData: null,
       photoMimeType: null,
@@ -225,7 +241,7 @@ export class AuthorizationsComponent implements OnInit {
       logoMimetype: null,
       phone: null,
       roleId: 3,
-      shortDescription: null,
+      shortDescription: this.signUpCompanyForm.get('shortDescription').value,
       site: null };
 
   }

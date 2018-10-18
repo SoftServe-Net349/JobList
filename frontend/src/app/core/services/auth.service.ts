@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { TokenService } from './token.service';
 import { LoginRequest } from '../../shared/models/login-request.model';
 import { Token } from '../../shared/models/token.model';
-import { User } from '../../shared/models/user.model';
-import { UserService } from './user.service';
-import { UserRequest } from '../../shared/models/user-request.model';
+import { Employee } from '../../shared/models/employee.model';
+import { EmployeeService } from './employee.service';
+import { EmployeeRequest } from '../../shared/models/employee-request.model';
 import { RecruiterService } from './recruiter.service';
 import { CompanyService } from './company.service';
 import { CompanyRequest } from '../../shared/models/company-request.model';
@@ -16,13 +16,13 @@ import { RecruiterRequest } from '../../shared/models/recruiter-request.model';
 @Injectable()
 export class AuthService {
   constructor(private tokenService: TokenService,
-              private userServise: UserService,
+              private employeeServise: EmployeeService,
               private recruiterService: RecruiterService,
               private companyService: CompanyService) {
   }
 
-  userLogin(request: LoginRequest): Observable<Token> {
-    return this.tokenService.getToken('user', request);
+  employeeLogin(request: LoginRequest): Observable<Token> {
+    return this.tokenService.getToken('employee', request);
   }
 
   companyLogin(request: LoginRequest): Observable<Token> {
@@ -33,8 +33,8 @@ export class AuthService {
     return this.tokenService.getToken('recruiter', request);
   }
 
-  userSignUp(request: UserRequest): Observable<User> {
-    return this.userServise.register(request);
+  employeeSignUp(request: EmployeeRequest): Observable<Employee> {
+    return this.employeeServise.register(request);
   }
 
   companySignUp(request: CompanyRequest): Observable<Company> {

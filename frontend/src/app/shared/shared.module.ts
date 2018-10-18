@@ -15,6 +15,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {MenuModule} from 'primeng/menu';
+import {CalendarModule} from 'primeng/calendar';
 
 // Our created components
 import { AuthorizationsComponent } from '../authorizations/authorizations.component';
@@ -38,7 +39,8 @@ import { SearchLineComponent } from './search-line/search-line.component';
     PanelMenuModule,
     RadioButtonModule,
     ReactiveFormsModule,
-    MenuModule
+    MenuModule,
+    CalendarModule
   ],
   declarations: [
     SomePipe,

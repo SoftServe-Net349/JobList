@@ -24,8 +24,8 @@ export class HeaderComponent implements OnInit {
   visibleForRecruiter = false;
   itemsForRecruiter: MenuItem[];
 
-  visibleForUser = false;
-  itemsForUser: MenuItem[];
+  visibleForEmployee = false;
+  itemsForEmployee: MenuItem[];
 
   signInItems: MenuItem[];
 
@@ -45,14 +45,14 @@ export class HeaderComponent implements OnInit {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
     this.signInItems = [
-      {label: 'Sign In for User', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('User'); }},
+      {label: 'Sign In for Employee', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('Employee'); }},
       {label: 'Sign In for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
       {label: 'Sign In for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
     ];
 
     this.itemsForCompany = this.getItemsForCompany();
     this.itemsForRecruiter = this.getItemsForRecruiter();
-    this.itemsForUser = this.getItemsForUser();
+    this.itemsForEmployee = this.getItemsForEmployee();
 
     this.chengeAuthenticatedStatus();
 
@@ -106,13 +106,13 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  getItemsForUser(): MenuItem[] {
+  getItemsForEmployee(): MenuItem[] {
 
     return [
       {
         label: 'Home',
         icon: 'fa fa-home',
-        command: (event) => { this.router.navigate(['/users', this.uId]); }
+        command: (event) => { this.router.navigate(['/employees', this.uId]); }
       },
       {
         label: 'Settings',

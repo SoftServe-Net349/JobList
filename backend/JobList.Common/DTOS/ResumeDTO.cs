@@ -21,7 +21,7 @@ namespace JobList.Common.DTOS
         public DateTime CreateDate { get; set; }
         public DateTime? ModDate { get; set; }
 
-        public UserDTO User { get; set; }
+        public EmployeeDTO User { get; set; }
         public WorkAreaDTO WorkArea { get; set; }
         public IList<EducationPeriodDTO> EducationPeriods { get; set; }
         public IList<ExperienceDTO> Experiences { get; set; }

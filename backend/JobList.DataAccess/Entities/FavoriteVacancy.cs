@@ -5,9 +5,9 @@ namespace JobList.DataAccess.Entities
     {
         public override int Id { get; set; }
         public int VacancyId { get; set; }
-        public int UserId { get; set; }
+        public int EmployeeId { get; set; }
 
-        public User User { get; set; }
+        public Employee Employee { get; set; }
         public Vacancy Vacancy { get; set; }
     }
 }

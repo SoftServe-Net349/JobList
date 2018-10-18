@@ -1,3 +1,4 @@
+import { Role } from './role.model';
 
 export interface Company {
   id: number;
@@ -11,5 +12,5 @@ export interface Company {
   logoMimetype: string;
   site: string;
   email: string;
-  roleId: number;
+  role: Role;
 }

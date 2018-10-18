@@ -28,8 +28,6 @@ export class CompanyInfoFormComponent implements OnInit {
               private messageService: MessageService,
               private companyService: CompanyService) {
 
-    this.company = this.defaultCompany();
-
   }
 
   ngOnInit() {
@@ -54,24 +52,7 @@ export class CompanyInfoFormComponent implements OnInit {
 
   }
 
-  defaultCompany(): Company {
-
-    return {
-      id: 0, name: '',
-      bossName: '',
-      fullDescription: '',
-      shortDescription: '',
-      address: '',
-      phone: '',
-      logoData: [],
-      logoMimetype: '',
-      site: '',
-      email: '',
-      roleId: 0 };
-
-  }
-
-  showInformationForm(action: String, company: Company = this.defaultCompany()) {
+  showInformationForm(action: String, company: Company = null) {
 
     this.company = company;
     this.companyInfoForm.reset();
@@ -129,7 +110,7 @@ export class CompanyInfoFormComponent implements OnInit {
       address: this.companyInfoForm.get('address').value,
       fullDescription: this.companyInfoForm.get('fullDescription').value,
       password: '',
-      roleId: this.company.roleId,
+      roleId: this.company.role.id,
       logoData: this.company.logoData,
       logoMimetype: this.company.logoMimetype
     };

@@ -21,7 +21,7 @@ namespace JobList.DataAccess.Entities
         public DateTime? ModDate { get; set; }
         public int WorkAreaId { get; set; }
 
-        public User User { get; set; }
+        public Employee Employee { get; set; }
         public WorkArea WorkArea { get; set; }
         public IList<EducationPeriod> EducationPeriods { get; set; }
         public IList<Experience> Experiences { get; set; }

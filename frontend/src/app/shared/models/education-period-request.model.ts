@@ -4,4 +4,5 @@ export interface EducationPeriodRequest {
   finishDate: Date;
   resumeId: number;
   schoolId: number;
+  facultyId: number;
 }

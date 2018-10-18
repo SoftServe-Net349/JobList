@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 
 // Our created modules
 import { HomeModule } from './home/home.module';
-import { UserModule } from './user/user.module';
+import { EmployeeModule } from './employee/employee.module';
 import { AdminModule } from './admin/admin.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { CompanyModule } from './company/company.module';
@@ -39,7 +39,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     FormsModule,
     HomeModule,
-    UserModule,
+    EmployeeModule,
     AdminModule,
     RecruiterModule,
     CompanyModule,

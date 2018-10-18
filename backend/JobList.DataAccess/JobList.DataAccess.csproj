@@ -24,8 +24,4 @@
     <ProjectReference Include="..\JobList.Common\JobList.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

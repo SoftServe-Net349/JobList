@@ -8,7 +8,7 @@ namespace JobList.Common.Validators
         public FavoriteVacancyValidator()
         {
             RuleFor(x => x.VacancyId).NotEmpty().WithMessage("Please specify a valid Vacancy Id.");
-            RuleFor(x => x.UserId).NotEmpty().WithMessage("Please specify a valid User Id.");
+            RuleFor(x => x.EmployeeId).NotEmpty().WithMessage("Please specify a valid Employee Id.");
         }
     }
 }

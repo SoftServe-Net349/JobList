@@ -5,12 +5,12 @@
     <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Company logo">
     <div class="wrapper-flex">
       <div class="additional-info">
-        <p>{{company.shortDescription}}</p>
-        <p><span>Company Name:</span> {{company.name}}</p>
-        <p><span>Boss Name:</span> {{company.bossName}}</p>
-        <p><span>E-Mail:</span> {{company.email}}</p>
-        <p><span>Phone:</span> {{company.phone}}</p>
-        <p><span>Address:</span> {{company.address}}</p>
+        <p>{{company?.shortDescription}}</p>
+        <p><span>Company Name:</span> {{company?.name}}</p>
+        <p><span>Boss Name:</span> {{company?.bossName}}</p>
+        <p><span>E-Mail:</span> {{company?.email}}</p>
+        <p><span>Phone:</span> {{company?.phone}}</p>
+        <p><span>Address:</span> {{company?.address}}</p>
       </div>
       <div>
         <app-company-info-form #companyInfoForm (loadCompanyById)=" loadCompanyById()" [company]="company"></app-company-info-form>
@@ -19,7 +19,7 @@
     <div class="description">
       <p-accordion>
         <p-accordionTab header="Description" [selected]="false">
-          {{company.fullDescription}}
+          {{company?.fullDescription}}
         </p-accordionTab>
       </p-accordion>
     </div>
@@ -40,19 +40,19 @@
       <hr class="fd-f1">
       <p>Recruiters</p>
       <hr class="fd-f1">
-      <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company.id"></app-recruiter-form>
+      <app-recruiter-form #recruiterForm (loadRecruiters)="loadRecruiters()" [companyId]="company?.id"></app-recruiter-form>
     </div>
 
-    <ul *ngIf="recruiters.length > 0">
+    <ul *ngIf="recruiters?.length > 0">
       <li *ngFor="let recruiter of recruiters">
         <div class="recruiter-wrapper-flex">
           <div>
             <img class="avatar" [src]="sanitizeImg('data:image/jbeg;base64,'+recruiter.photoData)" alt="Recruiter avatar">
           </div>
           <div class="recruiter-info">
-            <p>{{recruiter.firstName}} {{recruiter.lastName}}</p>
-            <p>{{recruiter.email}}</p>
-            <p>{{recruiter.phone}}</p>
+            <p>{{recruiter?.firstName}} {{recruiter?.lastName}}</p>
+            <p>{{recruiter?.email}}</p>
+            <p>{{recruiter?.phone}}</p>
           </div>
           <div class="recruiter-modification">
             <button pButton type="button" (click)="recruiterForm.showRecruiterForm('Update', recruiter)" label="Update" class="ui-button-rounded ui-button-warning"></button>

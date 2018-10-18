@@ -26,8 +26,6 @@ export class RecruiterComponent implements OnInit {
     private vacancyService: VacancyService,
     private activatedRoute: ActivatedRoute) {
 
-    this.recruiter = this.defaultRecruiter();
-    this.vacancies = [];
     }
 
 
@@ -37,20 +35,6 @@ export class RecruiterComponent implements OnInit {
       this.loadRecruiterById(id);
       this.loadVacancies(id);
     });
-  }
-
-  defaultRecruiter(): Recruiter {
-    return {
-      id: 0,
-      firstName: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      company: null,
-      roleId: 0,
-      photoData: '',
-      photoMimetype: ''
-    };
   }
 
   loadRecruiterById(id: number) {
@@ -68,7 +52,7 @@ export class RecruiterComponent implements OnInit {
         message: 'Do you want to delete this record?',
         header: 'Delete Confirmation',
         icon: 'pi pi-info-circle',
-        accept: () => { this.vacancyService.delete(id).subscribe(data => this.loadVacancies()); 
+        accept: () => { this.vacancyService.delete(id).subscribe(data => this.loadVacancies());
       }
     });
   }

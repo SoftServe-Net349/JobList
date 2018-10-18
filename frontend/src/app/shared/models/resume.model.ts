@@ -1,5 +1,5 @@
 import { WorkArea } from './work-area.model';
-import { User } from './user.model';
+import { Employee } from './employee.model';
 import { Experience } from './experience.model';
 import { EducationPeriod } from './education-period.model';
 import { ResumeLanguage} from './resume-language.model';
@@ -20,7 +20,7 @@ export interface Resume {
   createDate: Date;
   modDate: Date;
   workArea: WorkArea;
-  user: User;
+  employee: Employee;
 
   educationPeriods: EducationPeriod[];
   experiences: Experience[];

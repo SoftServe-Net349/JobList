@@ -33,28 +33,10 @@ export class CompanyComponent implements OnInit {
               private confirmationService: ConfirmationService,
               private _sanitizer: DomSanitizer) {
 
-    this.company = this.defaultCompany();
     this.recruiters = [];
 
   }
 
-  defaultCompany(): Company {
-
-    return {
-      id: 0,
-      name: '',
-      bossName: '',
-      fullDescription: '',
-      shortDescription: '',
-      address: '',
-      phone: '',
-      logoData: [],
-      logoMimetype: '',
-      site: '',
-      email: '',
-      roleId: 0 };
-
-  }
 
   ngOnInit() {
 
@@ -80,7 +62,11 @@ export class CompanyComponent implements OnInit {
     this.recruiterService.getByCompanyIdWithPagination(id, pageSize, pageNumber)
     .subscribe((response) => {
       this.recruiters = response.body;
-      this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+      const XPagination = JSON.parse(response.headers.get('X-Pagination'));
+
+      if (XPagination !== null) {
+        this.totalRecords = XPagination.TotalRecords;
+      }
     });
 
   }
@@ -106,11 +92,17 @@ export class CompanyComponent implements OnInit {
                                                 this.searchString,
                                                 this.pageSize,
                                                 this.pageNumber)
-        .subscribe((response) => {
-          this.recruiters = response.body;
-          this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-          this.recruitersPaginator.changePage(0);
-        });
+      .subscribe((response) => {
+        this.recruiters = response.body;
+
+        const XPagination = JSON.parse(response.headers.get('X-Pagination'));
+
+        if (XPagination !== null) {
+          this.totalRecords = XPagination.TotalRecords;
+        }
+
+        this.recruitersPaginator.changePage(0);
+      });
     }
   }
 
@@ -124,11 +116,16 @@ export class CompanyComponent implements OnInit {
       this.recruiterService.getByCompanyIdSearchStringWithPagination(this.company.id, this.searchString, pageSize, this.pageNumber)
         .subscribe((response) => {
           this.recruiters = response.body;
-          this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-        });
+
+          const XPagination = JSON.parse(response.headers.get('X-Pagination'));
+
+          if (XPagination !== null) {
+            this.totalRecords = XPagination.TotalRecords;
+          }
+      });
     }
   }
-  sanitizeImg(url): SafeUrl{ 
+  sanitizeImg(url): SafeUrl {
     return this._sanitizer.bypassSecurityTrustUrl(url);
   }
 }
