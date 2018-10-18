@@ -48,7 +48,7 @@ export class RecruiterComponent implements OnInit {
       email: '',
       company: null,
       roleId: 0,
-      photoData: [],
+      photoData: '',
       photoMimetype: ''
     };
   }
