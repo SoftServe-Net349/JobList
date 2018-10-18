@@ -10,7 +10,7 @@ export interface User {
   photoData: string;
   photoMimeType: string;
   sex: string;
-  birthData: Date;
+  birthData?: Date;
   email: string;
   city: City;
   roleId: number;

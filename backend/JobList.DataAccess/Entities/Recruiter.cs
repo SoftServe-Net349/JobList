@@ -14,6 +14,7 @@ namespace JobList.DataAccess.Entities
         public string Password { get; set; }
         public int CompanyId { get; set; }
         public int RoleId { get; set; }
+        public string RefreshToken { get; set; }
 
         public Company Company { get; set; }
         public Role Role { get; set; }

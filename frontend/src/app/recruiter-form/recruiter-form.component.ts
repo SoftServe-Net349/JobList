@@ -21,10 +21,15 @@ export class RecruiterFormComponent implements OnInit {
 
   display: Boolean = false;
   action: String;
+  errorMessage: string;
 
   recruiter: Recruiter;
+  
+  type:string;
   uploadedFiles: any[] = [];
-
+  dataString: string|ArrayBuffer;
+  base64: string;
+  
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
@@ -51,20 +56,28 @@ export class RecruiterFormComponent implements OnInit {
       lastName: '',
       phone: '',
       email: '',
-      password: '',
       company: null,
       roleId: 0,
-      photoData: [],
+      photoData: '',
       photoMimetype: ''
     };
   }
 
-  onUpload(event) {
-    for (const file of event.files) {
-      this.uploadedFiles.push(file);
-    }
+  
 
-    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+  onUpload(event) {
+    for(let file of event.files) {
+    this.uploadedFiles.push(file);
+     var reader = new FileReader();
+     reader.onload = (event:any) => {
+     this.dataString=reader.result;
+     this.base64=this.dataString.toString().split(',')[1];
+
+    }
+    reader.readAsDataURL(file);  
+    this.type=file.type.toString().split('/')[1];
+    
+   }
   }
 
   showRecruiterForm(action: String, recruiter = this.defaultRecruiter()) {
@@ -98,11 +111,11 @@ export class RecruiterFormComponent implements OnInit {
       lastName: this.recruiterForm.get('lastName').value,
       email: this.recruiterForm.get('email').value,
       phone: this.recruiterForm.get('phone').value,
-      password: this.recruiter.password,
+      password: '',
       companyId: this.companyId,
       roleId: this.recruiter.roleId,
-      photoData: this.recruiter.photoData,
-      photoMimetype: this.recruiter.photoMimetype
+      photoData: this.base64,
+      photoMimetype: this.type
     };
     this.recruiterService.update(this.recruiter.id, request)
     .subscribe(data => this.loadRecruiters.emit());
@@ -114,14 +127,17 @@ export class RecruiterFormComponent implements OnInit {
       lastName: this.recruiterForm.get('lastName').value,
       email: this.recruiterForm.get('email').value,
       phone: this.recruiterForm.get('phone').value,
-      password: 'sddsdsdsdsd',
+      password: '12345678',
       companyId: this.companyId,
-      roleId: 3,
-      photoData: this.recruiter.photoData,
-      photoMimetype: this.recruiter.photoMimetype
+      roleId: 4,
+      photoData: this.base64,
+      photoMimetype: this.type
 
     };
-    this.recruiterService.create(request)
-    .subscribe(data => this.loadRecruiters.emit());
+    this.recruiterService.register(request)
+    .subscribe((data: Recruiter) => {
+      this.errorMessage = '';
+      this.loadRecruiters.emit(); },
+    error => { this.errorMessage = error.error; });
   }
 }

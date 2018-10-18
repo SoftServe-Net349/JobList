@@ -61,13 +61,10 @@
 		</div> 
 		<hr>
 
-		<h4 class="info-title">Short Description<span class="required-input-symbol">*</span></h4>
+		<h4 class="info-title">Short Description</h4>
 		<div class="ui-float-label">
 			<input id="shortDescription" type="text"  pInputText formControlName="shortDescription"> 
 			<div *ngIf="companyInfoForm.get('shortDescription').invalid && (companyInfoForm.get('shortDescription').dirty || companyInfoForm.get('shortDescription').touched)" class="alert alert-danger">
-				<div *ngIf="companyInfoForm.controls['shortDescription'].errors.required">
-					Short Description is required
-				</div>
 				<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
 					ShortDiscription contains (2-25) chars
 				</div>
@@ -117,3 +114,6 @@
     <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
 </p-footer>
 </p-dialog>
+
+<button type="button" (click)="showInformationForm('Update', company)" pButton icon="pi pi-fw pi-plus" label="Update info"></button>
+

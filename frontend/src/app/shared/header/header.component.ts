@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Company } from '../models/company.model';
 import { MenuItem } from 'primeng/api';
 import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
+import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
+import { AuthHelper } from '../helpers/auth-helper';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -10,34 +13,58 @@ import { CompanyInfoFormComponent } from '../../company-info-form/company-info-f
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
+
   index: string;
-  visibleForCompany;
+  role = '';
+  uId = 0;
+
+  visibleForCompany = false;
   itemsForCompany: MenuItem[];
 
-  visibleForRecruiter;
+  visibleForRecruiter = false;
   itemsForRecruiter: MenuItem[];
 
-  visibleForUser;
+  visibleForUser = false;
   itemsForUser: MenuItem[];
 
+  signInItems: MenuItem[];
+
+  @ViewChild(AuthorizationsComponent)
+  authorizations: AuthorizationsComponent;
+
+
   constructor(private activeRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private authHelper: AuthHelper,
+              private jwtHelper: JwtHelperService) {
 
-   }
+  }
 
-   @Input()
-   company: Company;
-   @Input()
-   companyInfoForm: CompanyInfoFormComponent;
+  ngOnInit() {
 
-   ngOnInit() {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
-    if (this.isCompanyHeader()) {
-    this.itemsForCompany = [
+    this.signInItems = [
+      {label: 'Sign In for User', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('User'); }},
+      {label: 'Sign In for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
+      {label: 'Sign In for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
+    ];
+
+    this.itemsForCompany = this.getItemsForCompany();
+    this.itemsForRecruiter = this.getItemsForRecruiter();
+    this.itemsForUser = this.getItemsForUser();
+
+    this.chengeAuthenticatedStatus();
+
+  }
+
+  getItemsForCompany(): MenuItem[] {
+
+     return [
       {
         label: 'Home',
-        icon: 'fa fa-home'
+        icon: 'fa fa-home',
+        command: (event) => { this.router.navigate(['/companies', this.uId]); }
       },
       {
         label: 'Settings',
@@ -48,13 +75,20 @@ export class HeaderComponent implements OnInit {
       },
       {
       label: 'Sign out',
-      icon: 'fa fa-sign-out'
+      icon: 'fa fa-sign-out',
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
-    ]; } else if (this.isRecruiterHeader()) {
-    this.itemsForRecruiter = [
+    ];
+
+  }
+
+  getItemsForRecruiter(): MenuItem[] {
+
+    return [
       {
         label: 'Home',
-        icon: 'fa fa-home'
+        icon: 'fa fa-home',
+        command: (event) => { this.router.navigate(['/recruiters', this.uId]); }
       },
       {
         label: 'Settings',
@@ -65,42 +99,52 @@ export class HeaderComponent implements OnInit {
       },
       {
       label: 'Sign out',
-      icon: 'fa fa-sign-out'
+      icon: 'fa fa-sign-out',
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
-      ]; } else if (this.isUserHeader()) {
-        this.itemsForUser = [
-          {
-            label: 'Home',
-            icon: 'fa fa-home'
-          },
-          {
-            label: 'Settings',
-            icon: 'fa fa-cog',
-            items: [
-              {label: 'Change password', icon: 'fa fa-pencil-square-o'}
-            ]
-          },
-          {
-          label: 'Sign out',
-          icon: 'fa fa-sign-out'
-          }
-        ];
+    ];
+
+  }
+
+  getItemsForUser(): MenuItem[] {
+
+    return [
+      {
+        label: 'Home',
+        icon: 'fa fa-home',
+        command: (event) => { this.router.navigate(['/users', this.uId]); }
+      },
+      {
+        label: 'Settings',
+        icon: 'fa fa-cog',
+        items: [
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+        ]
+      },
+      {
+      label: 'Sign out',
+      icon: 'fa fa-sign-out',
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
-   }
-   isHomeHeader() {
-     return this.router.url === '/';
-   }
-   isCompanyHeader() {
-    return this.router.url === '/companies/' + this.index;
-   }
-   isRecruiterHeader() {
-    return this.router.url === '/recruiters/' + this.index || this.router.url === '/resumessearch'
-     || this.router.url.includes('/resume-details/');
-   }
-   isUserHeader() {
-     return this.router.url === '/users/' + this.index
-     || this.router.url === '/jobsearch'
-     || this.router.url.includes('/vacancy-details/')
-     || this.router.url.includes('/company-details/');
-   }
+    ];
+
+  }
+
+  chengeAuthenticatedStatus() {
+
+    if (this.authHelper.isAuthenticated()) {
+
+      const token = this.authHelper.getToken();
+      const decodeToken = this.jwtHelper.decodeToken(token);
+      this.role = decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+
+    } else {
+
+      this.role = '';
+      this.uId = 0;
+
+    }
+
+  }
 }

@@ -27,22 +27,34 @@ h4
 	input 
 		width: 100%
 
-input.ng-touched.ng-invalid
-  border: 1px solid red
-  border-radius: 3px
+	input.ng-touched.ng-invalid
+		border: 1px solid red
+		border-radius: 3px
 
-input.ng-touched.ng-valid
-  border: 1px solid green
-  border-radius: 3px
+	input.ng-touched.ng-valid
+		border: 1px solid green
+		border-radius: 3px
 
-.alert-danger
-	font-size: small
-	font-weight: 500
-	color: red
-	position: absolute
-	top: 35px
-	width: 100%
-	padding: 3px 2px
+	.alert-danger
+		font-size: small
+		font-weight: 500
+		color: red
+		position: absolute
+		top: 35px
+		width: 100%
+		padding: 3px 2px
 
-.phone
-	margin-top: 50px !important
+	.error-message
+		position: absolute
+		font-size: small
+		font-weight: 500
+		color: red
+		padding: 3px 2px
+
+	.phone
+		margin-top: 50px !important
+	
+	/deep/.ui-button.ui-button-icon-only
+		background-color: green
+		display: none
+		

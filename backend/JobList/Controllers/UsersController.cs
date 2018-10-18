@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
 using JobList.Common.Requests;
+using JobList.Common.Pagination;
+using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobList.Controllers
 {
@@ -13,10 +17,12 @@ namespace JobList.Controllers
     [ApiController]
     public class UsersController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IUsersService _usersService;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _usersService = usersService;
         }
 
@@ -29,14 +35,46 @@ namespace JobList.Controllers
             {
                 return NoContent();
             }
-
+      
             return Ok(dtos);
         }
 
 
+        [HttpGet("filtered")]
+        public virtual async Task<ActionResult<IEnumerable<UserDTO>>> GetFiltered(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        {
+            var dtos = await _usersService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+
+
+            var pageInfo = new PageInfo()
+            {
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _usersService.TotalRecords
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
+            return Ok(dtos);
+        }
+
+        [Authorize(Roles = "user")]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<UserDTO>> GetById(int id)
         {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, "OwnerPolicy");
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var dto = await _usersService.GetEntityByIdAsync(id);
             if (dto == null)
             {
@@ -47,21 +85,28 @@ namespace JobList.Controllers
         }
 
         // POST: /users
-        [HttpPost]
-        public virtual async Task<ActionResult<UserDTO>> Create([FromBody] UserRequest request)
+        [HttpPost("register")]
+        public virtual async Task<ActionResult<UserDTO>> Register([FromBody] UserRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var dtos = await _usersService.CreateEntityAsync(request);
-            if (dtos == null)
+            try
             {
-                return StatusCode(500);
-            }
+                var dtos = await _usersService.CreateEntityAsync(request);
 
-            return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+                if (dtos == null)
+                {
+                    return StatusCode(500);
+                }
+
+                return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: /users/:id
