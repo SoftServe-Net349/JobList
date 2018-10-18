@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -46,11 +47,14 @@ namespace JobList.DataAccess.Repositories
             if (filter != null)
             {
                 query = query.Where(filter);
+                Debug.WriteLine(query);
             }
 
             if (include != null)
             {
                 query = include(query);
+                Debug.WriteLine(query);
+
             }
 
             TotalRecords = await query.CountAsync();
@@ -68,6 +72,8 @@ namespace JobList.DataAccess.Repositories
                 query = query.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
                     .Take(paginationUrlQuery.PageSize);
             }
+
+            Debug.WriteLine(query);
 
             return await query.ToListAsync();
         }
