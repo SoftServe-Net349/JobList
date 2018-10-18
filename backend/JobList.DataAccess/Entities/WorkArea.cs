@@ -6,7 +6,7 @@ namespace JobList.DataAccess.Entities
     {
         public override int Id { get; set; }
         public string Name { get; set; }
-        public byte[] PhotoData { get; set; }
+        public string PhotoData { get; set; }
         public string PhotoMimetype { get; set; }
 
         public IList<Resume> Resumes { get; set; }

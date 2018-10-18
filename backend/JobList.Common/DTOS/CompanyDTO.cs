@@ -12,7 +12,7 @@ namespace JobList.Common.DTOS
         public string ShortDescription { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public byte[] LogoData { get; set; }
+        public string LogoData { get; set; }
         public string LogoMimetype { get; set; }
         public string Site { get; set; }
         public string Email { get; set; }

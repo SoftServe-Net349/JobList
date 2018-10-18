@@ -9,7 +9,7 @@ namespace JobList.DataAccess.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
-        public byte[] PhotoData { get; set; }
+        public string PhotoData { get; set; }
         public string PhotoMimeType { get; set; }
         public string Sex { get; set; }
         public DateTime BirthData { get; set; }

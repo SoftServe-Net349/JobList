@@ -14,6 +14,8 @@ export interface Resume {
   familyState: string;
   softSkills: string;
   keySkills: string;
+  position: string;
+  introduction: string;
   courses: string;
   createDate: Date;
   modDate: Date;

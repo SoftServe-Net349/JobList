@@ -50,6 +50,16 @@ namespace JobList.DataAccess.Data
                     .HasColumnName("NAME")
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.LogoData)
+                .HasColumnName("LOGO_DATA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LogoMimetype)
+                    .HasColumnName("LOGO_MIMETYPE")
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -85,7 +95,7 @@ namespace JobList.DataAccess.Data
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("EMAIL")
-                    .HasMaxLength(150)
+                    .HasMaxLength(254)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FullDescription)
@@ -93,11 +103,13 @@ namespace JobList.DataAccess.Data
                     .HasColumnName("FULL_DESCRIPTION")
                     .IsUnicode(false);
 
-                entity.Property(e => e.LogoData).HasColumnName("LOGO_DATA");
+                entity.Property(e => e.LogoData)
+                    .HasColumnName("LOGO_DATA")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LogoMimetype)
                     .HasColumnName("LOGO_MIMETYPE")
-                    .HasMaxLength(50)
+                    .HasMaxLength(5)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
@@ -120,6 +132,7 @@ namespace JobList.DataAccess.Data
                 entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
 
                 entity.Property(e => e.ShortDescription)
+                    .IsRequired()
                     .HasColumnName("SHORT_DESCRIPTION")
                     .HasMaxLength(25)
                     .IsUnicode(false);
@@ -132,7 +145,6 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Companies)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_COMPANIES_TO_ROLES");
             });
 
@@ -159,19 +171,17 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.Resume)
                     .WithMany(p => p.EducationPeriods)
                     .HasForeignKey(d => d.ResumeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PK_EDUCATION_PERIODS_TO_RESUMES");
 
                 entity.HasOne(d => d.School)
                     .WithMany(p => p.EducationPeriods)
                     .HasForeignKey(d => d.SchoolId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PK_EDUCATION_PERIODS_TO_SCHOOLS");
 
                 entity.HasOne(d => d.Faculty)
                     .WithMany(p => p.EducationPeriods)
                     .HasForeignKey(d => d.FacultyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PK_EDUCATION_PERIODS_TO_FACULTIES");
             });
 
@@ -206,7 +216,7 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.Resume)
                     .WithMany(p => p.Experiences)
                     .HasForeignKey(d => d.ResumeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_EXPERIENCES_TO_RESUMES");
             });
 
@@ -242,13 +252,13 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.FavoriteVacancies)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_FAVORITE_VACANCIES_TO_USERS");
 
                 entity.HasOne(d => d.Vacancy)
                     .WithMany(p => p.FavoriteVacancies)
                     .HasForeignKey(d => d.VacancyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_FAVORITE_VACANCIES_TO_VACANCIES");
             });
 
@@ -282,11 +292,13 @@ namespace JobList.DataAccess.Data
                     .HasName("UQ_RECRUITERS_PHONE")
                     .IsUnique();
 
-                entity.Property(e => e.LogoData).HasColumnName("LOGO_DATA");
+                entity.Property(e => e.LogoData)
+                    .HasColumnName("LOGO_DATA")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LogoMimetype)
                     .HasColumnName("LOGO_MIMETYPE")
-                    .HasMaxLength(50)
+                    .HasMaxLength(5)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Id).HasColumnName("ID");
@@ -296,7 +308,7 @@ namespace JobList.DataAccess.Data
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("EMAIL")
-                    .HasMaxLength(150)
+                    .HasMaxLength(254)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
@@ -327,13 +339,12 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.Company)
                     .WithMany(p => p.Recruiters)
                     .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RECRUITERS_TO_COMPANIES");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Recruiters)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RECRUITERS_TO_ROLES");
             });
 
@@ -350,13 +361,12 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.Language)
                     .WithMany(p => p.ResumeLanguages)
                     .HasForeignKey(d => d.LanguageId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PK_RESUME_LANGUAGES_TO_LANGUAGES");
 
                 entity.HasOne(d => d.Resume)
                     .WithMany(p => p.ResumeLanguages)
                     .HasForeignKey(d => d.ResumeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PK_RESUME_LANGUAGES_TO_RESUMES");
             });
 
@@ -386,6 +396,17 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.Courses)
                     .HasColumnName("COURSES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Introduction)
+                    .HasColumnName("INTRODUCTION")
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Position)
+                    .HasColumnName("POSITION")
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreateDate)
@@ -443,13 +464,12 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.Resumes)
                     .HasForeignKey<Resume>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_RESUMES_TO_USERS");
 
                 entity.HasOne(d => d.WorkArea)
                     .WithMany(p => p.Resumes)
                     .HasForeignKey(d => d.WorkAreaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RESUMES_TO_WORKAREA");
             });
 
@@ -505,7 +525,6 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-
                 entity.Property(e => e.BirthData)
                     .HasColumnName("BIRTH_DATA")
                     .HasColumnType("date");
@@ -515,7 +534,7 @@ namespace JobList.DataAccess.Data
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("EMAIL")
-                    .HasMaxLength(150)
+                    .HasMaxLength(254)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
@@ -541,11 +560,13 @@ namespace JobList.DataAccess.Data
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PhotoData).HasColumnName("PHOTO_DATA");
+                entity.Property(e => e.PhotoData)
+                    .HasColumnName("PHOTO_DATA")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PhotoMimeType)
                     .HasColumnName("PHOTO_MIME_TYPE")
-                    .HasMaxLength(50)
+                    .HasMaxLength(5)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
@@ -558,13 +579,11 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_USERS_TO_CITIES");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_USERS_TO_ROLES");
             });
 
@@ -635,13 +654,12 @@ namespace JobList.DataAccess.Data
                 entity.HasOne(d => d.Recruiter)
                     .WithMany(p => p.Vacancies)
                     .HasForeignKey(d => d.RecruiterId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_VACANCIES_TO_RECRUITERS");
 
                 entity.HasOne(d => d.WorkArea)
                     .WithMany(p => p.Vacancies)
                     .HasForeignKey(d => d.WorkAreaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VACANCIES_TO_WORK_AREAS");
             });
 
@@ -663,11 +681,13 @@ namespace JobList.DataAccess.Data
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PhotoData).HasColumnName("PHOTO_DATA");
+                entity.Property(e => e.PhotoData)
+                    .HasColumnName("PHOTO_DATA")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PhotoMimetype)
                     .HasColumnName("PHOTO_MIMETYPE")
-                    .HasMaxLength(50)
+                    .HasMaxLength(5)
                     .IsUnicode(false);
             });
 

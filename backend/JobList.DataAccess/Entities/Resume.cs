@@ -11,6 +11,8 @@ namespace JobList.DataAccess.Entities
         public string Facebook { get; set; }
         public string Skype { get; set; }
         public string Instagram { get; set; }
+        public string Introduction { get; set; }
+        public string Position { get; set; }
         public string FamilyState { get; set; }
         public string SoftSkills { get; set; }
         public string KeySkills { get; set; }

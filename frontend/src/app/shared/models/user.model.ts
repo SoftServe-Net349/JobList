@@ -7,12 +7,11 @@ export interface User {
   firstName: string;
   lastName: string;
   phone: string;
-  photoData: number[];
+  photoData: string;
   photoMimeType: string;
   sex: string;
   birthData: Date;
   email: string;
-  password: string;
   city: City;
   roleId: number;
 

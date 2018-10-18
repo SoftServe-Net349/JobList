@@ -15,6 +15,8 @@ namespace JobList.Common.DTOS
         public string FamilyState { get; set; }
         public string SoftSkills { get; set; }
         public string KeySkills { get; set; }
+        public string Introduction { get; set; }
+        public string Position { get; set; }
         public string Courses { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? ModDate { get; set; }
