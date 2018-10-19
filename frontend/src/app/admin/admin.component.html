@@ -1,15 +1,15 @@
 <app-admin-header></app-admin-header>
 <div class="container">
-    <div id="left-side-menu">
-        <p-sidebar [(visible)]="visibleForUser" [baseZIndex]="10000" blockScroll="true" [fullScreen]="false" position="left"
-            modal="" showCloseIcon="">
-            <h1>Admin panel</h1>
-            <hr>
-            <p-panelMenu [model]="itemsForUser" [multiple]="false"></p-panelMenu>
-        </p-sidebar>
+    <div class="left-side-menu">
+        <a routerLink="/admin/admin-dashboard" [routerLinkActive]="'active'"><i class="fa fa-home"></i>Dashboard</a>
+        <a routerLink="/admin/admin-employees" [routerLinkActive]="'active'"><i class="fa fa-users"></i>Employees</a>
+        <a routerLink="/admin/admin-companies" [routerLinkActive]="'active'"><i class="fa fa-university"></i>Companies</a>
+        <a routerLink="/admin/admin-recruiters" [routerLinkActive]="'active'"><i class="fa fa-user-secret"></i>Recruiters</a>
+        <a routerLink="/admin/admin-vacancies" [routerLinkActive]="'active'"><i class="fa fa-address-card"></i>Vacancies</a>
+        <a routerLink="/admin"><i class="fa fa-cog"></i>Settings</a>
     </div>
 
-    <div class="right-side-menu">
+    <div class="content">
         <router-outlet></router-outlet>
     </div>
 </div>

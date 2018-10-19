@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { MessageService } from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -10,7 +10,7 @@ export class AdminDashboardComponent implements OnInit {
 
     data: any;
 
-    constructor(private messageService: MessageService){
+    constructor(private messageService: MessageService) {
         this.data = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
@@ -27,13 +27,14 @@ export class AdminDashboardComponent implements OnInit {
                     borderColor: '#565656'
                 }
             ]
-        }
+        };
     }
 
-    ngOnInit(){
+    ngOnInit() {
     }
-    
+
     selectData(event) {
-        this.messageService.add({severity: 'info', summary: 'Data Selected', 'detail': this.data.datasets[event.element._datasetIndex].data[event.element._index]});
+        this.messageService.add({severity: 'info', summary: 'Data Selected',
+        'detail': this.data.datasets[event.element._datasetIndex].data[event.element._index]});
     }
 }

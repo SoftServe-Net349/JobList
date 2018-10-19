@@ -151,7 +151,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id)
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var vacancies = vacancyFaker.Generate(amount).ToArray();
+            var vacancies = vacancyFaker.Generate(5000).ToArray();
 
 
             var employeeFaker = new Faker<Employee>()
