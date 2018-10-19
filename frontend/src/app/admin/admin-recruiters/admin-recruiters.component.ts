@@ -1,9 +1,9 @@
-import { OnInit, Component, ViewChild } from "@angular/core";
-import { SelectItem, ConfirmationService } from "primeng/api";
-import { Paginator } from "primeng/primeng";
-import { isNullOrUndefined } from "util";
-import { Recruiter } from "src/app/shared/models/recruiter.model";
-import { RecruiterService } from "src/app/core/services/recruiter.service";
+import { OnInit, Component, ViewChild } from '@angular/core';
+import { SelectItem, ConfirmationService } from 'primeng/api';
+import { Paginator } from 'primeng/primeng';
+import { isNullOrUndefined } from 'util';
+import { Recruiter } from 'src/app/shared/models/recruiter.model';
+import { RecruiterService } from 'src/app/core/services/recruiter.service';
 
 @Component({
     selector: 'app-admin-recruiters',
@@ -14,29 +14,28 @@ export class AdminRecruitersComponent implements OnInit {
 
     recruiters: Recruiter[];
 
-    displayDialog: boolean = false;
+    displayDialog = false;
 
-    sortKey: string = '';
-    sortOrder: boolean = false;
-    sortField: string = '';
+    sortKey = '';
+    sortOrder = false;
+    sortField = '';
 
     sortOptions: SelectItem[];
 
-    pageSize: number = 4;
-    pageNumber: number = 1;
-    totalRecords: number = 0;
+    pageSize = 4;
+    pageNumber = 1;
+    totalRecords = 0;
 
-    searchString: string = '';
+    searchString = '';
     searchedRecruiter: Recruiter = null;
 
     @ViewChild('p') paginator: Paginator;
 
-    constructor(private confirmationService: ConfirmationService, private recruiterService: RecruiterService, ){
+    constructor(private confirmationService: ConfirmationService, private recruiterService: RecruiterService, ) {
         this.recruiters = [];
     }
 
-    ngOnInit() {    
-        
+    ngOnInit() {
         this.sortOptions = [
             { label: 'Email by descending', value: '!Email' },
             { label: 'Email by ascending', value: 'Email' }
@@ -46,13 +45,12 @@ export class AdminRecruitersComponent implements OnInit {
     }
 
     onSortChange(event) {
-        let value = event.value;
+        const value = event.value;
 
         if (value.indexOf('!') === 0) {
             this.sortOrder = false;
             this.sortField = value.substring(1, value.length);
-        }
-        else {
+        } else {
             this.sortOrder = true;
             this.sortField = value;
         }
@@ -68,11 +66,11 @@ export class AdminRecruitersComponent implements OnInit {
         this.loadRecruiters();
     }
 
-    filterCompanies(event) {
+    filterRecruiter(event) {
         this.searchString = event.query;
         this.pageNumber = 1;
         this.loadRecruiters();
-        
+
         this.paginator.changePage(0);
     }
 
@@ -87,8 +85,7 @@ export class AdminRecruitersComponent implements OnInit {
     search() {
         if (isNullOrUndefined(this.searchedRecruiter)) {
             this.searchString = '';
-        }
-        else if (isNullOrUndefined(this.searchedRecruiter.email)) {
+        } else if (isNullOrUndefined(this.searchedRecruiter.email)) {
             this.searchString = this.searchedRecruiter.toString();
         }
 
@@ -105,8 +102,7 @@ export class AdminRecruitersComponent implements OnInit {
                 if (response.body !== null) {
                     this.recruiters = response.body;
                     this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-                }
-                else {
+                } else {
                     this.recruiters = null;
                     this.totalRecords = 0;
                 }

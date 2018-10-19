@@ -27,7 +27,7 @@ export class AdminEmployeesComponent implements OnInit {
     totalRecords = 0;
 
     searchString = '';
-    searchedUser = null;
+    searchedEmployee = null;
 
     @ViewChild('p') paginator: Paginator;
 
@@ -85,10 +85,10 @@ export class AdminEmployeesComponent implements OnInit {
     }
 
     search() {
-        if (isNullOrUndefined(this.searchedUser)) {
+        if (isNullOrUndefined(this.searchedEmployee)) {
             this.searchString = '';
-        } else if (isNullOrUndefined(this.searchedUser.email)) {
-            this.searchString = this.searchedUser.toString();
+        } else if (isNullOrUndefined(this.searchedEmployee.email)) {
+            this.searchString = this.searchedEmployee.toString();
         }
 
         this.pageNumber = 1;

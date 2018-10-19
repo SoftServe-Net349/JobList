@@ -134,6 +134,8 @@ namespace JobList.BusinessLogic.Services
             var entities = await _uow.RecruitersRepository.GetRangeAsync(
                 filter: filter,
                 include: e => e.Include(o => o.Company),
+                sorting: GetSortField(sortingUrlQuery.SortField),
+                sortOrder: sortingUrlQuery.SortOrder,
                 paginationUrlQuery: paginationUrlQuery);
 
             if (entities == null) return null;

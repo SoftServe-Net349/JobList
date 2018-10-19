@@ -1,46 +1,36 @@
-<p-dataView [value]="companies">
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-4">
-                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
-                        [autoWidth]="false" [style]="{'min-width':'15em'}"></p-dropdown>
-                </div>
-
-                <p-autoComplete [(ngModel)]="searchedCompany" [suggestions]="companies" (onSelect)="select($event)"
-                    (completeMethod)="filterCompanies($event)" (keyup.enter)="search($event)" field="name"></p-autoComplete>
-            </div>
+<div class="table-entities">
+    <div class="table-header">
+        <div>
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
+                [autoWidth]="false"></p-dropdown>
         </div>
-    </p-header>
-    <ng-template let-company pTemplate="listItem">
-        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-            <div class="ui-g-12 ui-md-3" style="text-align:left">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" width="120"
-                    height="140">
-            </div>
-            <div class="ui-g-12 ui-md-8 user-details">
-                <div class="ui-g">
-                    <div class="ui-g-2 ui-sm-6">Name: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{company.name}}</b></div>
 
-                    <div class="ui-g-2 ui-sm-6">Phone: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{company.phone}}</b></div>
-
-                    <div class="ui-g-2 ui-sm-6">Email: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{company.email}}</b></div>
-
-                    <div class="ui-g-2 ui-sm-6">Site: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{company.site}}</b></div>
-                </div>
-            </div>
-            <div class="ui-g-12 ui-md-1">
-                <div class="admin-button">
-                    <button pButton type="button" label="Delete" (click)="deleteConfirm(company.id)" class="ui-button-rounded ui-button-danger"></button>
-                </div>
-            </div>
+        <div class="table-autocomplete">
+            <p-autoComplete [(ngModel)]="searchedCompany" [suggestions]="companies" (onSelect)="select($event)" (completeMethod)="filterCompanies($event)"
+            (keyup.enter)="search($event)" field="name"></p-autoComplete>
         </div>
-    </ng-template>
-</p-dataView>
+    </div>
+    <table>
+        <tr>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Site</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let company of companies">
+            <td><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="" /></td>
+            <td>{{company.name}}</td>
+            <td>{{company.phone}}</td>
+            <td>{{company.email}}</td>
+            <td>{{company.site}}</td>
+            <td>                    
+                <button pButton type="button" label="Delete" (click)="deleteConfirm(company.id)" class="ui-button-rounded ui-button-danger"></button>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 

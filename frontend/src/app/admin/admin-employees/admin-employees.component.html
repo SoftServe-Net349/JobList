@@ -1,12 +1,14 @@
-<div class="table-users">
-    <div class="header">
+<div class="table-entities">
+    <div class="table-header">
         <div>
             <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
                 [autoWidth]="false"></p-dropdown>
         </div>
 
-        <p-autoComplete [(ngModel)]="searchedUser" [suggestions]="employees" (onSelect)="select($event)" (completeMethod)="filterEmployees($event)"
+        <div class="table-autocomplete">
+            <p-autoComplete [(ngModel)]="searchedEmployee" [suggestions]="employees" (onSelect)="select($event)" (completeMethod)="filterEmployees($event)"
             (keyup.enter)="search($event)" field="email"></p-autoComplete>
+        </div>
     </div>
     <table>
         <tr>
@@ -35,55 +37,3 @@
 <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 
 <p-confirmDialog></p-confirmDialog>
-
-
-<!-- <p-dataView [value]="users">
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <div class="ui-g">
-                <div class="ui-g-12 ui-md-4">
-                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
-                        [autoWidth]="false" [style]="{'min-width':'15em'}"></p-dropdown>
-                </div>
-
-                <p-autoComplete [(ngModel)]="searchedUser" [suggestions]="users" (onSelect)="select($event)"
-                    (completeMethod)="filterUsers($event)" (keyup.enter)="search($event)" field="email"></p-autoComplete>
-            </div>
-        </div>
-    </p-header>
-    <ng-template let-user pTemplate="listItem">
-        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-            <div class="ui-g-12 ui-md-3" style="text-align:left">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Stevejobs.jpg" width="140"
-                    height="140">
-            </div>
-            <div class="ui-g-12 ui-md-8 user-details">
-                <div class="ui-g">
-                    <div class="ui-g-2 ui-sm-6">First Name: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{user.firstName}}</b></div>
-
-                    <div class="ui-g-2 ui-sm-6">Last Name: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{user.lastName}}</b></div>
-
-                    <div class="ui-g-2 ui-sm-6">Phone: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{user.phone}}</b></div>
-
-                    <div class="ui-g-2 ui-sm-6">Birthdate: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{user.birthData | date}}</b></div>
-
-                    <div class="ui-g-2 ui-sm-6">Email: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
-                </div>
-            </div>
-            <div class="ui-g-12 ui-md-1">
-                <div class="admin-button">
-                    <button pButton type="button" label="Delete" (click)="deleteConfirm(user.id)" class="ui-button-rounded ui-button-danger"></button>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-</p-dataView>
-
-<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
-
-<p-confirmDialog></p-confirmDialog> -->
