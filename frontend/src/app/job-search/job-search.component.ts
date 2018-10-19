@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
-import { SearchLineComponent } from '../shared/search-line/search-line.component';
 import { Paginator } from 'primeng/primeng';
 
 @Component({
@@ -22,11 +21,9 @@ export class JobSearchComponent implements OnInit {
   param: JobSearchQuery;
 
 
-  constructor(private vacancyService: VacancyService, private router: ActivatedRoute) {
-
   @ViewChild('p') paginator: Paginator;
 
-
+  constructor(private vacancyService: VacancyService, private router: Router) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
   }
