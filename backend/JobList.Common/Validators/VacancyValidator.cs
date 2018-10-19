@@ -7,13 +7,10 @@ namespace JobList.Common.Validators
     {
         public VacancyValidator()
         {
-            RuleFor(x => x.Name).Length(1, 200).WithMessage("Please specify a valid Name.");
+            RuleFor(x => x.Name).NotEmpty().Length(1, 200).WithMessage("Please specify a valid Name.");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Please specify a valid Description.");
             RuleFor(x => x.Offering).NotEmpty().WithMessage("Please specify a valid Offering.");
             RuleFor(x => x.Requirements).NotEmpty().WithMessage("Please specify a valid Requirements.");
-            // RuleFor(x => x.BePlus)
-            // RuleFor(x => x.IsChecked)
-            // RuleFor(x => x.Salary)
             RuleFor(x => x.FullPartTime).MaximumLength(25).WithMessage("Please specify a valid FullPartTime.");
             RuleFor(x => x.CreateDate).NotEmpty().WithMessage("Please specify a valid Creation Date.");
             RuleFor(x => x.RecruiterId).NotEmpty().WithMessage("Please specify a valid Recruiter Id.");

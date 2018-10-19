@@ -11,12 +11,12 @@ import { ApiService } from './services/api.service';
 import { RecruiterService } from './services/recruiter.service';
 import { ResumeService } from './services/resume.service';
 import { VacancyService } from './services/vacancy.service';
-import { UserService } from './services/user.service';
+import { EmployeeService } from './services/employee.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { TokenService } from './services/token.service';
 import { AdminGuard } from './guards/admin.guard';
-import { UserGuard } from './guards/user.guard';
+import { EmployeeGuard } from './guards/employee.guard';
 import { CompanyGuard } from './guards/company.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
 
@@ -35,12 +35,12 @@ import { RecruiterGuard } from './guards/recruiter.guard';
     RecruiterService,
     ResumeService,
     VacancyService,
-    UserService,
+    EmployeeService,
     AuthGuard,
     AuthService,
     TokenService,
     AdminGuard,
-    UserGuard,
+    EmployeeGuard,
     CompanyGuard,
     RecruiterGuard
   ],

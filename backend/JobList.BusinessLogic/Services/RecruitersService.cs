@@ -2,7 +2,6 @@
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
-using JobList.Common.Extensions;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
@@ -76,43 +75,89 @@ namespace JobList.BusinessLogic.Services
                                                                                 SortingUrlQuery sortingUrlQuery = null,
                                                                                 PaginationUrlQuery paginationUrlQuery = null)
         {
-
-            Expression<Func<Recruiter, bool>> filter = e => true;
-
+            List<Recruiter> entities = null;
             string [] searchList;
 
-            if (companyId != null)
+            if (companyId != null && String.IsNullOrEmpty(searchString))
             {
-                filter = filter.And(r => (r.CompanyId == companyId));
-            }
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    filter: r => (r.CompanyId == companyId),
+                    include: r => r.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery?.SortField),
+                    sortOrder: sortingUrlQuery?.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
 
-            if (!String.IsNullOrEmpty(searchString) && IsEmailValid(searchString))
+            }
+            else if (companyId != null && !String.IsNullOrEmpty(searchString) && IsEmailValid(searchString))
             {
-                filter = filter.And(r => r.Email.Contains(searchString));
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    filter: r => r.CompanyId == companyId && r.Email.Contains(searchString),
+                    include: r => r.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery?.SortField),
+                    sortOrder: sortingUrlQuery?.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
-
-            else if(!String.IsNullOrEmpty(searchString) && !IsEmailValid(searchString))
+            else if(companyId != null && !String.IsNullOrEmpty(searchString) && !IsEmailValid(searchString))
             {
                 searchList = searchString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (searchList.Length > 1)
                 {
-                    filter = filter.And(r =>(r.FirstName.Contains(searchList[0]) && r.LastName.Contains(searchList[1])) ||
-                                            (r.FirstName.Contains(searchList[1]) && r.LastName.Contains(searchList[0])));
+                    entities = await _uow.RecruitersRepository.GetRangeAsync(
+                        filter: r => r.CompanyId == companyId && (
+                            (r.FirstName.Contains(searchList[0]) && r.LastName.Contains(searchList[1])) ||                        
+                            (r.FirstName.Contains(searchList[1]) && r.LastName.Contains(searchList[0]))),
+                        include: r => r.Include(o => o.Company),
+                        sorting: GetSortField(sortingUrlQuery?.SortField),
+                        sortOrder: sortingUrlQuery?.SortOrder,
+                        paginationUrlQuery: paginationUrlQuery);
                 }
                 else
                 {
-                    filter = filter.And(r => r.FirstName.Contains(searchList[0]) ||
-                                        r.LastName.Contains(searchList[0]));
+                    entities = await _uow.RecruitersRepository.GetRangeAsync(
+                        filter: r => r.CompanyId == companyId && (
+                            r.FirstName.Contains(searchList[0]) ||
+                            r.LastName.Contains(searchList[0])),
+                        include: r => r.Include(o => o.Company),
+                        sorting: GetSortField(sortingUrlQuery?.SortField),
+                        sortOrder: sortingUrlQuery?.SortOrder,
+                        paginationUrlQuery: paginationUrlQuery);
                 }
             }
+            else if (companyId == null && !String.IsNullOrEmpty(searchString) && IsEmailValid(searchString))
+            {
+                entities = await _uow.RecruitersRepository.GetRangeAsync(
+                    filter: r => r.Email.Contains(searchString),
+                    include: r => r.Include(o => o.Company),
+                    sorting: GetSortField(sortingUrlQuery?.SortField),
+                    sortOrder: sortingUrlQuery?.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
+            }
+            else if (companyId == null && !String.IsNullOrEmpty(searchString) && !IsEmailValid(searchString))
+            {
+                searchList = searchString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-           var entities = await _uow.RecruitersRepository.GetRangeAsync(
-                filter: filter,
-                include: r => r.Include(o => o.Company),
-                sorting: GetSortField(sortingUrlQuery?.SortField),
-                sortOrder: sortingUrlQuery?.SortOrder,
-                paginationUrlQuery: paginationUrlQuery);
+                if (searchList.Length > 1)
+                {
+                    entities = await _uow.RecruitersRepository.GetRangeAsync(
+                        filter: r=> (r.FirstName.Contains(searchList[0]) && r.LastName.Contains(searchList[1])) ||
+                            (r.FirstName.Contains(searchList[1]) && r.LastName.Contains(searchList[0])),
+                        include: r => r.Include(o => o.Company),
+                        sorting: GetSortField(sortingUrlQuery?.SortField),
+                        sortOrder: sortingUrlQuery?.SortOrder,
+                        paginationUrlQuery: paginationUrlQuery);
+                }
+                else
+                {
+                    entities = await _uow.RecruitersRepository.GetRangeAsync(
+                        filter: r => r.FirstName.Contains(searchList[0]) ||
+                            r.LastName.Contains(searchList[0]),
+                        include: r => r.Include(o => o.Company),
+                        sorting: GetSortField(sortingUrlQuery?.SortField),
+                        sortOrder: sortingUrlQuery?.SortOrder,
+                        paginationUrlQuery: paginationUrlQuery);
+                }
+            }
 
             if (entities == null) return null;
 
@@ -120,30 +165,6 @@ namespace JobList.BusinessLogic.Services
 
             return dtos;
         }
-
-
-        public async Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
-        {
-            Expression<Func<Recruiter, bool>> filter = e => true;
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                filter = filter.And(e => e.Email.ToLower().Contains(searchString.ToLower()));
-            }
-
-            var entities = await _uow.RecruitersRepository.GetRangeAsync(
-                filter: filter,
-                include: e => e.Include(o => o.Company),
-                paginationUrlQuery: paginationUrlQuery);
-
-            if (entities == null) return null;
-
-            var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
-
-            return dtos; 
-        }
-
-
 
         public async Task<RecruiterDTO> CreateRecruiterAsync(RecruiterRequest modelRequest)
         {

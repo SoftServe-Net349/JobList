@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Person } from '../models/person.model';
+import { User } from '../models/user.model';
 
 @Injectable()
 
@@ -10,7 +9,7 @@ export class AuthHelper  {
 
     private authenticationChanged = new Subject<boolean>();
 
-    currentPerson: Person;
+    currentUser: User;
 
     constructor(private jwtHelper: JwtHelperService) {
     }
@@ -79,23 +78,23 @@ export class AuthHelper  {
 
     }
 
-    public getCurrentPerson(): Person {
+    public getCurrentUser(): User {
 
-        if ( window.localStorage['currentPerson'] === undefined ||
+        if ( window.localStorage['currentUser'] === undefined ||
 
-        window.localStorage['currentPerson'] === null ||
+        window.localStorage['currentUser'] === null ||
 
-        window.localStorage['currentPerson'] === 'null' ||
+        window.localStorage['currentUser'] === 'null' ||
 
-        window.localStorage['currentPerson'] === 'undefined' ||
+        window.localStorage['currentUser'] === 'undefined' ||
 
-        window.localStorage['currentPerson'] === '') {
+        window.localStorage['currentUser'] === '') {
 
         return null;
 
         }
 
-        const obj = JSON.parse(window.localStorage['currentPerson']);
+        const obj = JSON.parse(window.localStorage['currentUser']);
 
         return obj;
 
@@ -104,20 +103,20 @@ export class AuthHelper  {
     public setToken(data: any): void {
 
         const decodeToken = this.jwtHelper.decodeToken(data.jwt);
-        const currentPerson: Person = {
+        const currentUser: User = {
             id: decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
             role: decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
         };
 
         this.setStorageToken(data.jwt);
         this.setStorageRefreshToken(data.refreshToken);
-        this.setCurrentPerson(JSON.stringify(currentPerson));
+        this.setCurrentUser(JSON.stringify(currentUser));
 
     }
 
     public failToken(): void {
 
-        this.setCurrentPerson(undefined);
+        this.setCurrentUser(undefined);
         this.setStorageToken(undefined);
         this.setStorageRefreshToken(undefined);
 
@@ -125,7 +124,7 @@ export class AuthHelper  {
 
     public logout(): void {
 
-        this.setCurrentPerson(undefined);
+        this.setCurrentUser(undefined);
         this.setStorageToken(undefined);
         this.setStorageRefreshToken(undefined);
 
@@ -144,9 +143,9 @@ export class AuthHelper  {
 
     }
 
-    private setCurrentPerson(value: any) {
+    private setCurrentUser(value: any) {
 
-        window.localStorage['currentPerson'] = value;
+        window.localStorage['currentUser'] = value;
 
     }
 

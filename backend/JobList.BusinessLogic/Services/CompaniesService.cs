@@ -2,7 +2,6 @@
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
-using JobList.Common.Extensions;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
@@ -84,19 +83,24 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<CompanyDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            Expression<Func<Company, bool>> filter = e => true;
+            List<Company> entities = null;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                filter = filter.And(e => e.Name.ToLower().Contains(searchString.ToLower()));
+                entities = await _uow.CompaniesRepository.GetRangeAsync(
+                    filter: e => e.Name.ToLower().Contains(searchString.ToLower()),
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
             }
 
-            var entities = await _uow.CompaniesRepository.GetRangeAsync(
-                filter: filter,
-                sorting: GetSortField(sortingUrlQuery.SortField),
-                sortOrder: sortingUrlQuery.SortOrder,
-                paginationUrlQuery: paginationUrlQuery);
-            
+            else
+            {
+                entities = await _uow.CompaniesRepository.GetRangeAsync(
+                    sorting: GetSortField(sortingUrlQuery.SortField),
+                    sortOrder: sortingUrlQuery.SortOrder,
+                    paginationUrlQuery: paginationUrlQuery);
+            }
 
             var dtos = _mapper.Map<List<Company>, List<CompanyDTO>>(entities);
 

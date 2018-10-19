@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../shared/models/user.model';
+import { Employee } from '../shared/models/employee.model';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { CityService } from '../core/services/city.service';
 import { LanguageService } from '../core/services/language.service';
@@ -25,7 +25,7 @@ export class ResumeFormComponent implements OnInit {
   display: Boolean = false;
   action: String;
 
-  user: User;
+  employee: Employee;
   resume: Resume;
 
   workAreas: WorkArea[];
@@ -52,8 +52,6 @@ export class ResumeFormComponent implements OnInit {
               private schoolService: SchoolService,
               private facultyService: FacultyService) {
 
-    this.user = this.defaultUser();
-    this.resume = this.defaultResume();
   }
 
   ngOnInit() {
@@ -91,45 +89,6 @@ export class ResumeFormComponent implements OnInit {
     .subscribe((data: Faculty[]) => this.faculties = data);
   }
 
-  defaultUser(): User {
-    return {
-      id: 0,
-      birthData: new Date(),
-      city: null,
-      email: '',
-      favoriteVacancies: [],
-      firstName: '',
-      lastName: '',
-      phone: '',
-      photoData: [],
-      photoMimeType: '',
-      roleId: 0,
-      sex: ''
-    };
-  }
-
-  defaultResume(): Resume {
-    return {
-      id: 0,
-      courses: '',
-      createDate: new Date(),
-      educationPeriods: [],
-      experiences: [],
-      facebook: '',
-      familyState: '',
-      github: '',
-      instagram: '',
-      keySkills: '',
-      linkedin: '',
-      modDate: new Date(),
-      resumeLanguages: [],
-      skype: '',
-      softSkills: '',
-      user: null,
-      workArea: null
-    };
-  }
-
   defaultResumeForm(): FormGroup {
     return this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -152,8 +111,8 @@ export class ResumeFormComponent implements OnInit {
     });
   }
 
-  showResumeForm(action: String, user = this.defaultUser(), resume = this.defaultResume()) {
-    this.user = user;
+  showResumeForm(action: String, employee = null, resume = null) {
+    this.employee = employee;
     this.resume = resume;
     this.resumeForm.reset();
     this.display = true;
@@ -161,10 +120,10 @@ export class ResumeFormComponent implements OnInit {
 
     if (action === 'Update') {
       this.resumeForm.setValue({
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        email: this.user.email,
-        phone: this.user.phone,
+        firstName: this.employee.firstName,
+        lastName: this.employee.lastName,
+        email: this.employee.email,
+        phone: this.employee.phone,
         companyName: 'SoftServe',
         position: '.NET DEVELOPER',
         courses: this.resume.courses,
@@ -176,7 +135,7 @@ export class ResumeFormComponent implements OnInit {
         linkedIn: this.resume.linkedin,
         gitHub: this.resume.github,
         workArea: this.resume.workArea,
-        city: this.user.city,
+        city: this.employee.city,
         birthDate: ''
       });
       // this.selectedWorkArea = this.workAreas[1];

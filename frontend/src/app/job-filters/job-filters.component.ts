@@ -16,7 +16,7 @@ import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 
 export class JobFiltersComponent implements OnInit {
 
-  checked: boolean = false;
+  checked: boolean;
   salary: number;
 
   workAreas: WorkArea[];

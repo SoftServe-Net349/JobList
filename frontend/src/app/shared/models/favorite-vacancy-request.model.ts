@@ -1,5 +1,5 @@
 
 export interface FavoriteVacancyRequest {
-  userId: number;
+  employeeId: number;
   vacancyId: number;
 }

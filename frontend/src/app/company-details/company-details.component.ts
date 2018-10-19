@@ -14,7 +14,6 @@ export class CompanyDetailsComponent implements OnInit {
   company: Company;
 
   constructor(private activatedRoute: ActivatedRoute, private companyService: CompanyService) {
-    this.company = this.defaultCompany();
   }
 
   ngOnInit() {
@@ -30,20 +29,4 @@ export class CompanyDetailsComponent implements OnInit {
     .subscribe((data: Company) => this.company = data);
   }
 
-  defaultCompany(): Company {
-    return {
-      id: 0,
-      name: '',
-      bossName: '',
-      fullDescription: '',
-      shortDescription: '',
-      address: '',
-      phone: '',
-      logoData: [],
-      logoMimetype: '',
-      site: '',
-      email: '',
-      roleId: 0
-    };
-  }
 }

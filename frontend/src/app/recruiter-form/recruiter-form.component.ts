@@ -24,18 +24,15 @@ export class RecruiterFormComponent implements OnInit {
   errorMessage: string;
 
   recruiter: Recruiter;
-  
-  type:string;
+
+  type: string;
   uploadedFiles: any[] = [];
   dataString: string|ArrayBuffer;
   base64: string;
-  
 
   constructor(private messageService: MessageService,
               private formBuilder: FormBuilder,
               private recruiterService: RecruiterService) {
-
-    this.recruiter = this.defaultRecruiter();
 
     this.recruiterForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -49,38 +46,22 @@ export class RecruiterFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  defaultRecruiter(): Recruiter {
-    return {
-      id: 0,
-      firstName: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      company: null,
-      roleId: 0,
-      photoData: '',
-      photoMimetype: ''
-    };
-  }
-
-  
 
   onUpload(event) {
-    for(let file of event.files) {
+    for (const file of event.files) {
     this.uploadedFiles.push(file);
-     var reader = new FileReader();
-     reader.onload = (event:any) => {
-     this.dataString=reader.result;
-     this.base64=this.dataString.toString().split(',')[1];
+     const reader = new FileReader();
+     reader.onload = () => {
+     this.dataString = reader.result;
+     this.base64 = this.dataString.toString().split(',')[1];
+    };
+    reader.readAsDataURL(file);
+    this.type = file.type.toString().split('/')[1];
 
-    }
-    reader.readAsDataURL(file);  
-    this.type=file.type.toString().split('/')[1];
-    
    }
   }
 
-  showRecruiterForm(action: String, recruiter = this.defaultRecruiter()) {
+  showRecruiterForm(action: String, recruiter = null) {
     this.recruiter = recruiter;
     this.recruiterForm.reset();
     this.display = true;
@@ -113,7 +94,7 @@ export class RecruiterFormComponent implements OnInit {
       phone: this.recruiterForm.get('phone').value,
       password: '',
       companyId: this.companyId,
-      roleId: this.recruiter.roleId,
+      roleId: this.recruiter.role.id,
       photoData: this.base64,
       photoMimetype: this.type
     };

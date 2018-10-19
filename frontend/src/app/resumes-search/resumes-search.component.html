@@ -12,32 +12,32 @@
         </div>
         <div class="inform">
           <h3>
-            <a>{{resume.workArea.name}}</a>
+            <a>{{resume?.workArea?.name}}</a>
           </h3>
           <p class="person-inform">
             <span>
-              {{resume.user.firstName}} {{resume.user.lastName}}
+              {{resume?.employee?.firstName}} {{resume?.employee?.lastName}}
             </span>
           </p>
           <p>
               <i class="fa fa-map-marker"></i>
               <span>
-                {{resume.user.address}}
+                {{resume?.employee?.address}}
               </span>
               <i class="fa fa-user"></i>
               <span>
-                {{resume.user.birthData | date}}
+                {{resume?.employee?.birthData | date}}
               </span>
           </p>
           <p class="experiance">
             <span>
-            {{resume.keySkills}}
+            {{resume?.keySkills}}
           </span>
           </p>
           <p class="agotime">
             <i class="fa fa-refresh"></i>
             <span>
-              {{resume.createDate | date}}
+              {{resume?.createDate | date}}
             </span>
           </p>
         </div>

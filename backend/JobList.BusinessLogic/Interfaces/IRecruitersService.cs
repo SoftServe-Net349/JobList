@@ -18,9 +18,6 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyIdAsync(int companyId, PaginationUrlQuery urlQuery = null);
 
-        Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
-
-
         Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(int? companyId = null,
                                                                    string searchString = null,
                                                                    SortingUrlQuery sortingUrlQuery = null,

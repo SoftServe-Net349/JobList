@@ -25,7 +25,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import {PaginatorModule} from 'primeng/paginator';
 import {KeyFilterModule} from 'primeng/keyfilter';
-
+import {CalendarModule} from 'primeng/calendar';
 
 import { CoreModule } from '../core/core.module';
 
@@ -47,7 +47,8 @@ import { CoreModule } from '../core/core.module';
     CardModule,
     PaginatorModule,
     CoreModule,
-    KeyFilterModule
+    KeyFilterModule,
+    CalendarModule
   ],
   declarations: [
     HomeComponent,

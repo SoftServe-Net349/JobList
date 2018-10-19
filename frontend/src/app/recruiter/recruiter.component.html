@@ -10,14 +10,14 @@
 			</div>
 			<div class="recruiter-additional-info">
 				<p>
-					<span>Name:</span> {{recruiter.firstName}} {{recruiter.lastName}}</p>
+					<span>Name:</span> {{recruiter?.firstName}} {{recruiter?.lastName}}</p>
 				<p>
-					<span>Email:</span> {{recruiter.email}}</p>
+					<span>Email:</span> {{recruiter?.email}}</p>
 				<p>
-					<span>Phone:</span> {{recruiter.phone}}</p>
+					<span>Phone:</span> {{recruiter?.phone}}</p>
 			</div>
 			<div class="vacancy-modification">
-				<app-vacancy-form #vacancyForm (loadVacancy)="loadVacancies()" [recruiterId]="recruiter.id"></app-vacancy-form>
+				<app-vacancy-form #vacancyForm (loadVacancy)="loadVacancies()" [recruiterId]="recruiter?.id"></app-vacancy-form>
 
 
 			</div>
@@ -48,7 +48,7 @@
 									<a>{{vacancy.name}}</a>
 								</h3>
 								<p class="company-name">
-									<a>{{recruiter.company?.name}}</a>
+									<a>{{recruiter?.company?.name}}</a>
 								</p>
 								<p class="location">
 									<i class="fa fa-map-marker"></i>

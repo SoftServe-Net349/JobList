@@ -14,7 +14,7 @@
     <!-- COMANY HEADER -->
     <div *ngIf="role === 'company'">
       <div id="right-side-menu">
-        <a>Find Resumes</a>
+        <a routerLink="/resumessearch" routerLinkActive="active">Find Resumes</a>
         <a href="">Vacancies</a>
 
         <p-sidebar [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
@@ -45,20 +45,20 @@
         </a>
       </div>
     </div>
-    <!-- USER HEADER -->
-    <div *ngIf="role === 'user'">
+    <!-- EMPLOYEE HEADER -->
+    <div *ngIf="role === 'employee'">
       <div id="right-side-menu">
-        <a routerLink="/" routerLinkActive="active">Find Vacancies</a>
+        <a routerLink="/jobsearch" routerLinkActive="active">Find Vacancies</a>
         <a>Invitation</a>
         <a>Favourite Vacancies</a>
 
-        <p-sidebar [(visible)]="visibleForUser" position="right" [baseZIndex]="10000" blockScroll="true">
+        <p-sidebar [(visible)]="visibleForEmployee" position="right" [baseZIndex]="10000" blockScroll="true">
           <h1 class="company-profile">Profile</h1>
           <hr>
-          <p-panelMenu [model]="itemsForUser" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
+          <p-panelMenu [model]="itemsForEmployee" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
         </p-sidebar>
 
-        <a class="profile" (click)="visibleForUser = true">
+        <a class="profile" (click)="visibleForEmployee = true">
           <span>Profile</span>
           <i class="fa fa-sort-desc"></i>
         </a>

@@ -8,7 +8,7 @@ h4
     margin-inline-end: 0px
     font-weight: bold
 
-#authoruzations, #company-authoruzations
+#authoruzations, #company-authoruzations, #employee-authoruzations
     max-width: 100%
     font-family: "Open Sans","Helvetica Neue",sans-serif
     padding: 15px 25px
@@ -122,7 +122,11 @@ h4
 
     /deep/ .ui-button
         margin-left: 10px
-        
+    
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect, /deep/ .ui-calendar
+        width: 100% !important
+        height: 33px
+
        
     .toolbar-sing-up
         display: flex
@@ -200,7 +204,7 @@ h4
     input
         width: 248px !important
 
-    /deep/ .ui-dropdown, /deep/ .ui-multiselect
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect, /deep/ .ui-calendar
         width: 248px !important
             
     /deep/ .ui-dropdown

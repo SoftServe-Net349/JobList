@@ -9,6 +9,6 @@ namespace JobList.DataAccess.Entities
 
         public IList<Company> Companies { get; set; }
         public IList<Recruiter> Recruiters { get; set; }
-        public IList<User> Users { get; set; }
+        public IList<Employee> Employees { get; set; }
     }
 }

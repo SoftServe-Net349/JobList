@@ -4,7 +4,6 @@ import { VacancyService } from '../core/services/vacancy.service';
 import { Router } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { SearchLineComponent } from '../shared/search-line/search-line.component';
-import { Paginator } from 'primeng/primeng';
 
 @Component({
   selector: 'app-job-search',
@@ -24,15 +23,13 @@ export class JobSearchComponent implements OnInit {
   param: JobSearchQuery;
 
 
-  @ViewChild('p') paginator: Paginator;
-
   constructor(private vacancyService: VacancyService, private router: Router) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
   }
 
   ngOnInit() {
-    this.loadVacancies();
+    this.loadVacancies(this.pageSize, this.pageNumber);
   }
 
   goToVacancyDetails(id: number) {
@@ -63,22 +60,33 @@ export class JobSearchComponent implements OnInit {
     this.param.typeOfEmployment = param.typeOfEmployment !== null ? param.typeOfEmployment : this.param.typeOfEmployment;
     this.param.isChecked = param.isChecked !== false ? true : false;
     this.param.salary = param.salary !== null ? param.salary : this.param.salary;
-
-    this.loadVacancies();
-
-    this.paginator.changePage(0);
+    if (param === this.getDefaultParam()) {
+      this.loadVacancies(this.pageSize, this.pageNumber);
+    } else {
+      this.vacancyService.getByFilter(this.param, this.pageSize, this.pageNumber)
+        .subscribe((response) => {
+          this.vacancies = response.body;
+          this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+        });
+    }
   }
 
   paginate(event) {
     this.pageNumber = event.page + 1;
     this.pageSize = event.rows;
 
-    this.loadVacancies();
+    if (this.param === this.getDefaultParam()) {
+      this.loadVacancies(event.rows, this.pageNumber);
+    } else {
+      this.vacancyService.getByFilter(this.param, event.rows, this.pageNumber)
+        .subscribe((response) => {
+          this.vacancies = response.body;
+        });
+    }
   }
 
-
-  loadVacancies(){
-    this.vacancyService.getByFilter(this.param, this.pageSize, this.pageNumber)
+  loadVacancies(pageSize: number, pageNumber: number) {
+    this.vacancyService.getFullResponse(pageSize, pageNumber)
       .subscribe((response) => {
         this.vacancies = response.body;
         this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { DataViewModule } from 'primeng/dataview';
-import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 import { PanelModule, DialogModule, ButtonModule, DropdownModule, SidebarModule, PanelMenuModule, PaginatorModule } from 'primeng/primeng';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
@@ -37,6 +37,13 @@ import {ChartModule} from 'primeng/chart';
     AutoCompleteModule,
     ChartModule
   ],
-  declarations: [AdminComponent, AdminCompaniesComponent, AdminRecruitersComponent, AdminUsersComponent, AdminVacanciesComponent, AdminDashboardComponent, AdminHeaderComponent]
+  declarations: [
+    AdminComponent,
+    AdminCompaniesComponent,
+    AdminRecruitersComponent,
+    AdminEmployeesComponent,
+    AdminVacanciesComponent,
+    AdminDashboardComponent,
+    AdminHeaderComponent]
 })
 export class AdminModule { }

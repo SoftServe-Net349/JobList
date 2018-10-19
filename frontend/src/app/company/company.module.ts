@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
-import { CompanyHeaderComponent } from './company-header/company-header.component';
 import { RecruiterFormComponent } from '../recruiter-form/recruiter-form.component';
 import { CompanyInfoFormComponent } from '../company-info-form/company-info-form.component';
 
@@ -50,7 +49,6 @@ import { PaginatorModule } from 'primeng/paginator';
   declarations: [
     CompanyComponent,
     RecruiterFormComponent,
-    CompanyHeaderComponent,
     CompanyInfoFormComponent
   ],
   providers: [MessageService, ConfirmationService]

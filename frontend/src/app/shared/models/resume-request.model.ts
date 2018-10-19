@@ -12,4 +12,6 @@ export interface ResumeRequest {
   courses: string;
   createDate: Date;
   workAreaId: number;
+  position: string;
+  introduction: string;
 }

@@ -15,16 +15,16 @@ export class CompanyGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
-    const currentPerson = this.authHelper.getCurrentPerson();
+    const currentUser = this.authHelper.getCurrentUser();
 
-    if (currentPerson === null) {
+    if (currentUser === null) {
 
       this.router.navigate(['/']);
       return false;
 
     }
 
-    if (currentPerson.role === 'company'  && route.params['id'] === currentPerson.id) {
+    if (currentUser.role === 'company'  && route.params['id'] === currentUser.id) {
 
       return true;
 

@@ -7,7 +7,8 @@ namespace JobList.Common.Validators
     {
         public LanguageValidator()
         {
-            RuleFor(x => x.Name).Length(1, 50).WithMessage("Please specify a valid Name.");
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Please specify a valid Id.");
+            RuleFor(x => x.Name).NotEmpty().Length(1, 50).WithMessage("Please specify a valid Name.");
         }
     }
 }

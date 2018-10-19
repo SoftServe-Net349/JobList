@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using JobList.DataAccess.Entities;
+using JobList.DataAccess.Images;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -14,25 +15,25 @@ namespace JobList.DataAccess.Data
             var roles = new Role[]
             {
                 new Role { Id = 1, Name = "admin" },
-                new Role { Id = 2, Name = "user" },
+                new Role { Id = 2, Name = "employee" },
                 new Role { Id = 3, Name = "company" },
                 new Role { Id = 4, Name = "recruiter" }
             };
 
             var cities = new City[]
             {
-                new City {Id = 1, Name = "New York City"},
-                new City {Id = 2, Name = "Jersey City"},
-                new City {Id = 3, Name = "Atlanta"},
-                new City {Id = 4, Name = "Los Angeles"},
-                new City {Id = 5, Name = "Boston"},
-                new City {Id = 6, Name = "Philadephia"},
-                new City {Id = 7, Name = "Seattle" },
-                new City {Id = 8, Name = "Washington DC"},
-                new City {Id = 9, Name = "Las Vegas"},
-                new City {Id = 10, Name = "Phoneix"},
-                new City {Id = 11, Name = "San Francisco"},
-                new City {Id = 12, Name = "Chicago"}
+                new City {Id = 1, Name = "New York", PhotoData = CitiesImages.NewYork, PhotoMimetype = "jpg"},
+                new City {Id = 2, Name = "Jersey", PhotoData = CitiesImages.Jersey, PhotoMimetype = "jpg"},
+                new City {Id = 3, Name = "Atlanta", PhotoData = CitiesImages.Atlanta, PhotoMimetype = "jpg"},
+                new City {Id = 4, Name = "Los Angeles", PhotoData = CitiesImages.LosAngeles, PhotoMimetype = "jpg"},
+                new City {Id = 5, Name = "Boston", PhotoData = CitiesImages.Boston, PhotoMimetype = "jpg"},
+                new City {Id = 6, Name = "Philadephia", PhotoData = CitiesImages.Philadephia, PhotoMimetype = "jpg"},
+                new City {Id = 7, Name = "Seattle", PhotoData = CitiesImages.Seattle, PhotoMimetype = "jpg"},
+                new City {Id = 8, Name = "Washington DC", PhotoData = CitiesImages.WashingtonDC, PhotoMimetype = "jpg"},
+                new City {Id = 9, Name = "Las Vegas", PhotoData = CitiesImages.LasVegas, PhotoMimetype = "jpg"},
+                new City {Id = 10, Name = "Phoneix", PhotoData = CitiesImages.Phoneix, PhotoMimetype = "jpg"},
+                new City {Id = 11, Name = "San Francisco", PhotoData = CitiesImages.SanFrancisco, PhotoMimetype = "jpg"},
+                new City {Id = 12, Name = "Chicago", PhotoData = CitiesImages.Chicago, PhotoMimetype = "jpg"}
 
             };
 
@@ -95,8 +96,8 @@ namespace JobList.DataAccess.Data
                 new Faculty{ Id = 10, Name = "Journalism"}
             };
 
-            var user = new User { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthData = new DateTime(1995, 8, 3), Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
-            var resume = new Resume { Id = 46, WorkAreaId = 3, Courses = "Certification training", CreateDate = new DateTime(2018, 4, 5), KeySkills = "hardworking, persuasive", SoftSkills = "plastic surgery", Facebook = "www.facebook.com", FamilyState = "not married" };
+            var employee = new Employee { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthData = new DateTime(1995, 8, 3), Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
+            var resume = new Resume { Id = 46, WorkAreaId = 3, Courses = "Certification training", CreateDate = new DateTime(2018, 4, 5), KeySkills = "hardworking, persuasive", SoftSkills = "plastic surgery", Facebook = "www.facebook.com", FamilyState = "not married", Introduction = "Hello!" };
             var resume_language1 = new ResumeLanguage { Id = 111, ResumeId = 46, LanguageId = 10 };
             var resume_language2 = new ResumeLanguage { Id = 112, ResumeId = 46, LanguageId = 5 };
             var resume_language3 = new ResumeLanguage { Id = 113, ResumeId = 46, LanguageId = 7 };
@@ -107,16 +108,16 @@ namespace JobList.DataAccess.Data
 
             var companyFaker = new Faker<Company>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
-                .RuleFor(o => o.Name, f => f.PickRandom($"Company № {f.Random.Number(999)}"))
+                .RuleFor(o => o.Name, f => f.PickRandom($"Company {f.Random.Number(999)}"))
                 .RuleFor(o => o.BossName, f => f.Name.FirstName())
-                .RuleFor(o => o.FullDescription, f => f.Lorem.Sentence())
+                .RuleFor(o => o.FullDescription, f => f.Lorem.Sentence(3))
                 .RuleFor(o => o.ShortDescription, f => f.Lorem.Slug(1))
                 .RuleFor(o => o.Address, f => f.Address.FullAddress())
                 .RuleFor(o => o.Phone, f => f.PickRandom($"({f.Random.Number(999)}) {f.Random.Number(999)} {f.Random.Number(9999)}"))
                 .RuleFor(o => o.Site, f => f.Internet.Url())
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Password, f => f.Internet.Password())
-                .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id);
+                .RuleFor(o => o.RoleId, f => roles[2].Id);
 
             var companies = companyFaker.Generate(amount).ToArray();
 
@@ -129,7 +130,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Password, f => f.Internet.Password())
                 .RuleFor(o => o.CompanyId, f => f.PickRandom(companies).Id)
-                .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id);
+                .RuleFor(o => o.RoleId, f => roles[3].Id);
 
             var recruiters = recruiterFaker.Generate(amount).ToArray();
 
@@ -153,7 +154,7 @@ namespace JobList.DataAccess.Data
             var vacancies = vacancyFaker.Generate(amount).ToArray();
 
 
-            var userFaker = new Faker<User>()
+            var employeeFaker = new Faker<Employee>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.FirstName, f => f.Name.FirstName())
                 .RuleFor(o => o.LastName, f => f.Name.LastName())
@@ -162,15 +163,15 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.BirthData, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Password, f => f.Internet.Password())
-                .RuleFor(o => o.RoleId, f => f.PickRandom(roles).Id)
+                .RuleFor(o => o.RoleId, f => roles[1].Id)
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id);
-            User[] uu = new User[10];
-            var users = userFaker.Generate(amount + 1).ToArray();
+            Employee[] uu = new Employee[10];
+            var employees = employeeFaker.Generate(amount + 1).ToArray();
             for (int i = 0; i < 10; i++)
             {
-                uu[i] = users[i];
+                uu[i] = employees[i];
             }
-            users[10] = user;
+            employees[10] = employee;
             var resumeFaker = new Faker<Resume>()
                 .RuleFor(o => o.Id, f => f.PickRandom(uu).Id)
                 .RuleFor(o => o.Linkedin, f => f.Internet.Url())
@@ -179,8 +180,10 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.Skype, f => f.Internet.Url())
                 .RuleFor(o => o.Instagram, f => f.Internet.Url())
                 .RuleFor(o => o.FamilyState, f => f.Lorem.Sentence(1))
-                .RuleFor(o => o.SoftSkills, f => f.Lorem.Sentence())
-                .RuleFor(o => o.KeySkills, f => f.Lorem.Sentence())
+                .RuleFor(o => o.SoftSkills, f => f.Lorem.Sentence(2))
+                .RuleFor(o => o.Position, f => f.Lorem.Sentence(1))
+                .RuleFor(o => o.Introduction, f => f.Lorem.Sentence(2))
+                .RuleFor(o => o.KeySkills, f => f.Lorem.Sentence(2))
                 .RuleFor(o => o.Courses, f => f.Lorem.Sentence())
                 .RuleFor(o => o.CreateDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.ModDate, new DateTime(2017, 3, 4))
@@ -234,7 +237,7 @@ namespace JobList.DataAccess.Data
             var favoriteVacancyFaker = new Faker<FavoriteVacancy>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
                 .RuleFor(o => o.VacancyId, f => f.PickRandom(vacancies).Id)
-                .RuleFor(o => o.UserId, f => f.PickRandom(users).Id);
+                .RuleFor(o => o.EmployeeId, f => f.PickRandom(employees).Id);
 
             var favoriteVacancies = favoriteVacancyFaker.Generate(amount).ToArray();
 
@@ -248,7 +251,7 @@ namespace JobList.DataAccess.Data
             modelBuilder.Entity<WorkArea>().HasData(workAreas);
             modelBuilder.Entity<Recruiter>().HasData(recruiters);
             modelBuilder.Entity<Vacancy>().HasData(vacancies);
-            modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<Employee>().HasData(employees);
             modelBuilder.Entity<Resume>().HasData(resumes);
             modelBuilder.Entity<Experience>().HasData(experiences);
             modelBuilder.Entity<EducationPeriod>().HasData(educationPeriods);

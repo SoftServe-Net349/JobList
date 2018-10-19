@@ -61,7 +61,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<ResumeDTO>> GetAllEntitiesAsync()
         {
             var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
-                 include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                 include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.EducationPeriods).ThenInclude(e=>e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
@@ -76,7 +76,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<ResumeDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null)
         {
             var entities = await _uow.ResumesRepository.GetRangeAsync(
-                include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
@@ -92,7 +92,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<ResumeDTO>> GetFilteredEntitiesAsync(ResumeUrlQuery resumeUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
             var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
-                 include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                 include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
@@ -106,7 +106,7 @@ namespace JobList.BusinessLogic.Services
             }
             if (!string.IsNullOrEmpty(resumeUrlQuery.City))
             {
-                entities = entities.Where(е => е.User.City.Name == resumeUrlQuery.City).ToList();
+                entities = entities.Where(е => е.Employee.City.Name == resumeUrlQuery.City).ToList();
             }
 
             if (!string.IsNullOrEmpty(resumeUrlQuery.WorkArea))
@@ -138,7 +138,7 @@ namespace JobList.BusinessLogic.Services
         public async Task<ResumeDTO> GetEntityByIdAsync(int id)
         {
             var entity = await _uow.ResumesRepository.GetEntityAsync(id,
-                 include: r => r.Include(o => o.User).ThenInclude(u => u.City)
+                 include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
                                 .Include(o => o.WorkArea)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
                                 .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)

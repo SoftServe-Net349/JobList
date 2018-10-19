@@ -66,8 +66,8 @@
     <div class=fb_google *ngIf="role!='Recruiter'">
       <label class="title"> Don't have an account?</label>
     </div>
-    <div class=fb_google *ngIf="role=='User'">
-      <a (click)="showSignUpUser()" class="title">
+    <div class=fb_google *ngIf="role=='Employee'">
+      <a (click)="showSignUpEmployee()" class="title">
         Sing Up
         <i class="fa fa-sign-in icon" aria-hidden="true"></i>
       </a>
@@ -85,21 +85,21 @@
 </p-dialog>
 
 
-<p-dialog header="Sign Up for User" [(visible)]="signUpUser" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+<p-dialog header="Sign Up for Employee" [(visible)]="signUpEmployee" [modal]="true" [responsive]="true" [width]="400" [minWidth]="200"
   [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="false"
   [baseZIndex]="10000">
-  <div id="authoruzations">
+  <div id="employee-authoruzations">
 
-    <form [formGroup]="signUpUserForm" novalidate>
+    <form [formGroup]="signUpEmployeeForm" novalidate>
       <h4 class="info-title">First name<span class="required-input-symbol">*</span></h4>
       <div class="ui-float-label">
         <input id="firstName" type="text" pInputText formControlName="firstName">
-        <div *ngIf="signUpUserForm.get('firstName').invalid && (signUpUserForm.get('firstName').dirty || signUpUserForm.get('firstName').touched)"
+        <div *ngIf="signUpEmployeeForm.get('firstName').invalid && (signUpEmployeeForm.get('firstName').dirty || signUpEmployeeForm.get('firstName').touched)"
           class="alert alert-danger">
-          <div *ngIf="signUpUserForm.controls['firstName'].errors.required">
+          <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.required">
             First name is required
           </div>
-          <div *ngIf="signUpUserForm.controls['firstName'].errors.minlength || signUpUserForm.controls['firstName'].errors.maxlength">
+          <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.minlength || signUpEmployeeForm.controls['firstName'].errors.maxlength">
             First name contains (2-50) chars
           </div>
         </div>
@@ -109,32 +109,54 @@
       <h4 class="info-title">Last name<span class="required-input-symbol">*</span></h4>
         <div class="ui-float-label">
           <input id="lastName" type="text" pInputText formControlName="lastName">
-          <div *ngIf="signUpUserForm.get('lastName').invalid && (signUpUserForm.get('lastName').dirty || signUpUserForm.get('lastName').touched)"
+          <div *ngIf="signUpEmployeeForm.get('lastName').invalid && (signUpEmployeeForm.get('lastName').dirty || signUpEmployeeForm.get('lastName').touched)"
             class="alert alert-danger">
-            <div *ngIf="signUpUserForm.controls['lastName'].errors.required">
+            <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.required">
               Last name is required
             </div>
-            <div *ngIf="signUpUserForm.controls['lastName'].errors.minlength || signUpUserForm.controls['lastName'].errors.maxlength">
+            <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.minlength || signUpEmployeeForm.controls['lastName'].errors.maxlength">
               Last name contains (2-50) chars
             </div>
           </div>
         </div>
       <hr>
         
+      <h4 class="resume-title">Birth Date<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label size-input">
+          <p-calendar [(ngModel)]="birthDate" dateFormat="D d, M yy" formControlName="birthDate"></p-calendar>
+          <div *ngIf="signUpEmployeeForm.get('birthDate').invalid && (signUpEmployeeForm.get('birthDate').dirty || signUpEmployeeForm.get('birthDate').touched)" class="alert alert-danger">
+              <div *ngIf="signUpEmployeeForm.controls['birthDate'].errors.required">
+                  Birth Date is required
+              </div>
+          </div>     
+      </div>
+      <hr>
+
+      <h4 class="resume-title">City<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+          <p-dropdown [options]="cities" optionLabel="name" [(ngModel)]="selectedCity" placeholder="Select a City" formControlName="city"></p-dropdown>
+          <div *ngIf="signUpEmployeeForm.get('city').invalid && (signUpEmployeeForm.get('city').dirty || signUpEmployeeForm.get('city').touched)" class="alert alert-danger">
+              <div *ngIf="signUpEmployeeForm.controls['city'].errors.required">
+                  City is required
+              </div>
+          </div>     
+      </div>
+      <hr>
+
       <h4 class="info-title">Email
         <span class="required-input-symbol">*</span>
       </h4>
       <div class="ui-float-label">
         <input id="email" type="text" pInputText formControlName="email">
-        <div *ngIf="signUpUserForm.get('email').invalid && (signUpUserForm.get('email').dirty || signUpUserForm.get('email').touched)"
+        <div *ngIf="signUpEmployeeForm.get('email').invalid && (signUpEmployeeForm.get('email').dirty || signUpEmployeeForm.get('email').touched)"
           class="alert alert-danger">
-          <div *ngIf="signUpUserForm.controls['email'].errors.required">
+          <div *ngIf="signUpEmployeeForm.controls['email'].errors.required">
             E-Mail is required
           </div>
-          <div *ngIf="signUpUserForm.controls['email'].errors.email">
+          <div *ngIf="signUpEmployeeForm.controls['email'].errors.email">
             E-Mail should match sample@ex.com
           </div>
-          <div *ngIf="signUpUserForm.controls['email'].errors.minlength || signUpUserForm.controls['email'].errors.maxlength">
+          <div *ngIf="signUpEmployeeForm.controls['email'].errors.minlength || signUpEmployeeForm.controls['email'].errors.maxlength">
             E-mail contains (2-150) chars
           </div>
         </div>
@@ -149,12 +171,12 @@
       </h4>
       <div class="ui-float-label">
         <input type="password" pPassword formControlName="password" />
-        <div *ngIf="signUpUserForm.get('password').invalid && (signUpUserForm.get('password').dirty || signUpUserForm.get('password').touched)"
+        <div *ngIf="signUpEmployeeForm.get('password').invalid && (signUpEmployeeForm.get('password').dirty || signUpEmployeeForm.get('password').touched)"
           class="alert alert-danger">
-          <div *ngIf="signUpUserForm.controls['password'].errors.required">
+          <div *ngIf="signUpEmployeeForm.controls['password'].errors.required">
             Password is required
           </div>
-          <div *ngIf="signUpUserForm.controls['password'].errors.minlength || signUpUserForm.controls['password'].errors.maxlength">
+          <div *ngIf="signUpEmployeeForm.controls['password'].errors.minlength || signUpEmployeeForm.controls['password'].errors.maxlength">
             Password contains (8-100) chars
           </div>
         </div>
@@ -166,12 +188,12 @@
       </h4>
         <div class="ui-float-label">
           <input type="password" pPassword formControlName="passwordConfirm" />
-          <div *ngIf="signUpUserForm.get('passwordConfirm').invalid && (signUpUserForm.get('passwordConfirm').dirty || signUpUserForm.get('passwordConfirm').touched)"
+          <div *ngIf="signUpEmployeeForm.get('passwordConfirm').invalid && (signUpEmployeeForm.get('passwordConfirm').dirty || signUpEmployeeForm.get('passwordConfirm').touched)"
             class="alert alert-danger">
-            <div *ngIf="signUpUserForm.controls['passwordConfirm'].errors.required">
+            <div *ngIf="signUpEmployeeForm.controls['passwordConfirm'].errors.required">
               Password is required
             </div>
-            <div *ngIf="signUpUserForm.controls['passwordConfirm'].errors.minlength || signUpUserForm.controls['passwordConfirm'].errors.maxlength">
+            <div *ngIf="signUpEmployeeForm.controls['passwordConfirm'].errors.minlength || signUpEmployeeForm.controls['passwordConfirm'].errors.maxlength">
               Password contains (8-100) chars
             </div>
           </div>
@@ -208,7 +230,7 @@
   </div>
   <p-footer>
     <div class="toolbar-sing-up">
-      <button type="button" pButton icon="pi pi-check" (click)="submitUserSignUp()" [disabled]="signUpUserForm.invalid"
+      <button type="button" pButton icon="pi pi-check" (click)="submitEmployeeSignUp()" [disabled]="signUpEmployeeForm.invalid"
         label="Sing Up" class="ui-button-success"></button>
       <button type="button" pButton icon="pi pi-times" (click)="closeForm()" label="Cancel" class="ui-button-secondary"></button>
     </div>
@@ -267,6 +289,20 @@
       </div>
       <hr>
 
+      <h4 class="info-title">Short Description<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="shortDescription" type="text"  pInputText formControlName="shortDescription"> 
+        <div *ngIf="signUpCompanyForm.get('shortDescription').invalid && (signUpCompanyForm.get('shortDescription').dirty || signUpCompanyForm.get('shortDescription').touched)" class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['shortDescription'].errors.required">
+            Short Description is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['shortDescription'].errors?.minlength || signUpCompanyForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
+            ShortDiscription contains (2-25) chars
+          </div>
+        </div>
+      </div>
+      <hr>
+  
       <h4 class="info-title">E-Mail
         <span class="required-input-symbol">*</span>
       </h4>

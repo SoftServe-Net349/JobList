@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using JobList.Common.Validators;
 using JobList.BusinessLogic.Interfaces;
 using JobList.BusinessLogic.MappingProfiles;
@@ -77,10 +76,10 @@ namespace JobList
             services.AddTransient<IResumesService, ResumesService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddTransient<ISchoolsService, SchoolsService>();
-            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
-            services.AddTransient<ITokensService<UserDTO>, UserTokensService>();
+            services.AddTransient<ITokensService<EmployeeDTO>, EmployeeTokensService>();
             services.AddTransient<ITokensService<CompanyDTO>, CompanyTokensService>();
             services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 
@@ -178,7 +177,7 @@ namespace JobList
                 cfg.AddProfile<ResumeLanguageProfile>();
                 cfg.AddProfile<RoleProfile>();
                 cfg.AddProfile<SchoolProfile>();
-                cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<EmployeeProfile>();
                 cfg.AddProfile<VacancyProfile>();
                 cfg.AddProfile<WorkAreaProfile>();
             }); // Scoped Lifetime!
