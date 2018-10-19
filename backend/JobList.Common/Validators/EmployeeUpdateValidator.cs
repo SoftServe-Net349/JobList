@@ -12,7 +12,7 @@ namespace JobList.Common.Validators
             RuleFor(x => x.Phone).MaximumLength(15).WithMessage("Please specify a valid Phone.");
             RuleFor(x => x.PhotoMimeType).MaximumLength(5).WithMessage("Please specify a valid Photo Mime Type.");
             RuleFor(x => x.Sex).MaximumLength(1).WithMessage("Please specify a valid Sex.");
-            RuleFor(x => x.BirthData).NotEmpty().WithMessage("Please specify a valid Birth Date.");
+            RuleFor(x => x.BirthDate).NotEmpty().WithMessage("Please specify a valid Birth Date.");
             RuleFor(x => x.Email).NotEmpty().Length(4, 254).WithMessage("Please specify a valid Email.");
             RuleFor(x => x.RoleId).NotEmpty().WithMessage("Please specify a valid Role Id.");
             RuleFor(x => x.CityId).NotEmpty().WithMessage("Please specify a valid City Id.");

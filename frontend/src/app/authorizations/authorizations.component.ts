@@ -204,7 +204,7 @@ export class AuthorizationsComponent implements OnInit {
       lastName: this.signUpEmployeeForm.get('lastName').value,
       email: this.signUpEmployeeForm.get('email').value,
       password: this.signUpEmployeeForm.get('password').value,
-      birthData: this.birthDate,
+      birthDate: this.birthDate,
       cityId: this.selectedCity.id,
       phone: null,
       photoData: null,

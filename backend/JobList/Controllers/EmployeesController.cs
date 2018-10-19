@@ -15,12 +15,12 @@ namespace JobList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class employeesController : Controller
+    public class EmployeesController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
         private IEmployeesService _employeesService;
 
-        public employeesController(IEmployeesService employeesService, IAuthorizationService authorizationService)
+        public EmployeesController(IEmployeesService employeesService, IAuthorizationService authorizationService)
         {
             _authorizationService = authorizationService;
             _employeesService = employeesService;

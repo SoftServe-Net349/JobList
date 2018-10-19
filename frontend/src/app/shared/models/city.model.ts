@@ -2,6 +2,6 @@
 export interface City {
   id: number;
   name: string;
-  photoData: string;
+  photoData: number[];
   photoMimetype: string;
 }

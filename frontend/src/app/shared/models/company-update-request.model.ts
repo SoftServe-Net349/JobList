@@ -6,7 +6,7 @@ export interface CompanyUpdateRequest {
   shortDescription: string;
   address: string;
   phone: string;
-  logoData: string;
+  logoData: number[];
   logoMimetype: string;
   site: string;
   email: string;

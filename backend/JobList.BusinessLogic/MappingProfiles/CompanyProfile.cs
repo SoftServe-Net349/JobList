@@ -21,8 +21,7 @@ namespace JobList.BusinessLogic.MappingProfiles
                 .ForMember(d => d.Id, o => o.UseValue(0));
 
             CreateMap<CompanyUpdateRequest, Company>()
-                .ForMember(d => d.Id, o => o.UseValue(0))
-                .ForMember(d => d.Password, o => o.Ignore());
+                .ForMember(d => d.Id, o => o.UseValue(0));
 
         }
     }

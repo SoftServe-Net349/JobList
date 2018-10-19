@@ -3,10 +3,10 @@ export interface EmployeeUpdateRequest {
   firstName: string;
   lastName: string;
   phone: string;
-  photoData: string;
+  photoData: number[];
   photoMimeType: string;
   sex: string;
-  birthData: Date;
+  birthDate: Date;
   email: string;
   cityId: number;
   roleId: number;

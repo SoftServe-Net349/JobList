@@ -7,7 +7,7 @@ export interface Recruiter {
   lastName: string;
   phone: string;
   email: string;
-  photoData: string;
+  photoData: number[];
   photoMimetype: string;
   company: Company;
   role: Role;

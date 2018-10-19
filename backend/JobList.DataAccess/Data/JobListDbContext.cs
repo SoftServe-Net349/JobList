@@ -52,8 +52,7 @@ namespace JobList.DataAccess.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.PhotoData)
-                .HasColumnName("PHOTO_DATA")
-                    .IsUnicode(false);
+                .HasColumnName("PHOTO_DATA");
 
                 entity.Property(e => e.PhotoMimetype)
                     .HasColumnName("PHOTO_MIMETYPE")
@@ -113,8 +112,7 @@ namespace JobList.DataAccess.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.LogoData)
-                    .HasColumnName("LOGO_DATA")
-                    .IsUnicode(false);
+                    .HasColumnName("LOGO_DATA");
 
                 entity.Property(e => e.LogoMimetype)
                     .HasColumnName("LOGO_MIMETYPE")
@@ -302,8 +300,7 @@ namespace JobList.DataAccess.Data
                     .IsUnique();
 
                 entity.Property(e => e.PhotoData)
-                    .HasColumnName("PHOTO_DATA")
-                    .IsUnicode(false);
+                    .HasColumnName("PHOTO_DATA");
 
                 entity.Property(e => e.PhotoMimetype)
                     .HasColumnName("PHOTO_MIMETYPE")
@@ -550,9 +547,9 @@ namespace JobList.DataAccess.Data
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.BirthData)
+                entity.Property(e => e.BirthDate)
                     .IsRequired()
-                    .HasColumnName("BIRTH_DATA")
+                    .HasColumnName("BIRTH_DATE")
                     .HasColumnType("date");
 
                 entity.Property(e => e.CityId)
@@ -594,8 +591,7 @@ namespace JobList.DataAccess.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.PhotoData)
-                    .HasColumnName("PHOTO_DATA")
-                    .IsUnicode(false);
+                    .HasColumnName("PHOTO_DATA");
 
                 entity.Property(e => e.PhotoMimeType)
                     .HasColumnName("PHOTO_MIME_TYPE")
@@ -718,8 +714,7 @@ namespace JobList.DataAccess.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.PhotoData)
-                    .HasColumnName("PHOTO_DATA")
-                    .IsUnicode(false);
+                    .HasColumnName("PHOTO_DATA");
 
                 entity.Property(e => e.PhotoMimetype)
                     .HasColumnName("PHOTO_MIMETYPE")

@@ -8,7 +8,7 @@ export interface Company {
   shortDescription: string;
   address: string;
   phone: string;
-  logoData: string;
+  logoData: number[];
   logoMimetype: string;
   site: string;
   email: string;

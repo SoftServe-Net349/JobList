@@ -7,10 +7,10 @@ export interface Employee {
   firstName: string;
   lastName: string;
   phone: string;
-  photoData: string;
+  photoData: number[];
   photoMimeType: string;
   sex: string;
-  birthData: Date;
+  birthDate: Date;
   email: string;
   city: City;
   role: Role;

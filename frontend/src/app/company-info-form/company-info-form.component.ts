@@ -74,7 +74,7 @@ export class CompanyInfoFormComponent implements OnInit {
         address: this.company.address,
         fullDescription: this.company.fullDescription
       });
-      this.base64 = this.company.logoData;
+      // this.base64 = this.company.logoData;
       this.type = this.company.logoMimetype;
     }
 
@@ -118,7 +118,7 @@ export class CompanyInfoFormComponent implements OnInit {
       address: this.companyInfoForm.get('address').value,
       fullDescription: this.companyInfoForm.get('fullDescription').value,
       roleId: this.company.role.id,
-      logoData: this.base64,
+      logoData: [],
       logoMimetype: this.type
     };
     this.companyService.update(this.company.id, request)
