@@ -1,4 +1,43 @@
-<p-dataView [value]="employees">
+<div class="table-users">
+    <div class="header">
+        <div>
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
+                [autoWidth]="false"></p-dropdown>
+        </div>
+
+        <p-autoComplete [(ngModel)]="searchedUser" [suggestions]="employees" (onSelect)="select($event)" (completeMethod)="filterEmployees($event)"
+            (keyup.enter)="search($event)" field="email"></p-autoComplete>
+    </div>
+    <table>
+        <tr>
+            <th>Picture</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Birthdate</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let employee of employees">
+            <td><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Stevejobs.jpg" alt="" /></td>
+            <td>{{employee.firstName}}</td>
+            <td>{{employee.lastName}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.phone}}</td>
+            <td>{{employee.birthData | date}}</td>
+            <td>                    
+                <button pButton type="button" label="Delete" (click)="deleteConfirm(employee.id)" class="ui-button-rounded ui-button-danger"></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
+
+<p-confirmDialog></p-confirmDialog>
+
+
+<!-- <p-dataView [value]="users">
     <p-header>
         <div class="ui-helper-clearfix">
             <div class="ui-g">
@@ -7,7 +46,7 @@
                         [autoWidth]="false" [style]="{'min-width':'15em'}"></p-dropdown>
                 </div>
 
-                <p-autoComplete [(ngModel)]="searchedUser" [suggestions]="employees" (onSelect)="select($event)"
+                <p-autoComplete [(ngModel)]="searchedUser" [suggestions]="users" (onSelect)="select($event)"
                     (completeMethod)="filterUsers($event)" (keyup.enter)="search($event)" field="email"></p-autoComplete>
             </div>
         </div>
@@ -21,19 +60,19 @@
             <div class="ui-g-12 ui-md-8 user-details">
                 <div class="ui-g">
                     <div class="ui-g-2 ui-sm-6">First Name: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{employee?.firstName}}</b></div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{user.firstName}}</b></div>
 
                     <div class="ui-g-2 ui-sm-6">Last Name: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{employee?.lastName}}</b></div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{user.lastName}}</b></div>
 
                     <div class="ui-g-2 ui-sm-6">Phone: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{employee?.phone}}</b></div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{user.phone}}</b></div>
 
                     <div class="ui-g-2 ui-sm-6">Birthdate: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{employee?.birthData | date}}</b></div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{user.birthData | date}}</b></div>
 
                     <div class="ui-g-2 ui-sm-6">Email: </div>
-                    <div class="ui-g-10 ui-sm-6"><b>{{employee?.email}}</b></div>
+                    <div class="ui-g-10 ui-sm-6"><b>{{user.email}}</b></div>
                 </div>
             </div>
             <div class="ui-g-12 ui-md-1">
@@ -47,4 +86,4 @@
 
 <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 
-<p-confirmDialog></p-confirmDialog>
+<p-confirmDialog></p-confirmDialog> -->

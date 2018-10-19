@@ -1,9 +1,9 @@
-import { OnInit, Component, ViewChild } from "@angular/core";
-import { CompanyService } from "src/app/core/services/company.service";
-import { Company } from "src/app/shared/models/company.model";
-import { SelectItem, ConfirmationService } from "primeng/api";
-import { Paginator } from "primeng/primeng";
-import { isNullOrUndefined } from "util";
+import { OnInit, Component, ViewChild } from '@angular/core';
+import { CompanyService } from 'src/app/core/services/company.service';
+import { Company } from 'src/app/shared/models/company.model';
+import { SelectItem, ConfirmationService } from 'primeng/api';
+import { Paginator } from 'primeng/primeng';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-admin-companies',
@@ -14,29 +14,28 @@ export class AdminCompaniesComponent implements OnInit {
 
     companies: Company[];
 
-    displayDialog: boolean = false;
+    displayDialog = false;
 
-    sortKey: string = '';
-    sortOrder: boolean = false;
-    sortField: string = '';
+    sortKey = '';
+    sortOrder = false;
+    sortField = '';
 
     sortOptions: SelectItem[];
 
-    pageSize: number = 4;
-    pageNumber: number = 1;
-    totalRecords: number = 0;
+    pageSize = 4;
+    pageNumber = 1;
+    totalRecords = 0;
 
-    searchString: string = '';
+    searchString = '';
     searchedCompany: Company = null;
 
     @ViewChild('p') paginator: Paginator;
 
-    constructor(private confirmationService: ConfirmationService, private companyService: CompanyService, ){
+    constructor(private confirmationService: ConfirmationService, private companyService: CompanyService, ) {
         this.companies = [];
     }
 
-    ngOnInit() {    
-        
+    ngOnInit() {
         this.sortOptions = [
             { label: 'Name by ascending', value: 'Name' },
             { label: 'Name by decending', value: '!Name' }
@@ -47,13 +46,12 @@ export class AdminCompaniesComponent implements OnInit {
     }
 
     onSortChange(event) {
-        let value = event.value;
+        const value = event.value;
 
         if (value.indexOf('!') === 0) {
             this.sortOrder = false;
             this.sortField = value.substring(1, value.length);
-        }
-        else {
+        } else {
             this.sortOrder = true;
             this.sortField = value;
         }
@@ -73,7 +71,7 @@ export class AdminCompaniesComponent implements OnInit {
         this.searchString = event.query;
         this.pageNumber = 1;
         this.loadCompanies();
-        
+
         this.paginator.changePage(0);
     }
 
@@ -88,8 +86,7 @@ export class AdminCompaniesComponent implements OnInit {
     search() {
         if (isNullOrUndefined(this.searchedCompany)) {
             this.searchString = '';
-        }
-        else if (isNullOrUndefined(this.searchedCompany.name)) {
+        } else if (isNullOrUndefined(this.searchedCompany.name)) {
             this.searchString = this.searchedCompany.toString();
         }
 
@@ -106,8 +103,7 @@ export class AdminCompaniesComponent implements OnInit {
                 if (response.body !== null) {
                     this.companies = response.body;
                     this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-                }
-                else {
+                } else {
                     this.companies = null;
                     this.totalRecords = 0;
                 }

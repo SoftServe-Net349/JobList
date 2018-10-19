@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 import { AdminCompaniesComponent } from './admin-companies/admin-companies.component';
 import { AdminVacanciesComponent } from './admin-vacancies/admin-vacancies.component';
 import { AdminRecruitersComponent } from './admin-recruiters/admin-recruiters.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 
 const childRoutes: Routes = [
   { path: 'admin-employees', component: AdminEmployeesComponent },
