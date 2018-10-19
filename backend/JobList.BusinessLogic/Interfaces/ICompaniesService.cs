@@ -20,7 +20,7 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<CompanyDTO> CreateEntityAsync(CompanyRequest modelRequest);
 
-        Task<bool> UpdateEntityByIdAsync(CompanyRequest modelRequest, int id);
+        Task<bool> UpdateEntityByIdAsync(CompanyUpdateRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
 

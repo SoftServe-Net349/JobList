@@ -123,7 +123,24 @@ namespace JobList
                                 // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                     fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EducationPeriodValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<CompanyUpdateValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EmployeeValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EmployeeUpdateValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RecruiterValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RecruiterUpdateValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<WorkAreaValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<LanguageValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<FacultyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<FavoriteVacancyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<ResumeLanguageValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RoleValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<SchoolValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<VacancyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<ExperienceValidator>();
+
+
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

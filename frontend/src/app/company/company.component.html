@@ -2,15 +2,16 @@
 
 <div id="company-page">
   <div class="company-info">
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Company logo">
+    <img class="logo"  [src]="sanitizeImg('data:image;base64,'+company?.logoData)" alt="Company logo">
     <div class="wrapper-flex">
       <div class="additional-info">
         <p>{{company?.shortDescription}}</p>
         <p><span>Company Name:</span> {{company?.name}}</p>
         <p><span>Boss Name:</span> {{company?.bossName}}</p>
         <p><span>E-Mail:</span> {{company?.email}}</p>
-        <p><span>Phone:</span> {{company?.phone}}</p>
+        <p *ngIf="company?.phone"><span>Phone:</span> {{company?.phone}}</p>
         <p><span>Address:</span> {{company?.address}}</p>
+        <p *ngIf="company?.site"><span>Web site:</span> {{company?.site}}</p>
       </div>
       <div>
         <app-company-info-form #companyInfoForm (loadCompanyById)=" loadCompanyById()" [company]="company"></app-company-info-form>
@@ -47,7 +48,7 @@
       <li *ngFor="let recruiter of recruiters">
         <div class="recruiter-wrapper-flex">
           <div>
-            <img class="avatar" [src]="sanitizeImg('data:image/jbeg;base64,'+recruiter.photoData)" alt="Recruiter avatar">
+            <img class="avatar" [src]="sanitizeImg('data:image;base64,'+recruiter.photoData)" alt="Recruiter avatar">
           </div>
           <div class="recruiter-info">
             <p>{{recruiter?.firstName}} {{recruiter?.lastName}}</p>

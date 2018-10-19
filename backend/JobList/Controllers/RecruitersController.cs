@@ -37,8 +37,9 @@ namespace JobList.Controllers
         }
 
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
-                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get(string searchString,
+                                                                               [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                               [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
             var dtos = await _recruitersService.GetFilteredRecruitersAsync(null, searchString, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
@@ -151,7 +152,7 @@ namespace JobList.Controllers
 
         // PUT: /recruiters/:id
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]RecruiterRequest request)
+        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]RecruiterUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

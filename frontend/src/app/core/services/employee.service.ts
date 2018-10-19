@@ -5,6 +5,7 @@ import { EmployeeRequest } from '../../shared/models/employee-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { EmployeeUpdateRequest } from '../../shared/models/employee-update-request.model';
 
 @Injectable()
 export class EmployeeService {
@@ -37,7 +38,7 @@ export class EmployeeService {
     return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 
-  update(id: number, request: EmployeeRequest): Observable<Object> {
+  update(id: number, request: EmployeeUpdateRequest): Observable<Object> {
     return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
   }
 

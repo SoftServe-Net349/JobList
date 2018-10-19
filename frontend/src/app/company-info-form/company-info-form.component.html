@@ -61,10 +61,13 @@
 		</div> 
 		<hr>
 
-		<h4 class="info-title">Short Description</h4>
+		<h4 class="info-title">Short Description<span class="required-input-symbol">*</span></h4>
 		<div class="ui-float-label">
 			<input id="shortDescription" type="text"  pInputText formControlName="shortDescription"> 
 			<div *ngIf="companyInfoForm.get('shortDescription').invalid && (companyInfoForm.get('shortDescription').dirty || companyInfoForm.get('shortDescription').touched)" class="alert alert-danger">
+					<div *ngIf="companyInfoForm.controls['shortDescription'].errors.required">
+							Short Description is required
+					</div>		
 				<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
 					ShortDiscription contains (2-25) chars
 				</div>
@@ -91,7 +94,7 @@
 						Web site should contain (2-100) chars
 					</div>
 					<div *ngIf="companyInfoForm.controls['site'].errors.pattern">
-						Should match [http(s)://]domain.com
+						Should match [http(s)://]domain[.com]
 					</div>
 			</div>
 		</div>
@@ -104,7 +107,8 @@
 		<hr>
 
 		<div>
-			<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Logo"></p-fileUpload>
+				<p-fileUpload name="demo[]" mode="advanced"  [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
+			<!-- <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Logo"></p-fileUpload> -->
 		</div>
 	</form> 
 </div>

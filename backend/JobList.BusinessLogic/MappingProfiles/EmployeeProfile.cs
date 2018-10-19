@@ -19,6 +19,9 @@ namespace JobList.BusinessLogic.MappingProfiles
             CreateMap<EmployeeRequest, Employee>()
                 .ForMember(d => d.Id, o => o.UseValue(0));
 
+            CreateMap<EmployeeUpdateRequest, Employee>()
+                .ForMember(d => d.Id, o => o.UseValue(0));
+
         }
     }
 }

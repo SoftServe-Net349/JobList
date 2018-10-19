@@ -37,13 +37,13 @@ export class CompanyComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
 
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadCompanyById(id);
       this.loadRecruiters(id);
+
     });
 
   }
@@ -51,7 +51,7 @@ export class CompanyComponent implements OnInit {
   loadCompanyById(id: number = this.company.id) {
 
     this.companyService.getById(id)
-    .subscribe((data: Company) => this.company = data);
+    .subscribe((data: Company) => { this.company = data; });
 
   }
 
@@ -68,7 +68,6 @@ export class CompanyComponent implements OnInit {
         this.totalRecords = XPagination.TotalRecords;
       }
     });
-
   }
 
   deleteConfirm(id: number) {
@@ -125,6 +124,7 @@ export class CompanyComponent implements OnInit {
       });
     }
   }
+
   sanitizeImg(url): SafeUrl {
     return this._sanitizer.bypassSecurityTrustUrl(url);
   }
