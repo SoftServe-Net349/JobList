@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { SearchLineComponent } from '../shared/search-line/search-line.component';
 
@@ -11,9 +11,7 @@ import { SearchLineComponent } from '../shared/search-line/search-line.component
   styleUrls: ['./job-search.component.sass']
 })
 export class JobSearchComponent implements OnInit {
-  
-  @ViewChild(SearchLineComponent)
-  
+
   totalRecords: number = 0;
   vacancies: Vacancy[];
 
@@ -23,21 +21,13 @@ export class JobSearchComponent implements OnInit {
   param: JobSearchQuery;
 
 
-  constructor(private vacancyService: VacancyService, private router: Router) {
+  constructor(private vacancyService: VacancyService, private router: ActivatedRoute) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
   }
 
   ngOnInit() {
     this.loadVacancies(this.pageSize, this.pageNumber);
-  }
-
-  goToVacancyDetails(id: number) {
-    this.router.navigate(['/vacancy-details/', id]);
-  }
-
-  goToCompanyDetails(id: number) {
-    this.router.navigate(['/company-details/', id]);
   }
 
   getDefaultParam(): JobSearchQuery {
