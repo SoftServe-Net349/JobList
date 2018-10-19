@@ -10,10 +10,10 @@ namespace JobList.Common.DTOS
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
-        public string PhotoData { get; set; }
+        public byte[] PhotoData { get; set; }
         public string PhotoMimeType { get; set; }
         public string Sex { get; set; }
-        public DateTime BirthData { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Email { get; set; }
 
         public RoleDTO Role { get; set; }

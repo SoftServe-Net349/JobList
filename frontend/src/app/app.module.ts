@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
@@ -46,13 +46,13 @@ export function tokenGetter() {
     CoreModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:56681'],
-        blacklistedRoutes: ['localhost:56681/tokens/']
+        tokenGetter: tokenGetter
       }
     })
   ],
-  providers: [AuthHelper],
+  providers: [
+    AuthHelper
+  ],
   bootstrap: [
     AppComponent
   ]

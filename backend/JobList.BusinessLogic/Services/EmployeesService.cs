@@ -137,7 +137,7 @@ namespace JobList.BusinessLogic.Services
             switch (field)
             {
                 case "Birthdate":
-                    return e => e.BirthData.ToString();
+                    return e => e.BirthDate.ToString();
                 case "Email":
                     return e => e.Email;
 

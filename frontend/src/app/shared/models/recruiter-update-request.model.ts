@@ -4,7 +4,7 @@ export interface RecruiterUpdateRequest {
   lastName: string;
   phone: string;
   email: string;
-  photoData: string;
+  photoData: number[];
   photoMimetype: string;
   companyId: number;
   roleId: number;

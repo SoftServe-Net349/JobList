@@ -10,6 +10,7 @@ namespace JobList.BusinessLogic.MappingProfiles
         public EmployeeProfile()
         {
             CreateMap<Employee, Employee>()
+                .ForMember(d => d.Password, o => o.Ignore())
                 .ForMember(d => d.Id, o => o.Ignore()); // Don't Map Id because It is useless for Ids when updating
 
             CreateMap<Employee, EmployeeDTO>();

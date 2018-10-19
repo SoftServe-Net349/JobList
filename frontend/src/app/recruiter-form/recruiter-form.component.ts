@@ -74,6 +74,9 @@ export class RecruiterFormComponent implements OnInit {
         email: this.recruiter.email,
         phone: this.recruiter.phone
       });
+
+      this.type = this.recruiter.photoMimetype;
+      // this.base64 = this.recruiter.photoData;
     }
   }
 
@@ -95,7 +98,7 @@ export class RecruiterFormComponent implements OnInit {
       phone: this.recruiterForm.get('phone').value,
       companyId: this.companyId,
       roleId: this.recruiter.role.id,
-      photoData: this.base64,
+      photoData: [],
       photoMimetype: this.type
     };
     this.recruiterService.update(this.recruiter.id, request)
@@ -111,7 +114,7 @@ export class RecruiterFormComponent implements OnInit {
       password: '12345678',
       companyId: this.companyId,
       roleId: 4,
-      photoData: this.base64,
+      photoData: [],
       photoMimetype: this.type
 
     };

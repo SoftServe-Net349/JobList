@@ -6,7 +6,7 @@ namespace JobList.Common.DTOS
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string PhotoData { get; set; }
+        public byte[] PhotoData { get; set; }
         public string PhotoMimetype { get; set; }
     }
 }
