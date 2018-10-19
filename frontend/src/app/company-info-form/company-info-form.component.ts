@@ -2,8 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Company } from '../shared/models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService, MenuItem } from 'primeng/api';
-import { CompanyRequest } from '../shared/models/company-request.model';
 import { CompanyService } from '../core/services/company.service';
+import { CompanyUpdateRequest } from '../shared/models/company-update-request.model';
 
 @Component({
   selector: 'app-company-info-form',
@@ -22,7 +22,10 @@ export class CompanyInfoFormComponent implements OnInit {
   display: Boolean = false;
   action: String;
 
+  type: string;
   uploadedFiles: any[] = [];
+  dataString: string|ArrayBuffer;
+  base64: string;
 
   constructor(private formBuilder: FormBuilder,
               private messageService: MessageService,
@@ -71,19 +74,24 @@ export class CompanyInfoFormComponent implements OnInit {
         address: this.company.address,
         fullDescription: this.company.fullDescription
       });
-
+      this.base64 = this.company.logoData;
+      this.type = this.company.logoMimetype;
     }
 
   }
 
   onUpload(event) {
-
     for (const file of event.files) {
-      this.uploadedFiles.push(file);
-    }
+    this.uploadedFiles.push(file);
+     const reader = new FileReader();
+     reader.onload = () => {
+     this.dataString = reader.result;
+     this.base64 = this.dataString.toString().split(',')[1];
+    };
+    reader.readAsDataURL(file);
+    this.type = file.type.toString().split('/')[1];
 
-    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-
+   }
   }
 
   submit() {
@@ -100,7 +108,7 @@ export class CompanyInfoFormComponent implements OnInit {
 
   updateCompanyInfo() {
 
-    const request: CompanyRequest = {
+    const request: CompanyUpdateRequest = {
       name: this.companyInfoForm.get('companyName').value,
       bossName: this.companyInfoForm.get('bossName').value,
       email: this.companyInfoForm.get('email').value,
@@ -109,12 +117,10 @@ export class CompanyInfoFormComponent implements OnInit {
       site: this.companyInfoForm.get('site').value,
       address: this.companyInfoForm.get('address').value,
       fullDescription: this.companyInfoForm.get('fullDescription').value,
-      password: '',
       roleId: this.company.role.id,
-      logoData: this.company.logoData,
-      logoMimetype: this.company.logoMimetype
+      logoData: this.base64,
+      logoMimetype: this.type
     };
-
     this.companyService.update(this.company.id, request)
     .subscribe(data => this.loadCompanyById.emit());
 

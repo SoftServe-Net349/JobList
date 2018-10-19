@@ -4,6 +4,7 @@ import { Recruiter } from '../shared/models/recruiter.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RecruiterService } from '../core/services/recruiter.service';
 import { RecruiterRequest } from '../shared/models/recruiter-request.model';
+import { RecruiterUpdateRequest } from '../shared/models/recruiter-update-request.model';
 
 @Component({
   selector: 'app-recruiter-form',
@@ -87,12 +88,11 @@ export class RecruiterFormComponent implements OnInit {
   }
 
   updateRecruiter() {
-    const request: RecruiterRequest = {
+    const request: RecruiterUpdateRequest = {
       firstName: this.recruiterForm.get('firstName').value,
       lastName: this.recruiterForm.get('lastName').value,
       email: this.recruiterForm.get('email').value,
       phone: this.recruiterForm.get('phone').value,
-      password: '',
       companyId: this.companyId,
       roleId: this.recruiter.role.id,
       photoData: this.base64,

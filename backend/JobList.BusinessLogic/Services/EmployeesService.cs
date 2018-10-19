@@ -146,9 +146,9 @@ namespace JobList.BusinessLogic.Services
         }
 
 
-        public async Task<bool> UpdateEntityByIdAsync(EmployeeRequest modelRequest, int id)
+        public async Task<bool> UpdateEntityByIdAsync(EmployeeUpdateRequest modelRequest, int id)
         {
-            var entity = _mapper.Map<EmployeeRequest, Employee>(modelRequest);
+            var entity = _mapper.Map<EmployeeUpdateRequest, Employee>(modelRequest);
             entity.Id = id;
 
             var updated = await _uow.EmployeesRepository.UpdateAsync(entity);

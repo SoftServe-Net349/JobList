@@ -28,7 +28,7 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<RecruiterDTO> CreateRecruiterAsync(RecruiterRequest modelRequest);
 
-        Task<bool> UpdateRecruiterByIdAsync(RecruiterRequest modelRequest, int id);
+        Task<bool> UpdateRecruiterByIdAsync(RecruiterUpdateRequest modelRequest, int id);
 
         Task<bool> DeleteRecruiterByIdAsync(int id);
         

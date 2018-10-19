@@ -41,8 +41,9 @@ namespace JobList.Controllers
 
 
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
-                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered(string searchString,
+                                                                                     [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                                     [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
             var dtos = await _employeesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
@@ -111,7 +112,7 @@ namespace JobList.Controllers
 
         // PUT: /employees/:id
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]EmployeeRequest request)
+        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]EmployeeUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
