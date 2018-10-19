@@ -41,7 +41,7 @@ namespace JobList.Controllers
                                                                                [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                                [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _recruitersService.GetFilteredRecruitersAsync(null, searchString, sortingUrlQuery, paginationUrlQuery);
+            var dtos = await _recruitersService.GetFilteredRecruitersAsync(searchString, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();

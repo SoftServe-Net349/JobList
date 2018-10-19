@@ -1,10 +1,10 @@
-import { OnInit, Component, ViewChild } from "@angular/core";
-import { VacancyService } from "src/app/core/services/vacancy.service";
-import { Vacancy } from "src/app/shared/models/vacancy.model";
-import { ConfirmationService, SelectItem } from "primeng/api";
-import { VacancyRequest } from "src/app/shared/models/vacancy-request.model";
-import { Paginator } from "primeng/primeng";
-import { isNullOrUndefined } from "util";
+import { OnInit, Component, ViewChild } from '@angular/core';
+import { VacancyService } from 'src/app/core/services/vacancy.service';
+import { Vacancy } from 'src/app/shared/models/vacancy.model';
+import { ConfirmationService, SelectItem } from 'primeng/api';
+import { VacancyRequest } from 'src/app/shared/models/vacancy-request.model';
+import { Paginator } from 'primeng/primeng';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-admin-vacancies',
@@ -15,19 +15,19 @@ export class AdminVacanciesComponent implements OnInit {
 
     vacancies: Vacancy[];
 
-    displayDialog: boolean = false;
+    displayDialog = false;
 
-    sortKey: string = '';
-    sortOrder: boolean = false;
-    sortField: string = '';
+    sortKey = '';
+    sortOrder = false;
+    sortField = '';
 
     sortOptions: SelectItem[];
 
-    pageSize: number = 4;
-    pageNumber: number = 1;
-    totalRecords: number = 0;
+    pageSize = 4;
+    pageNumber = 1;
+    totalRecords = 0;
 
-    searchString: string = '';
+    searchString = '';
     searchedVacancy: Vacancy = null;
 
     @ViewChild('p') paginator: Paginator;
@@ -49,13 +49,12 @@ export class AdminVacanciesComponent implements OnInit {
     }
 
     onSortChange(event) {
-        let value = event.value;
+        const value = event.value;
 
         if (value.indexOf('!') === 0) {
             this.sortOrder = false;
             this.sortField = value.substring(1, value.length);
-        }
-        else {
+        } else {
             this.sortOrder = true;
             this.sortField = value;
         }
@@ -74,7 +73,7 @@ export class AdminVacanciesComponent implements OnInit {
         this.searchString = event.query;
         this.pageNumber = 1;
         this.loadVacancies();
-        
+
         this.paginator.changePage(0);
     }
 
@@ -90,8 +89,7 @@ export class AdminVacanciesComponent implements OnInit {
     search() {
         if (isNullOrUndefined(this.searchedVacancy)) {
             this.searchString = '';
-        }
-        else if (isNullOrUndefined(this.searchedVacancy.name)) {
+        } else if (isNullOrUndefined(this.searchedVacancy.name)) {
             this.searchString = this.searchedVacancy.toString();
         }
 
@@ -100,7 +98,7 @@ export class AdminVacanciesComponent implements OnInit {
 
         this.paginator.changePage(0);
     }
-    
+
     checkConfirm(vacancy: Vacancy, isChecked: boolean) {
         const request: VacancyRequest = this.getRequest(vacancy, isChecked);
 
@@ -151,8 +149,7 @@ export class AdminVacanciesComponent implements OnInit {
                 if (response.body !== null) {
                     this.vacancies = response.body;
                     this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-                }
-                else {
+                } else {
                     this.vacancies = null;
                     this.totalRecords = 0;
                 }

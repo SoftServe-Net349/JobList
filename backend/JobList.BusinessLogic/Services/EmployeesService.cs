@@ -13,6 +13,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
+using JobList.Common.Extensions;
 
 namespace JobList.BusinessLogic.Services
 {
@@ -110,25 +111,20 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            List<Employee> entities = null;
+            Expression<Func<Employee, bool>> filter = e => true;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                entities = await _uow.EmployeesRepository.GetRangeAsync(
-                    filter: e => e.Email.ToLower().Contains(searchString.ToLower()),
-                    include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
-                    sorting: GetSortField(sortingUrlQuery.SortField),
-                    sortOrder: sortingUrlQuery.SortOrder,
-                    paginationUrlQuery: paginationUrlQuery);
+                filter = filter.And(e => e.Email.ToLower().Contains(searchString.ToLower()));
             }
-            else
-            {
-                entities = await _uow.EmployeesRepository.GetRangeAsync(
-                    include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
-                    sorting: GetSortField(sortingUrlQuery.SortField),
-                    sortOrder: sortingUrlQuery.SortOrder,
-                    paginationUrlQuery: paginationUrlQuery);
-            }
+
+            var entities = await _uow.EmployeesRepository.GetRangeAsync(
+                filter: filter,
+                include: e => e.Include(c => c.City).Include(o => o.FavoriteVacancies).Include(o => o.Resumes),
+                sorting: GetSortField(sortingUrlQuery.SortField),
+                sortOrder: sortingUrlQuery.SortOrder,
+                paginationUrlQuery: paginationUrlQuery);
+
 
             var dtos = _mapper.Map<List<Employee>, List<EmployeeDTO>>(entities);
 

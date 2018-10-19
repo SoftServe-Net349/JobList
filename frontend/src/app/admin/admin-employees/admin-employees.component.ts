@@ -1,9 +1,9 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
-import { Employee } from '../../shared/models/employee.model';
-import { EmployeeService } from '../../core/services/employee.service';
+import { EmployeeService } from 'src/app/core/services/employee.service';
 import { SelectItem, ConfirmationService } from 'primeng/api';
 import { isNullOrUndefined } from 'util';
 import { Paginator } from 'primeng/primeng';
+import { Employee } from 'src/app/shared/models/employee.model';
 
 @Component({
     selector: 'app-admin-employees',
@@ -27,16 +27,16 @@ export class AdminEmployeesComponent implements OnInit {
     totalRecords = 0;
 
     searchString = '';
-    searchedEmployee: Employee = null;
+    searchedUser = null;
 
     @ViewChild('p') paginator: Paginator;
 
-    constructor(private confirmationService: ConfirmationService, private employeeService: EmployeeService) {
+    constructor(private confirmationService: ConfirmationService, private userService: EmployeeService) {
         this.employees = [];
     }
 
     ngOnInit() {
-        this.loadEmployees();
+        this.loadUsers();
 
         this.sortOptions = [
             { label: 'Newest First', value: '!Birthdate' },
@@ -57,7 +57,7 @@ export class AdminEmployeesComponent implements OnInit {
             this.sortField = value;
         }
 
-        this.loadEmployees();
+        this.loadUsers();
     }
 
 
@@ -65,13 +65,13 @@ export class AdminEmployeesComponent implements OnInit {
         this.pageNumber = event.page + 1;
         this.pageSize = event.rows;
 
-        this.loadEmployees();
+        this.loadUsers();
     }
 
     filterEmployees(event) {
         this.searchString = event.query;
         this.pageNumber = 1;
-        this.loadEmployees();
+        this.loadUsers();
 
         this.paginator.changePage(0);
     }
@@ -79,27 +79,27 @@ export class AdminEmployeesComponent implements OnInit {
     select(event) {
         this.searchString = event.email;
         this.pageNumber = 1;
-        this.loadEmployees();
+        this.loadUsers();
 
         this.paginator.changePage(0);
     }
 
     search() {
-        if (isNullOrUndefined(this.searchedEmployee)) {
+        if (isNullOrUndefined(this.searchedUser)) {
             this.searchString = '';
-        } else if (isNullOrUndefined(this.searchedEmployee.email)) {
-            this.searchString = this.searchedEmployee.toString();
+        } else if (isNullOrUndefined(this.searchedUser.email)) {
+            this.searchString = this.searchedUser.toString();
         }
 
         this.pageNumber = 1;
-        this.loadEmployees();
+        this.loadUsers();
 
         this.paginator.changePage(0);
     }
 
 
-    loadEmployees() {
-        this.employeeService.getFullResponse(this.searchString, this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
+    loadUsers() {
+        this.userService.getFullResponse(this.searchString, this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
             .subscribe((response) => {
                 if (response.body !== null) {
                     this.employees = response.body;
@@ -117,7 +117,7 @@ export class AdminEmployeesComponent implements OnInit {
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.employeeService.delete(id).subscribe(data => this.loadEmployees());
+                this.userService.delete(id).subscribe(data => this.loadUsers());
             }
         });
     }
