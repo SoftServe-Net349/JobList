@@ -2,7 +2,7 @@
 
 <div id="company-page">
   <div class="company-info">
-    <img class="logo"  [src]="sanitizeImg('data:image;base64,'+company?.logoData)" alt="Company logo">
+    <img class="logo"  [src]="sanitizeCompanyImg(company?.logoData)" alt="Company logo">
     <div class="wrapper-flex">
       <div class="additional-info">
         <p>{{company?.shortDescription}}</p>
@@ -48,7 +48,7 @@
       <li *ngFor="let recruiter of recruiters">
         <div class="recruiter-wrapper-flex">
           <div>
-            <img class="avatar" [src]="sanitizeImg('data:image;base64,'+recruiter.photoData)" alt="Recruiter avatar">
+            <img class="avatar" [src]="sanitizeRecruiterImg(recruiter?.photoData, recruiter)" alt="Recruiter avatar">
           </div>
           <div class="recruiter-info">
             <p>{{recruiter?.firstName}} {{recruiter?.lastName}}</p>
