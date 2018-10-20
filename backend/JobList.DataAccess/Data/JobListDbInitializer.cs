@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using JobList.DataAccess.Entities;
-using JobList.DataAccess.Images;
+using JobList.DataAccess.ImageReader;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -22,19 +22,18 @@ namespace JobList.DataAccess.Data
 
             var cities = new City[]
             {
-                new City {Id = 1, Name = "New York"},
-                new City {Id = 2, Name = "Jersey"},
-                new City {Id = 3, Name = "Atlanta"},
-                new City {Id = 4, Name = "Los Angeles"},
-                new City {Id = 5, Name = "Boston"},
-                new City {Id = 6, Name = "Philadephia"},
-                new City {Id = 7, Name = "Seattle"},
-                new City {Id = 8, Name = "Washington DC"},
-                new City {Id = 9, Name = "Las Vegas"},
-                new City {Id = 10, Name = "Phoneix"},
-                new City {Id = 11, Name = "San Francisco"},
-                new City {Id = 12, Name = "Chicago"}
-
+                new City {Id = 1, Name = "New York", PhotoData = ImageReaderHelper.ReadImage("NewYork"), PhotoMimetype = "jpeg"},
+                new City {Id = 2, Name = "Jersey", PhotoData = ImageReaderHelper.ReadImage("Jersey"), PhotoMimetype = "jpeg"},
+                new City {Id = 3, Name = "Atlanta", PhotoData = ImageReaderHelper.ReadImage("Atlanta"), PhotoMimetype = "jpeg"},
+                new City {Id = 4, Name = "Los Angeles", PhotoData = ImageReaderHelper.ReadImage("LosAngeles"), PhotoMimetype = "jpeg"},
+                new City {Id = 5, Name = "Boston", PhotoData = ImageReaderHelper.ReadImage("Boston"), PhotoMimetype = "jpeg"},
+                new City {Id = 6, Name = "Philadephia", PhotoData = ImageReaderHelper.ReadImage("Philadephia"), PhotoMimetype = "jpeg"},
+                new City {Id = 7, Name = "Seattle", PhotoData = ImageReaderHelper.ReadImage("Seattle"), PhotoMimetype = "jpeg"},
+                new City {Id = 8, Name = "Washington DC", PhotoData = ImageReaderHelper.ReadImage("WashingtonDC"), PhotoMimetype = "jpeg"},
+                new City {Id = 9, Name = "Las Vegas", PhotoData = ImageReaderHelper.ReadImage("LasVegas"), PhotoMimetype = "jpeg"},
+                new City {Id = 10, Name = "Phoneix", PhotoData = ImageReaderHelper.ReadImage("Phoneix"), PhotoMimetype = "jpeg"},
+                new City {Id = 11, Name = "San Francisco", PhotoData = ImageReaderHelper.ReadImage("SanFrancisco"), PhotoMimetype = "jpeg"},
+                new City {Id = 12, Name = "Chicago", PhotoData = ImageReaderHelper.ReadImage("Chicago"), PhotoMimetype = "jpeg"}
             };
 
             var languages = new Language[]
