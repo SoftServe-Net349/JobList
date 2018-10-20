@@ -34,7 +34,6 @@ export class CompanyService {
 }
 
   register(request: CompanyRequest): Observable<Company> {
-    console.log(request);
     return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 

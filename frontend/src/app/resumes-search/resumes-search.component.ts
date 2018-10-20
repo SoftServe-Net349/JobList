@@ -94,7 +94,6 @@ export class ResumesSearchComponent implements OnInit {
     this.resumeService.getFullResponse(pageSize, pageNumber)
       .subscribe((response) => {
         this.resumes = response.body;
-        console.log(this.resumes);
         this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
       });
   }
