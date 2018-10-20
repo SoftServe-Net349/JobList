@@ -25,7 +25,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/web.config"
+              "src/web.config",
+              "src/images/"
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.min.css",

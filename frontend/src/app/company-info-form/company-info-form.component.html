@@ -10,7 +10,7 @@
 						Company Name is required
 					</div>
 					<div *ngIf="companyInfoForm.controls['companyName'].errors.minlength || companyInfoForm.controls['companyName'].errors.maxlength">
-						Company Name contains (2-200) chars
+						Company Name contains (1-200) chars
 					</div>
 				</div>
 			</div>
@@ -24,7 +24,7 @@
 						Boss Name is required
 					</div>
 					<div *ngIf="companyInfoForm.controls['bossName'].errors.minlength || companyInfoForm.controls['bossName'].errors.maxlength">
-						Boss Name should contain (2-100) chars
+						Boss Name should contain (1-100) chars
 					</div>
 			</div>
 		</div> 
@@ -37,11 +37,11 @@
 				<div *ngIf="companyInfoForm.controls['email'].errors.required">
 					Email is required
 				</div>
-				<div *ngIf="companyInfoForm.controls['email'].errors.email">
-					Email should match sample@example.com
+				<div *ngIf="companyInfoForm.controls['email'].errors.pattern">
+					Email should match exam@exam.com
 				</div>
 				<div *ngIf="companyInfoForm.controls['email'].errors.maxlength">
-					Email should contain (5-150) chars
+					Email should contain (6-254) chars
 				</div>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 					Address is required
 				</div>
 				<div *ngIf="companyInfoForm.controls['address'].errors.minlength || companyInfoForm.controls['address'].errors.maxlength">
-					Address contains (2-200) chars
+					Address contains (1-200) chars
 				</div>
 			</div>
 		</div> 
@@ -69,7 +69,7 @@
 							Short Description is required
 					</div>		
 				<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
-					ShortDiscription contains (2-25) chars
+					ShortDiscription contains (1-25) chars
 				</div>
 			</div>
 		</div>
@@ -91,7 +91,7 @@
 			<input id="webSite" type="text"  pInputText formControlName="site"> 
 			<div *ngIf="companyInfoForm.get('site').invalid && (companyInfoForm.get('site').dirty || companyInfoForm.get('site').touched)" class="alert alert-danger">
 					<div *ngIf="companyInfoForm.controls['site'].errors.minlength || companyInfoForm.controls['site'].errors.maxlength">
-						Web site should contain (2-100) chars
+						Web site should contain (3-100) chars
 					</div>
 					<div *ngIf="companyInfoForm.controls['site'].errors.pattern">
 						Should match [http(s)://]domain[.com]
@@ -107,8 +107,7 @@
 		<hr>
 
 		<div>
-				<p-fileUpload name="demo[]" mode="advanced"  [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
-			<!-- <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Logo"></p-fileUpload> -->
+			<p-fileUpload name="demo[]" mode="advanced"  [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
 		</div>
 	</form> 
 </div>
