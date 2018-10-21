@@ -16,7 +16,7 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<EmployeeDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery paginationUrlQuery = null);
 
-        Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
+        Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(string searchString, string searhcField, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
         Task<EmployeeDTO> GetEntityByIdAsync(int id);
 

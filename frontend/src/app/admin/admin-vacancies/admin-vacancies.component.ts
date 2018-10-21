@@ -23,7 +23,7 @@ export class AdminVacanciesComponent implements OnInit {
 
     sortOptions: SelectItem[];
 
-    pageSize = 20;
+    pageSize = 10;
     pageNumber = 1;
     totalRecords = 0;
 

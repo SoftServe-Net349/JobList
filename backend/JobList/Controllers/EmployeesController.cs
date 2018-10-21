@@ -41,10 +41,10 @@ namespace JobList.Controllers
 
 
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered(string searchString, string searchField, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _employeesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
+            var dtos = await _employeesService.GetFilteredEntitiesAsync(searchString, searchField, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();

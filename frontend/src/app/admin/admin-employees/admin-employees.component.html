@@ -1,13 +1,19 @@
 <div class="table-entities">
     <div class="table-header">
-        <div>
+        <div class="left-dropdown">
             <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
-                [autoWidth]="false"></p-dropdown>
+                [autoWidth]="false" styleClass="left"></p-dropdown>
         </div>
 
         <div class="table-autocomplete">
-            <p-autoComplete [(ngModel)]="searchedEmployee" [suggestions]="employees" (onSelect)="select($event)" (completeMethod)="filterEmployees($event)"
-            (keyup.enter)="search($event)" field="email"></p-autoComplete>
+            <p-autoComplete [(ngModel)]="searchedEmployee" [suggestions]="employees" (onSelect)="select($event)"
+                (completeMethod)="filterEmployees($event)" (onClear)="clear()" [field]="suggestField" [placeholder]="placeholder">
+            </p-autoComplete>
+        </div>
+
+        <div class="right-dropdown">
+            <p-dropdown [options]="searchOptions" [(ngModel)]="searchField" (onChange)="onSearchFieldChange($event)">
+            </p-dropdown>
         </div>
     </div>
     <table>
@@ -27,13 +33,13 @@
             <td>{{employee.email}}</td>
             <td>{{employee.phone}}</td>
             <td>{{employee.birthData | date}}</td>
-            <td>                    
+            <td>
                 <button pButton type="button" label="Delete" (click)="deleteConfirm(employee.id)" class="ui-button-rounded ui-button-danger"></button>
             </td>
         </tr>
     </table>
 </div>
 
-<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
+<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
 
 <p-confirmDialog></p-confirmDialog>

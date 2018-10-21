@@ -109,13 +109,13 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        public async Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(string searchString, string searchField, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
             Expression<Func<Employee, bool>> filter = e => true;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                filter = filter.And(e => e.Email.ToLower().Contains(searchString.ToLower()));
+                filter = filter.And(GetSearchField(searchField, searchString));
             }
 
             var entities = await _uow.EmployeesRepository.GetRangeAsync(
@@ -136,10 +136,25 @@ namespace JobList.BusinessLogic.Services
         {
             switch (field)
             {
-                case "Birthdate":
+                case "birthDate":
                     return e => e.BirthData.ToString();
-                case "Email":
+                case "email":
                     return e => e.Email;
+
+                default: return null;
+            }
+        }
+
+        private Expression<Func<Employee, bool>> GetSearchField(string searchField, string searchString)
+        {
+            switch (searchField)
+            {
+                case "firstName":
+                    return e => e.FirstName.Contains(searchString);
+                case "lastName":
+                    return e => e.LastName.Contains(searchString);
+                case "email":
+                    return e => e.Email.Contains(searchString);
 
                 default: return null;
             }
