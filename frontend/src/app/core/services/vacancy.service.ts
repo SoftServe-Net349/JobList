@@ -20,16 +20,17 @@ export class VacancyService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
   }
 
-  getAdminResponse(searchString: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number)
+  getAdminResponse(searchString: string, searchField: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number)
   : Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
       .set('sortField', sortField)
       .set('sortOrder', sortOrder.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString())
-      .set('searchString', searchString);
+      .set('searchString', searchString)
+      .set('searchField', searchField);
 
-    return this.apiService.getFullResponse(`/${this.ctrlUrl}/admin`, params);
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
   getAll(): Observable<Vacancy[]> {

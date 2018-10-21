@@ -92,7 +92,9 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null,
+            SearchingUrlQuery searchingUrlQuery = null, SortingUrlQuery sortingUrlQuery = null,
+            PaginationUrlQuery paginationUrlQuery = null)
         {
             Expression<Func<Vacancy, bool>> filter = e => true;
 
@@ -120,55 +122,48 @@ namespace JobList.BusinessLogic.Services
             {
                 filter = filter.And(е => е.FullPartTime == vacancyUrlQuery.TypeOfEmployment);
             }
-            if (!(vacancyUrlQuery.Salary == 0))
+            if (vacancyUrlQuery.Salary != null)
             {
                 filter = filter.And(е => е.Salary >= vacancyUrlQuery.Salary);
             }
 
-
-            var entities = await _uow.VacanciesRepository.GetRangeAsync(
-                filter: filter,
-                include: r => r.Include(o => o.City)
-                               .Include(o => o.WorkArea)
-                               .Include(o => o.Recruiter).ThenInclude(v => v.Company),
-                paginationUrlQuery: paginationUrlQuery);
-
-            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
-
-            return dtos;
-        }
-
-
-        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
-        {
-            Expression<Func<Vacancy, bool>> filter = e => true;
-
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
             {
-                filter = filter.And(e => e.Name.ToLower().Contains(searchString.ToLower()));
+                filter = filter.And(GetSearchField(searchingUrlQuery));
             }
 
             var entities = await _uow.VacanciesRepository.GetRangeAsync(
                 filter: filter,
-                include: e => e.Include(o => o.City).Include(o => o.WorkArea).Include(o => o.Recruiter).ThenInclude(v => v.Company),
+                include: r => r.Include(o => o.City)
+                                .Include(o => o.WorkArea)
+                                .Include(o => o.Recruiter).ThenInclude(v => v.Company),
                 sorting: GetSortField(sortingUrlQuery.SortField),
                 sortOrder: sortingUrlQuery.SortOrder,
                 paginationUrlQuery: paginationUrlQuery);
-
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 
             return dtos;
         }
 
+        private Expression<Func<Vacancy, bool>> GetSearchField(SearchingUrlQuery searchingUrlQuery)
+        {
+            switch (searchingUrlQuery.SearchField)
+            {
+                case "name":
+                    return e => e.Name.Contains(searchingUrlQuery.SearchString);
+
+                default: return null;
+            }
+        }
 
         private Expression<Func<Vacancy, string>> GetSortField(string field)
         {
             switch (field)
             {
-                case "Name":
+                case "name":
                     return e => e.Name;
-                case "CreateDate":
+                case "createDate":
                     return e => e.CreateDate.ToString();
 
                 default: return null;

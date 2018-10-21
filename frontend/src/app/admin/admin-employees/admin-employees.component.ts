@@ -52,7 +52,7 @@ export class AdminEmployeesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadUsers();
+        this.loadEmployees();
 
         this.sortOptions = [
             { label: 'Newest First', value: '!birthDate' },
@@ -83,19 +83,19 @@ export class AdminEmployeesComponent implements OnInit {
             this.sortField = value;
         }
 
-        this.loadUsers();
+        this.loadEmployees();
     }
 
     paginate(event) {
         this.pageNumber = event.page + 1;
         this.pageSize = event.rows;
 
-        this.loadUsers();
+        this.loadEmployees();
     }
 
     filterEmployees(event) {
         this.searchString = event.query;
-        this.loadUsers();
+        this.loadEmployees();
 
         this.paginator.changePage(0);
     }
@@ -109,7 +109,7 @@ export class AdminEmployeesComponent implements OnInit {
 
     clear() {
         this.searchString = '';
-        this.loadUsers();
+        this.loadEmployees();
     }
 
     deleteConfirm(id: number) {
@@ -118,12 +118,12 @@ export class AdminEmployeesComponent implements OnInit {
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {
-                this.userService.delete(id).subscribe(data => this.loadUsers());
+                this.userService.delete(id).subscribe(data => this.loadEmployees());
             }
         });
     }
 
-    loadUsers() {
+    loadEmployees() {
         this.userService.getFullResponse(this.searchString, this.searchField,
             this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
             .subscribe((response) => {
