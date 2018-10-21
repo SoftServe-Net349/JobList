@@ -8,13 +8,15 @@ import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.comp
 
 import { HomeComponent } from './home.component';
 import { MainSearchComponent } from './main-search/main-search.component';
+import { AuthGuard } from '../core/guards/auth.guard';
+import { CompanyRecruiterAdminGuard } from '../core/guards/company-recruiter-admin.guard';
 
 const childRoutes: Routes = [
   { path: '', component: MainSearchComponent, pathMatch: 'full'},
   { path: 'jobsearch', component: JobSearchComponent},
-  { path: 'resumessearch', component: ResumesSearchComponent },
+  { path: 'resumessearch', component: ResumesSearchComponent, canActivate: [AuthGuard, CompanyRecruiterAdminGuard] },
   { path: 'company-details/:id', component: CompanyDetailsComponent},
-  { path: 'resume-details/:id', component: ResumeDetailsComponent },
+  { path: 'resume-details/:id', component: ResumeDetailsComponent, canActivate: [AuthGuard, CompanyRecruiterAdminGuard] },
   { path: 'vacancy-details/:id', component: VacancyDetailsComponent}
 ];
 

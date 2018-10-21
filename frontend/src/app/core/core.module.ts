@@ -19,8 +19,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { EmployeeGuard } from './guards/employee.guard';
 import { CompanyGuard } from './guards/company.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtTokenInterceptor } from './interceptors/jwt-token-interceptor';
+import { CompanyRecruiterAdminGuard } from './guards/company-recruiter-admin.guard';
 
 @NgModule({
   imports: [
@@ -45,7 +44,7 @@ import { JwtTokenInterceptor } from './interceptors/jwt-token-interceptor';
     EmployeeGuard,
     CompanyGuard,
     RecruiterGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtTokenInterceptor, multi: true }
+    CompanyRecruiterAdminGuard
   ],
   declarations: []
 })

@@ -27,7 +27,7 @@ namespace JobList.Controllers
         }
 
         // GET: /resumes
-        [Authorize]
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get([FromQuery] PaginationUrlQuery urlQuery = null)
         {
@@ -49,7 +49,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]ResumeUrlQuery resumeUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
@@ -84,6 +84,17 @@ namespace JobList.Controllers
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<ResumeDTO>> GetById(int id)
         {
+            if (User.IsInRole("employee"))
+            {
+                var isAuthorized = await _authorizationService
+                                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+                if (!isAuthorized.Succeeded)
+                {
+                    return Forbid();
+                }
+            }
+
             var dto = await _resumesService.GetEntityByIdAsync(id);
             if (dto == null)
             {
