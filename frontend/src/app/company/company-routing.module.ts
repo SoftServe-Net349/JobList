@@ -5,7 +5,7 @@ import { AuthGuard } from '../core/guards/auth.guard';
 import { CompanyGuard } from '../core/guards/company.guard';
 
 const routes: Routes = [
-  { path: 'companies/:id', component: CompanyComponent, canActivate: [AuthGuard, CompanyGuard] }
+  { path: '', component: CompanyComponent, canActivate: [AuthGuard, CompanyGuard] }
 ];
 
 @NgModule({
