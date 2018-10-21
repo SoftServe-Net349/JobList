@@ -6,6 +6,7 @@ using JobList.Common.Extensions;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
+using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -122,13 +123,13 @@ namespace JobList.BusinessLogic.Services
         }
 
 
-        public async Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        public async Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(SearchingUrlQuery searchingUrlQuery, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
             Expression<Func<Recruiter, bool>> filter = e => true;
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
             {
-                filter = filter.And(e => e.Email.ToLower().Contains(searchString.ToLower()));
+                filter = filter.And(GetSearchField(searchingUrlQuery));
             }
 
             var entities = await _uow.RecruitersRepository.GetRangeAsync(
@@ -143,6 +144,37 @@ namespace JobList.BusinessLogic.Services
             var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
 
             return dtos;
+        }
+
+        private Expression<Func<Recruiter, string>> GetSortField(string field)
+        {
+            switch (field)
+            {
+                case "firstName":
+                    return r => r.FirstName;
+                case "lastName":
+                    return r => r.LastName;
+                case "companyName":
+                    return r => r.Company.Name;
+                case "email":
+                    return r => r.Email;
+            }
+            return null;
+        }
+
+        private Expression<Func<Recruiter, bool>> GetSearchField(SearchingUrlQuery searchingUrlQuery)
+        {
+            switch (searchingUrlQuery.SearchField)
+            {
+                case "firstName":
+                    return e => e.FirstName.Contains(searchingUrlQuery.SearchString);
+                case "lastName":
+                    return e => e.LastName.Contains(searchingUrlQuery.SearchString);
+                case "email":
+                    return e => e.Email.Contains(searchingUrlQuery.SearchString);
+
+                default: return null;
+            }
         }
 
 
@@ -207,22 +239,6 @@ namespace JobList.BusinessLogic.Services
             {
                 return false;
             }
-        }
-
-        private Expression<Func<Recruiter, string>> GetSortField(string field)
-        {
-            switch (field)
-            {
-                case "FirstName":
-                    return r => r.FirstName;
-                case "LastName":
-                    return r => r.LastName;
-                case "CompanyName":
-                    return r => r.Company.Name;
-                case "Email":
-                    return r => r.Email;
-            }
-            return null;
         }
     }
 }

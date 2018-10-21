@@ -160,7 +160,6 @@ namespace JobList.BusinessLogic.Services
             }
         }
 
-
         public async Task<bool> UpdateEntityByIdAsync(EmployeeRequest modelRequest, int id)
         {
             var entity = _mapper.Map<EmployeeRequest, Employee>(modelRequest);

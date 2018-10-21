@@ -2,6 +2,7 @@
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
+using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyIdAsync(int companyId, PaginationUrlQuery urlQuery = null);
 
-        Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
+        Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(SearchingUrlQuery searchingUrlQuery = null, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
 
         Task<IEnumerable<RecruiterDTO>> GetFilteredRecruitersAsync(int? companyId = null,
