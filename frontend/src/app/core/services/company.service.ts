@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CompanyRequest } from '../../shared/models/company-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
+import { CompanyUpdateRequest } from '../../shared/models/company-update-request.model';
 
 @Injectable()
 export class CompanyService {
@@ -34,11 +35,10 @@ export class CompanyService {
 }
 
   register(request: CompanyRequest): Observable<Company> {
-    console.log(request);
     return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 
-  update(id: number, request: CompanyRequest): Observable<Object> {
+  update(id: number, request: CompanyUpdateRequest): Observable<Object> {
     return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
   }
 

@@ -33,10 +33,7 @@ export class CompanyComponent implements OnInit {
               private confirmationService: ConfirmationService,
               private _sanitizer: DomSanitizer) {
 
-    this.recruiters = [];
-
   }
-
 
   ngOnInit() {
 
@@ -48,10 +45,13 @@ export class CompanyComponent implements OnInit {
 
   }
 
+  console() {
+    console.log(this.company);
+  }
   loadCompanyById(id: number = this.company.id) {
 
     this.companyService.getById(id)
-    .subscribe((data: Company) => this.company = data);
+    .subscribe((data: Company) => { this.company = data; });
 
   }
 
@@ -68,7 +68,6 @@ export class CompanyComponent implements OnInit {
         this.totalRecords = XPagination.TotalRecords;
       }
     });
-
   }
 
   deleteConfirm(id: number) {
@@ -125,7 +124,30 @@ export class CompanyComponent implements OnInit {
       });
     }
   }
-  sanitizeImg(url): SafeUrl {
-    return this._sanitizer.bypassSecurityTrustUrl(url);
+
+  sanitizeCompanyImg(imageBase64): SafeUrl {
+    if (this.company !== undefined && this.company.logoData !== undefined &&
+        this.company.logoData !== null && this.company.logoData !== '') {
+
+      return this._sanitizer.bypassSecurityTrustUrl(`data:image/${this.company.logoMimetype};base64,` + imageBase64);
+
+    } else {
+
+      return '../../images/yourLogoHere.png';
+
+    }
+  }
+
+  sanitizeRecruiterImg(imageBase64, recruiter: Recruiter): SafeUrl {
+    if (this.recruiters !== undefined && recruiter.photoData !== undefined &&
+          recruiter.photoData !== null && recruiter.photoData !== '') {
+
+      return this._sanitizer.bypassSecurityTrustUrl(`data:image/${recruiter.photoMimetype};base64,` + imageBase64);
+
+    } else {
+
+      return '../../images/defaultUser.png';
+
+    }
   }
 }

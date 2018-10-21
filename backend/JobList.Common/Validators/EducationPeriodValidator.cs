@@ -3,7 +3,7 @@ using JobList.Common.Requests;
 
 namespace JobList.Common.Validators
 {
-    class EducationPeriodValidator : AbstractValidator<EducationPeriodRequest>
+    public class EducationPeriodValidator : AbstractValidator<EducationPeriodRequest>
     {
         public EducationPeriodValidator()
         {

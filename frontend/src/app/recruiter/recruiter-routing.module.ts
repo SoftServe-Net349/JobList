@@ -5,7 +5,7 @@ import { AuthGuard } from '../core/guards/auth.guard';
 import { RecruiterGuard } from '../core/guards/recruiter.guard';
 
 const routes: Routes = [
-  { path: 'recruiters/:id', component: RecruiterComponent, canActivate: [AuthGuard, RecruiterGuard] }
+  { path: '', component: RecruiterComponent, canActivate: [AuthGuard, RecruiterGuard] }
 ];
 
 

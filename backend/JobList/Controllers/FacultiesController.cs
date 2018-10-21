@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -21,6 +22,7 @@ namespace JobList.Controllers
         }
 
         // GET: /faculties
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<FacultyDTO>>> Get()
         {
@@ -33,7 +35,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<FacultyDTO>> GetById(int id)
         {
@@ -47,6 +49,7 @@ namespace JobList.Controllers
         }
 
         // POST: /faculties
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public virtual async Task<ActionResult<FacultyDTO>> Create([FromBody] FacultyRequest request)
         {
@@ -65,6 +68,7 @@ namespace JobList.Controllers
         }
 
         // PUT: /faculties/:id
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]FacultyRequest request)
         {
@@ -83,6 +87,7 @@ namespace JobList.Controllers
         }
 
         // DELETE: /faculties/:id
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {

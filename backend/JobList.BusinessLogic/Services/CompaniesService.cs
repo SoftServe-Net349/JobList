@@ -9,6 +9,7 @@ using JobList.Common.Sorting;
 using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -74,7 +75,8 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<CompanyDTO>> GetAllEntitiesAsync()
         {
-            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync();
+            var entities = await _uow.CompaniesRepository.GetAllEntitiesAsync(
+                include: r => r.Include(u => u.Role));
 
             if (entities == null) return null;
 
@@ -97,7 +99,6 @@ namespace JobList.BusinessLogic.Services
                 sorting: GetSortField(sortingUrlQuery.SortField),
                 sortOrder: sortingUrlQuery.SortOrder,
                 paginationUrlQuery: paginationUrlQuery);
-
 
             var dtos = _mapper.Map<List<Company>, List<CompanyDTO>>(entities);
 
@@ -134,7 +135,8 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<CompanyDTO> GetEntityByIdAsync(int id)
         {
-            var entity = await _uow.CompaniesRepository.GetEntityAsync(id);
+            var entity = await _uow.CompaniesRepository.GetEntityAsync(id,
+                    include: r => r.Include(u => u.Role));
 
             if (entity == null) return null;
 
@@ -143,9 +145,9 @@ namespace JobList.BusinessLogic.Services
             return dto;
         }
 
-        public async Task<bool> UpdateEntityByIdAsync(CompanyRequest modelRequest, int id)
+        public async Task<bool> UpdateEntityByIdAsync(CompanyUpdateRequest modelRequest, int id)
         {
-            var entity = _mapper.Map<CompanyRequest, Company>(modelRequest);
+            var entity = _mapper.Map<CompanyUpdateRequest, Company>(modelRequest);
             entity.Id = id;
 
             var updated = await _uow.CompaniesRepository.UpdateAsync(entity);

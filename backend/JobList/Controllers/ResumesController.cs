@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.UrlQuery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -15,14 +17,17 @@ namespace JobList.Controllers
     [ApiController]
     public class ResumesController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IResumesService _resumesService;
 
-        public ResumesController(IResumesService resumesService)
+        public ResumesController(IResumesService resumesService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _resumesService = resumesService;
         }
 
         // GET: /resumes
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get([FromQuery] PaginationUrlQuery urlQuery = null)
         {
@@ -44,7 +49,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]ResumeUrlQuery resumeUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
@@ -75,10 +80,21 @@ namespace JobList.Controllers
         }
  
 
-
+        [Authorize]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<ResumeDTO>> GetById(int id)
         {
+            if (User.IsInRole("employee"))
+            {
+                var isAuthorized = await _authorizationService
+                                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+                if (!isAuthorized.Succeeded)
+                {
+                    return Forbid();
+                }
+            }
+
             var dto = await _resumesService.GetEntityByIdAsync(id);
             if (dto == null)
             {
@@ -89,6 +105,7 @@ namespace JobList.Controllers
         }
 
         // POST: /resumes
+        [Authorize(Roles = "employee, admin")]
         [HttpPost]
         public virtual async Task<ActionResult<ResumeDTO>> Create([FromBody] ResumeRequest request)
         {
@@ -107,9 +124,18 @@ namespace JobList.Controllers
         }
 
         // PUT: /resumes/:id
+        [Authorize(Roles = "employee, admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]ResumeRequest request)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -125,9 +151,18 @@ namespace JobList.Controllers
         }
 
         // DELETE: /resumes/:id
+        [Authorize(Roles = "employee, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _resumesService.DeleteEntityByIdAsync(id);
             if (!result)
             {

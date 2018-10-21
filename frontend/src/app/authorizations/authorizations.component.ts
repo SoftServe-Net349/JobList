@@ -34,6 +34,11 @@ export class AuthorizationsComponent implements OnInit {
   signUpEmployeeForm: FormGroup;
   signUpCompanyForm: FormGroup;
 
+  uploadedFile: File;
+  type: string;
+  dataString: string|ArrayBuffer;
+  base64: string;
+
   @Output()
   chengeAuthenticatedStatus = new EventEmitter();
 
@@ -73,7 +78,7 @@ export class AuthorizationsComponent implements OnInit {
     return this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(150)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(254)]],
       birthDate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -85,12 +90,16 @@ export class AuthorizationsComponent implements OnInit {
   getSignUpCompanyForm(): FormGroup {
 
     return this.formBuilder.group({
-      companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      bossName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
+      companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      bossName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(254),
+        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+      phone: [''],
+      shortDescription: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
+      site: ['', [Validators.minLength(3), Validators.maxLength(100),
+        Validators.pattern('^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$')]],
+      address: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       fullDescription: ['', [Validators.required]],
-      shortDescription: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(150)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
       passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
     });
@@ -99,6 +108,7 @@ export class AuthorizationsComponent implements OnInit {
 
   showSignIn(_role: string, _login = '') {
 
+    this.errorMessage = '';
     this.authoruzationsForm.reset();
     this.role = _role;
     this.authoruzationsForm.setValue({login: _login, password: ''});
@@ -108,6 +118,7 @@ export class AuthorizationsComponent implements OnInit {
 
   showSignUpEmployee() {
 
+    this.errorMessage = '';
     this.signUpEmployeeForm.reset();
     this.signInDialog = false;
     this.signUpEmployee = true;
@@ -116,6 +127,7 @@ export class AuthorizationsComponent implements OnInit {
 
   showSignUpCompany() {
 
+    this.errorMessage = '';
     this.signUpCompanyForm.reset();
     this.signInDialog = false;
     this.signUpCompany = true;
@@ -204,13 +216,13 @@ export class AuthorizationsComponent implements OnInit {
       lastName: this.signUpEmployeeForm.get('lastName').value,
       email: this.signUpEmployeeForm.get('email').value,
       password: this.signUpEmployeeForm.get('password').value,
-      birthData: this.birthDate,
+      birthDate: this.birthDate,
       cityId: this.selectedCity.id,
-      phone: null,
+      phone: '',
       photoData: null,
       photoMimeType: null,
       roleId: 2,
-      sex: null };
+      sex: '' };
 
   }
 
@@ -237,13 +249,23 @@ export class AuthorizationsComponent implements OnInit {
       fullDescription: this.signUpCompanyForm.get('fullDescription').value,
       email: this.signUpCompanyForm.get('email').value,
       password: this.signUpCompanyForm.get('password').value,
-      logoData: null,
-      logoMimetype: null,
-      phone: null,
+      logoData:  this.base64,
+      logoMimetype:  this.type,
+      phone: this.signUpCompanyForm.get('phone').value,
       roleId: 3,
       shortDescription: this.signUpCompanyForm.get('shortDescription').value,
-      site: null };
+      site: this.signUpCompanyForm.get('site').value };
 
   }
 
+  onUpload(event) {
+    this.uploadedFile = event.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+     this.dataString = reader.result;
+     this.base64 = this.dataString.toString().split(',')[1];
+    };
+    reader.readAsDataURL(this.uploadedFile);
+    this.type = this.uploadedFile.type.toString().split('/')[1];
+  }
 }

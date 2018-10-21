@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
+using Microsoft.AspNetCore.Authorization;
 using JobList.Common.UrlQuery;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -17,14 +19,17 @@ namespace JobList.Controllers
     [ApiController]
     public class CompaniesController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private ICompaniesService _companiesService;
 
-        public CompaniesController(ICompaniesService companiesService)
+        public CompaniesController(ICompaniesService companiesService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _companiesService = companiesService;
         }
 
         // GET: /companies
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<CompanyDTO>>> Get()
         {
@@ -37,7 +42,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get([FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
@@ -60,7 +65,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<CompanyDTO>> GetById(int id)
         {
@@ -74,6 +79,7 @@ namespace JobList.Controllers
         }
 
         // POST: /companies
+        [AllowAnonymous]
         [HttpPost("register")]
         public virtual async Task<ActionResult<CompanyDTO>> Register([FromBody] CompanyRequest request)
         {
@@ -99,9 +105,19 @@ namespace JobList.Controllers
         }
 
         // PUT: /companies/:id
+        [Authorize(Roles = "company, admin")]
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]CompanyRequest request)
+        public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]CompanyUpdateRequest request)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -117,9 +133,18 @@ namespace JobList.Controllers
         }
 
         // DELETE: /companies/:id
+        [Authorize(Roles = "company, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _companiesService.DeleteEntityByIdAsync(id);
             if (!result)
             {

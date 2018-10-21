@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { RecruiterRequest } from '../../shared/models/recruiter-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
+import { RecruiterUpdateRequest } from '../../shared/models/recruiter-update-request.model';
 
 @Injectable()
 export class RecruiterService {
@@ -57,7 +58,7 @@ export class RecruiterService {
     return this.apiService.post(`/${this.ctrlUrl}/register`, request);
   }
 
-  update(id: number, request: RecruiterRequest): Observable<Object> {
+  update(id: number, request: RecruiterUpdateRequest): Observable<Object> {
     return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
   }
 

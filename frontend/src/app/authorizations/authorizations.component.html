@@ -157,7 +157,7 @@
             E-Mail should match sample@ex.com
           </div>
           <div *ngIf="signUpEmployeeForm.controls['email'].errors.minlength || signUpEmployeeForm.controls['email'].errors.maxlength">
-            E-mail contains (2-150) chars
+            E-mail contains (2-254) chars
           </div>
         </div>
         <div class="error-message" *ngIf="errorMessage">
@@ -253,7 +253,7 @@
             Company Name is required
           </div>
           <div *ngIf="signUpCompanyForm.controls['companyName'].errors.minlength || signUpCompanyForm.controls['companyName'].errors.maxlength">
-            Company Name contains (2-200) chars
+            Company Name contains (1-200) chars
           </div>
         </div>
       </div>
@@ -268,7 +268,7 @@
             Boss name is required
           </div>
           <div *ngIf="signUpCompanyForm.controls['bossName'].errors.minlength || signUpCompanyForm.controls['bossName'].errors.maxlength">
-            Boss name contains (2-100) chars
+            Boss name contains (1-100) chars
           </div>
         </div>
       </div>
@@ -283,7 +283,7 @@
             Address is required
           </div>
           <div *ngIf="signUpCompanyForm.controls['address'].errors.minlength || signUpCompanyForm.controls['address'].errors.maxlength">
-              Address contains (2-200) chars
+              Address contains (1-200) chars
           </div>  
         </div>
       </div>
@@ -297,7 +297,7 @@
             Short Description is required
           </div>
           <div *ngIf="signUpCompanyForm.controls['shortDescription'].errors?.minlength || signUpCompanyForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
-            ShortDiscription contains (2-25) chars
+            ShortDiscription contains (1-25) chars
           </div>
         </div>
       </div>
@@ -313,11 +313,11 @@
           <div *ngIf="signUpCompanyForm.controls['email'].errors.required">
               E-Mail is required
           </div>
-          <div *ngIf="signUpCompanyForm.controls['email'].errors.email">
-              E-Mail should match sample@example.com
+          <div *ngIf="signUpCompanyForm.controls['email'].errors.pattern">
+              E-Mail should match exam@exam.com
           </div>
           <div *ngIf="signUpCompanyForm.controls['email'].errors.minlength || signUpCompanyForm.controls['email'].errors.maxlength">
-              E-Mail contains (2-150) chars
+              E-Mail contains (6-254) chars
           </div>  
         </div>
         <div class="error-message" *ngIf="errorMessage">
@@ -329,19 +329,17 @@
       <h4 class="info-title">Password
         <span class="required-input-symbol">*</span>
       </h4>
-      <div class="sdf">
-        <span class="ui-float-label">
-          <input type="password" pPassword formControlName="password" />
-          <div *ngIf="signUpCompanyForm.get('password').invalid && (signUpCompanyForm.get('password').dirty || signUpCompanyForm.get('password').touched)"
-            class="alert alert-danger">
-            <div *ngIf="signUpCompanyForm.controls['password'].errors.required">
-              Password is required
-            </div>
-            <div *ngIf="signUpCompanyForm.controls['password'].errors.minlength || signUpCompanyForm.controls['password'].errors.maxlength">
-              Password contains (2-100) chars
-            </div>
+      <div class="ui-float-label">
+        <input type="password" pPassword formControlName="password" />
+        <div *ngIf="signUpCompanyForm.get('password').invalid && (signUpCompanyForm.get('password').dirty || signUpCompanyForm.get('password').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['password'].errors.required">
+            Password is required
           </div>
-        </span>
+          <div *ngIf="signUpCompanyForm.controls['password'].errors.minlength || signUpCompanyForm.controls['password'].errors.maxlength">
+            Password contains (8-100) chars
+          </div>
+        </div>
       </div>
       <hr>
       <h4 class="info-title">Confirm password<span class="required-input-symbol">*</span></h4>
@@ -353,7 +351,7 @@
             Password is required
           </div>
           <div *ngIf="signUpCompanyForm.controls['passwordConfirm'].errors.minlength || signUpCompanyForm.controls['passwordConfirm'].errors.maxlength">
-            Password contains (2-100) chars
+            Password contains (8-100) chars
           </div>
         </div>
       </div>
@@ -366,15 +364,35 @@
         <div *ngIf="signUpCompanyForm.get('fullDescription').invalid && (signUpCompanyForm.get('fullDescription').dirty || signUpCompanyForm.get('fullDescription').touched)"
           class="alert alert-danger">
           <div *ngIf="signUpCompanyForm.controls['fullDescription'].errors.required">
-            Information about company is required
-          </div>
-          <div *ngIf="signUpCompanyForm.controls['fullDescription'].errors.minlength || signUpCompanyForm.controls['fullDescription'].errors.maxlength">
-            Information about compan should contain (10-400) chars
+            FullDescription about company is required
           </div>
         </div>
       </div>
       <hr>
 
+      <h4 class="info-title">Web Site</h4>
+      <div class="ui-float-label">
+        <input id="webSite" type="text"  pInputText formControlName="site"> 
+        <div *ngIf="signUpCompanyForm.get('site').invalid && (signUpCompanyForm.get('site').dirty || signUpCompanyForm.get('site').touched)" class="alert alert-danger">
+            <div *ngIf="signUpCompanyForm.controls['site'].errors.minlength || signUpCompanyForm.controls['site'].errors.maxlength">
+              Web site should contain (3-100) chars
+            </div>
+            <div *ngIf="signUpCompanyForm.controls['site'].errors.pattern">
+              Should match [http(s)://]domain[.com]
+            </div>
+        </div>
+      </div>
+      <hr class="hr-after-website">
+  
+      <h4 class="info-title">Phone</h4>
+      <div class="ui-float-label">
+        <p-inputMask id="phone" mask="(999) 999-9999" formControlName="phone"></p-inputMask>
+      </div>
+      <hr>
+
+      <div>
+				<p-fileUpload name="demo[]" mode="advanced"  [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
+		  </div>
     </form>
 
 

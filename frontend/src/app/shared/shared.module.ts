@@ -22,6 +22,7 @@ import { AuthorizationsComponent } from '../authorizations/authorizations.compon
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchLineComponent } from './search-line/search-line.component';
+import { InputMaskModule, FileUploadModule } from 'primeng/primeng';
 
 // Our created modules
 
@@ -40,7 +41,9 @@ import { SearchLineComponent } from './search-line/search-line.component';
     RadioButtonModule,
     ReactiveFormsModule,
     MenuModule,
-    CalendarModule
+    CalendarModule,
+    InputMaskModule,
+    FileUploadModule
   ],
   declarations: [
     SomePipe,

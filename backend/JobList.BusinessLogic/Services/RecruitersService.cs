@@ -38,7 +38,8 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<RecruiterDTO>> GetAllRecruitersAsync()
         {
             var entities = await _uow.RecruitersRepository.GetAllEntitiesAsync(
-                include: r => r.Include(o => o.Company));
+                include: r => r.Include(o => o.Company)
+                               .Include(o => o.Role));
 
             var dtos = _mapper.Map<List<Recruiter>, List<RecruiterDTO>>(entities);
 
@@ -49,8 +50,7 @@ namespace JobList.BusinessLogic.Services
         {
             var entity = await _uow.RecruitersRepository.GetEntityAsync(id,
                 include: r => r.Include(o => o.Company)
-                                .Include(o => o.Vacancies).ThenInclude(v => v.WorkArea)
-                                .Include(o => o.Vacancies).ThenInclude(v => v.City));
+                               .Include(o => o.Role));
 
             if (entity == null) return null;
 
@@ -62,7 +62,8 @@ namespace JobList.BusinessLogic.Services
         public async Task<IEnumerable<RecruiterDTO>> GetRecruitersByCompanyIdAsync(int companyId, PaginationUrlQuery urlQuery = null)
         {
             var entities = await _uow.RecruitersRepository.GetRangeAsync(filter: r => r.CompanyId == companyId,
-              include: r => r.Include(o => o.Company),
+              include: r => r.Include(o => o.Company)
+                             .Include(o => o.Role),
               paginationUrlQuery: urlQuery);
 
             if (entities == null) return null;
@@ -209,9 +210,9 @@ namespace JobList.BusinessLogic.Services
             return result;
         }
 
-        public async Task<bool> UpdateRecruiterByIdAsync(RecruiterRequest modelRequest, int id)
+        public async Task<bool> UpdateRecruiterByIdAsync(RecruiterUpdateRequest modelRequest, int id)
         {
-            var entity = _mapper.Map<RecruiterRequest, Recruiter>(modelRequest);
+            var entity = _mapper.Map<RecruiterUpdateRequest, Recruiter>(modelRequest);
             entity.Id = id;
 
             var updated = await _uow.RecruitersRepository.UpdateAsync(entity);

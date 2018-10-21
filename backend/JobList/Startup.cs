@@ -22,6 +22,7 @@ using System.Text;
 using JobList.Common.DTOS;
 using Microsoft.AspNetCore.Authorization;
 using JobList.AuthorizationHandlers;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace JobList
 {
@@ -86,14 +87,11 @@ namespace JobList
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Authorization User as an Owner
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("OwnerPolicy", policy =>
-                    policy.Requirements.Add(new SameOwnerRequirement()));
-            });
-
-            // Add your authorization handlers here
-            services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("OwnerPolicy", policy =>
+            //        policy.Requirements.Add(new SameOwnerRequirement()));
+            //});
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -116,22 +114,51 @@ namespace JobList
                     };
                 });
 
-            services.AddMvc()
+            services.AddMvc(config =>
+            {
+                // using Microsoft.AspNetCore.Mvc.Authorization;
+                // using Microsoft.AspNetCore.Authorization;
+                var policy = new AuthorizationPolicyBuilder()
+                                    .RequireAuthenticatedUser()
+                                    .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            })
                 .AddFluentValidation(fv =>
                 {
                     fv.ImplicitlyValidateChildProperties = true;
-                                // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                    // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                     fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EducationPeriodValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<CompanyUpdateValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EmployeeValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EmployeeUpdateValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RecruiterValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RecruiterUpdateValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<WorkAreaValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<LanguageValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<FacultyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<FavoriteVacancyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<ResumeLanguageValidator>();
                     fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<RoleValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<SchoolValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<VacancyValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<ExperienceValidator>();
+
+
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
-            services.AddMvc()
                 .AddJsonOptions(
                  options => options.SerializerSettings.ReferenceLoopHandling
-                = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Add your authorization handlers here
+            services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
+
+            // AdministratorsAuthorizationHandler and OwnerAuthorizationHandler are added as singletons.
+            // They're singletons because they don't use EF.
 
             InitializeAutomapper(services);
         }

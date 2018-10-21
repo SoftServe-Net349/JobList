@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
@@ -11,16 +11,17 @@ import { FormsModule } from '@angular/forms';
 // Our created components
 
 // Our created modules
-import { HomeModule } from './home/home.module';
-import { EmployeeModule } from './employee/employee.module';
 import { AdminModule } from './admin/admin.module';
-import { RecruiterModule } from './recruiter/recruiter.module';
-import { CompanyModule } from './company/company.module';
-import { CoreModule } from './core/core.module';
+
 
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AuthHelper } from './shared/helpers/auth-helper';
+import { CoreModule } from './core/core.module';
+import { JwtTokenInterceptor } from './core/interceptors/jwt-token-interceptor';
+import { TokenService } from './core/services/token.service';
+import { AuthService } from './core/services/auth.service';
+import { ApiService } from './core/services/api.service';
 
 export function tokenGetter() {
 
@@ -38,21 +39,20 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HomeModule,
-    EmployeeModule,
     AdminModule,
-    RecruiterModule,
-    CompanyModule,
-    CoreModule,
+
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:56681'],
-        blacklistedRoutes: ['localhost:56681/tokens/']
+        tokenGetter: tokenGetter
       }
     })
   ],
-  providers: [AuthHelper],
+  providers: [
+    AuthHelper,
+    TokenService,
+    ApiService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtTokenInterceptor, multi: true }
+  ],
   bootstrap: [
     AppComponent
   ]

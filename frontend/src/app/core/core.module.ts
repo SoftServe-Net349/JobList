@@ -19,6 +19,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { EmployeeGuard } from './guards/employee.guard';
 import { CompanyGuard } from './guards/company.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
+import { CompanyRecruiterAdminGuard } from './guards/company-recruiter-admin.guard';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { RecruiterGuard } from './guards/recruiter.guard';
     AdminGuard,
     EmployeeGuard,
     CompanyGuard,
-    RecruiterGuard
+    RecruiterGuard,
+    CompanyRecruiterAdminGuard
   ],
   declarations: []
 })

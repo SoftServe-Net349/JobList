@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 import { RecruiterComponent } from './recruiter.component';
-import { RecruiterHeaderComponent } from './recruiter-header/recruiter-header.component';
 
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
@@ -44,7 +43,6 @@ import { CoreModule } from '../core/core.module';
   ],
   declarations: [
     RecruiterComponent,
-    RecruiterHeaderComponent,
     VacancyFormComponent
   ]
 })

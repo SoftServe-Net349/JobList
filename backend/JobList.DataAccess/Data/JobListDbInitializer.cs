@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using JobList.DataAccess.Entities;
-using JobList.DataAccess.Images;
+using JobList.DataAccess.ImageReader;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -22,19 +22,18 @@ namespace JobList.DataAccess.Data
 
             var cities = new City[]
             {
-                new City {Id = 1, Name = "New York", PhotoData = CitiesImages.NewYork, PhotoMimetype = "jpg"},
-                new City {Id = 2, Name = "Jersey", PhotoData = CitiesImages.Jersey, PhotoMimetype = "jpg"},
-                new City {Id = 3, Name = "Atlanta", PhotoData = CitiesImages.Atlanta, PhotoMimetype = "jpg"},
-                new City {Id = 4, Name = "Los Angeles", PhotoData = CitiesImages.LosAngeles, PhotoMimetype = "jpg"},
-                new City {Id = 5, Name = "Boston", PhotoData = CitiesImages.Boston, PhotoMimetype = "jpg"},
-                new City {Id = 6, Name = "Philadephia", PhotoData = CitiesImages.Philadephia, PhotoMimetype = "jpg"},
-                new City {Id = 7, Name = "Seattle", PhotoData = CitiesImages.Seattle, PhotoMimetype = "jpg"},
-                new City {Id = 8, Name = "Washington DC", PhotoData = CitiesImages.WashingtonDC, PhotoMimetype = "jpg"},
-                new City {Id = 9, Name = "Las Vegas", PhotoData = CitiesImages.LasVegas, PhotoMimetype = "jpg"},
-                new City {Id = 10, Name = "Phoneix", PhotoData = CitiesImages.Phoneix, PhotoMimetype = "jpg"},
-                new City {Id = 11, Name = "San Francisco", PhotoData = CitiesImages.SanFrancisco, PhotoMimetype = "jpg"},
-                new City {Id = 12, Name = "Chicago", PhotoData = CitiesImages.Chicago, PhotoMimetype = "jpg"}
-
+                new City {Id = 1, Name = "New York", PhotoData = ImageReaderHelper.ReadImage("NewYork"), PhotoMimetype = "jpeg"},
+                new City {Id = 2, Name = "Jersey", PhotoData = ImageReaderHelper.ReadImage("Jersey"), PhotoMimetype = "jpeg"},
+                new City {Id = 3, Name = "Atlanta", PhotoData = ImageReaderHelper.ReadImage("Atlanta"), PhotoMimetype = "jpeg"},
+                new City {Id = 4, Name = "Los Angeles", PhotoData = ImageReaderHelper.ReadImage("LosAngeles"), PhotoMimetype = "jpeg"},
+                new City {Id = 5, Name = "Boston", PhotoData = ImageReaderHelper.ReadImage("Boston"), PhotoMimetype = "jpeg"},
+                new City {Id = 6, Name = "Philadephia", PhotoData = ImageReaderHelper.ReadImage("Philadephia"), PhotoMimetype = "jpeg"},
+                new City {Id = 7, Name = "Seattle", PhotoData = ImageReaderHelper.ReadImage("Seattle"), PhotoMimetype = "jpeg"},
+                new City {Id = 8, Name = "Washington DC", PhotoData = ImageReaderHelper.ReadImage("WashingtonDC"), PhotoMimetype = "jpeg"},
+                new City {Id = 9, Name = "Las Vegas", PhotoData = ImageReaderHelper.ReadImage("LasVegas"), PhotoMimetype = "jpeg"},
+                new City {Id = 10, Name = "Phoneix", PhotoData = ImageReaderHelper.ReadImage("Phoneix"), PhotoMimetype = "jpeg"},
+                new City {Id = 11, Name = "San Francisco", PhotoData = ImageReaderHelper.ReadImage("SanFrancisco"), PhotoMimetype = "jpeg"},
+                new City {Id = 12, Name = "Chicago", PhotoData = ImageReaderHelper.ReadImage("Chicago"), PhotoMimetype = "jpeg"}
             };
 
             var languages = new Language[]
@@ -96,7 +95,7 @@ namespace JobList.DataAccess.Data
                 new Faculty{ Id = 10, Name = "Journalism"}
             };
 
-            var employee = new Employee { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthData = new DateTime(1995, 8, 3), Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
+            var employee = new Employee { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthDate = new DateTime(1995, 8, 3), Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
             var resume = new Resume { Id = 46, WorkAreaId = 3, Courses = "Certification training", CreateDate = new DateTime(2018, 4, 5), KeySkills = "hardworking, persuasive", SoftSkills = "plastic surgery", Facebook = "www.facebook.com", FamilyState = "not married", Introduction = "Hello!" };
             var resume_language1 = new ResumeLanguage { Id = 111, ResumeId = 46, LanguageId = 10 };
             var resume_language2 = new ResumeLanguage { Id = 112, ResumeId = 46, LanguageId = 5 };
@@ -151,7 +150,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id)
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var vacancies = vacancyFaker.Generate(5000).ToArray();
+            var vacancies = vacancyFaker.Generate(amount).ToArray();
 
 
             var employeeFaker = new Faker<Employee>()
@@ -160,7 +159,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.LastName, f => f.Name.LastName())
                 .RuleFor(o => o.Phone, f => f.PickRandom($"({f.Random.Number(999)}) {f.Random.Number(999)} {f.Random.Number(9999)}"))
                 .RuleFor(o => o.Sex, f => f.PickRandom("m", "f"))
-                .RuleFor(o => o.BirthData, new DateTime(2017, 3, 4))
+                .RuleFor(o => o.BirthDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Password, f => f.Internet.Password())
                 .RuleFor(o => o.RoleId, f => roles[1].Id)
