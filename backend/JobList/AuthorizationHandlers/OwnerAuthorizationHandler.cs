@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace JobList.AuthorizationHandlers
 {
-    public class OwnerAuthorizationHandler : AuthorizationHandler<SameOwnerRequirement, int>
+    public class OwnerAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, int>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
-                                                       SameOwnerRequirement requirement,
+                                                       OperationAuthorizationRequirement requirement,
                                                        int id)
         {
             if (context.User == null)
@@ -27,5 +27,4 @@ namespace JobList.AuthorizationHandlers
         }
     }
 
-    public class SameOwnerRequirement : IAuthorizationRequirement { }
 }

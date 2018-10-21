@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Errors;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -16,14 +18,17 @@ namespace JobList.Controllers
     [ApiController]
     public class RecruitersController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IRecruitersService _recruitersService;
 
-        public RecruitersController(IRecruitersService recruitersService)
+        public RecruitersController(IRecruitersService recruitersService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _recruitersService = recruitersService;
         }
 
         // GET: /recruiters
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get()
         {
@@ -36,6 +41,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get(string searchString,
                                                                                [FromQuery]SortingUrlQuery sortingUrlQuery = null,
@@ -59,7 +65,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("company/{id}")]
         public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id, [FromQuery] PaginationUrlQuery urlQuery = null)
         {
@@ -85,6 +91,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("company/{id}/filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> GetFilteredRecruiters(int id, string searchString, [FromQuery]PaginationUrlQuery urlQuery = null)
         {
@@ -112,7 +119,7 @@ namespace JobList.Controllers
         }
 
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<RecruiterDTO>> GetById(int id)
         {
@@ -126,6 +133,7 @@ namespace JobList.Controllers
         }
 
         // POST: /recruiters
+        [Authorize(Roles = "company, admin")]
         [HttpPost("register")]
         public virtual async Task<ActionResult<RecruiterDTO>> Register([FromBody] RecruiterRequest request)
         {
@@ -151,9 +159,18 @@ namespace JobList.Controllers
         }
 
         // PUT: /recruiters/:id
+        [Authorize(Roles = "company, admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]RecruiterUpdateRequest request)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, request.CompanyId, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -169,9 +186,20 @@ namespace JobList.Controllers
         }
 
         // DELETE: /recruiters/:id
+        [Authorize(Roles = "company, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var entity = await _recruitersService.GetRecruiterByIdAsync(id);
+
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, entity.Company.Id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _recruitersService.DeleteRecruiterByIdAsync(id);
             if (!result)
             {
