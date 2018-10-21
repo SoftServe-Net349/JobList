@@ -16,15 +16,17 @@ export class AuthHelper  {
 
     public isAuthenticated(): boolean {
 
-        return (!(window.localStorage['token'] === undefined ||
+        const token = window.localStorage['token'];
 
-            window.localStorage['token'] === null ||
+        return (!(token === undefined ||
 
-            window.localStorage['token'] === 'null' ||
+            token === null ||
 
-            window.localStorage['token'] === 'undefined' ||
+            token === 'null' ||
 
-            window.localStorage['token'] === ''));
+            token === 'undefined' ||
+
+            token === ''));
 
     }
 
@@ -36,21 +38,23 @@ export class AuthHelper  {
 
     public getToken(): any {
 
-        if ( window.localStorage['token'] === undefined ||
+        const token = window.localStorage['token'];
 
-            window.localStorage['token'] === null ||
+        if ( token === undefined ||
 
-            window.localStorage['token'] === 'null' ||
+            token === null ||
 
-            window.localStorage['token'] === 'undefined' ||
+            token === 'null' ||
 
-            window.localStorage['token'] === '') {
+            token === 'undefined' ||
+
+            token === '') {
 
             return '';
 
         }
 
-        const obj = window.localStorage['token'];
+        const obj = token;
 
         return obj;
 
@@ -58,21 +62,23 @@ export class AuthHelper  {
 
     public getRefreshToken(): any {
 
-        if ( window.localStorage['token'] === undefined ||
+        const refreshToken = window.localStorage['refreshToken'];
 
-            window.localStorage['token'] === null ||
+        if ( refreshToken === undefined ||
 
-            window.localStorage['token'] === 'null' ||
+            refreshToken === null ||
 
-            window.localStorage['token'] === 'undefined' ||
+            refreshToken === 'null' ||
 
-            window.localStorage['token'] === '') {
+            refreshToken === 'undefined' ||
+
+            refreshToken === '') {
 
             return '';
 
         }
 
-        const obj = window.localStorage['refreshToken'];
+        const obj = refreshToken;
 
         return obj;
 
@@ -80,21 +86,23 @@ export class AuthHelper  {
 
     public getCurrentUser(): User {
 
-        if ( window.localStorage['currentUser'] === undefined ||
+        const currentUser = window.localStorage['currentUser'];
 
-        window.localStorage['currentUser'] === null ||
+        if ( currentUser === undefined ||
 
-        window.localStorage['currentUser'] === 'null' ||
+            currentUser === null ||
 
-        window.localStorage['currentUser'] === 'undefined' ||
+            currentUser === 'null' ||
 
-        window.localStorage['currentUser'] === '') {
+            currentUser === 'undefined' ||
+
+            currentUser === '') {
 
         return null;
 
         }
 
-        const obj = JSON.parse(window.localStorage['currentUser']);
+        const obj = JSON.parse(currentUser);
 
         return obj;
 

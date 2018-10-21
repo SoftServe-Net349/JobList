@@ -10,6 +10,7 @@ using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using JobList.Authorization;
 
 namespace JobList.Controllers
 {
@@ -27,6 +28,7 @@ namespace JobList.Controllers
         }
 
         // GET: /employees
+        [Authorize]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> Get()
         {
@@ -39,7 +41,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [Authorize]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered(string searchString,
                                                                                      [FromQuery]SortingUrlQuery sortingUrlQuery = null,
@@ -64,18 +66,10 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize(Roles = "employee")]
+        [Authorize]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<EmployeeDTO>> GetById(int id)
         {
-            var isAuthorized = await _authorizationService
-                                .AuthorizeAsync(User, id, "OwnerPolicy");
-
-            if (!isAuthorized.Succeeded)
-            {
-                return Forbid();
-            }
-
             var dto = await _employeesService.GetEntityByIdAsync(id);
             if (dto == null)
             {
@@ -86,6 +80,7 @@ namespace JobList.Controllers
         }
 
         // POST: /employees
+        [AllowAnonymous]
         [HttpPost("register")]
         public virtual async Task<ActionResult<EmployeeDTO>> Register([FromBody] EmployeeRequest request)
         {
@@ -111,9 +106,18 @@ namespace JobList.Controllers
         }
 
         // PUT: /employees/:id
+        [Authorize(Roles = "employee, admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]EmployeeUpdateRequest request)
         {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -129,9 +133,18 @@ namespace JobList.Controllers
         }
 
         // DELETE: /employees/:id
+        [Authorize(Roles = "employee, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, UserOperations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _employeesService.DeleteEntityByIdAsync(id);
             if (!result)
             {

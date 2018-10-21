@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
 using JobList.Common.UrlQuery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -16,14 +18,17 @@ namespace JobList.Controllers
     [ApiController]
     public class VacanciesController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IVacanciesService _vacanciesService;
 
-        public VacanciesController(IVacanciesService vacanciesService)
+        public VacanciesController(IVacanciesService vacanciesService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _vacanciesService = vacanciesService;
         }
 
         // GET: /vacancies
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
@@ -45,6 +50,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]VacancyUrlQuery vacancyUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
@@ -67,7 +73,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("admin")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
@@ -90,6 +96,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("recruiter/{id}")]
         public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
         {
@@ -101,7 +108,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<VacancyDTO>> GetById(int id)
         {
@@ -115,6 +122,7 @@ namespace JobList.Controllers
         }
 
         // POST: /vacancies
+        [Authorize(Roles = "recruiter, admin")]
         [HttpPost]
         public virtual async Task<ActionResult<VacancyDTO>> Create([FromBody] VacancyRequest request)
         {
@@ -133,9 +141,18 @@ namespace JobList.Controllers
         }
 
         // PUT: /vacancies/:id
+        [Authorize(Roles = "recruiter, admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]VacancyRequest request)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, request.RecruiterId, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -151,9 +168,20 @@ namespace JobList.Controllers
         }
 
         // DELETE: /vacancies/:id
+        [Authorize(Roles = "recruiter, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var entity = await _vacanciesService.GetEntityByIdAsync(id);
+
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, entity.Recruiter.Id, UserOperations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _vacanciesService.DeleteEntityByIdAsync(id);
             if (!result)
             {

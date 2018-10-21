@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -21,6 +22,7 @@ namespace JobList.Controllers
         }
 
         // GET: /workAreas
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<WorkAreaDTO>>> Get()
         {
@@ -33,7 +35,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<WorkAreaDTO>> GetById(int id)
         {
@@ -47,6 +49,7 @@ namespace JobList.Controllers
         }
 
         // POST: /workAreas
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public virtual async Task<ActionResult<WorkAreaDTO>> Create([FromBody] WorkAreaRequest request)
         {
@@ -65,6 +68,7 @@ namespace JobList.Controllers
         }
 
         // PUT: /workAreas/:id
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]WorkAreaRequest request)
         {
@@ -83,6 +87,7 @@ namespace JobList.Controllers
         }
 
         // DELETE: /workAreas/:id
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
