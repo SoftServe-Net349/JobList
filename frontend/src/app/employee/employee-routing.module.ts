@@ -5,7 +5,7 @@ import { AuthGuard } from '../core/guards/auth.guard';
 import { EmployeeGuard } from '../core/guards/employee.guard';
 
 const routes: Routes = [
-  { path: 'employees/:id', component: EmployeeComponent, canActivate: [AuthGuard, EmployeeGuard] }
+  { path: '', component: EmployeeComponent, canActivate: [AuthGuard, EmployeeGuard] }
 ];
 
 @NgModule({

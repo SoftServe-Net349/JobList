@@ -7,8 +7,10 @@ import { ResumeDetailsComponent } from '../resume-details/resume-details.compone
 import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.component';
 
 import { HomeComponent } from './home.component';
+import { MainSearchComponent } from './main-search/main-search.component';
 
 const childRoutes: Routes = [
+  { path: '', component: MainSearchComponent, pathMatch: 'full'},
   { path: 'jobsearch', component: JobSearchComponent},
   { path: 'resumessearch', component: ResumesSearchComponent },
   { path: 'company-details/:id', component: CompanyDetailsComponent},

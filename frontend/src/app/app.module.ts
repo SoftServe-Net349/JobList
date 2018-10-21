@@ -11,12 +11,7 @@ import { FormsModule } from '@angular/forms';
 // Our created components
 
 // Our created modules
-import { HomeModule } from './home/home.module';
-import { EmployeeModule } from './employee/employee.module';
 import { AdminModule } from './admin/admin.module';
-import { RecruiterModule } from './recruiter/recruiter.module';
-import { CompanyModule } from './company/company.module';
-import { CoreModule } from './core/core.module';
 
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -38,12 +33,7 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HomeModule,
-    EmployeeModule,
     AdminModule,
-    RecruiterModule,
-    CompanyModule,
-    CoreModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
