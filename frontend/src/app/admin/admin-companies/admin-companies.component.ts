@@ -127,7 +127,7 @@ export class AdminCompaniesComponent implements OnInit {
 
     deleteConfirm(id: number) {
         this.confirmationService.confirm({
-            message: 'Do you want to delete this record?',
+            message: 'After removing a company, all its recruiters and vacancies are deleted. Do you want to delete this company?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {

@@ -113,9 +113,9 @@ namespace JobList.BusinessLogic.Services
                     return e => e.Name;
                 case "email":
                     return e => e.Email;
-            }
 
-            return null;
+                default: return null;
+            }
         }
 
         private Expression<Func<Company, bool>> GetSearchField(SearchingUrlQuery searchingUrlQuery)

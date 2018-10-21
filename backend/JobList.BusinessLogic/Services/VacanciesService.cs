@@ -129,7 +129,7 @@ namespace JobList.BusinessLogic.Services
 
             if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
             {
-                filter = filter.And(GetSearchField(searchingUrlQuery));
+                filter = filter.And(e => e.Name.Contains(searchingUrlQuery.SearchString));
             }
 
             var entities = await _uow.VacanciesRepository.GetRangeAsync(
@@ -144,17 +144,6 @@ namespace JobList.BusinessLogic.Services
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
 
             return dtos;
-        }
-
-        private Expression<Func<Vacancy, bool>> GetSearchField(SearchingUrlQuery searchingUrlQuery)
-        {
-            switch (searchingUrlQuery.SearchField)
-            {
-                case "name":
-                    return e => e.Name.Contains(searchingUrlQuery.SearchString);
-
-                default: return null;
-            }
         }
 
         private Expression<Func<Vacancy, string>> GetSortField(string field)

@@ -114,7 +114,7 @@ export class AdminEmployeesComponent implements OnInit {
 
     deleteConfirm(id: number) {
         this.confirmationService.confirm({
-            message: 'Do you want to delete this record?',
+            message: 'After removing an employee, all his resumes will be deleted. Do you want to delete this employee?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {

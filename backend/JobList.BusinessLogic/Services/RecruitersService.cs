@@ -154,8 +154,6 @@ namespace JobList.BusinessLogic.Services
                     return r => r.FirstName;
                 case "lastName":
                     return r => r.LastName;
-                case "companyName":
-                    return r => r.Company.Name;
                 case "email":
                     return r => r.Email;
             }

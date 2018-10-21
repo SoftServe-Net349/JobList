@@ -113,7 +113,7 @@ export class AdminRecruitersComponent implements OnInit {
 
 
     loadRecruiters() {
-        this.recruiterService.getFullResponse(this.searchString, this.searchField, 
+        this.recruiterService.getFullResponse(this.searchString, this.searchField,
             this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
             .subscribe((response) => {
                 if (response.body !== null) {
@@ -128,7 +128,7 @@ export class AdminRecruitersComponent implements OnInit {
 
     deleteConfirm(id: number) {
         this.confirmationService.confirm({
-            message: 'Do you want to delete this record?',
+            message: 'After removing a recruiter, all his vacancies will be deleted. Do you want to delete this recruiter?',
             header: 'Delete Confirmation',
             icon: 'pi pi-info-circle',
             accept: () => {
