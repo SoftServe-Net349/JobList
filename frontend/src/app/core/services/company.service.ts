@@ -12,17 +12,19 @@ export class CompanyService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(searchString: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number): Observable<HttpResponse<Company[]>> {
+  getFullResponse(searchString: string, searchField: string, sortField: string,
+    sortOrder: boolean, pageSize: number, pageNumber: number): Observable<HttpResponse<Company[]>> {
     const params = new HttpParams()
       .set('sortField', sortField)
       .set('sortOrder', sortOrder.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString())
-      .set('searchString', searchString);
-      
+      .set('searchString', searchString)
+      .set('searchField', searchField);
+
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
-  
+
   getAll(): Observable<Company[]> {
       return this.apiService.get(`/${this.ctrlUrl}`);
   }

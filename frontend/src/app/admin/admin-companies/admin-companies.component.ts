@@ -14,35 +14,61 @@ export class AdminCompaniesComponent implements OnInit {
 
     companies: Company[];
 
-    displayDialog = false;
-
-    sortKey = '';
-    sortOrder = false;
-    sortField = '';
-
+    sortKey: string;
+    sortOrder: boolean;
+    sortField: string;
     sortOptions: SelectItem[];
 
-    pageSize = 4;
-    pageNumber = 1;
-    totalRecords = 0;
+    pageSize: number;
+    pageNumber: number;
+    totalRecords: number;
+    rowsPerPage: number[];
 
-    searchString = '';
-    searchedCompany: Company = null;
+    searchString: string;
+    searchedCompany: Company;
+    searchOptions: SelectItem[];
+    searchField: string;
+
+    suggestField: string;
+    placeholder: string;
 
     @ViewChild('p') paginator: Paginator;
 
     constructor(private confirmationService: ConfirmationService, private companyService: CompanyService, ) {
         this.companies = [];
+
+        this.sortKey = '';
+        this.sortOrder = false;
+        this.sortField = '';
+
+        this.pageSize = 4;
+        this.pageNumber = 1;
+        this.totalRecords = 0;
+        this.rowsPerPage = [2, 4, 6];
+
+        this.searchString = '';
+
+        this.suggestField = this.searchField = 'email';
+        this.placeholder = 'Enter email';
     }
 
     ngOnInit() {
         this.sortOptions = [
-            { label: 'Name by ascending', value: 'Name' },
-            { label: 'Name by decending', value: '!Name' }
+            { label: 'Name by ascending', value: 'name' },
+            { label: 'Name by decending', value: '!name' }
+        ];
 
+        this.searchOptions = [
+            { label: 'Email', value: 'email' },
+            { label: 'Name', value: 'name' }
         ];
 
         this.loadCompanies();
+    }
+
+    onSearchFieldChange(event) {
+        this.suggestField = this.searchField = event.value;
+        this.placeholder = 'Enter ' + this.searchField;
     }
 
     onSortChange(event) {
@@ -69,18 +95,21 @@ export class AdminCompaniesComponent implements OnInit {
 
     filterCompanies(event) {
         this.searchString = event.query;
-        this.pageNumber = 1;
         this.loadCompanies();
 
         this.paginator.changePage(0);
     }
 
     select(event) {
-        this.searchString = event.name;
-        this.pageNumber = 1;
-        this.loadCompanies();
+        this.searchString = this.getSearchStringFromSearchField(event);
+        this.companies = [];
+        this.companies[0] = event;
+        this.totalRecords = 1;
+    }
 
-        this.paginator.changePage(0);
+    clear() {
+        this.searchString = '';
+        this.loadCompanies();
     }
 
     search() {
@@ -96,9 +125,20 @@ export class AdminCompaniesComponent implements OnInit {
         this.paginator.changePage(0);
     }
 
+    deleteConfirm(id: number) {
+        this.confirmationService.confirm({
+            message: 'Do you want to delete this record?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+            accept: () => {
+                this.companyService.delete(id).subscribe(data => this.loadCompanies());
+            }
+        });
+    }
 
     loadCompanies() {
-        this.companyService.getFullResponse(this.searchString, this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
+        this.companyService.getFullResponse(this.searchString, this.searchField,
+            this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
             .subscribe((response) => {
                 if (response.body !== null) {
                     this.companies = response.body;
@@ -110,14 +150,14 @@ export class AdminCompaniesComponent implements OnInit {
             });
     }
 
-    deleteConfirm(id: number) {
-        this.confirmationService.confirm({
-            message: 'Do you want to delete this record?',
-            header: 'Delete Confirmation',
-            icon: 'pi pi-info-circle',
-            accept: () => {
-                this.companyService.delete(id).subscribe(data => this.loadCompanies());
-            }
-        });
+    getSearchStringFromSearchField(company: Company): string {
+        switch (this.searchField) {
+            case 'email':
+                return company.email;
+            case 'name':
+                return company.name;
+
+            default: return null;
+        }
     }
 }

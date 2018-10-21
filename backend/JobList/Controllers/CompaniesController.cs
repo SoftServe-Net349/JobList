@@ -7,6 +7,7 @@ using JobList.Common.Errors;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
+using JobList.Common.UrlQuery;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -38,10 +39,10 @@ namespace JobList.Controllers
 
 
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get([FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _companiesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
+            var dtos = await _companiesService.GetFilteredEntitiesAsync(searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
