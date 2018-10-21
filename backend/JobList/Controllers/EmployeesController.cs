@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using JobList.Authorization;
+using JobList.Common.UrlQuery;
 
 namespace JobList.Controllers
 {
@@ -43,11 +44,10 @@ namespace JobList.Controllers
 
         [Authorize]
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered(string searchString,
-                                                                                     [FromQuery]SortingUrlQuery sortingUrlQuery = null,
-                                                                                     [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered([FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _employeesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
+            var dtos = await _employeesService.GetFilteredEntitiesAsync(searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();

@@ -52,36 +52,16 @@ namespace JobList.Controllers
 
         [AllowAnonymous]
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]VacancyUrlQuery vacancyUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(
+            [FromQuery]VacancyUrlQuery vacancyUrlQuery = null, 
+            [FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null, 
+            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(vacancyUrlQuery, paginationUrlQuery);
+            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(vacancyUrlQuery, searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
 
             if (dtos == null)
             {
                 return NotFound();
-            }
-
-            var pageInfo = new PageInfo()
-            {
-                PageNumber = paginationUrlQuery.PageNumber,
-                PageSize = paginationUrlQuery.PageSize,
-                TotalRecords = _vacanciesService.TotalRecords
-            };
-
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
-
-            return Ok(dtos);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("admin")]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string searchString, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
-                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
-        {
-            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(searchString, sortingUrlQuery, paginationUrlQuery);
-            if (!dtos.Any())
-            {
-                return NoContent();
             }
 
             var pageInfo = new PageInfo()

@@ -1,4 +1,4 @@
-.table-users
+.table-entities
     border: 1px solid #327a81
     border-radius: 10px
     box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1)
@@ -6,7 +6,7 @@
     overflow: hidden
     width: 100%
 
-    .header 
+    .table-header 
         background-color: #327a81
         color: white
         font-size: 1.5em
@@ -16,12 +16,16 @@
         display: inline-flex
         width: 100%
 
+        .table-autocomplete
+            width: 100%
+        
+
     table 
         width: 100%
 
         tr:nth-child(2n+1) 
             background-color: #edf7f8
-
+        
         tr:nth-child(2n) 
             background-color: white
 
@@ -42,3 +46,6 @@
         td 
             text-align: center
             vertical-align: middle
+
+        button
+            width: 73px

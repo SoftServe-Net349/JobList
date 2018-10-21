@@ -9,6 +9,7 @@ using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
 using Microsoft.AspNetCore.Authorization;
+using JobList.Common.UrlQuery;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -43,11 +44,10 @@ namespace JobList.Controllers
 
         [AllowAnonymous]
         [HttpGet("filtered")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get(string searchString,
-                                                                               [FromQuery]SortingUrlQuery sortingUrlQuery = null,
-                                                                               [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> Get([FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
+                                                                            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _recruitersService.GetFilteredRecruitersAsync(searchString, sortingUrlQuery, paginationUrlQuery);
+            var dtos = await _recruitersService.GetFilteredRecruitersAsync(searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();

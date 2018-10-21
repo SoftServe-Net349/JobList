@@ -18,14 +18,15 @@ export class EmployeeService {
     return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
-  getFullResponse(searchString: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number)
+  getFullResponse(searchString: string, searchField: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number)
   : Observable<HttpResponse<Employee[]>> {
     const params = new HttpParams()
       .set('sortField', sortField)
       .set('sortOrder', sortOrder.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString())
-      .set('searchString', searchString);
+      .set('searchString', searchString)
+      .set('searchField', searchField);
 
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }

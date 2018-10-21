@@ -3,7 +3,6 @@
     grid-template-columns: 20% 75%
     grid-template-areas: "left-side-menu content"
 
-
     .left-side-menu
         margin: 0
         min-width: 300px
@@ -38,48 +37,98 @@
 
     .content
         width: 105%
-        margin: 70px 10px
+        margin: 75px 0px 10px 15px
         grid-area: content
-        float: left
 
 
-/deep/ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active,
+// Autocomplete searchline 
+/deep/ .ui-autocomplete
+    display: inline
+
+    /deep/ .ui-inputtext
+        font-size: 14px
+        height: 29px
+        margin-left: 10px
+
+    /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error),
+    /deep/ .ui-inputtext:enabled:hover:not(.ui-state-error)
+         border-color: #208087 !important
+
+    /deep/ .ui-autocomplete-panel
+        left: 10px !important
+        top: 31px !important
+        text-transform: none
+        min-width: 99.3%
+
+        /deep/ .ui-autocomplete-items .ui-autocomplete-list-item.ui-state-highlight
+            background-color: #208087
+
+        /deep/ .ui-autocomplete-items
+            width: 100%
+
+
+// Left dropdown
+/deep/ .left-dropdown .ui-dropdown 
+    height: 28px
+    width: 200px
+    border-radius: 3px
+
+    /deep/ .ui-dropdown-panel .ui-dropdown-items
+        width: 100%
+
+
+// Right dropdown
+/deep/ .right-dropdown p-dropdown
+    position: absolute
+    margin-left: -210px
+    text-align: center
+    margin-top: 1px
+    width: 200px
+
+    /deep/ .ui-dropdown
+        border-top: none
+        border-bottom: none
+        border-right: none
+        border-top-left-radius: 0px
+        border-bottom-left-radius: 0px
+        width: 100% !important
+
+        /deep/ label.ui-dropdown-label
+            height: 100%
+            padding-top: 5px
+
+        /deep/ .ui-dropdown-panel
+            top: 29px !important
+            width: 102%
+
+            /deep/ .ui-dropdown-items
+                width: 100%
+
+
+// Paginator 
+/deep/ p-paginator 
+    /deep/ .ui-paginator
+        width: 100%
+        
+    /deep/ .ui-dropdown
+        margin-top: 0px
+        margin-left: 0px
+        width: auto 
+
+    /deep/ .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active
+        background-color: #208087
+                
+
+// Shared styles
 /deep/ body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item.ui-state-highlight
     background-color: #208087
 
-
-    
-/deep/ .ui-autocomplete .ui-inputtext
-    font-size: 14px
-    width: 105%
-    min-width: 940px
-    height: 29px
-    margin-left: 10px
-
-/deep/ .ui-autocomplete .ui-autocomplete-panel
-    min-width: 90.5%
-    left: 96.5px !important
-    top: 31px !important
-    text-transform: none
-
-    /deep/.ui-autocomplete-items .ui-autocomplete-list-item.ui-state-highlight
-        background-color: #208087
-
-/deep/ .ui-autocomplete .ui-inputtext:enabled:focus:not(.ui-state-error),
-/deep/ .ui-autocomplete .ui-inputtext:enabled:hover:not(.ui-state-error)
-    border-color: #208087 !important
-
-    
 /deep/ body .ui-dropdown:not(.ui-state-disabled).ui-state-focus,
 /deep/ body .ui-dropdown:not(.ui-state-disabled):hover
     border-color: #208087
 
-/deep/ p-dropdown .ui-dropdown
-    height: 27px
-    width: 200px
-    z-index: 99999
+/deep/ .ui-widget
+    width: 98.8%
 
-/deep/ p-paginator .ui-dropdown
-    margin-top: 0px
-    margin-left: 0px
-    width: auto
+/deep/ body .ui-dialog
+    width: 30em

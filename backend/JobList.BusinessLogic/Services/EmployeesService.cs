@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
 using JobList.Common.Extensions;
+using JobList.Common.UrlQuery;
 
 namespace JobList.BusinessLogic.Services
 {
@@ -109,13 +110,13 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(string searchString, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
+        public async Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(SearchingUrlQuery searchingUrlQuery, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
             Expression<Func<Employee, bool>> filter = e => true;
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
             {
-                filter = filter.And(e => e.Email.ToLower().Contains(searchString.ToLower()));
+                filter = filter.And(GetSearchField(searchingUrlQuery));
             }
 
             var entities = await _uow.EmployeesRepository.GetRangeAsync(
@@ -131,20 +132,33 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-
         private Expression<Func<Employee, string>> GetSortField(string field)
         {
             switch (field)
             {
-                case "Birthdate":
-                    return e => e.BirthDate.ToString();
-                case "Email":
+                case "birthDate":
+                    return e => e.BirthData.ToString();
+                case "email":
                     return e => e.Email;
 
                 default: return null;
             }
         }
 
+        private Expression<Func<Employee, bool>> GetSearchField(SearchingUrlQuery searchingUrlQuery)
+        {
+            switch (searchingUrlQuery.SearchField)
+            {
+                case "firstName":
+                    return e => e.FirstName.Contains(searchingUrlQuery.SearchString);
+                case "lastName":
+                    return e => e.LastName.Contains(searchingUrlQuery.SearchString);
+                case "email":
+                    return e => e.Email.Contains(searchingUrlQuery.SearchString);
+
+                default: return null;
+            }
+        }
 
         public async Task<bool> UpdateEntityByIdAsync(EmployeeUpdateRequest modelRequest, int id)
         {

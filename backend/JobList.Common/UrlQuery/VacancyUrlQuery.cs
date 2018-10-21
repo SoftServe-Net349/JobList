@@ -9,6 +9,5 @@
         public bool IsChecked { get; set; }
         public string TypeOfEmployment { get; set; }
         public decimal? Salary { get; set; }
-
     }
 }

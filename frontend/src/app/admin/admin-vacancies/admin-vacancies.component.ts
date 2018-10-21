@@ -4,7 +4,6 @@ import { Vacancy } from 'src/app/shared/models/vacancy.model';
 import { ConfirmationService, SelectItem } from 'primeng/api';
 import { VacancyRequest } from 'src/app/shared/models/vacancy-request.model';
 import { Paginator } from 'primeng/primeng';
-import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'app-admin-vacancies',
@@ -15,37 +14,62 @@ export class AdminVacanciesComponent implements OnInit {
 
     vacancies: Vacancy[];
 
-    displayDialog = false;
-
-    sortKey = '';
-    sortOrder = false;
-    sortField = '';
-
+    sortKey: string;
+    sortOrder: boolean;
+    sortField: string;
     sortOptions: SelectItem[];
 
-    pageSize = 4;
-    pageNumber = 1;
-    totalRecords = 0;
+    pageSize: number;
+    pageNumber: number;
+    totalRecords: number;
+    rowsPerPage: number[];
 
-    searchString = '';
-    searchedVacancy: Vacancy = null;
+    searchString: string;
+    searchedVacancy: Vacancy;
+    searchOptions: SelectItem[];
+    searchField: string;
+
+    suggestField: string;
+    placeholder: string;
 
     @ViewChild('p') paginator: Paginator;
 
 
-    constructor(private vacancyService: VacancyService,
-        private confirmationService: ConfirmationService) {
+    constructor(private vacancyService: VacancyService, private confirmationService: ConfirmationService) {
         this.vacancies = [];
+
+        this.sortKey = '';
+        this.sortOrder = false;
+        this.sortField = '';
+
+        this.pageSize = 10;
+        this.pageNumber = 1;
+        this.totalRecords = 0;
+        this.rowsPerPage = [10, 15, 20];
+
+        this.searchString = '';
+
+        this.suggestField = this.searchField = 'name';
+        this.placeholder = 'Enter name';
     }
 
     ngOnInit() {
         this.loadVacancies();
 
         this.sortOptions = [
-            { label: 'Newest First', value: '!CreateDate' },
-            { label: 'Oldest First', value: 'CreateDate' },
-            { label: 'Name', value: 'Name' }
+            { label: 'Newest First', value: '!createDate' },
+            { label: 'Oldest First', value: 'createDate' },
+            { label: 'Name', value: 'name' }
         ];
+
+        this.searchOptions = [
+            { label: 'Name', value: 'name' }
+        ];
+    }
+
+    onSearchFieldChange(event) {
+        this.suggestField = this.searchField = event.value;
+        this.placeholder = 'Enter ' + this.searchField;
     }
 
     onSortChange(event) {
@@ -71,7 +95,6 @@ export class AdminVacanciesComponent implements OnInit {
 
     filterVacancies(event) {
         this.searchString = event.query;
-        this.pageNumber = 1;
         this.loadVacancies();
 
         this.paginator.changePage(0);
@@ -79,24 +102,14 @@ export class AdminVacanciesComponent implements OnInit {
 
     select(event) {
         this.searchString = event.name;
-        this.pageNumber = 1;
-        this.loadVacancies();
-
-        this.paginator.changePage(0);
+        this.vacancies = [];
+        this.vacancies[0] = event;
+        this.totalRecords = 1;
     }
 
-
-    search() {
-        if (isNullOrUndefined(this.searchedVacancy)) {
-            this.searchString = '';
-        } else if (isNullOrUndefined(this.searchedVacancy.name)) {
-            this.searchString = this.searchedVacancy.toString();
-        }
-
-        this.pageNumber = 1;
+    clear() {
+        this.searchString = '';
         this.loadVacancies();
-
-        this.paginator.changePage(0);
     }
 
     checkConfirm(vacancy: Vacancy, isChecked: boolean) {
@@ -144,7 +157,8 @@ export class AdminVacanciesComponent implements OnInit {
     }
 
     loadVacancies() {
-        this.vacancyService.getAdminResponse(this.searchString, this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
+        this.vacancyService.getAdminResponse(this.searchString, this.searchField,
+            this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
             .subscribe((response) => {
                 if (response.body !== null) {
                     this.vacancies = response.body;

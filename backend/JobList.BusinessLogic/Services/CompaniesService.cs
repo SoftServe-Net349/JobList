@@ -6,6 +6,7 @@ using JobList.Common.Extensions;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.Sorting;
+using JobList.Common.UrlQuery;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -84,15 +85,13 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<CompanyDTO>> GetFilteredEntitiesAsync(string searchString,
-                                                                            SortingUrlQuery sortingUrlQuery = null,
-                                                                            PaginationUrlQuery paginationUrlQuery = null)
+        public async Task<IEnumerable<CompanyDTO>> GetFilteredEntitiesAsync(SearchingUrlQuery searchingUrlQuery = null, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
             Expression<Func<Company, bool>> filter = e => true;
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
             {
-                filter = filter.And(e => e.Name.ToLower().Contains(searchString.ToLower()));
+                filter = filter.And(GetSearchField(searchingUrlQuery));
             }
 
             var entities = await _uow.CompaniesRepository.GetRangeAsync(
@@ -111,13 +110,26 @@ namespace JobList.BusinessLogic.Services
         {
             switch (field)
             {
-                case "Name":
+                case "name":
                     return e => e.Name;
-                case "Email":
+                case "email":
                     return e => e.Email;
-            }
 
-            return null;
+                default: return null;
+            }
+        }
+
+        private Expression<Func<Company, bool>> GetSearchField(SearchingUrlQuery searchingUrlQuery)
+        {
+            switch (searchingUrlQuery.SearchField)
+            {
+                case "name":
+                    return e => e.Name.Contains(searchingUrlQuery.SearchString);
+                case "email":
+                    return e => e.Email.Contains(searchingUrlQuery.SearchString);
+
+                default: return null;
+            }
         }
 
 
