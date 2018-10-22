@@ -57,6 +57,21 @@ export class VacancyService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
 
+  getByRecruiterIdWithPagination(id: number, pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/recruiter/${id}`, params);
+  }
+  getByRecruiterIdSearchStringWithPagination(id: number, search: string, pageSize: number, pageNumber: number)
+  : Observable<HttpResponse<Vacancy[]>> {
+    const params = new HttpParams()
+      .set('searchString', search)
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/recruiter/${id}/filtered`, params);
+  }
+
   getById(id: number): Observable<Vacancy> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
 }

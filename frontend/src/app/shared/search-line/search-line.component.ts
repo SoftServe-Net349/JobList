@@ -4,6 +4,7 @@ import { CityService } from '../../core/services/city.service';
 import { Router } from '@angular/router';
 import { City } from '../models/city.model';
 import { JobSearchQuery } from '../filterQueries/JobsearchQuery';
+import { isNullOrUndefined } from 'util';
 
 
 @Component({
@@ -40,10 +41,8 @@ export class SearchLineComponent implements OnInit {
     this.cityService.getAll()
       .subscribe((data: City[]) => {
         this.cities = data;
-        console.log(this.selectedCity );
-        if (this.cityName) {
+        if (!isNullOrUndefined(this.cityName)) {
           this.selectedCity = this.cities.find(c => c.name === this.cityName);
-          console.log(this.selectedCity );
         }
       });
   }
