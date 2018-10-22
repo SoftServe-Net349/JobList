@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { CityService } from '../../core/services/city.service';
 import { Router } from '@angular/router';
@@ -22,17 +22,30 @@ export class SearchLineComponent implements OnInit {
   @Output() filteredResumes = new EventEmitter<object>();
 
   currentUrl: String;
+
+  @Input() searchString: string;
+  @Input() cityName: string;
+
   constructor(private cityService: CityService, router: Router) {
     this.currentUrl = router.url;
   }
 
   ngOnInit() {
     this.loadCities();
+
+    this.inputText = this.searchString;
   }
 
   loadCities() {
     this.cityService.getAll()
-    .subscribe((data: City[]) => this.cities = data);
+      .subscribe((data: City[]) => {
+        this.cities = data;
+        console.log(this.selectedCity );
+        if (this.cityName) {
+          this.selectedCity = this.cities.find(c => c.name === this.cityName);
+          console.log(this.selectedCity );
+        }
+      });
   }
 
   search() {
@@ -44,12 +57,14 @@ export class SearchLineComponent implements OnInit {
         isChecked: false,
         salary: null,
         name: this.inputText === undefined ? '' : this.inputText,
-        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name});
-     } else if (this.currentUrl === '/resumessearch') {
+        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name
+      });
+    } else if (this.currentUrl === '/resumessearch') {
       this.filteredResumes.emit({
         name: this.inputText === undefined ? '' : this.inputText,
-        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name});
-     }
+        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name
+      });
+    }
   }
 
 }

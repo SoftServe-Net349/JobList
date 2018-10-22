@@ -16,7 +16,7 @@ const childRoutes: Routes = [
 ];
 
 const routes: Routes = [
-  { path: 'admin', component: AdminComponent, children: childRoutes }
+  { path: '', component: AdminComponent, children: childRoutes }
 ];
 
 @NgModule({

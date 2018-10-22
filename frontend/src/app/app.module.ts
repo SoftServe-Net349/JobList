@@ -11,16 +11,11 @@ import { FormsModule } from '@angular/forms';
 // Our created components
 
 // Our created modules
-import { AdminModule } from './admin/admin.module';
-
-
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AuthHelper } from './shared/helpers/auth-helper';
-import { CoreModule } from './core/core.module';
 import { JwtTokenInterceptor } from './core/interceptors/jwt-token-interceptor';
 import { TokenService } from './core/services/token.service';
-import { AuthService } from './core/services/auth.service';
 import { ApiService } from './core/services/api.service';
 
 export function tokenGetter() {
@@ -39,8 +34,6 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    AdminModule,
-
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
