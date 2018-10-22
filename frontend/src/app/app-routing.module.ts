@@ -5,7 +5,8 @@ const routes: Routes = [
   { path: '', loadChildren: './home/home.module#HomeModule', pathMatch: 'prefix' },
   { path: 'companies/:id', loadChildren: './company/company.module#CompanyModule'},
   { path: 'employees/:id', loadChildren: './employee/employee.module#EmployeeModule'},
-  { path: 'recruiters/:id', loadChildren: './recruiter/recruiter.module#RecruiterModule'}
+  { path: 'recruiters/:id', loadChildren: './recruiter/recruiter.module#RecruiterModule'},
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule' }
  ];
 
 @NgModule({

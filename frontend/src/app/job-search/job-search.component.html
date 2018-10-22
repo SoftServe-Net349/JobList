@@ -1,5 +1,5 @@
 <div class="jobsearch">
-  <app-search-line (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
+  <app-search-line [searchString]="param.name" [cityName]="param.city" (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
       <app-job-filters (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
@@ -8,7 +8,7 @@
       <article class="vacancy-block" *ngFor="let vacancy of vacancies">
         <div class="inform">
           <h3>
-            <a [routerLink] = "['/vacancy-details/', vacancy.id]" routerLinkActive="active">{{vacancy.name}}</a>
+            <a [routerLink]="['/vacancy-details/', vacancy.id]" routerLinkActive="active">{{vacancy.name}}</a>
           </h3>
           <p class="company-name">
             <a [routerLink]="['/company-details/', vacancy.recruiter.company.id]" routerLinkActive="active">{{vacancy.recruiter.company.name}}</a>
@@ -25,11 +25,13 @@
           </p>
         </div>
         <div class="logo">
-          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png" [routerLink]="['/company-details/', vacancy.recruiter.company.id]" routerLinkActive="active">
+          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png" [routerLink]="['/company-details/', vacancy.recruiter.company.id]"
+            routerLinkActive="active">
         </div>
       </article>
     </div>
   </div>
 
-  <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
+  <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
+    [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 </div>

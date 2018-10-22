@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
-import { Router } from '@angular/router';
+import {  ActivatedRoute } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { Paginator } from 'primeng/primeng';
 
@@ -20,17 +20,25 @@ export class JobSearchComponent implements OnInit {
 
   param: JobSearchQuery;
 
+  url: string;
 
   @ViewChild('p') paginator: Paginator;
 
-  constructor(private vacancyService: VacancyService, private router: Router) {
+
+  constructor(private vacancyService: VacancyService, private route: ActivatedRoute) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
+
+    this.route.queryParams.subscribe(params => {
+      this.param.name = params['searchString'] === undefined ? '' : params['searchString'];
+      this.param.city = params['city'] === undefined ? '' : params['city'];
+    });
   }
 
   ngOnInit() {
     this.loadVacancies();
   }
+
 
   getDefaultParam(): JobSearchQuery {
     return {
