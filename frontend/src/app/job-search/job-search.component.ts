@@ -30,8 +30,12 @@ export class JobSearchComponent implements OnInit {
     this.param = this.getDefaultParam();
 
     this.route.queryParams.subscribe(params => {
-      this.param.name = params['searchString'] === undefined ? '' : params['searchString'];
       this.param.city = params['city'] === undefined ? '' : params['city'];
+      this.param.name = params['searchString'] === undefined ? '' : params['searchString'];
+
+      console.log('City = ' + this.param.city);
+      console.log('Name = ' + this.param.name);
+
     });
   }
 

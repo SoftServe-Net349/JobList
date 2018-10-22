@@ -4,6 +4,7 @@ import { CityService } from '../../core/services/city.service';
 import { Router } from '@angular/router';
 import { City } from '../models/city.model';
 import { JobSearchQuery } from '../filterQueries/JobsearchQuery';
+import { isNullOrUndefined } from 'util';
 
 
 @Component({

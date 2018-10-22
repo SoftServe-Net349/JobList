@@ -75,6 +75,29 @@ namespace JobList.Controllers
 
             return Ok(dtos);
         }
+        [AllowAnonymous]
+        [HttpGet("recruiter/{id}/filtered")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(int id, string searchString, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        {
+            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(id, searchString, paginationUrlQuery);
+
+            if (dtos == null)
+            {
+                return NotFound();
+            }
+
+            var pageInfo = new PageInfo()
+            {
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _vacanciesService.TotalRecords
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
+            return Ok(dtos);
+
+        }
 
         [AllowAnonymous]
         [HttpGet("recruiter/{id}")]

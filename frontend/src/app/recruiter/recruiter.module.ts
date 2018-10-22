@@ -21,6 +21,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {KeyFilterModule} from 'primeng/keyfilter';
 
 import { CoreModule } from '../core/core.module';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -39,11 +41,13 @@ import { CoreModule } from '../core/core.module';
     ReactiveFormsModule,
     ConfirmDialogModule,
     KeyFilterModule,
-    CoreModule
+    CoreModule,
+    PaginatorModule 
   ],
   declarations: [
     RecruiterComponent,
     VacancyFormComponent
-  ]
+  ],
+  providers: [MessageService, ConfirmationService]
 })
 export class RecruiterModule { }
