@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { EmployeeRequest } from '../../shared/models/employee-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { EmployeeUpdateRequest } from '../../shared/models/employee-update-request.model';
 
 @Injectable()

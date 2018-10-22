@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Company } from '../shared/models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MessageService, MenuItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { CompanyService } from '../core/services/company.service';
 import { CompanyUpdateRequest } from '../shared/models/company-update-request.model';
 

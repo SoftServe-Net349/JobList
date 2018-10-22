@@ -29,7 +29,7 @@ export class CompanyFiltersComponent implements OnInit {
 
   rangeValues: number[] = [20, 30];
 
-  constructor(private cityService: CityService, private workAreaService: WorkAreaService, 
+  constructor(private cityService: CityService, private workAreaService: WorkAreaService,
     private facultyService: FacultyService, private schoolService: SchoolService,
     private languageService: LanguageService) {
   }
@@ -43,27 +43,27 @@ export class CompanyFiltersComponent implements OnInit {
     this.loadLanguages();
   }
 
-  loadCities(){
+  loadCities() {
     this.cityService.getAll()
     .subscribe((data: City[]) => this.cities = data);
   }
 
-  loadWorkAreas(){
+  loadWorkAreas() {
     this.workAreaService.getAll()
     .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
 
-  loadSchools(){
+  loadSchools() {
     this.schoolService.getAll()
     .subscribe((data: School[]) => this.schools = data);
   }
 
-  loadFaculties(){
+  loadFaculties() {
     this.facultyService.getAll()
     .subscribe((data: Faculty[]) => this.faculties = data);
   }
 
-  loadLanguages(){
+  loadLanguages() {
     this.languageService.getAll()
     .subscribe((data: Language[]) => this.languages = data);
   }

@@ -13,7 +13,7 @@ export class ResumeService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>>{
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     const params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());

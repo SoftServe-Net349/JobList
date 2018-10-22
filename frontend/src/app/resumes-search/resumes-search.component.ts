@@ -12,13 +12,13 @@ export class ResumesSearchComponent implements OnInit {
 
   resumes: Resume[];
 
-  totalRecords: number = 0;
+  totalRecords = 0;
 
-  pageSize: number = 1;
-  pageNumber: number = 1;
+  pageSize = 1;
+  pageNumber = 1;
 
-  search: string = '';
-  city: string = '';
+  search = '';
+  city = '';
 
   param: ResumessearchQuery;
 

@@ -3,7 +3,6 @@ import { CompanyService } from '../core/services/company.service';
 import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { WorkArea } from '../shared/models/work-area.model';
-import { City } from '../shared/models/city.model';
 import { Company } from '../shared/models/company.model';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 
