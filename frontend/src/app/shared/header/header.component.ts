@@ -140,11 +140,8 @@ export class HeaderComponent implements OnInit {
       this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
 
     } else {
-
       this.role = '';
       this.uId = 0;
-
     }
-
   }
 }

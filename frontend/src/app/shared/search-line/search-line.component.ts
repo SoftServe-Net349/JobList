@@ -32,7 +32,6 @@ export class SearchLineComponent implements OnInit {
 
   ngOnInit() {
     this.loadCities();
-
     this.inputText = this.searchString;
   }
 
@@ -40,16 +39,14 @@ export class SearchLineComponent implements OnInit {
     this.cityService.getAll()
       .subscribe((data: City[]) => {
         this.cities = data;
-        console.log(this.selectedCity );
         if (this.cityName) {
           this.selectedCity = this.cities.find(c => c.name === this.cityName);
-          console.log(this.selectedCity );
         }
       });
   }
 
   search() {
-    if (this.currentUrl === '/jobsearch') {
+    if (this.currentUrl.includes('/jobsearch')) {
       this.foundVacancies.emit({
         workArea: null,
         namesOfCompanies: null,
@@ -59,12 +56,11 @@ export class SearchLineComponent implements OnInit {
         name: this.inputText === undefined ? '' : this.inputText,
         city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name
       });
-    } else if (this.currentUrl === '/resumessearch') {
+    } else if (this.currentUrl.includes('/resumessearch')) {
       this.filteredResumes.emit({
         name: this.inputText === undefined ? '' : this.inputText,
         city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name
       });
     }
   }
-
 }
