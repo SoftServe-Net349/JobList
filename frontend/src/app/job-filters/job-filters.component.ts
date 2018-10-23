@@ -1,9 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CompanyService } from '../core/services/company.service';
-import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { WorkArea } from '../shared/models/work-area.model';
-import { City } from '../shared/models/city.model';
 import { Company } from '../shared/models/company.model';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { resetFakeAsyncZone } from '@angular/core/testing';
@@ -32,6 +30,7 @@ export class JobFiltersComponent implements OnInit {
   @Input() companyName: string;
 
   constructor(private companyService: CompanyService, private cityService: CityService,
+
     private workAreaService: WorkAreaService) {
    }
 
@@ -55,6 +54,7 @@ export class JobFiltersComponent implements OnInit {
     this.workAreaService.getAll()
       .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
+
   filter() {
     this.filteredVacancies.emit({
       workArea: this.selectedWorkArea === undefined || this.selectedWorkArea === null ? '' : this.selectedWorkArea.name,

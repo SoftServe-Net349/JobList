@@ -34,10 +34,10 @@
     <div class="ui-g ui-fluid">
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon">from</span>
-          <input type="text" pKeyFilter="money" [(ngModel)]="salary" pInputText placeholder="   Price $">
-          <span class="ui-inputgroup-addon">$</span>
-          <p-button label="Ok" (click)="filter()"></p-button>
+            <span class="ui-inputgroup-addon">from</span>
+            <input type="text" pKeyFilter="money" [(ngModel)] = "salary" pInputText>  
+            <span class="ui-inputgroup-addon">$</span>
+            <p-button label="Ok" (onClick)="filter()"></p-button>      
         </div>
       </div>
     </div>

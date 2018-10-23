@@ -13,7 +13,7 @@ export class ResumeService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>>{
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     const params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
@@ -23,19 +23,20 @@ export class ResumeService {
 
   getByFilter(param: ResumessearchQuery, pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     let params = new HttpParams()
-      .set('name', param.name)
+      .set('position', param.position)
       .set('city', param.city)
       .set('workArea', param.workArea)
-      .set('age', param.age.toString())
+      .set('startAge', param.startAge.toString())
+      .set('finishAge', param.finishAge.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
       param.schools.forEach(school => {
         params = params.append('schools', school);
       });
-      param.schools.forEach(faculty => {
+      param.faculties.forEach(faculty => {
         params = params.append('faculties', faculty);
       });
-      param.schools.forEach(language => {
+      param.languages.forEach(language => {
         params = params.append('languages', language);
       });
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);

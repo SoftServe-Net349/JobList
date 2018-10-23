@@ -153,5 +153,4 @@ export class RecruiterFormComponent implements OnInit {
     error => { this.errorMessage = error.error; });
 
   }
-
 }

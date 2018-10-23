@@ -27,5 +27,7 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> DeleteEntityByIdAsync(int id);
 
         Task<int> CountAsync(Expression<Func<Resume, bool>> predicate = null);
+
+        int TotalRecords { get; }
     }
 }

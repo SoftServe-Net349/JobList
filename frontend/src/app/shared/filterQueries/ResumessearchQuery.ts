@@ -1,9 +1,10 @@
 export interface ResumessearchQuery {
-    name: string;
+    position: string;
     city: string;
     workArea: string;
     schools: string[];
     faculties: string[];
-    age: number;
+    startAge: number;
+    finishAge: number;
     languages: string[];
 }

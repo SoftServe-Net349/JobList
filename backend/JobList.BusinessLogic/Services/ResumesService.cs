@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Extensions;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.UrlQuery;
@@ -25,6 +26,12 @@ namespace JobList.BusinessLogic.Services
             _uow = uow;
             _mapper = mapper;
         }
+
+        public int TotalRecords
+        {
+            get { return _uow.ResumesRepository.TotalRecords; }
+        }
+
 
         public Task<int> CountAsync(Expression<Func<Resume, bool>> predicate = null)
         {
@@ -91,46 +98,54 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<ResumeDTO>> GetFilteredEntitiesAsync(ResumeUrlQuery resumeUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            var entities = await _uow.ResumesRepository.GetAllEntitiesAsync(
-                 include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
-                                .Include(o => o.WorkArea)
-                                .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
-                                .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
-                                .Include(o => o.Experiences)
-                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
+            Expression<Func<Resume, bool>> filter = e => true;
 
-            if (!string.IsNullOrEmpty(resumeUrlQuery.Name))
+            if(resumeUrlQuery.Position != null)
             {
-                entities = entities.Where(е => е.WorkArea.Name.ToLower()
-                    .Contains(resumeUrlQuery.Name.ToLower())).ToList();
-            }
-            if (!string.IsNullOrEmpty(resumeUrlQuery.City))
-            {
-                entities = entities.Where(е => е.Employee.City.Name == resumeUrlQuery.City).ToList();
+                filter = filter.And(r => r.Position
+                    .Contains(resumeUrlQuery.Position));
             }
 
-            if (!string.IsNullOrEmpty(resumeUrlQuery.WorkArea))
+            if(resumeUrlQuery.WorkArea != null)
             {
-                entities = entities.Where(е => е.WorkArea.Name == resumeUrlQuery.WorkArea).ToList();
+                filter = filter.And(r => r.WorkArea.Name == resumeUrlQuery.WorkArea);
             }
-            if (!(resumeUrlQuery.Scools == null))
+            if(resumeUrlQuery.City != null)
             {
-                //entities = (from x in entities
-                //            where resumeUrlQuery.Scools.Contains(x.Company.Name)
-                //            select x).ToList();
+                filter = filter.And(r => r.Employee.City.Name == resumeUrlQuery.City);
             }
-            if (!(resumeUrlQuery.Faculties == null))
+            if(resumeUrlQuery.StartAge.Value >= 0 && resumeUrlQuery.FinishAge.Value > 0)
             {
+                filter = filter.And(r => (DateTime.Now - r.Employee.BirthDate).Days / 365 > resumeUrlQuery.StartAge && 
+                                         (DateTime.Now - r.Employee.BirthDate).Days / 365 < resumeUrlQuery.FinishAge);
+            }
+            if(resumeUrlQuery.Languages != null)
+            {
+                filter = filter.And(r => r.ResumeLanguages
+                    .Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name)));
+            }
+            if(resumeUrlQuery.Schools != null)
+            {
+                filter = filter.And(r => r.EducationPeriods
+                    .Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name)));
+            }
+            if(resumeUrlQuery.Faculties != null)
+            {
+                filter = filter.And(r => r.EducationPeriods
+                    .Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name)));
             }
 
-            if (!(resumeUrlQuery.Languages == null))
-            {
-            }
-            if (!(resumeUrlQuery.Age == 0))
-            {
-            }
+            var resumes = await _uow.ResumesRepository.GetRangeAsync(
+                include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
+                    .Include(o => o.WorkArea)
+                    .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
+                    .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
+                    .Include(o => o.Experiences)
+                    .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language),
+                filter: filter,
+                paginationUrlQuery: paginationUrlQuery);
 
-            var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(entities);
+            var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(resumes);
 
             return dtos;
         }
