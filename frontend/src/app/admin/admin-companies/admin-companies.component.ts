@@ -97,7 +97,9 @@ export class AdminCompaniesComponent implements OnInit {
         this.searchString = event.query;
         this.loadCompanies();
 
-        this.paginator.changePage(0);
+        if (this.paginator.first !== 0) {
+            this.paginator.changePage(0);
+        }
     }
 
     select(event) {

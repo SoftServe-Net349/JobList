@@ -5,6 +5,7 @@ import { WorkArea } from '../shared/models/work-area.model';
 import { Company } from '../shared/models/company.model';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { resetFakeAsyncZone } from '@angular/core/testing';
+import { CityService } from '../core/services/city.service';
 
 @Component({
   selector: 'app-job-filters',
@@ -43,8 +44,8 @@ export class JobFiltersComponent implements OnInit {
   loadCompanies() {
     this.companyService.getAll()
       .subscribe((data: Company[]) => {
-        this.companies = data
-      if(this.companyName) {
+        this.companies = data;
+      if (this.companyName) {
         this.selectedCompanies[0] = this.companies.find(c => c.name === this.companyName);
       }
       });

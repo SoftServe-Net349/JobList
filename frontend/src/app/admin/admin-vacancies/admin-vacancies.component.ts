@@ -97,7 +97,9 @@ export class AdminVacanciesComponent implements OnInit {
         this.searchString = event.query;
         this.loadVacancies();
 
-        this.paginator.changePage(0);
+        if (this.paginator.first !== 0) {
+            this.paginator.changePage(0);
+        }
     }
 
     select(event) {
