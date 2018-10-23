@@ -59,7 +59,9 @@ export class ResumesSearchComponent implements OnInit {
 
     this.loadResumes();
 
-    // this.paginator.changePage(0);
+    if (this.paginator.first !== 0) {
+      this.paginator.changePage(0);
+    }
   }
 
   paginate(event) {
