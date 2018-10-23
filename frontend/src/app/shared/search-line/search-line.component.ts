@@ -6,7 +6,6 @@ import { City } from '../models/city.model';
 import { JobSearchQuery } from '../filterQueries/JobsearchQuery';
 import { ResumessearchQuery } from '../filterQueries/ResumessearchQuery';
 
-
 @Component({
   selector: 'app-search-line',
   templateUrl: './search-line.component.html',

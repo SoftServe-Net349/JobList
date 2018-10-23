@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Recruiter } from '../shared/models/recruiter.model';
 import { ConfirmationService } from 'primeng/api';
 import { RecruiterService } from '../core/services/recruiter.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { VacancyService } from '../core/services/vacancy.service';
 import { Vacancy } from '../shared/models/vacancy.model';
+import { Paginator } from 'primeng/paginator';
+
+
 
 
 @Component({
@@ -16,9 +19,17 @@ export class RecruiterComponent implements OnInit {
 
   display: Boolean = false;
   action: String;
+
+  searchString = '';
+
+  totalRecords = 0;
+  pageSize = 4;
+  pageNumber = 1;
   vacancies: Vacancy[];
 
   recruiter: Recruiter;
+
+  @ViewChild('p') vacanciesPaginator: Paginator;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -42,10 +53,21 @@ export class RecruiterComponent implements OnInit {
     .subscribe((data: Recruiter) => this.recruiter = data);
   }
 
-  loadVacancies(id: number = this.recruiter.id) {
-    this.vacancyService.getByRecruiterId(id)
-    .subscribe((data: Vacancy[]) => this.vacancies = data);
-  }
+  loadVacancies(id: number = this.recruiter.id,
+    pageSize: number = this.pageSize,
+    pageNumber: number = this.pageNumber) {
+
+      this.vacancyService.getByRecruiterIdWithPagination(id, pageSize, pageNumber)
+      .subscribe((response) => {
+        this.vacancies = response.body;
+        const XPagination = JSON.parse(response.headers.get('X-Pagination'));
+  
+        if (XPagination !== null) {
+          this.totalRecords = XPagination.TotalRecords;
+        }
+      });
+    }
+  
 
   deleteConfirm(id: number) {
     this.confirmationService.confirm({
@@ -55,5 +77,48 @@ export class RecruiterComponent implements OnInit {
         accept: () => { this.vacancyService.delete(id).subscribe(data => this.loadVacancies());
       }
     });
+  }
+  search() {
+    this.pageNumber = 1;
+    if (this.searchString === '') {
+      this.loadVacancies(this.recruiter.id, this.pageSize, this.pageNumber);
+    } else {
+      this.vacancyService
+      .getByRecruiterIdSearchStringWithPagination(this.recruiter.id,
+                                                this.searchString,
+                                                this.pageSize,
+                                                this.pageNumber)
+      .subscribe((response) => {
+        this.vacancies = response.body;
+
+        const XPagination = JSON.parse(response.headers.get('X-Pagination'));
+
+        if (XPagination !== null) {
+          this.totalRecords = XPagination.TotalRecords;
+        }
+
+        this.vacanciesPaginator.changePage(0);
+      });
+    }
+  }
+
+  paginate(event) {
+    this.pageNumber = ++event.page;
+    const pageSize = event.rows;
+
+    if (this.searchString === '') {
+      this.loadVacancies(this.recruiter.id, pageSize, this.pageNumber);
+    } else {
+      this.vacancyService.getByRecruiterIdSearchStringWithPagination(this.recruiter.id, this.searchString, pageSize, this.pageNumber)
+        .subscribe((response) => {
+          this.vacancies = response.body;
+
+          const XPagination = JSON.parse(response.headers.get('X-Pagination'));
+
+          if (XPagination !== null) {
+            this.totalRecords = XPagination.TotalRecords;
+          }
+      });
+    }
   }
 }

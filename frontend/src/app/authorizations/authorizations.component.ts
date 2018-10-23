@@ -9,6 +9,7 @@ import { CompanyRequest } from '../shared/models/company-request.model';
 import { Company } from '../shared/models/company.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
+import { sha512_224 }from 'js-sha512';
 
 @Component({
   selector: 'app-authorizations',
@@ -152,7 +153,7 @@ export class AuthorizationsComponent implements OnInit {
 
     const request: LoginRequest = {
       email: this.authoruzationsForm.get('login').value,
-      password: this.authoruzationsForm.get('password').value
+      password: sha512_224(this.authoruzationsForm.get('password').value).toString()
     };
 
     if (this.role === 'Employee') {
@@ -215,7 +216,7 @@ export class AuthorizationsComponent implements OnInit {
       firstName: this.signUpEmployeeForm.get('firstName').value,
       lastName: this.signUpEmployeeForm.get('lastName').value,
       email: this.signUpEmployeeForm.get('email').value,
-      password: this.signUpEmployeeForm.get('password').value,
+      password:  sha512_224(this.signUpEmployeeForm.get('password').value).toString(),
       birthDate: this.birthDate,
       cityId: this.selectedCity.id,
       phone: null,
@@ -248,7 +249,7 @@ export class AuthorizationsComponent implements OnInit {
       address: this.signUpCompanyForm.get('address').value,
       fullDescription: this.signUpCompanyForm.get('fullDescription').value,
       email: this.signUpCompanyForm.get('email').value,
-      password: this.signUpCompanyForm.get('password').value,
+      password:  sha512_224(this.signUpCompanyForm.get('password').value).toString(),
       logoData:  this.base64,
       logoMimetype:  this.type,
       phone: this.signUpCompanyForm.get('phone').value,
