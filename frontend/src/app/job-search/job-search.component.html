@@ -1,8 +1,8 @@
 <div class="jobsearch">
-  <app-search-line [searchString]="param.name" [cityName]="param.city" (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
+  <app-search-line [searchString]="param.name" [cityName]="param.city"  (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
-      <app-job-filters (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
+      <app-job-filters [companyName]="param.namesOfCompanies[0]" (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
     </div>
     <div class="vacancy-container">
       <article class="vacancy-block" *ngFor="let vacancy of vacancies">

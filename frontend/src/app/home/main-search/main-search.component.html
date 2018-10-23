@@ -15,7 +15,7 @@
     <br />
     <div id="professions">
       <div class="list-professions">
-        <a *ngFor="let vacancy of vacancies | slice:0:5; let i=index"><img src="https://images.cf-rabota.com.ua/2017/12/professions/manager.svg?v=621.1.297-83c2778-master">
+        <a *ngFor="let vacancy of vacancies | slice:0:5; let i=index"><img src="https://images.cf-rabota.com.ua/2017/12/professions/manager.svg?v=621.1.297-83c2778-master" (click)="goToJobSearchByVacancy(vacancy.name)">
           <p>{{vacancy.name}}</p>
         </a>
       </div>
@@ -27,7 +27,7 @@
     <div id="companies">
       <div class="list-companies" *ngIf="companies?.length > 0">
         <a *ngFor="let company of companies">
-          <img class="city-image" [src]="sanitizeCompanyImg(company?.logoData, company)">
+          <img class="city-image" [src]="sanitizeCompanyImg(company?.logoData, company)"(click)="goToJobSearchByCompany(company.name)">
           <p>{{company?.name}}</p>
         </a>
       </div>
@@ -40,7 +40,7 @@
     <div id="cities">
       <div class="list-cities" *ngIf="cities?.length > 0">
         <a *ngFor="let city of cities">
-          <img class="city-image" [src]="sanitizeCityImg(city?.photoData, city)">
+          <img class="city-image" [src]="sanitizeCityImg(city?.photoData, city)" (click)="goToJobSearchByCity(city.name)">
           <p>{{city?.name}}</p>
         </a>
       </div>
