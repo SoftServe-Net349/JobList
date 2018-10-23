@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CompanyService } from '../core/services/company.service';
 import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
@@ -24,10 +24,12 @@ export class JobFiltersComponent implements OnInit {
   selectedWorkArea: WorkArea;
 
   companies: Company[];
-  selectedCompanies: Company[];
+  selectedCompanies: Company[] = [];
 
   selectedTypeOfEmployment: string;
   @Output() filteredVacancies = new EventEmitter<JobSearchQuery>();
+
+  @Input() companyName: string;
 
   constructor(private companyService: CompanyService, private cityService: CityService,
     private workAreaService: WorkAreaService) {
@@ -41,7 +43,12 @@ export class JobFiltersComponent implements OnInit {
 
   loadCompanies() {
     this.companyService.getAll()
-      .subscribe((data: Company[]) => this.companies = data);
+      .subscribe((data: Company[]) => {
+        this.companies = data
+      if(this.companyName) {
+        this.selectedCompanies[0] = this.companies.find(c => c.name === this.companyName);
+      }
+      });
   }
 
   loadWorkAreas() {

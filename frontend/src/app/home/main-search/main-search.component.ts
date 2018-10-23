@@ -93,4 +93,39 @@ export class MainSearchComponent implements OnInit {
       }
     );
   }
+  goToJobSearchByVacancy(vacancyName: string) {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'searchString': vacancyName
+        }
+      }
+    );
+  }
+
+  goToJobSearchByCompany(companyName: string) {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'company': companyName
+        }
+      }
+    );
+  }
+
+  goToJobSearchByCity(cityName: string) {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'city': cityName
+        }
+      }
+    );
+  }
 }
