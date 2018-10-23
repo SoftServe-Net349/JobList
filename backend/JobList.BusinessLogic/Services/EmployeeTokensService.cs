@@ -42,8 +42,23 @@ namespace JobList.BusinessLogic.Services
             {
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Login is uncorrect!");
             }
+            byte[] hashBytes = Convert.FromBase64String(entity.Password);
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            var hashRequestPassword = new Rfc2898DeriveBytes(request.Password, salt, 1000);
+            byte[] hashRequest = hashRequestPassword.GetBytes(20);
+            bool flag = false;
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] == hashRequest[i])
+                {
+                    flag = true;
+                }
+                else break;
 
-            if (entity.Password != request.Password)
+            }
+
+            if (flag == false)
             {
                 throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Password is uncorrect!");
             }
