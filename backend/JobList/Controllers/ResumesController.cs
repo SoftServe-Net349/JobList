@@ -52,7 +52,7 @@ namespace JobList.Controllers
         [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]ResumeUrlQuery resumeUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
-        {
+       {
             var dtos = await _resumesService.GetFilteredEntitiesAsync(resumeUrlQuery, paginationUrlQuery);
 
             if (dtos == null)
@@ -60,21 +60,14 @@ namespace JobList.Controllers
                 return NotFound();
             }
 
-            if (paginationUrlQuery != null)
+            var pageInfo = new PageInfo()
             {
-                int count = dtos.Count();
-                dtos = dtos.Skip(paginationUrlQuery.PageSize * (paginationUrlQuery.PageNumber - 1))
-                    .Take(paginationUrlQuery.PageSize).ToList();
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _resumesService.TotalRecords
+            };
 
-                var pageInfo = new PageInfo()
-                {
-                    PageNumber = paginationUrlQuery.PageNumber,
-                    PageSize = paginationUrlQuery.PageSize,
-                    TotalRecords = count
-                };
-
-                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
-            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
 
             return Ok(dtos);
         }

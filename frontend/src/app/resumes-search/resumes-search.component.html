@@ -1,8 +1,8 @@
 <div class="resumes-search">
-  <app-search-line (filteredResumes)="getResumesBySearchString($event)"></app-search-line>
+  <app-search-line (filteredResumes)="getResumesByFilter($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
-      <app-company-filters></app-company-filters>
+      <app-company-filters (filteredResumes)="getResumesByFilter($event)"></app-company-filters>
     </div>
     
     <div class="resume-container">
@@ -12,7 +12,7 @@
         </div>
         <div class="inform">
           <h3>
-            <a>{{resume?.workArea?.name}}</a>
+            <a>{{resume?.position}}</a>
           </h3>
           <p class="person-inform">
             <span>
@@ -20,13 +20,9 @@
             </span>
           </p>
           <p>
-              <i class="fa fa-map-marker"></i>
-              <span>
-                {{resume?.employee?.address}}
-              </span>
               <i class="fa fa-user"></i>
               <span>
-                {{resume?.employee?.birthData | date}}
+                {{resume?.employee?.birthDate | date}}
               </span>
           </p>
           <p class="experiance">
@@ -44,5 +40,5 @@
       </article>
     </div>
   </div>
-  <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[pageSize, pageSize + 1]"></p-paginator>
+  <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 </div>

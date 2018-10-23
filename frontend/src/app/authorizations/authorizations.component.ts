@@ -218,7 +218,7 @@ export class AuthorizationsComponent implements OnInit {
       password: this.signUpEmployeeForm.get('password').value,
       birthDate: this.birthDate,
       cityId: this.selectedCity.id,
-      phone: '',
+      phone: null,
       photoData: null,
       photoMimeType: null,
       roleId: 2,

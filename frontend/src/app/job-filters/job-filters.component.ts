@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CompanyService } from '../core/services/company.service';
-import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { WorkArea } from '../shared/models/work-area.model';
 import { Company } from '../shared/models/company.model';
@@ -27,7 +26,7 @@ export class JobFiltersComponent implements OnInit {
   selectedTypeOfEmployment: string;
   @Output() filteredVacancies = new EventEmitter<JobSearchQuery>();
 
-  constructor(private companyService: CompanyService, private cityService: CityService,
+  constructor(private companyService: CompanyService,
     private workAreaService: WorkAreaService) {
    }
 
@@ -46,6 +45,7 @@ export class JobFiltersComponent implements OnInit {
     this.workAreaService.getAll()
       .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
+
   filter() {
     this.filteredVacancies.emit({
       workArea: this.selectedWorkArea === undefined ? '' : this.selectedWorkArea.name,

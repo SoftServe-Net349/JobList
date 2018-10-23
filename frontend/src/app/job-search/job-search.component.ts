@@ -20,10 +20,7 @@ export class JobSearchComponent implements OnInit {
 
   param: JobSearchQuery;
 
-  url: string;
-
   @ViewChild('p') paginator: Paginator;
-
 
   constructor(private vacancyService: VacancyService, private route: ActivatedRoute) {
     this.vacancies = [];

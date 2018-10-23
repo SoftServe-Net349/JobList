@@ -32,10 +32,10 @@ export class ResumeService {
       param.schools.forEach(school => {
         params = params.append('schools', school);
       });
-      param.schools.forEach(faculty => {
+      param.faculties.forEach(faculty => {
         params = params.append('faculties', faculty);
       });
-      param.schools.forEach(language => {
+      param.languages.forEach(language => {
         params = params.append('languages', language);
       });
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
