@@ -137,7 +137,7 @@ export class HeaderComponent implements OnInit {
       const token = this.authHelper.getToken();
       const decodeToken = this.jwtHelper.decodeToken(token);
       this.role = decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+      this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     } else {
 

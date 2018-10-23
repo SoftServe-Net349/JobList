@@ -112,7 +112,7 @@ export class AuthHelper  {
 
         const decodeToken = this.jwtHelper.decodeToken(data.jwt);
         const currentUser: User = {
-            id: decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+            id: decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
             role: decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
         };
 

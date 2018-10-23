@@ -51,20 +51,6 @@ export class MainSearchComponent implements OnInit {
     .subscribe((data: Company[]) => this.companies = data);
   }
 
-
-  sanitizeCityImg(imageBase64, city: City): SafeUrl {
-
-    if (this.cities !== undefined && city.photoData !== undefined &&
-        city.photoData !== null && city.photoData !== '') {
-      return this._sanitizer.bypassSecurityTrustUrl(`data:image/${city.photoMimetype};base64,` + imageBase64);
-
-    } else {
-
-      return '../../../images/defaultUser.png';
-
-    }
-  }
-
   sanitizeCompanyImg(imageBase64, company: Company): SafeUrl {
 
     if (this.cities !== undefined && company.logoData !== undefined &&

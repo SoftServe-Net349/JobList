@@ -23,6 +23,11 @@ using JobList.Common.DTOS;
 using Microsoft.AspNetCore.Authorization;
 using JobList.AuthorizationHandlers;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using JobList.Providers;
+using Microsoft.AspNetCore.SignalR;
+using JobList.BusinessLogic.Hubs;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Primitives;
 
 namespace JobList
 {
@@ -38,9 +43,11 @@ namespace JobList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Connection to db
+            // Connection to DataBase
             services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+
+            // Add Cors policy
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -50,9 +57,10 @@ namespace JobList
                        .WithExposedHeaders("X-Pagination");
             }));
 
-            var tokensSection = Configuration.GetSection("Tokens");
 
             // Configuring JobListTokenOptions
+            var tokensSection = Configuration.GetSection("Tokens");
+
             services.Configure<JobListTokenOptions>(o => 
                 {
                     o.Issuer = tokensSection["Issuer"];
@@ -62,9 +70,9 @@ namespace JobList
                     o.Security_Key = tokensSection["Key"];
                 });
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add your services here
+           
             services.AddTransient<ICitiesService, CitiesService>();
             services.AddTransient<ICompaniesService, CompaniesService>();
             services.AddTransient<IEducationPeriodsService, EducationPeriodsService>();
@@ -80,19 +88,21 @@ namespace JobList
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
+            services.AddTransient<IInvitationsService, InvitationsService>();
             services.AddTransient<ITokensService<EmployeeDTO>, EmployeeTokensService>();
             services.AddTransient<ITokensService<CompanyDTO>, CompanyTokensService>();
             services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // Authorization User as an Owner
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("OwnerPolicy", policy =>
-            //        policy.Requirements.Add(new SameOwnerRequirement()));
-            //});
 
+            // Add your authorization handlers here
+            services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
+
+            // Add authentication and set up validation parameters
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -112,7 +122,29 @@ namespace JobList
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
                         ClockSkew = TimeSpan.Zero
                     };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["token"].ToString();
+
+                            // If the request is for our hub...
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                (path.StartsWithSegments("/invitationHub")))
+                            {
+                                // Read the token out of the query string
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
+
+            services.AddSignalR();
+            // Add user id provider
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
             services.AddMvc(config =>
             {
@@ -123,42 +155,12 @@ namespace JobList
                                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddFluentValidation(fv =>
-                {
-                    fv.ImplicitlyValidateChildProperties = true;
-                    // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                    fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<EducationPeriodValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<CompanyUpdateValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<EmployeeValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<EmployeeUpdateValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<RecruiterValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<RecruiterUpdateValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<WorkAreaValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<LanguageValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<FacultyValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<FavoriteVacancyValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<ResumeLanguageValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<RoleValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<SchoolValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<VacancyValidator>();
-                    fv.RegisterValidatorsFromAssemblyContaining<ExperienceValidator>();
 
-
-                })
+                .AddFluentValidation(GetRegisteredFluentValidators())
                 .AddJsonOptions(
                  options => options.SerializerSettings.ReferenceLoopHandling
                 = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            // Add your authorization handlers here
-            services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
-            services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
-
-            // AdministratorsAuthorizationHandler and OwnerAuthorizationHandler are added as singletons.
-            // They're singletons because they don't use EF.
 
             InitializeAutomapper(services);
         }
@@ -179,10 +181,43 @@ namespace JobList
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<InvitationHub>("/invitationHub");
+            });
             app.UseMvc();
+        }
+
+        public virtual Action<FluentValidationMvcConfiguration> GetRegisteredFluentValidators()
+        {
+            return fv =>
+            {
+                fv.ImplicitlyValidateChildProperties = true;
+                // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                fv.RegisterValidatorsFromAssemblyContaining<CityValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<CompanyValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<EducationPeriodValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<CompanyUpdateValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<EmployeeValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<EmployeeUpdateValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<RecruiterValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<RecruiterUpdateValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<WorkAreaValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<LanguageValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<FacultyValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<FavoriteVacancyValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<ResumeLanguageValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<ResumeValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<RoleValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<SchoolValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<VacancyValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<ExperienceValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<InvitationValidator>();
+            };
         }
 
         public virtual IServiceCollection InitializeAutomapper(IServiceCollection services)
@@ -207,6 +242,7 @@ namespace JobList
                 cfg.AddProfile<EmployeeProfile>();
                 cfg.AddProfile<VacancyProfile>();
                 cfg.AddProfile<WorkAreaProfile>();
+                cfg.AddProfile<InvitationProfile>();
             }); // Scoped Lifetime!
 
             return services;

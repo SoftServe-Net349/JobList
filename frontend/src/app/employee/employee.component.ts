@@ -4,6 +4,7 @@ import { Resume } from '../shared/models/resume.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { ResumeService } from '../core/services/resume.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { InvitationHubService } from '../core/hubs/invitation.hub';
 
 @Component({
   selector: 'app-employee',
@@ -17,7 +18,11 @@ export class EmployeeComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService,
               private resumeService: ResumeService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private invitationHubService: InvitationHubService) {
+
+    this.subscribeToInvitationEvents();
+
   }
 
 
@@ -49,5 +54,11 @@ export class EmployeeComponent implements OnInit {
     }
 
     return languages.slice(0, languages.length - 2); // to delete the last ,
+  }
+
+  private subscribeToInvitationEvents() {
+    this.invitationHubService.invitationReceived.subscribe((message: string) => {
+      console.log(message);
+    });
   }
 }

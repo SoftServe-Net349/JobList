@@ -69,7 +69,7 @@ namespace JobList.BusinessLogic.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, employeeDTO.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, employeeDTO.Id.ToString()),
                 new Claim(ClaimTypes.Email, employeeDTO.Email),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, employeeDTO.Role.Name)
             };
