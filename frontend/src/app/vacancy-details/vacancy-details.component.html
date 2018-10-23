@@ -1,5 +1,5 @@
 <div id="vacancy-page">
-  <img class="vacancy-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Vacancy logo">
+  <img class="vacancy-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="Vacancy logo" [routerLink]="['/company-details/', vacancy?.recruiter?.company?.id]" routerLinkActive="active">
   <div class="wrapper-flex">
     <div class="additional-info">
       <h1>{{vacancy.name}}</h1>
