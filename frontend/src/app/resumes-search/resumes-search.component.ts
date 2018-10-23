@@ -36,7 +36,7 @@ export class ResumesSearchComponent implements OnInit {
 
   getDefaultParam(): ResumessearchQuery {
     return {
-      name: '',
+      position: '',
       city: '',
       workArea: '',
       schools: [],
@@ -48,7 +48,7 @@ export class ResumesSearchComponent implements OnInit {
   }
 
   getResumesByFilter(param: ResumessearchQuery) {
-    this.param.name = param.name !== null ? param.name : this.param.name;
+    this.param.position = param.position !== null ? param.position : this.param.position;
     this.param.city = param.city !== null ? param.city : this.param.city;
     this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
     this.param.schools = param.schools !== null ? param.schools : this.param.schools;

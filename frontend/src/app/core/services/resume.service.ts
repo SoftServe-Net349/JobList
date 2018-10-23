@@ -23,7 +23,7 @@ export class ResumeService {
 
   getByFilter(param: ResumessearchQuery, pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     let params = new HttpParams()
-      .set('name', param.name)
+      .set('position', param.position)
       .set('city', param.city)
       .set('workArea', param.workArea)
       .set('startAge', param.startAge.toString())

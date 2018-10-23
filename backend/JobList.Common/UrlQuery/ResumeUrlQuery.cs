@@ -2,7 +2,7 @@
 {
     public class ResumeUrlQuery
     {
-        public string Name { get; set; }
+        public string Position { get; set; }
         public string City { get; set; }
         public string WorkArea { get; set; }
         public string[] Schools { get; set; }

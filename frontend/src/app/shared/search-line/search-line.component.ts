@@ -59,7 +59,7 @@ export class SearchLineComponent implements OnInit {
       });
     } else if (this.currentUrl.includes('/resumessearch')) {
       this.filteredResumes.emit({
-        name: this.inputText === undefined ? '' : this.inputText,
+        position: this.inputText === undefined ? '' : this.inputText,
         city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name,
         workArea: null,
         schools: null,

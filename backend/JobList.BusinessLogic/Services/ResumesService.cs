@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Extensions;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.UrlQuery;
@@ -97,43 +98,52 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<ResumeDTO>> GetFilteredEntitiesAsync(ResumeUrlQuery resumeUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            var resumes = await _uow.ResumesRepository.GetAllEntitiesAsync(
-                 include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
-                                .Include(o => o.WorkArea)
-                                .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
-                                .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
-                                .Include(o => o.Experiences)
-                                .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
+            Expression<Func<Resume, bool>> filter = e => true;
+
+            if(resumeUrlQuery.Position != null)
+            {
+                filter = filter.And(r => r.Position
+                    .Contains(resumeUrlQuery.Position));
+            }
 
             if(resumeUrlQuery.WorkArea != null)
             {
-                resumes = resumes.Where(r => r.WorkArea.Name == resumeUrlQuery.WorkArea).ToList();
+                filter = filter.And(r => r.WorkArea.Name == resumeUrlQuery.WorkArea);
             }
             if(resumeUrlQuery.City != null)
             {
-                resumes = resumes.Where(r => r.Employee.City.Name == resumeUrlQuery.City).ToList();
+                filter = filter.And(r => r.Employee.City.Name == resumeUrlQuery.City);
             }
-            if(resumeUrlQuery.StartAge.Value > 0 && resumeUrlQuery.FinishAge.Value > 0)
+            if(resumeUrlQuery.StartAge.Value >= 0 && resumeUrlQuery.FinishAge.Value > 0)
             {
-                resumes = resumes
-                    .Where(r =>
-                    {
-                        int age = (DateTime.Now - r.Employee.BirthDate).Days / 365;
-                        return age > resumeUrlQuery.StartAge && age < resumeUrlQuery.FinishAge;
-                    }).ToList();
+                filter = filter.And(r => (DateTime.Now - r.Employee.BirthDate).Days / 365 > resumeUrlQuery.StartAge && 
+                                         (DateTime.Now - r.Employee.BirthDate).Days / 365 < resumeUrlQuery.FinishAge);
             }
             if(resumeUrlQuery.Languages != null)
             {
-                resumes = resumes.Where(r => r.ResumeLanguages.Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name))).ToList();
+                filter = filter.And(r => r.ResumeLanguages
+                    .Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name)));
             }
             if(resumeUrlQuery.Schools != null)
             {
-                resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name))).ToList();
+                filter = filter.And(r => r.EducationPeriods
+                    .Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name)));
             }
             if(resumeUrlQuery.Faculties != null)
             {
-                resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name))).ToList();
+                filter = filter.And(r => r.EducationPeriods
+                    .Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name)));
             }
+
+            var resumes = await _uow.ResumesRepository.GetRangeAsync(
+                include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
+                    .Include(o => o.WorkArea)
+                    .Include(o => o.EducationPeriods).ThenInclude(e => e.School)
+                    .Include(o => o.EducationPeriods).ThenInclude(e => e.Faculty)
+                    .Include(o => o.Experiences)
+                    .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language),
+                filter: filter,
+                paginationUrlQuery: paginationUrlQuery);
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(resumes);
 

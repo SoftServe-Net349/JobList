@@ -89,7 +89,7 @@ export class CompanyFiltersComponent implements OnInit {
       languages: this.selectedLanguages === undefined ||
                  this.selectedLanguages === null ? [] : this.selectedLanguages.map(l => l.name),
       city: null,
-      name: null
+      position: null
     });
   }
 }

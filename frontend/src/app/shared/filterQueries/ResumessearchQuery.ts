@@ -1,5 +1,5 @@
 export interface ResumessearchQuery {
-    name: string;
+    position: string;
     city: string;
     workArea: string;
     schools: string[];
