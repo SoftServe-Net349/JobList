@@ -35,7 +35,7 @@ export class CompanyFiltersComponent implements OnInit {
 
   @Output() filteredResumes = new EventEmitter<ResumessearchQuery>();
 
-  rangeValues: number[] = [20, 30];
+  rangeValues: number[] = [0, 50];
 
   constructor(private cityService: CityService, private workAreaService: WorkAreaService,
     private facultyService: FacultyService, private schoolService: SchoolService,
@@ -82,8 +82,10 @@ export class CompanyFiltersComponent implements OnInit {
                this.selectedSchools === null ? [] : this.selectedSchools.map(s => s.name),
       faculties: this.selectedFaculties === undefined ||
                  this.selectedFaculties === null ? [] : this.selectedFaculties.map(f => f.name),
-      age: this.rangeValues === undefined ||
-           this.rangeValues === null || this.rangeValues[0].toString() === '' ? 0 : this.rangeValues[0],
+      startAge: this.rangeValues === undefined ||
+                this.rangeValues === null || this.rangeValues[0].toString() === '' ? 0 : this.rangeValues[0],
+      finishAge: this.rangeValues === undefined ||
+                 this.rangeValues === null || this.rangeValues[1].toString() === '' ? 0 : this.rangeValues[1],
       languages: this.selectedLanguages === undefined ||
                  this.selectedLanguages === null ? [] : this.selectedLanguages.map(l => l.name),
       city: null,

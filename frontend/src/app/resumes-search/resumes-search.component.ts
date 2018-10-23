@@ -41,7 +41,8 @@ export class ResumesSearchComponent implements OnInit {
       workArea: '',
       schools: [],
       faculties: [],
-      age: 0,
+      startAge: 0,
+      finishAge: 0,
       languages: []
     };
   }
@@ -52,10 +53,10 @@ export class ResumesSearchComponent implements OnInit {
     this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
     this.param.schools = param.schools !== null ? param.schools : this.param.schools;
     this.param.faculties = param.faculties !== null ? param.faculties : this.param.faculties;
-    this.param.age = param.age !== null ? param.age : this.param.age;
+    this.param.startAge = param.startAge !== null ? param.startAge : this.param.startAge;
+    this.param.finishAge = param.finishAge !== null ? param.finishAge : this.param.finishAge;
     this.param.languages = param.languages !== null ? param.languages : this.param.languages;
 
-    console.log('Languages: ' + this.param.languages);
     this.loadResumes();
 
     // this.paginator.changePage(0);

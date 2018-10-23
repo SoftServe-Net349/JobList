@@ -4,6 +4,7 @@ export interface ResumessearchQuery {
     workArea: string;
     schools: string[];
     faculties: string[];
-    age: number;
+    startAge: number;
+    finishAge: number;
     languages: string[];
 }

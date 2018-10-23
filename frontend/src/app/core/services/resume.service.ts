@@ -26,7 +26,8 @@ export class ResumeService {
       .set('name', param.name)
       .set('city', param.city)
       .set('workArea', param.workArea)
-      .set('age', param.age.toString())
+      .set('startAge', param.startAge.toString())
+      .set('finishAge', param.finishAge.toString())
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
       param.schools.forEach(school => {

@@ -105,25 +105,35 @@ namespace JobList.BusinessLogic.Services
                                 .Include(o => o.Experiences)
                                 .Include(o => o.ResumeLanguages).ThenInclude(v => v.Language));
 
+            if(resumeUrlQuery.WorkArea != null)
+            {
+                resumes = resumes.Where(r => r.WorkArea.Name == resumeUrlQuery.WorkArea).ToList();
+            }
+            if(resumeUrlQuery.City != null)
+            {
+                resumes = resumes.Where(r => r.Employee.City.Name == resumeUrlQuery.City).ToList();
+            }
+            if(resumeUrlQuery.StartAge.Value > 0 && resumeUrlQuery.FinishAge.Value > 0)
+            {
+                resumes = resumes
+                    .Where(r =>
+                    {
+                        int age = (DateTime.Now - r.Employee.BirthDate).Days / 365;
+                        return age > resumeUrlQuery.StartAge && age < resumeUrlQuery.FinishAge;
+                    }).ToList();
+            }
             if(resumeUrlQuery.Languages != null)
             {
                 resumes = resumes.Where(r => r.ResumeLanguages.Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name))).ToList();
-                    //(from r in resumes
-                    // from e in r.ResumeLanguages
-                    // where resumeUrlQuery.Languages.Contains(e.Language.Name)
-                    // select r).Distinct().ToList();
             }
-
             if(resumeUrlQuery.Schools != null)
             {
                 resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name))).ToList();
             }
-
             if(resumeUrlQuery.Faculties != null)
             {
                 resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name))).ToList();
             }
-
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(resumes);
 
