@@ -107,7 +107,6 @@ namespace JobList.BusinessLogic.Services
 
             if(resumeUrlQuery.Languages != null)
             {
-
                 resumes = resumes.Where(r => r.ResumeLanguages.Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name))).ToList();
                     //(from r in resumes
                     // from e in r.ResumeLanguages
@@ -118,6 +117,11 @@ namespace JobList.BusinessLogic.Services
             if(resumeUrlQuery.Schools != null)
             {
                 resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name))).ToList();
+            }
+
+            if(resumeUrlQuery.Faculties != null)
+            {
+                resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name))).ToList();
             }
 
 
