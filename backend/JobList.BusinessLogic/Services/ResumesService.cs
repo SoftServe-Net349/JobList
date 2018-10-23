@@ -115,6 +115,11 @@ namespace JobList.BusinessLogic.Services
                     // select r).Distinct().ToList();
             }
 
+            if(resumeUrlQuery.Schools != null)
+            {
+                resumes = resumes.Where(r => r.EducationPeriods.Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name))).ToList();
+            }
+
 
             var dtos = _mapper.Map<List<Resume>, List<ResumeDTO>>(resumes);
 
