@@ -219,7 +219,7 @@ export class AuthorizationsComponent implements OnInit {
       password:  sha512_224(this.signUpEmployeeForm.get('password').value).toString(),
       birthDate: this.birthDate,
       cityId: this.selectedCity.id,
-      phone: '',
+      phone: null,
       photoData: null,
       photoMimeType: null,
       roleId: 2,

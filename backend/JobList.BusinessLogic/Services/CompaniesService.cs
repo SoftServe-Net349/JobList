@@ -51,14 +51,14 @@ namespace JobList.BusinessLogic.Services
 
             var entity = _mapper.Map<CompanyRequest, Company>(modelRequest);
             byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-            var pbkdf2 = new Rfc2898DeriveBytes(modelRequest.Password, salt, 1000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            byte[] hashbytes = new byte[36];
-            Array.Copy(salt, 0, hashbytes, 0, 16);
-            Array.Copy(hash, 0, hashbytes, 16, 20);
-            entity.Password = Convert.ToBase64String(hashbytes);
-            entity = await _uow.CompaniesRepository.CreateEntityAsync(entity);
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]); //generate unique salt (length 16 bytes)!
+            var hashedPassword = new Rfc2898DeriveBytes(modelRequest.Password, salt, 1000); //hash password with that salt using 1000 iterations
+            byte[] bytesFromHashedPassw = hashedPassword.GetBytes(20);//hashwd passw to bytes
+            byte[] arrayOfHashedBytes = new byte[36];//reserve array for salt +hashed passw
+            Array.Copy(salt, 0, arrayOfHashedBytes, 0, 16);// add to reserved array salt
+            Array.Copy(bytesFromHashedPassw, 0, arrayOfHashedBytes, 16, 20);//then add to same array hashed pswd
+            entity.Password = Convert.ToBase64String(arrayOfHashedBytes);//convert that array hashed (salt+ psw) o string
+            entity = await _uow.CompaniesRepository.CreateEntityAsync(entity);// to DB
             var result = await _uow.SaveAsync();
             if (!result)
             {
