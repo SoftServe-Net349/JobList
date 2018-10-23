@@ -163,6 +163,7 @@ namespace JobList.BusinessLogic.Services
             }
 
             var entities = await _uow.VacanciesRepository.GetRangeAsync(
+                 include: r => r.Include(o => o.City),
                  filter: filter,
                  paginationUrlQuery: paginationUrlQuery);
 
