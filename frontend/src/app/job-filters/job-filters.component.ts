@@ -4,6 +4,7 @@ import { WorkAreaService } from '../core/services/work-area.service';
 import { WorkArea } from '../shared/models/work-area.model';
 import { Company } from '../shared/models/company.model';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
+import { CityService } from '../core/services/city.service';
 
 @Component({
   selector: 'app-job-filters',
