@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user.model';
 
@@ -156,5 +156,4 @@ export class AuthHelper  {
         window.localStorage['currentUser'] = value;
 
     }
-
 }

@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RecruiterService } from '../core/services/recruiter.service';
 import { RecruiterRequest } from '../shared/models/recruiter-request.model';
 import { RecruiterUpdateRequest } from '../shared/models/recruiter-update-request.model';
+import { sha512_224 } from 'js-sha512';
 
 @Component({
   selector: 'app-recruiter-form',
@@ -136,7 +137,7 @@ export class RecruiterFormComponent implements OnInit {
       lastName: this.recruiterForm.get('lastName').value,
       email: this.recruiterForm.get('email').value,
       phone: this.recruiterForm.get('phone').value,
-      password: '12345678',
+      password: sha512_224('12345678').toString(),
       companyId: this.companyId,
       roleId: 4,
       photoData: this.base64,
@@ -152,5 +153,4 @@ export class RecruiterFormComponent implements OnInit {
     error => { this.errorMessage = error.error; });
 
   }
-
 }

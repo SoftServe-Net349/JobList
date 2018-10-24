@@ -11,9 +11,6 @@ import { FormsModule } from '@angular/forms';
 // Our created components
 
 // Our created modules
-import { AdminModule } from './admin/admin.module';
-
-
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AuthHelper } from './shared/helpers/auth-helper';
@@ -37,8 +34,6 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    AdminModule,
-
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter

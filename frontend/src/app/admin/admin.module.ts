@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { DataViewModule } from 'primeng/dataview';
-import { PanelModule, DialogModule, ButtonModule, DropdownModule, SidebarModule, PanelMenuModule, PaginatorModule } from 'primeng/primeng';
+import { PanelModule, DialogModule, ButtonModule,
+  DropdownModule, SidebarModule, PanelMenuModule, PaginatorModule, MessageService, ConfirmationService } from 'primeng/primeng';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
@@ -17,6 +18,7 @@ import { AdminRecruitersComponent } from './admin-recruiters/admin-recruiters.co
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ChartModule } from 'primeng/chart';
 import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
@@ -35,7 +37,8 @@ import { AdminEmployeesComponent } from './admin-employees/admin-employees.compo
     ConfirmDialogModule,
     InputTextModule,
     AutoCompleteModule,
-    ChartModule
+    ChartModule,
+    CoreModule
   ],
   declarations: [
     AdminComponent,
@@ -44,6 +47,8 @@ import { AdminEmployeesComponent } from './admin-employees/admin-employees.compo
     AdminEmployeesComponent,
     AdminVacanciesComponent,
     AdminDashboardComponent,
-    AdminHeaderComponent]
+    AdminHeaderComponent
+  ],
+    providers: [MessageService, ConfirmationService]
 })
 export class AdminModule { }

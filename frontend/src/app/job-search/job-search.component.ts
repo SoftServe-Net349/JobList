@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { Paginator } from 'primeng/primeng';
 
@@ -14,23 +14,31 @@ export class JobSearchComponent implements OnInit {
 
   totalRecords = 0;
   vacancies: Vacancy[];
+  test: string[] = [];
 
   pageSize = 4;
   pageNumber = 1;
 
   param: JobSearchQuery;
+  url: string;
 
-
+  companyName: string;
   @ViewChild('p') paginator: Paginator;
 
-  constructor(private vacancyService: VacancyService, private router: Router) {
+  constructor(private vacancyService: VacancyService, private route: ActivatedRoute) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
+    this.route.queryParams.subscribe(params => {
+      this.param.city = params['city'] === undefined ? '' : params['city'];
+      this.param.name = params['searchString'] === undefined ? '' : params['searchString'];
+      this.param.namesOfCompanies[0] = params['company'] === undefined ? '' : params['company'];
+    });
   }
 
   ngOnInit() {
     this.loadVacancies();
   }
+
 
   getDefaultParam(): JobSearchQuery {
     return {
@@ -55,7 +63,9 @@ export class JobSearchComponent implements OnInit {
 
     this.loadVacancies();
 
-    this.paginator.changePage(0);
+    if (this.paginator.first !== 0) {
+      this.paginator.changePage(0);
+    }
   }
 
   paginate(event) {

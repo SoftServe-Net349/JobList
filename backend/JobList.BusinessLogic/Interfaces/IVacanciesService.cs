@@ -19,6 +19,10 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, SearchingUrlQuery searchingUrlQuery = null, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
+        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(int? recruiterId, 
+                                                               string searchString,
+                                                               PaginationUrlQuery paginationUrlQuery = null);
+
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 
         Task<VacancyDTO> CreateEntityAsync(VacancyRequest modelRequest);

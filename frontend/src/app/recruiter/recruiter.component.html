@@ -2,7 +2,7 @@
 
 <div id="recruiter-page">
 	<div class="recruiter-info">
-		<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="recruiter logo">
+		<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="recruiter logo"   [routerLink]="['/company-details/', recruiter?.company?.id]" routerLinkActive="active">
 
 		<div class="wrapper-grid">
 			<div>
@@ -25,8 +25,8 @@
 	</div>
 	<div class="filter-search">
 		<div class="wrapper">
-			<input type="text" pInputText [(ngModel)]="property" placeholder="Enter recruiter name" />
-			<p-button label="Search" icon="pi pi-search"></p-button>
+			<input type="text" pInputText [(ngModel)]="searchString" placeholder="Enter vacacy name" />
+			<p-button label="Search" icon="pi pi-search" (click)="search()"></p-button>
 		</div>
 	</div>
 	<div class="vacancy-list">
@@ -45,10 +45,10 @@
 						<div class="vacancy">
 							<div class="inform">
 								<h3>
-									<a>{{vacancy.name}}</a>
+									<a  [routerLink]="['/vacancy-details/', vacancy.id]" routerLinkActive="active">{{vacancy.name}}</a>
 								</h3>
-								<p class="company-name">
-									<a>{{recruiter?.company?.name}}</a>
+								<p class="company-name" >
+									<a  [routerLink]="['/company-details/', recruiter?.company.id]" routerLinkActive="active">{{recruiter?.company?.name}}</a>
 								</p>
 								<p class="location">
 									<i class="fa fa-map-marker"></i>
@@ -65,7 +65,7 @@
 
 						<div class="vacancy-logo">
 							<div class="vacancy-container">
-								<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
+								<img class="logo" src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png"  [routerLink]="['/company-details/', recruiter?.company?.id]" routerLinkActive="active">
 							</div>
 						</div>
 						<div class="vacancy-button">
@@ -80,6 +80,9 @@
 		</div>
 	</div>
 </div>
+
+<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
+
 
 <app-footer></app-footer>
 

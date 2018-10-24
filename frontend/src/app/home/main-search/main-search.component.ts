@@ -6,6 +6,7 @@ import { City } from '../../shared/models/city.model';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { Company } from '../../shared/models/company.model';
 import { CompanyService } from '../../core/services/company.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-search',
@@ -23,11 +24,13 @@ export class MainSearchComponent implements OnInit {
 
   vacancies: Vacancy[];
 
-  constructor(private cityService: CityService,
-              private vacancyService: VacancyService,
-              private _sanitizer: DomSanitizer,
-              private companyService: CompanyService) {
+  searchString: string;
 
+  constructor(private cityService: CityService,
+    private vacancyService: VacancyService,
+    private _sanitizer: DomSanitizer,
+    private companyService: CompanyService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -38,17 +41,17 @@ export class MainSearchComponent implements OnInit {
 
   loadCities() {
     this.cityService.getAll()
-    .subscribe((data: City[]) => this.cities = data);
+      .subscribe((data: City[]) => this.cities = data);
   }
 
   loadVacancies() {
     this.vacancyService.getAll()
-    .subscribe((data: Vacancy[]) => this.vacancies = data);
+      .subscribe((data: Vacancy[]) => this.vacancies = data);
   }
 
   loadCompanies() {
     this.companyService.getAll()
-    .subscribe((data: Company[]) => this.companies = data);
+      .subscribe((data: Company[]) => this.companies = data);
   }
 
   sanitizeCompanyImg(imageBase64, company: Company): SafeUrl {
@@ -64,4 +67,51 @@ export class MainSearchComponent implements OnInit {
     }
   }
 
+  goToJobSearch() {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'searchString': this.searchString,
+          'city': this.selectedCity === undefined ? '' : this.selectedCity.name
+        }
+      }
+    );
+  }
+  goToJobSearchByVacancy(vacancyName: string) {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'searchString': vacancyName
+        }
+      }
+    );
+  }
+
+  goToJobSearchByCompany(companyName: string) {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'company': companyName
+        }
+      }
+    );
+  }
+
+  goToJobSearchByCity(cityName: string) {
+    this.router.navigate(
+      ['/jobsearch'],
+      {
+        queryParams:
+        {
+          'city': cityName
+        }
+      }
+    );
+  }
 }

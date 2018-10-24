@@ -3,6 +3,9 @@ import { EmployeeService } from 'src/app/core/services/employee.service';
 import { SelectItem, ConfirmationService } from 'primeng/api';
 import { Paginator } from 'primeng/primeng';
 import { Employee } from 'src/app/shared/models/employee.model';
+import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
+import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
 
 @Component({
     selector: 'app-admin-employees',
@@ -13,42 +16,43 @@ export class AdminEmployeesComponent implements OnInit {
 
     employees: Employee[];
 
-    sortKey: string;
-    sortOrder: boolean;
-    sortField: string;
+    sorting: SortingQuery;
     sortOptions: SelectItem[];
 
-    pageSize: number;
-    pageNumber: number;
     totalRecords: number;
     rowsPerPage: number[];
 
-    searchString: string;
+    searching: SearchingQuery;
+
     searchedEmployee: Employee;
     searchOptions: SelectItem[];
-    searchField: string;
 
     suggestField: string;
     placeholder: string;
+
+    pagination: PaginationQuery;
 
     @ViewChild('p') paginator: Paginator;
 
     constructor(private confirmationService: ConfirmationService, private userService: EmployeeService) {
         this.employees = [];
 
-        this.sortKey = '';
-        this.sortOrder = false;
-        this.sortField = '';
+        this.sorting = { sortField: '', sortOrder: false };
 
-        this.pageSize = 4;
-        this.pageNumber = 1;
         this.totalRecords = 0;
         this.rowsPerPage = [2, 4, 6];
 
-        this.searchString = '';
-
-        this.suggestField = this.searchField = 'email';
         this.placeholder = 'Enter email';
+
+        this.searching = {
+            searchString: '',
+            searchField: this.suggestField = 'email'
+        };
+
+        this.pagination = {
+            pageSize: 4,
+            pageNumber: 1
+        };
     }
 
     ngOnInit() {
@@ -68,7 +72,7 @@ export class AdminEmployeesComponent implements OnInit {
     }
 
     onSearchFieldChange(event) {
-        this.suggestField = this.searchField = event.value;
+        this.suggestField = this.searching.searchField = event.value;
         this.placeholder = this.getPlaceholder();
     }
 
@@ -76,39 +80,47 @@ export class AdminEmployeesComponent implements OnInit {
         const value = event.value;
 
         if (value.indexOf('!') === 0) {
-            this.sortOrder = false;
-            this.sortField = value.substring(1, value.length);
+            this.sorting = {
+                sortField: value.substring(1, value.length),
+                sortOrder: false
+            };
         } else {
-            this.sortOrder = true;
-            this.sortField = value;
+            this.sorting = {
+                sortField: value,
+                sortOrder: true
+            };
         }
 
         this.loadEmployees();
     }
 
     paginate(event) {
-        this.pageNumber = event.page + 1;
-        this.pageSize = event.rows;
+        this.pagination = {
+            pageNumber: event.page + 1,
+            pageSize: event.rows
+        };
 
         this.loadEmployees();
     }
 
     filterEmployees(event) {
-        this.searchString = event.query;
+        this.searching.searchString = event.query;
         this.loadEmployees();
 
-        this.paginator.changePage(0);
+        if (this.paginator.first !== 0) {
+            this.paginator.changePage(0);
+        }
     }
 
     select(event) {
-        this.searchString = this.getSearchStringFromSearchField(event);
+        this.searching.searchString = this.getSearchStringFromSearchField(event);
         this.employees = [];
         this.employees[0] = event;
         this.totalRecords = 1;
     }
 
     clear() {
-        this.searchString = '';
+        this.searching.searchString = '';
         this.loadEmployees();
     }
 
@@ -124,8 +136,7 @@ export class AdminEmployeesComponent implements OnInit {
     }
 
     loadEmployees() {
-        this.userService.getFullResponse(this.searchString, this.searchField,
-            this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
+        this.userService.getFullResponse(this.searching, this.sorting, this.pagination)
             .subscribe((response) => {
                 if (response.body !== null) {
                     this.employees = response.body;
@@ -138,7 +149,7 @@ export class AdminEmployeesComponent implements OnInit {
     }
 
     getPlaceholder(): string {
-        switch (this.searchField) {
+        switch (this.searching.searchField) {
             case 'email':
                 return 'Enter email';
             case 'firstName':
@@ -151,7 +162,7 @@ export class AdminEmployeesComponent implements OnInit {
     }
 
     getSearchStringFromSearchField(employee: Employee): string {
-        switch (this.searchField) {
+        switch (this.searching.searchField) {
             case 'email':
                 return employee.email;
             case 'firstName':

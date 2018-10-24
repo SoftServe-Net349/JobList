@@ -5,6 +5,9 @@ import { VacancyRequest } from '../../shared/models/vacancy-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { JobSearchQuery } from '../../shared/filterQueries/JobsearchQuery';
+import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
+import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Injectable()
 export class VacancyService {
@@ -20,15 +23,15 @@ export class VacancyService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
   }
 
-  getAdminResponse(searchString: string, searchField: string, sortField: string, sortOrder: boolean, pageSize: number, pageNumber: number)
+  getAdminResponse(searching: SearchingQuery, sorting: SortingQuery, pagination: PaginationQuery)
   : Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
-      .set('sortField', sortField)
-      .set('sortOrder', sortOrder.toString())
-      .set('pageSize', pageSize.toString())
-      .set('pageNumber', pageNumber.toString())
-      .set('searchString', searchString)
-      .set('searchField', searchField);
+      .set('sortField', sorting.sortField)
+      .set('sortOrder', sorting.sortOrder.toString())
+      .set('pageSize', pagination.pageSize.toString())
+      .set('pageNumber', pagination.pageNumber.toString())
+      .set('searchString', searching.searchString)
+      .set('searchField', searching.searchField);
 
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }
@@ -55,6 +58,21 @@ export class VacancyService {
         params = params.append('namesOfCompanies', nameOfCompany);
       });
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
+  }
+
+  getByRecruiterIdWithPagination(id: number, pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/recruiter/${id}`, params);
+  }
+  getByRecruiterIdSearchStringWithPagination(id: number, search: string, pageSize: number, pageNumber: number)
+  : Observable<HttpResponse<Vacancy[]>> {
+    const params = new HttpParams()
+      .set('searchString', search)
+      .set('pageSize', pageSize.toString())
+      .set('pageNumber', pageNumber.toString());
+    return this.apiService.getFullResponse(`/${this.ctrlUrl}/recruiter/${id}/filtered`, params);
   }
 
   getById(id: number): Observable<Vacancy> {

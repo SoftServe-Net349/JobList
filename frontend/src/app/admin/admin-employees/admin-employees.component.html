@@ -1,7 +1,7 @@
 <div class="table-entities">
     <div class="table-header">
         <div class="left-dropdown">
-            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sorting.sortField" placeholder="Sort By" (onChange)="onSortChange($event)"
                 [autoWidth]="false" styleClass="left"></p-dropdown>
         </div>
 
@@ -12,7 +12,7 @@
         </div>
 
         <div class="right-dropdown">
-            <p-dropdown [options]="searchOptions" [(ngModel)]="searchField" (onChange)="onSearchFieldChange($event)">
+            <p-dropdown [options]="searchOptions" [(ngModel)]="searching.searchField" (onChange)="onSearchFieldChange($event)">
             </p-dropdown>
         </div>
     </div>
@@ -32,7 +32,7 @@
             <td>{{employee.lastName}}</td>
             <td>{{employee.email}}</td>
             <td>{{employee.phone}}</td>
-            <td>{{employee.birthData | date}}</td>
+            <td>{{employee.birthDate | date}}</td>
             <td>
                 <button pButton type="button" label="Delete" (click)="deleteConfirm(employee.id)" class="ui-button-rounded ui-button-danger"></button>
             </td>
@@ -40,6 +40,6 @@
     </table>
 </div>
 
-<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
+<p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
 
 <p-confirmDialog></p-confirmDialog>

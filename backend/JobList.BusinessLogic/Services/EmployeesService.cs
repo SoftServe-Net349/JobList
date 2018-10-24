@@ -15,6 +15,7 @@ using System.Linq.Expressions;
 using System;
 using JobList.Common.Extensions;
 using JobList.Common.UrlQuery;
+using System.Security.Cryptography;
 
 namespace JobList.BusinessLogic.Services
 {
@@ -47,6 +48,14 @@ namespace JobList.BusinessLogic.Services
             }
 
             var entity = _mapper.Map<EmployeeRequest, Employee>(modelRequest);
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var hashedPassword = new Rfc2898DeriveBytes(modelRequest.Password, salt, 1000);
+            byte[] bytesFromHashedPassw = hashedPassword.GetBytes(20);
+            byte[] arrayOfHashedBytes = new byte[36];
+            Array.Copy(salt, 0, arrayOfHashedBytes, 0, 16);
+            Array.Copy(bytesFromHashedPassw, 0, arrayOfHashedBytes, 16, 20);
+            entity.Password = Convert.ToBase64String(arrayOfHashedBytes);
 
             entity = await _uow.EmployeesRepository.CreateEntityAsync(entity);
             var result = await _uow.SaveAsync();

@@ -1,47 +1,49 @@
 <div class="home-page">
   <div id="search-area">
-    <div id="search" class="wrapper">  
-      <input id="input" type="text"  placeholder="Search"  pInputText />
-      <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [autoWidth]="false" placeholder="Select city" optionLabel="name" filter="true" [showClear]="true"></p-dropdown> 
-      <button id="srch-btn"pButton type="button" icon="fa fa-search" ></button>
+    <div id="search" class="wrapper">
+      <input id="input" [(ngModel)]="searchString" type="text" placeholder="Search" pInputText />
+      <p-dropdown [options]="cities" [(ngModel)]="selectedCity" [autoWidth]="false" placeholder="Select city" optionLabel="name"
+        filter="true" [showClear]="true"></p-dropdown>
+      <button id="srch-btn" pButton type="button" icon="fa fa-search" (click)="goToJobSearch()"></button>
     </div>
   </div>
 
-  <br/>
+  <br />
   <div class="wrapper">
-   <h1 class="subTitle">Popular vacancies</h1>
-   <hr class="red-line">
-   <br/>
-   <div id="professions" >
-      <div class="list-professions"  >
-        <a *ngFor="let vacancy of vacancies | slice:0:5; let i=index"><img src="https://images.cf-rabota.com.ua/2017/12/professions/manager.svg?v=621.1.297-83c2778-master" ><p>{{vacancy.name}}</p></a>    
-       </div>
-   </div>
-  
+    <h1 class="subTitle">Popular vacancies</h1>
+    <hr class="red-line">
+    <br />
+    <div id="professions">
+      <div class="list-professions">
+        <a *ngFor="let vacancy of vacancies | slice:0:5; let i=index"><img src="https://images.cf-rabota.com.ua/2017/12/professions/manager.svg?v=621.1.297-83c2778-master" (click)="goToJobSearchByVacancy(vacancy.name)">
+          <p>{{vacancy.name}}</p>
+        </a>
+      </div>
+    </div>
+
     <h1 class="subTitle">Companies</h1>
-    <hr  class="red-line">
-    <br/>
-    <div id="companies" >
+    <hr class="red-line">
+    <br />
+    <div id="companies">
       <div class="list-companies" *ngIf="companies?.length > 0">
-          <a *ngFor="let company of companies">
-            <img class="city-image" [src]="sanitizeCompanyImg(company?.logoData, company)" >
-            <p>{{company?.name}}</p>
-          </a>
+        <a *ngFor="let company of companies">
+          <img class="city-image" [src]="sanitizeCompanyImg(company?.logoData, company)"(click)="goToJobSearchByCompany(company.name)">
+          <p>{{company?.name}}</p>
+        </a>
       </div>
     </div>
 
     <h1 class="subTitle">Cities</h1>
     <hr class="red-line">
-    <br/>
+    <br />
 
     <div id="cities">
       <div class="list-cities" *ngIf="cities?.length > 0">
           <a *ngFor="let city of cities">
-            <img class="city-image" src="../../../images/location2.jpg" >
+            <img class="city-image" src="../../../images/location2.jpg" (click)="goToJobSearchByCity(city.name)">
             <p>{{city?.name}}</p>
           </a>
         </div>
     </div>
   </div>
-</div>  
-  
+</div>

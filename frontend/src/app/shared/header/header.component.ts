@@ -1,8 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Company } from '../models/company.model';
 import { MenuItem } from 'primeng/api';
-import { CompanyInfoFormComponent } from '../../company-info-form/company-info-form.component';
 import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
 import { AuthHelper } from '../helpers/auth-helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -140,11 +138,8 @@ export class HeaderComponent implements OnInit {
       this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     } else {
-
       this.role = '';
       this.uId = 0;
-
     }
-
   }
 }

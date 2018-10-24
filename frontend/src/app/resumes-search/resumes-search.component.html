@@ -1,18 +1,20 @@
 <div class="resumes-search">
-  <app-search-line (filteredResumes)="getResumesBySearchString($event)"></app-search-line>
+  <app-search-line (filteredResumes)="getResumesByFilter($event)"></app-search-line>
   <div class="container">
     <div class="filter-container">
-      <app-company-filters></app-company-filters>
+      <app-company-filters (filteredResumes)="getResumesByFilter($event)"></app-company-filters>
     </div>
-    
+
     <div class="resume-container">
       <article class="resume-block" *ngFor="let resume of resumes">
         <div class="avatar">
-          <img src="https://avatars1.githubusercontent.com/u/33777825?s=400&u=03881b8285bcb4c26c62dd1505b8ca9a9dd7e61f&v=4">
+          <a [routerLink]="['/resume-details/', resume.id]">
+            <img src="https://avatars1.githubusercontent.com/u/33777825?s=400&u=03881b8285bcb4c26c62dd1505b8ca9a9dd7e61f&v=4">
+          </a>
         </div>
         <div class="inform">
           <h3>
-            <a>{{resume?.workArea?.name}}</a>
+            <a [routerLink]="['/resume-details/', resume.id]">{{resume?.position}}</a>
           </h3>
           <p class="person-inform">
             <span>
@@ -20,19 +22,15 @@
             </span>
           </p>
           <p>
-              <i class="fa fa-map-marker"></i>
-              <span>
-                {{resume?.employee?.address}}
-              </span>
-              <i class="fa fa-user"></i>
-              <span>
-                {{resume?.employee?.birthData | date}}
-              </span>
+            <i class="fa fa-user"></i>
+            <span>
+              {{resume?.employee?.birthDate | date}}
+            </span>
           </p>
           <p class="experiance">
             <span>
-            {{resume?.keySkills}}
-          </span>
+              {{resume?.employee?.city?.name}}
+            </span>
           </p>
           <p class="agotime">
             <i class="fa fa-refresh"></i>
@@ -44,5 +42,6 @@
       </article>
     </div>
   </div>
-  <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[pageSize, pageSize + 1]"></p-paginator>
+  <p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
+    [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 </div>
