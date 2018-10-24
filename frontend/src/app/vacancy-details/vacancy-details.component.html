@@ -37,8 +37,11 @@
       <font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a
         href="www.softserveinc.com">{{vacancy.recruiter?.company?.site}}</a>
     </h3>
-    <h4>
+    <h4 *ngIf="vacancy.isChecked">
       <font color="green"><i class="fa fa-check-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Checked</font>
+    </h4>
+    <h4 *ngIf="!vacancy.isChecked">
+      <font color="red"><i class="fa fa-times-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Unchecked</font>
     </h4>
   </div>
   <div class="additional-info">
