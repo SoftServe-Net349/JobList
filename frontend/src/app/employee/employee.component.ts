@@ -18,6 +18,7 @@ export class EmployeeComponent implements OnInit {
   constructor(private employeeService: EmployeeService,
               private resumeService: ResumeService,
               private activatedRoute: ActivatedRoute) {
+
   }
 
 
@@ -50,4 +51,5 @@ export class EmployeeComponent implements OnInit {
 
     return languages.slice(0, languages.length - 2); // to delete the last ,
   }
+
 }
