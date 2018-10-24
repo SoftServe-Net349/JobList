@@ -4,8 +4,7 @@ import { CityService } from '../../core/services/city.service';
 import { Router } from '@angular/router';
 import { City } from '../models/city.model';
 import { JobSearchQuery } from '../filterQueries/JobsearchQuery';
-import { isNullOrUndefined } from 'util';
-
+import { ResumessearchQuery } from '../filterQueries/ResumessearchQuery';
 
 @Component({
   selector: 'app-search-line',
@@ -20,7 +19,7 @@ export class SearchLineComponent implements OnInit {
   inputText: string;
 
   @Output() foundVacancies = new EventEmitter<JobSearchQuery>();
-  @Output() filteredResumes = new EventEmitter<object>();
+  @Output() filteredResumes = new EventEmitter<ResumessearchQuery>();
 
   currentUrl: String;
 
@@ -59,8 +58,14 @@ export class SearchLineComponent implements OnInit {
       });
     } else if (this.currentUrl.includes('/resumessearch')) {
       this.filteredResumes.emit({
-        name: this.inputText === undefined ? '' : this.inputText,
-        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name
+        position: this.inputText === undefined ? '' : this.inputText,
+        city: this.selectedCity === undefined || this.selectedCity === null ? '' : this.selectedCity.name,
+        workArea: null,
+        schools: null,
+        faculties: null,
+        startAge: null,
+        finishAge: null,
+        languages: null
       });
     }
   }

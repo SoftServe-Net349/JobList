@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
-import {  ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { Paginator } from 'primeng/primeng';
 
@@ -20,12 +20,10 @@ export class JobSearchComponent implements OnInit {
   pageNumber = 1;
 
   param: JobSearchQuery;
-
   url: string;
 
   companyName: string;
   @ViewChild('p') paginator: Paginator;
-
 
   constructor(private vacancyService: VacancyService, private route: ActivatedRoute) {
     this.vacancies = [];
@@ -65,7 +63,9 @@ export class JobSearchComponent implements OnInit {
 
     this.loadVacancies();
 
-    this.paginator.changePage(0);
+    if (this.paginator.first !== 0) {
+      this.paginator.changePage(0);
+    }
   }
 
   paginate(event) {

@@ -5,6 +5,7 @@ import { ResumeRequest } from '../../shared/models/resume-request.model';
 import { Resume } from '../../shared/models/resume.model';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { ResumessearchQuery } from 'src/app/shared/filterQueries/ResumessearchQuery';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Injectable()
 export class ResumeService {
@@ -13,7 +14,7 @@ export class ResumeService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>>{
+  getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     const params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('pageNumber', pageNumber.toString());
@@ -21,21 +22,22 @@ export class ResumeService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}`, params);
   }
 
-  getByFilter(param: ResumessearchQuery, pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
+  getByFilter(param: ResumessearchQuery, pagination: PaginationQuery): Observable<HttpResponse<Resume[]>> {
     let params = new HttpParams()
-      .set('name', param.name)
+      .set('position', param.position)
       .set('city', param.city)
       .set('workArea', param.workArea)
-      .set('age', param.age.toString())
-      .set('pageSize', pageSize.toString())
-      .set('pageNumber', pageNumber.toString());
+      .set('startAge', param.startAge.toString())
+      .set('finishAge', param.finishAge.toString())
+      .set('pageSize', pagination.pageSize.toString())
+      .set('pageNumber', pagination.pageNumber.toString());
       param.schools.forEach(school => {
         params = params.append('schools', school);
       });
-      param.schools.forEach(faculty => {
+      param.faculties.forEach(faculty => {
         params = params.append('faculties', faculty);
       });
-      param.schools.forEach(language => {
+      param.languages.forEach(language => {
         params = params.append('languages', language);
       });
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);

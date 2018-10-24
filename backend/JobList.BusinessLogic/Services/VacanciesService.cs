@@ -100,7 +100,8 @@ namespace JobList.BusinessLogic.Services
 
             if (!string.IsNullOrEmpty(vacancyUrlQuery.Name))
             {
-                filter = filter.And(е => е.Name.ToLower().Contains(vacancyUrlQuery.Name.ToLower()));
+                filter = filter.And(е => е.Name
+                    .Contains(vacancyUrlQuery.Name));
             }
             if (!string.IsNullOrEmpty(vacancyUrlQuery.City))
             {
@@ -112,7 +113,8 @@ namespace JobList.BusinessLogic.Services
             }
             if (vacancyUrlQuery.NamesOfCompanies != null && !string.IsNullOrEmpty(vacancyUrlQuery.NamesOfCompanies[0]))
             {
-                filter = filter.And(e => vacancyUrlQuery.NamesOfCompanies.Contains(e.Recruiter.Company.Name));
+                filter = filter.And(e => vacancyUrlQuery.NamesOfCompanies
+                        .Contains(e.Recruiter.Company.Name));
             }
             if (vacancyUrlQuery.IsChecked != false)
             {
@@ -129,7 +131,8 @@ namespace JobList.BusinessLogic.Services
 
             if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
             {
-                filter = filter.And(e => e.Name.Contains(searchingUrlQuery.SearchString));
+                filter = filter.And(e => e.Name
+                    .Contains(searchingUrlQuery.SearchString));
             }
 
             var entities = await _uow.VacanciesRepository.GetRangeAsync(
