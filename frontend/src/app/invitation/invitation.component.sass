@@ -27,7 +27,8 @@ hr
     top: 5px
     right: -5px
     font-size: .7em
-    background: red
+    background: #2ECC71
+    font-weight: 600
     color: white
     width: 18px;
     height: 18px
@@ -36,73 +37,86 @@ hr
     border-radius: 50%
     box-shadow: 0 0 1px #333
 
-/deep/ .ui-sidebar-right
+/deep/ .invitation-sidebar .ui-sidebar-right
   width: 320px !important
+  overflow: scroll
+
 
 .invitation-container
-    max-width: 300px
-    background-color: #fff
-    overflow: hidden
-    box-shadow: none
-    border-radius: 0
+  max-width: 300px
+  background-color: #fff
+  overflow: hidden
+  box-shadow: none
+  border-radius: 0
 
-.invitation-block
-  display: flex
-  justify-content: space-between
-  border: 1px solid rgba(0,0,0,.12)
-  padding: 10px 
-  flex-wrap: wrap 
-  margin: 0 0 5px 0
-  border-radius: 4px
+  .invitation-block
+    display: flex
+    justify-content: space-between
+    border: 1px solid rgba(0,0,0,.12)
+    padding: 10px 
+    flex-wrap: wrap 
+    margin: 0 0 5px 0
+    border-radius: 4px
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.3)
 
-  .inform
-    width: 180px
+    .inform
+      width: 170px
 
 
-    /deep/ .ui-button
-      height: 20px
+      /deep/ .ui-button
+        height: 24px
+        margin-right: 5px
 
-      /deep/ .ui-button-text
-        padding: 0.2em .5em !important
+        /deep/ .ui-button-text
+          padding: 0 .5em !important
 
-  h3 
-    font-size: 1.1em 
-    font-family: "Graphik Medium",sans-serif
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
+    h3 
+      font-size: 1.1em 
+      font-family: "Graphik Medium",sans-serif
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      letter-spacing: .3px
 
-    a
+      a
+        padding: 0
+
+    p
+      display: block
+      font-size: 1em
       padding: 0
-
-  p
-    display: block
-    font-size: 1em
-    padding: 0
-    margin: 0
+      margin: 0
 
 
-  .company-name
-    font-size: 1em
-    font-family: "Graphik Regular",sans-serif
-    white-space: nowrap
-    overflow: hidden
-    text-overflow: ellipsis
-    padding: 0
-    margin: 0
-
-    a
+    .company-name
+      font-size: .98em
+      font-family: "Graphik Regular",sans-serif
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
       padding: 0
+      margin: 0
 
-  .location
-    line-height: 1.2
-    font-family: "Graphik Regular",sans-serif
-    padding: 0 0 0 10px
+      a
+        padding: 0
 
-    i 
-      top: 0
+    .location
+      font-size: .98em
+      font-family: "Graphik Regular",sans-serif
+      margin-bottom: 5px
 
-  .logo
-    img
-      width: 70px
-      margin-left: 10px
+      i 
+        top: 0
+
+    .logo
+      cursor: pointer
+      img
+        width: 70px
+        margin-left: 10px
+
+      img:hover
+        transform: scale(1.1)
+
+  .paginator
+    /deep/ .ui-paginator
+      border: none

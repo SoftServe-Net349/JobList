@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { InvitationHubService } from '../core/hubs/invitation.hub';
 import { AuthHelper } from '../shared/helpers/auth-helper';
 import { InvitationService } from '../core/services/invitation.service';
 import { Invitation } from '../shared/models/invitation.model';
+import { Paginator } from 'primeng/primeng';
 
 @Component({
   selector: 'app-invitation',
@@ -17,7 +18,7 @@ export class InvitationComponent implements OnInit {
   @Input() employeeId: number;
 
   invitationCounter = 0;
-  pageSize = 10;
+  pageSize = 6;
   pageNumber = 1;
 
   constructor(private invitationHub: InvitationHubService,

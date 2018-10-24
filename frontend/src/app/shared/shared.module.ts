@@ -22,7 +22,7 @@ import { AuthorizationsComponent } from '../authorizations/authorizations.compon
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchLineComponent } from './search-line/search-line.component';
-import { InputMaskModule, FileUploadModule } from 'primeng/primeng';
+import { InputMaskModule, FileUploadModule, PaginatorModule } from 'primeng/primeng';
 import { InvitationComponent } from '../invitation/invitation.component';
 
 // Our created modules
@@ -44,7 +44,8 @@ import { InvitationComponent } from '../invitation/invitation.component';
     MenuModule,
     CalendarModule,
     InputMaskModule,
-    FileUploadModule
+    FileUploadModule,
+    PaginatorModule
   ],
   declarations: [
     SomePipe,
