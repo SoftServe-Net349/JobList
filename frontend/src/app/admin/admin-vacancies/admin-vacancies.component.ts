@@ -4,6 +4,9 @@ import { Vacancy } from 'src/app/shared/models/vacancy.model';
 import { ConfirmationService, SelectItem } from 'primeng/api';
 import { VacancyRequest } from 'src/app/shared/models/vacancy-request.model';
 import { Paginator } from 'primeng/primeng';
+import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
+import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Component({
     selector: 'app-admin-vacancies',
@@ -14,23 +17,21 @@ export class AdminVacanciesComponent implements OnInit {
 
     vacancies: Vacancy[];
 
-    sortKey: string;
-    sortOrder: boolean;
-    sortField: string;
+    sorting: SortingQuery;
     sortOptions: SelectItem[];
 
-    pageSize: number;
-    pageNumber: number;
     totalRecords: number;
     rowsPerPage: number[];
 
-    searchString: string;
+    searching: SearchingQuery;
+
     searchedVacancy: Vacancy;
     searchOptions: SelectItem[];
-    searchField: string;
 
     suggestField: string;
     placeholder: string;
+
+    pagination: PaginationQuery;
 
     @ViewChild('p') paginator: Paginator;
 
@@ -38,19 +39,22 @@ export class AdminVacanciesComponent implements OnInit {
     constructor(private vacancyService: VacancyService, private confirmationService: ConfirmationService) {
         this.vacancies = [];
 
-        this.sortKey = '';
-        this.sortOrder = false;
-        this.sortField = '';
+        this.sorting = { sortField: '', sortOrder: false };
 
-        this.pageSize = 10;
-        this.pageNumber = 1;
         this.totalRecords = 0;
-        this.rowsPerPage = [10, 15, 20];
+        this.rowsPerPage = [5, 10, 15];
 
-        this.searchString = '';
-
-        this.suggestField = this.searchField = 'name';
         this.placeholder = 'Enter name';
+
+        this.searching = {
+            searchString: '',
+            searchField: this.suggestField = 'name'
+        };
+
+        this.pagination = {
+            pageSize: 5,
+            pageNumber: 1
+        };
     }
 
     ngOnInit() {
@@ -68,33 +72,39 @@ export class AdminVacanciesComponent implements OnInit {
     }
 
     onSearchFieldChange(event) {
-        this.suggestField = this.searchField = event.value;
-        this.placeholder = 'Enter ' + this.searchField;
+        this.suggestField = this.searching.searchField = event.value;
+        this.placeholder = 'Enter ' + this.searching.searchField;
     }
 
     onSortChange(event) {
         const value = event.value;
 
         if (value.indexOf('!') === 0) {
-            this.sortOrder = false;
-            this.sortField = value.substring(1, value.length);
+            this.sorting = {
+                sortField: value.substring(1, value.length),
+                sortOrder: false
+            };
         } else {
-            this.sortOrder = true;
-            this.sortField = value;
+            this.sorting = {
+                sortField: value,
+                sortOrder: true
+            };
         }
 
         this.loadVacancies();
     }
 
     paginate(event) {
-        this.pageNumber = event.page + 1;
-        this.pageSize = event.rows;
+        this.pagination = {
+            pageNumber: event.page + 1,
+            pageSize: event.rows
+        };
 
         this.loadVacancies();
     }
 
     filterVacancies(event) {
-        this.searchString = event.query;
+        this.searching.searchString = event.query;
         this.loadVacancies();
 
         if (this.paginator.first !== 0) {
@@ -103,14 +113,14 @@ export class AdminVacanciesComponent implements OnInit {
     }
 
     select(event) {
-        this.searchString = event.name;
+        this.searching.searchString = event.name;
         this.vacancies = [];
         this.vacancies[0] = event;
         this.totalRecords = 1;
     }
 
     clear() {
-        this.searchString = '';
+        this.searching.searchString = '';
         this.loadVacancies();
     }
 
@@ -159,8 +169,7 @@ export class AdminVacanciesComponent implements OnInit {
     }
 
     loadVacancies() {
-        this.vacancyService.getAdminResponse(this.searchString, this.searchField,
-            this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
+        this.vacancyService.getAdminResponse(this.searching, this.sorting, this.pagination)
             .subscribe((response) => {
                 if (response.body !== null) {
                     this.vacancies = response.body;

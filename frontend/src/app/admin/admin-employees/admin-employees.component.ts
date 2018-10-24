@@ -19,8 +19,6 @@ export class AdminEmployeesComponent implements OnInit {
     sorting: SortingQuery;
     sortOptions: SelectItem[];
 
-    pageSize: number;
-    pageNumber: number;
     totalRecords: number;
     rowsPerPage: number[];
 

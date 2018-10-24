@@ -3,6 +3,9 @@ import { SelectItem, ConfirmationService } from 'primeng/api';
 import { Paginator } from 'primeng/primeng';
 import { Recruiter } from 'src/app/shared/models/recruiter.model';
 import { RecruiterService } from 'src/app/core/services/recruiter.service';
+import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
+import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Component({
     selector: 'app-admin-recruiters',
@@ -13,42 +16,43 @@ export class AdminRecruitersComponent implements OnInit {
 
     recruiters: Recruiter[];
 
-    sortKey: string;
-    sortOrder: boolean;
-    sortField: string;
+    sorting: SortingQuery;
     sortOptions: SelectItem[];
 
-    pageSize: number;
-    pageNumber: number;
     totalRecords: number;
     rowsPerPage: number[];
 
-    searchString: string;
+    searching: SearchingQuery;
+
     searchedRecruiter: Recruiter;
     searchOptions: SelectItem[];
-    searchField: string;
 
     suggestField: string;
     placeholder: string;
+
+    pagination: PaginationQuery;
 
     @ViewChild('p') paginator: Paginator;
 
     constructor(private confirmationService: ConfirmationService, private recruiterService: RecruiterService, ) {
         this.recruiters = [];
 
-        this.sortKey = '';
-        this.sortOrder = false;
-        this.sortField = '';
+        this.sorting = { sortField: '', sortOrder: false };
 
-        this.pageSize = 4;
-        this.pageNumber = 1;
         this.totalRecords = 0;
         this.rowsPerPage = [2, 4, 6];
 
-        this.searchString = '';
-
-        this.suggestField = this.searchField = 'email';
         this.placeholder = 'Enter email';
+
+        this.searching = {
+            searchString: '',
+            searchField: this.suggestField = 'email'
+        };
+
+        this.pagination = {
+            pageSize: 4,
+            pageNumber: 1
+        };
     }
 
     ngOnInit() {
@@ -66,34 +70,40 @@ export class AdminRecruitersComponent implements OnInit {
         ];
     }
 
+    onSearchFieldChange(event) {
+        this.suggestField = this.searching.searchField = event.value;
+        this.placeholder = this.getPlaceholder();
+    }
+
     onSortChange(event) {
         const value = event.value;
 
         if (value.indexOf('!') === 0) {
-            this.sortOrder = false;
-            this.sortField = value.substring(1, value.length);
+            this.sorting = {
+                sortField: value.substring(1, value.length),
+                sortOrder: false
+            };
         } else {
-            this.sortOrder = true;
-            this.sortField = value;
+            this.sorting = {
+                sortField: value,
+                sortOrder: true
+            };
         }
 
         this.loadRecruiters();
     }
 
-    onSearchFieldChange(event) {
-        this.suggestField = this.searchField = event.value;
-        this.placeholder = this.getPlaceholder();
-    }
-
     paginate(event) {
-        this.pageNumber = event.page + 1;
-        this.pageSize = event.rows;
+        this.pagination = {
+            pageNumber: event.page + 1,
+            pageSize: event.rows
+        };
 
         this.loadRecruiters();
     }
 
     filterRecruiter(event) {
-        this.searchString = event.query;
+        this.searching.searchString = event.query;
         this.loadRecruiters();
 
         if (this.paginator.first !== 0) {
@@ -102,30 +112,15 @@ export class AdminRecruitersComponent implements OnInit {
     }
 
     select(event) {
-        this.searchString = this.getSearchStringFromSearchField(event);
+        this.searching.searchString = this.getSearchStringFromSearchField(event);
         this.recruiters = [];
         this.recruiters[0] = event;
         this.totalRecords = 1;
     }
 
     clear() {
-        this.searchString = '';
+        this.searching.searchString = '';
         this.loadRecruiters();
-    }
-
-
-    loadRecruiters() {
-        this.recruiterService.getFullResponse(this.searchString, this.searchField,
-            this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
-            .subscribe((response) => {
-                if (response.body !== null) {
-                    this.recruiters = response.body;
-                    this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
-                } else {
-                    this.recruiters = null;
-                    this.totalRecords = 0;
-                }
-            });
     }
 
     deleteConfirm(id: number) {
@@ -139,8 +134,21 @@ export class AdminRecruitersComponent implements OnInit {
         });
     }
 
+    loadRecruiters() {
+        this.recruiterService.getFullResponse(this.searching, this.sorting, this.pagination)
+            .subscribe((response) => {
+                if (response.body !== null) {
+                    this.recruiters = response.body;
+                    this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;
+                } else {
+                    this.recruiters = null;
+                    this.totalRecords = 0;
+                }
+            });
+    }
+
     getPlaceholder(): string {
-        switch (this.searchField) {
+        switch (this.searching.searchField) {
             case 'email':
                 return 'Enter email';
             case 'firstName':
@@ -153,7 +161,7 @@ export class AdminRecruitersComponent implements OnInit {
     }
 
     getSearchStringFromSearchField(recruiter: Recruiter): string {
-        switch (this.searchField) {
+        switch (this.searching.searchField) {
             case 'email':
                 return recruiter.email;
             case 'firstName':
