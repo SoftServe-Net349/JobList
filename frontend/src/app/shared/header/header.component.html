@@ -49,7 +49,7 @@
     <div *ngIf="role === 'employee'">
       <div id="right-side-menu">
         <a routerLink="/jobsearch" routerLinkActive="active">Find Vacancies</a>
-        <a>Invitation</a>
+        <app-invitation [employeeId]="uId"></app-invitation>
         <a>Favourite Vacancies</a>
 
         <p-sidebar [(visible)]="visibleForEmployee" position="right" [baseZIndex]="10000" blockScroll="true">

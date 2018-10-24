@@ -15,28 +15,31 @@ namespace JobList.BusinessLogic.Hubs
 
         public InvitationHub(IInvitationsService invitationsService)
         {
-            this._invitationsService = invitationsService;
+            _invitationsService = invitationsService;
         }
 
-
-        public async Task SendInvitation(string employeeId, string message)
+        [Authorize]
+        public async Task SendInvitation(InvitationRequest request)
         {
-           await Clients.User(employeeId).SendAsync("receiveInvitation", message);
+            var result = await _invitationsService.CreateInvitationAsync(request);
         }
 
+        [Authorize]
+        public async Task DeleteInvitation(int id)
+        {
+            var result = await _invitationsService.DeleteInvitationByIdAsync(id);
+        }
+
+        [AllowAnonymous]
         public override async Task OnConnectedAsync()
         {
             await base.OnConnectedAsync();
         }
 
+        [AllowAnonymous]
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             await base.OnDisconnectedAsync(exception);
         }
-        //public async Task SendInvitation(string employeeId, InvitationRequest request)
-        //{
-        //    Clients.User(employeeId).invitation(request);
-        //}
-
     }
 }

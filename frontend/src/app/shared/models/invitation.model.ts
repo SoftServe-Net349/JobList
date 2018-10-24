@@ -1,5 +1,7 @@
+import { Vacancy } from './vacancy.model';
+
 export interface Invitation {
   id: number;
   employeeId: number;
-  vacancyId: number;
+  vacancy: Vacancy;
 }

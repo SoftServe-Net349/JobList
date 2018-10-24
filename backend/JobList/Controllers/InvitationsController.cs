@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using JobList.BusinessLogic.Hubs;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
@@ -16,11 +18,9 @@ namespace JobList.Controllers
     public class InvitationsController : ControllerBase
     {
         private IInvitationsService _invitationsService;
-        private IHubContext<InvitationHub> _hubContext;
 
-        public InvitationsController(IInvitationsService invitationsService, IHubContext<InvitationHub> hubContext)
+        public InvitationsController(IInvitationsService invitationsService)
         {
-            _hubContext = hubContext;
             _invitationsService = invitationsService;
         }
 
@@ -51,32 +51,50 @@ namespace JobList.Controllers
             return Ok(dto);
         }
 
+        [AllowAnonymous]
+        [HttpGet("employee/{id}")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetInvitationsByEmployeeId(int id, [FromQuery] PaginationUrlQuery urlQuery = null)
+        {
+            var dtos = await _invitationsService.GetInvitationsByEmployeeIdAsync(id, urlQuery);
+
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+
+            if (urlQuery != null)
+            {
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = urlQuery.PageNumber,
+                    PageSize = urlQuery.PageSize,
+                    TotalRecords = await _invitationsService.CountAsync(r => r.EmployeeId == id)
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+            }
+
+            return Ok(dtos);
+        }
+
         // POST: /invitations
         //[Authorize(Roles = "recruiter, admin")]
         [AllowAnonymous]
         [HttpPost]
-        //public virtual async Task<ActionResult<InvitationDTO>> Create([FromBody] InvitationRequest request)
-        public virtual async Task<ActionResult<InvitationRequest>> Create([FromBody] InvitationRequest request)
+        public virtual async Task<ActionResult<InvitationDTO>> Create([FromBody] InvitationRequest request)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-            var aaa = _hubContext.Clients.User(request.EmployeeId);
-            var bbb = _hubContext.Clients.All;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var dtos = await _invitationsService.CreateInvitationAsync(request);
+            if (dtos == null)
+            {
+                return StatusCode(500);
+            }
 
-
-            await _hubContext.Clients.User(request.EmployeeId).SendAsync("receiveInvitation", request.Message);
-
-            return request;
-            //var dtos = await _invitationsService.CreateInvitationAsync(request);
-            //if (dtos == null)
-            //{
-            //    return StatusCode(500);
-            //}
-
-            //return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
+            return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
         }
 
         // PUT: /invitations/:id
@@ -99,7 +117,7 @@ namespace JobList.Controllers
         }
 
         // DELETE: /invitations/:id
-        [Authorize(Roles = "recruiter, admin")]
+        [Authorize(Roles = "recruiter, employee, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {

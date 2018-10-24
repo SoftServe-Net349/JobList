@@ -21,6 +21,7 @@ import { CompanyGuard } from './guards/company.guard';
 import { RecruiterGuard } from './guards/recruiter.guard';
 import { CompanyRecruiterAdminGuard } from './guards/company-recruiter-admin.guard';
 import { InvitationHubService } from './hubs/invitation.hub';
+import { InvitationService } from './services/invitation.service';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { InvitationHubService } from './hubs/invitation.hub';
     CompanyGuard,
     RecruiterGuard,
     CompanyRecruiterAdminGuard,
-    InvitationHubService
+    InvitationHubService,
+    InvitationService
   ],
   declarations: []
 })

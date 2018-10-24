@@ -6,6 +6,6 @@ namespace JobList.Common.DTOS
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public int VacancyId { get; set; }
+        public VacancyDTO Vacancy { get; set; }
     }
 }
