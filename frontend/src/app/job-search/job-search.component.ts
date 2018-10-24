@@ -14,18 +14,20 @@ export class JobSearchComponent implements OnInit {
 
   totalRecords = 0;
   vacancies: Vacancy[];
+  test: string[] = [];
 
   pageSize = 4;
   pageNumber = 1;
 
   param: JobSearchQuery;
+  url: string;
 
+  companyName: string;
   @ViewChild('p') paginator: Paginator;
 
   constructor(private vacancyService: VacancyService, private route: ActivatedRoute) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
-
     this.route.queryParams.subscribe(params => {
       this.param.city = params['city'] === undefined ? '' : params['city'];
       this.param.name = params['searchString'] === undefined ? '' : params['searchString'];

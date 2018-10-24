@@ -4,7 +4,6 @@ import { WorkAreaService } from '../core/services/work-area.service';
 import { WorkArea } from '../shared/models/work-area.model';
 import { Company } from '../shared/models/company.model';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
-import { resetFakeAsyncZone } from '@angular/core/testing';
 import { CityService } from '../core/services/city.service';
 
 @Component({
@@ -23,7 +22,7 @@ export class JobFiltersComponent implements OnInit {
   selectedWorkArea: WorkArea;
 
   companies: Company[];
-  selectedCompanies: Company[] = [];
+  selectedCompanies: Company[];
 
   selectedTypeOfEmployment: string;
   @Output() filteredVacancies = new EventEmitter<JobSearchQuery>();
@@ -44,9 +43,10 @@ export class JobFiltersComponent implements OnInit {
   loadCompanies() {
     this.companyService.getAll()
       .subscribe((data: Company[]) => {
-        this.companies = data;
-      if (this.companyName) {
-        this.selectedCompanies[0] = this.companies.find(c => c.name === this.companyName);
+        this.companies = data
+     if(this.companyName !== '') {
+       this.selectedCompanies = [];
+       this.selectedCompanies[0] = this.companies.find(c => c.name === this.companyName);
       }
       });
   }
@@ -64,8 +64,7 @@ export class JobFiltersComponent implements OnInit {
       typeOfEmployment: this.selectedTypeOfEmployment === undefined ||
                        this.selectedTypeOfEmployment === null ? '' : this.selectedTypeOfEmployment,
       isChecked: this.checked === undefined || this.checked === null ? false : this.checked,
-      salary: this.salary === undefined || this.salary === null ||
-      this.salary.toString() === '' ? 0 : this.salary,
+      salary: this.salary === undefined ? null : this.salary,
       city: null,
       name: null
     });
