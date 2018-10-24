@@ -3,7 +3,9 @@ import { CompanyService } from 'src/app/core/services/company.service';
 import { Company } from 'src/app/shared/models/company.model';
 import { SelectItem, ConfirmationService } from 'primeng/api';
 import { Paginator } from 'primeng/primeng';
-import { isNullOrUndefined } from 'util';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
+import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
+import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 
 @Component({
     selector: 'app-admin-companies',
@@ -14,42 +16,43 @@ export class AdminCompaniesComponent implements OnInit {
 
     companies: Company[];
 
-    sortKey: string;
-    sortOrder: boolean;
-    sortField: string;
+    sorting: SortingQuery;
     sortOptions: SelectItem[];
 
-    pageSize: number;
-    pageNumber: number;
     totalRecords: number;
     rowsPerPage: number[];
 
-    searchString: string;
+    searching: SearchingQuery;
+
     searchedCompany: Company;
     searchOptions: SelectItem[];
-    searchField: string;
 
     suggestField: string;
     placeholder: string;
+
+    pagination: PaginationQuery;
 
     @ViewChild('p') paginator: Paginator;
 
     constructor(private confirmationService: ConfirmationService, private companyService: CompanyService, ) {
         this.companies = [];
 
-        this.sortKey = '';
-        this.sortOrder = false;
-        this.sortField = '';
+        this.sorting = { sortField: '', sortOrder: false };
 
-        this.pageSize = 4;
-        this.pageNumber = 1;
         this.totalRecords = 0;
         this.rowsPerPage = [2, 4, 6];
 
-        this.searchString = '';
-
-        this.suggestField = this.searchField = 'email';
         this.placeholder = 'Enter email';
+
+        this.searching = {
+            searchString: '',
+            searchField: this.suggestField = 'email'
+        };
+
+        this.pagination = {
+            pageSize: 4,
+            pageNumber: 1
+        };
     }
 
     ngOnInit() {
@@ -67,19 +70,23 @@ export class AdminCompaniesComponent implements OnInit {
     }
 
     onSearchFieldChange(event) {
-        this.suggestField = this.searchField = event.value;
-        this.placeholder = 'Enter ' + this.searchField;
+        this.suggestField = this.searching.searchField = event.value;
+        this.placeholder = 'Enter ' + this.searching.searchField;
     }
 
     onSortChange(event) {
         const value = event.value;
 
         if (value.indexOf('!') === 0) {
-            this.sortOrder = false;
-            this.sortField = value.substring(1, value.length);
+            this.sorting = {
+                sortField: value.substring(1, value.length),
+                sortOrder: false
+            };
         } else {
-            this.sortOrder = true;
-            this.sortField = value;
+            this.sorting = {
+                sortField: value,
+                sortOrder: true
+            };
         }
 
         this.loadCompanies();
@@ -87,14 +94,16 @@ export class AdminCompaniesComponent implements OnInit {
 
 
     paginate(event) {
-        this.pageNumber = event.page + 1;
-        this.pageSize = event.rows;
+        this.pagination = {
+            pageNumber: event.page + 1,
+            pageSize: event.rows
+        };
 
         this.loadCompanies();
     }
 
     filterCompanies(event) {
-        this.searchString = event.query;
+        this.searching.searchString = event.query;
         this.loadCompanies();
 
         if (this.paginator.first !== 0) {
@@ -103,28 +112,15 @@ export class AdminCompaniesComponent implements OnInit {
     }
 
     select(event) {
-        this.searchString = this.getSearchStringFromSearchField(event);
+        this.searching.searchString = this.getSearchStringFromSearchField(event);
         this.companies = [];
         this.companies[0] = event;
         this.totalRecords = 1;
     }
 
     clear() {
-        this.searchString = '';
+        this.searching.searchString = '';
         this.loadCompanies();
-    }
-
-    search() {
-        if (isNullOrUndefined(this.searchedCompany)) {
-            this.searchString = '';
-        } else if (isNullOrUndefined(this.searchedCompany.name)) {
-            this.searchString = this.searchedCompany.toString();
-        }
-
-        this.pageNumber = 1;
-        this.loadCompanies();
-
-        this.paginator.changePage(0);
     }
 
     deleteConfirm(id: number) {
@@ -139,8 +135,7 @@ export class AdminCompaniesComponent implements OnInit {
     }
 
     loadCompanies() {
-        this.companyService.getFullResponse(this.searchString, this.searchField,
-            this.sortField, this.sortOrder, this.pageSize, this.pageNumber)
+        this.companyService.getFullResponse(this.searching, this.sorting, this.pagination)
             .subscribe((response) => {
                 if (response.body !== null) {
                     this.companies = response.body;
@@ -153,7 +148,7 @@ export class AdminCompaniesComponent implements OnInit {
     }
 
     getSearchStringFromSearchField(company: Company): string {
-        switch (this.searchField) {
+        switch (this.searching.searchField) {
             case 'email':
                 return company.email;
             case 'name':

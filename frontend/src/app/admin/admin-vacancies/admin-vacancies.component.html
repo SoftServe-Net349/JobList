@@ -1,7 +1,7 @@
 <div class="table-entities">
     <div class="table-header">
         <div class="left-dropdown">
-            <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sorting.sortField" placeholder="Sort By" (onChange)="onSortChange($event)"
                 [autoWidth]="false"></p-dropdown>
         </div>
 
@@ -11,7 +11,7 @@
         </div>
 
         <div class="right-dropdown">
-            <p-dropdown [options]="searchOptions" [(ngModel)]="searchField" (onChange)="onSearchFieldChange($event)">
+            <p-dropdown [options]="searchOptions" [(ngModel)]="searching.searchField" (onChange)="onSearchFieldChange($event)">
             </p-dropdown>
         </div>
     </div>
@@ -42,6 +42,6 @@
     </table>
 </div>
 
-<p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
+<p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
 
 <p-confirmDialog></p-confirmDialog>
