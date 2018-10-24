@@ -9,7 +9,7 @@ import { CompanyRequest } from '../shared/models/company-request.model';
 import { Company } from '../shared/models/company.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
-import { sha512_224 }from 'js-sha512';
+import { sha512_224 } from 'js-sha512';
 
 @Component({
   selector: 'app-authorizations',

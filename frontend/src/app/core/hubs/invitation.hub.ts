@@ -59,7 +59,7 @@ export class InvitationHubService {
     this._hubConnection.on('receiveInvitation', (data: Invitation) => {
 
       this.invitationReceived.emit(data);
-      console.log('received', data);
+
     });
 
   }
