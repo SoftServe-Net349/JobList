@@ -24,6 +24,7 @@ export class ResumesSearchComponent implements OnInit {
   pagination: PaginationQuery;
 
   isWorkArea: boolean;
+  isButtonReset: boolean;
 
   @ViewChild('p') paginator: Paginator;
 
@@ -40,6 +41,7 @@ export class ResumesSearchComponent implements OnInit {
     this.pagination = this.getDefaultPaginationParam();
 
     this.isWorkArea = false;
+    this.isButtonReset = false;
   }
 
   ngOnInit() {
@@ -80,6 +82,12 @@ export class ResumesSearchComponent implements OnInit {
       this.isWorkArea = true;
     }
 
+    if (param.languages.length !== 0 || param.schools.length !== 0 || param.faculties.length !== 0 || param.workArea) {
+        this.isButtonReset = true;
+    } else {
+      this.isButtonReset = false;
+    }
+
     this.loadResumes();
 
     if (this.paginator.first !== 0) {
@@ -112,6 +120,12 @@ export class ResumesSearchComponent implements OnInit {
     this.pagination.pageSize = event.rows;
 
     this.loadResumes();
+  }
+
+  resetAll() {
+    this.companyFilters.reset();
+    this.isWorkArea = false;
+    this.isButtonReset = false;
   }
 
   loadResumes() {

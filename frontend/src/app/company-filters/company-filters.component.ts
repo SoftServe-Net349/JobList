@@ -88,7 +88,7 @@ export class CompanyFiltersComponent implements OnInit {
       this.selectedSchools.splice(index, 1);
     }
     if (resetedFaculty) {
-      const index = this.selectedFaculties.findIndex(s => s.name === resetedFaculty);
+      const index = this.selectedFaculties.findIndex(f => f.name === resetedFaculty);
       this.selectedFaculties.splice(index, 1);
     }
 
@@ -104,6 +104,24 @@ export class CompanyFiltersComponent implements OnInit {
                  this.rangeValues === null || this.rangeValues[1].toString() === '' ? 0 : this.rangeValues[1],
       languages: this.selectedLanguages === undefined ||
                  this.selectedLanguages === null ? [] : this.selectedLanguages.map(l => l.name),
+      city: null,
+      position: null
+    });
+  }
+
+  reset() {
+    this.selectedWorkArea = null;
+    this.selectedSchools = null;
+    this.selectedFaculties = null;
+    this.selectedLanguages = null;
+
+    this.filteredResumes.emit({
+      workArea: '',
+      schools: [],
+      faculties: [],
+      languages: [],
+      startAge: 0,
+      finishAge: 50,
       city: null,
       position: null
     });
