@@ -20,9 +20,6 @@ export class ResumesSearchComponent implements OnInit {
 
   totalRecords: number;
 
-  search: string;
-  city: string;
-
   param: ResumessearchQuery;
   pagination: PaginationQuery;
 
@@ -32,14 +29,12 @@ export class ResumesSearchComponent implements OnInit {
 
   @ViewChild(CompanyFiltersComponent) companyFilters: CompanyFiltersComponent;
 
-  constructor(private resumeService: ResumeService) {
-    this.totalRecords = 0;
-
-    this.search = '';
-    this.city = '';
 
   constructor(private resumeService: ResumeService,
               private _sanitizer: DomSanitizer) {
+
+    this.totalRecords = 0;
+
     this.resumes = [];
     this.param = this.getDefaultParam();
     this.pagination = this.getDefaultPaginationParam();
@@ -102,6 +97,7 @@ export class ResumesSearchComponent implements OnInit {
       return '../../images/yourAvatarHere.png';
 
     }
+  }
 
   resetWorkArea() {
     this.companyFilters.resetWorkArea();
