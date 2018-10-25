@@ -27,7 +27,7 @@ export class JwtTokenInterceptor implements HttpInterceptor {
       let token = localStorage.getItem('token');
       const currentUser = this.authHelper.getCurrentUser();
       const refreshToken =  this.authHelper.getRefreshToken();
-      console.log('adding token header . isRefreshingToken: ', this.isRefreshingToken);
+      console.log('Adding token header| isRefreshingToken: ', this.isRefreshingToken);
 
       if (this.jwtHelper.isTokenExpired(token) && !this.isRefreshingToken) {
         // renew token
@@ -37,14 +37,10 @@ export class JwtTokenInterceptor implements HttpInterceptor {
           .pipe(switchMap((res) => {
             this.authHelper.setToken(res);
             token = localStorage.getItem('token');
-            console.log('refresh Token changed. isRefreshingToken:', this.isRefreshingToken);
-            clone = request.clone({
-              setHeaders: {
-                Accept: `application/json`,
-                'Content-Type': `application/json`,
-                Authorization: `Bearer ${token}`
-              }
-            });
+
+            console.log('RefreshToken changed| isRefreshingToken:', this.isRefreshingToken);
+
+            clone = this.cloneRequest(request, token);
 
             return next.handle(clone);
           }),
@@ -56,29 +52,18 @@ export class JwtTokenInterceptor implements HttpInterceptor {
 
           finalize(() => {
             this.isRefreshingToken = false;
-            console.log('refresh Token finalized. isRefreshingToken:', this.isRefreshingToken);
+            console.log('RefreshToken finalized| isRefreshingToken:', this.isRefreshingToken);
           })
 
         );
       }
 
-    clone = request.clone({
-      setHeaders: {
-        Accept: `application/json`,
-        'Content-Type': `application/json`,
-        Authorization: `Bearer ${token}`
-      }
-    });
+    clone = this.cloneRequest(request, token);
 
     } else {
-      console.log('unathorized . isRefreshingToken: ', this.isRefreshingToken);
+      console.log('Unathorized . isRefreshingToken: ', this.isRefreshingToken);
 
-      clone = request.clone({
-        setHeaders: {
-          Accept: `application/json`,
-          'Content-Type': `application/json`
-        }
-      });
+      clone = this.cloneRequest(request, undefined);
 
     }
 
@@ -93,4 +78,29 @@ export class JwtTokenInterceptor implements HttpInterceptor {
     return observableThrowError('');
 
   }
+
+  private cloneRequest(request, token: string): HttpRequest<any> {
+
+    if (token) {
+
+      return request.clone({
+        setHeaders: {
+          Accept: `application/json`,
+          'Content-Type': `application/json`,
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+    } else {
+
+      return request.clone({
+        setHeaders: {
+          Accept: `application/json`,
+          'Content-Type': `application/json`
+        }
+      });
+
+    }
+  }
+
 }

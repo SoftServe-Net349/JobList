@@ -9,7 +9,7 @@ import { CompanyRequest } from '../shared/models/company-request.model';
 import { Company } from '../shared/models/company.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
-import { sha512_224 }from 'js-sha512';
+import { sha512_224 } from 'js-sha512';
 
 @Component({
   selector: 'app-authorizations',
@@ -20,7 +20,6 @@ import { sha512_224 }from 'js-sha512';
 export class AuthorizationsComponent implements OnInit {
 
   signInDialog = false;
-
   signUpEmployee = false;
   signUpCompany = false;
   information = false;
@@ -77,13 +76,15 @@ export class AuthorizationsComponent implements OnInit {
   getSignUpEmployeeForm(): FormGroup {
 
     return this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(254)]],
+      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
+        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       birthDate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
+      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+      checkedAgreementEmployee: [false, Validators.required]
     });
 
   }
@@ -102,7 +103,8 @@ export class AuthorizationsComponent implements OnInit {
       address: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       fullDescription: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
+      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+      checkedAgreement: [false, Validators.required]
     });
 
   }
@@ -136,21 +138,19 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   closeForm() {
-
     this.signUpCompany = false;
     this.signUpEmployee = false;
-    this.information = false;
+  }
 
+  closeInformationForm() {
+    this.information = false;
   }
 
   openInformation() {
-
     this.information = true;
-
   }
 
   submitSignIn() {
-
     const request: LoginRequest = {
       email: this.authoruzationsForm.get('login').value,
       password: sha512_224(this.authoruzationsForm.get('password').value).toString()
@@ -197,9 +197,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   submitEmployeeSignUp() {
-
     const request: EmployeeRequest = this.getEmployeeRequest();
-
     this.authService.employeeSignUp(request).subscribe(
       (data: Employee) => {
         this.errorMessage = '';
@@ -207,7 +205,6 @@ export class AuthorizationsComponent implements OnInit {
         this.showSignIn('Employee', data.email); },
       error => { this.errorMessage = error.error; }
       );
-
   }
 
   getEmployeeRequest(): EmployeeRequest {

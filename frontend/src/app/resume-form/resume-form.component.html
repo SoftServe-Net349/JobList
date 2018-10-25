@@ -1,4 +1,4 @@
-<p-dialog header="Update CV" [(visible)]="display" [modal]="true" [responsive]="true" [minY]="70" [focusOnShow]="false" [width]="650" [minWidth]="300"
+<p-dialog [header]="action + ' CV'" [(visible)]="display" [modal]="true" [responsive]="true" [minY]="70" [focusOnShow]="false" [width]="650" [minWidth]="300"
 [resizable]="false" [draggable]="false" [blockScroll]="true" [baseZIndex]="10000">
 <div id="resume-form">
     <form [formGroup]="resumeForm" novalidate >
@@ -12,7 +12,7 @@
                         First Name is required
                     </div>
                     <div *ngIf="resumeForm.controls['firstName'].errors.minlength || resumeForm.controls['firstName'].errors.maxlength">
-                        First Name should contain (2-50) chars
+                        First Name should contain (1-50) chars
                     </div>
                 </div>
             </div> 
@@ -24,7 +24,7 @@
                         Last Name is required
                     </div>
                     <div *ngIf="resumeForm.controls['lastName'].errors.minlength || resumeForm.controls['lastName'].errors.maxlength">
-                        Last Name should contain (2-50) chars
+                        Last Name should contain (1-50) chars
                     </div>
                 </div>          
             </div>
@@ -36,13 +36,13 @@
             <input id="email" type="text" size="50" pInputText formControlName="email"> 
             <div *ngIf="resumeForm.get('email').invalid && (resumeForm.get('email').dirty || resumeForm.get('email').touched)" class="alert alert-danger">
                 <div *ngIf="resumeForm.controls['email'].errors.required">
-                    Email is required
+                    E-mail is required
                 </div>
-                <div *ngIf="resumeForm.controls['email'].errors.email">
-                    Email should match sample@exam.com
+                <div *ngIf="resumeForm.controls['email'].errors.pattern">
+                    E-mail should match exam@exam.com
                 </div>
                 <div *ngIf="resumeForm.controls['email'].errors.maxlength">
-                    Email should contain (5-150) chars
+                    E-mail should contain (6-254) chars
                 </div>
             </div>     
         </div>
@@ -66,7 +66,7 @@
                 <label for="linkedIn">LinkedIn</label>
                 <div *ngIf="resumeForm.get('linkedIn').invalid && (resumeForm.get('linkedIn').dirty || resumeForm.get('linkedIn').touched)" class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['linkedIn'].errors.minlength || resumeForm.controls['linkedIn'].errors.maxlength">
-                        LinkedIn contains (2-200) chars
+                        LinkedIn contains (1-200) chars
                     </div>
                 </div>                      
             </div>
@@ -75,7 +75,7 @@
                 <label for="gitHub">GitHub</label>
                 <div *ngIf="resumeForm.get('gitHub').invalid && (resumeForm.get('gitHub').dirty || resumeForm.get('gitHub').touched)" class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['gitHub'].errors.minlength || resumeForm.controls['gitHub'].errors.maxlength">
-                        GgitHub contains (2-200) chars
+                        GgitHub contains (1-200) chars
                     </div>
                 </div>              
             </div>
@@ -86,7 +86,7 @@
                 <label for="facebook">Facebook</label>
                 <div *ngIf="resumeForm.get('facebook').invalid && (resumeForm.get('facebook').dirty || resumeForm.get('facebook').touched)" class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['facebook'].errors.minlength || resumeForm.controls['facebook'].errors.maxlength">
-                        Facebook contains (2-200) chars
+                        Facebook contains (1-200) chars
                     </div>
                 </div>              
             </div>
@@ -95,7 +95,7 @@
                 <label for="skype">Skype</label>
                 <div *ngIf="resumeForm.get('skype').invalid && (resumeForm.get('skype').dirty || resumeForm.get('skype').touched)" class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['skype'].errors.minlength || resumeForm.controls['skype'].errors.maxlength">
-                        Skype contains (2-200) chars
+                        Skype contains (1-200) chars
                     </div>
                 </div>              
             </div>
@@ -141,7 +141,7 @@
             <input id="familyState" type="text" pInputText formControlName="familyState"> 
             <div *ngIf="resumeForm.get('familyState').invalid && (resumeForm.get('familyState').dirty || resumeForm.get('familyState').touched)" class="alert alert-danger">
                 <div *ngIf="resumeForm.controls['familyState'].errors.minlength || resumeForm.controls['familyState'].errors.maxlength">
-                    Family State contains (2-20) chars
+                    Family State contains (1-20) chars
                 </div>
             </div>              
         </div>     
@@ -170,7 +170,7 @@
                 <label for="companyname">Company Name</label>
                 <div *ngIf="resumeForm.get('companyName').invalid && (resumeForm.get('companyName').dirty || resumeForm.get('companyName').touched)" class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['companyName'].errors.minlength || resumeForm.controls['companyName'].errors.maxlength">
-                        Company Name contains (2-200) chars
+                        Company Name contains (1-200) chars
                     </div>
                 </div>              
             </div> 
@@ -179,7 +179,7 @@
                 <label for="position">Position</label>
                 <div *ngIf="resumeForm.get('position').invalid && (resumeForm.get('position').dirty || resumeForm.get('position').touched)" class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['position'].errors.minlength || resumeForm.controls['position'].errors.maxlength">
-                        Position should contain (2-200) chars
+                        Position should contain (1-200) chars
                     </div>
                 </div>          
     
@@ -193,6 +193,18 @@
         </div>
         <div class="ui-float-label">
             <button pButton type="button" icon="pi pi-plus" label="Add Company"></button>
+        </div>
+        <hr>
+
+        <h4 class="resume-title">Introduction</h4>
+        <div class="courses">
+            <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="introduction"></textarea>
+
+            <div *ngIf="resumeForm.get('introduction').invalid && (resumeForm.get('introduction').dirty || resumeForm.get('introduction').touched)" class="alert alert-danger">
+                <div *ngIf="resumeForm.controls['introduction'].errors.minlength || resumeForm.controls['introduction'].errors.maxlength">
+                    Skype contains (1-300) chars
+                </div>
+            </div>     
         </div>
         <hr>
 

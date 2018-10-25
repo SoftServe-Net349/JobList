@@ -19,7 +19,6 @@ namespace JobList.BusinessLogic.MappingProfiles
             CreateMap<FavoriteVacancyRequest, FavoriteVacancy>()
                 .ForMember(d => d.Id, o => o.UseValue(0));
 
-
         }
     }
 }

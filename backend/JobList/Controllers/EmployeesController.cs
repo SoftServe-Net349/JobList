@@ -88,13 +88,14 @@ namespace JobList.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             try
             {
                 var dtos = await _employeesService.CreateEntityAsync(request);
 
                 if (dtos == null)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, "Sth went wrong. Please try again!");
                 }
 
                 return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);

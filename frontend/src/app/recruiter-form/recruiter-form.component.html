@@ -29,6 +29,8 @@
       <div class="ui-float-label">
         <input id="email" type="text" pInputText formControlName="email"> 
         <label for="email">E-Mail<span class="required-input-symbol">*</span></label>
+
+
         <div *ngIf="recruiterForm.get('email').invalid && (recruiterForm.get('email').dirty || recruiterForm.get('email').touched)" class="alert alert-danger">
           <div *ngIf="recruiterForm.controls['email'].errors.required">
             E-Mail is required
@@ -39,10 +41,7 @@
           <div *ngIf="recruiterForm.controls['email'].errors.maxlength">
             E-Mail should contain (6-254) chars
           </div>
-        </div>
-        <div class="error-message" *ngIf="errorMessage">
-          {{errorMessage}}
-        </div>      
+        </div>       
       </div>
       <div class="ui-float-label phone">
         <p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
@@ -58,10 +57,13 @@
             </p>
           </ng-template>
         </p-fileUpload>
+        <div class="error-message" *ngIf="errorMessage">
+            {{errorMessage}}
+        </div>           
       </div>
       <div *ngIf="action === 'Update'" class="ui-float-label">
         <p-button icon="fa fa-paper-plane" label="Resend Email&nbsp;"></p-button>
-      </div>
+      </div>  
     </form> 
   </div>
 

@@ -61,13 +61,13 @@ export class RecruiterComponent implements OnInit {
       .subscribe((response) => {
         this.vacancies = response.body;
         const XPagination = JSON.parse(response.headers.get('X-Pagination'));
-  
+
         if (XPagination !== null) {
           this.totalRecords = XPagination.TotalRecords;
         }
       });
     }
-  
+
 
   deleteConfirm(id: number) {
     this.confirmationService.confirm({
