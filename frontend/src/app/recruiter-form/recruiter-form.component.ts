@@ -126,7 +126,7 @@ export class RecruiterFormComponent implements OnInit {
       this.display = false;
     },
       error => { this.errorMessage = error.error; }
-      );
+    );
 
   }
 
