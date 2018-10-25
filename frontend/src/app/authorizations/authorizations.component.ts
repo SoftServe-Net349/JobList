@@ -20,7 +20,6 @@ import { sha512_224 } from 'js-sha512';
 export class AuthorizationsComponent implements OnInit {
 
   signInDialog = false;
-
   signUpEmployee = false;
   signUpCompany = false;
   information = false;
@@ -84,7 +83,8 @@ export class AuthorizationsComponent implements OnInit {
       birthDate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
+      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+      checkedAgreementEmployee: [false, Validators.required]
     });
 
   }
@@ -103,7 +103,8 @@ export class AuthorizationsComponent implements OnInit {
       address: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       fullDescription: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
-      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]]
+      passwordConfirm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+      checkedAgreement: [false, Validators.required]
     });
 
   }
@@ -137,21 +138,19 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   closeForm() {
-
     this.signUpCompany = false;
     this.signUpEmployee = false;
-    this.information = false;
+  }
 
+  closeInformationForm() {
+    this.information = false;
   }
 
   openInformation() {
-
     this.information = true;
-
   }
 
   submitSignIn() {
-
     const request: LoginRequest = {
       email: this.authoruzationsForm.get('login').value,
       password: sha512_224(this.authoruzationsForm.get('password').value).toString()
@@ -198,9 +197,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   submitEmployeeSignUp() {
-
     const request: EmployeeRequest = this.getEmployeeRequest();
-
     this.authService.employeeSignUp(request).subscribe(
       (data: Employee) => {
         this.errorMessage = '';
@@ -208,7 +205,6 @@ export class AuthorizationsComponent implements OnInit {
         this.showSignIn('Employee', data.email); },
       error => { this.errorMessage = error.error; }
       );
-
   }
 
   getEmployeeRequest(): EmployeeRequest {
