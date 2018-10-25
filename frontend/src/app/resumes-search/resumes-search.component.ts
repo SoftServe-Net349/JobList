@@ -4,6 +4,7 @@ import { ResumeService } from '../core/services/resume.service';
 import { ResumessearchQuery } from '../shared/filterQueries/ResumessearchQuery';
 import { Paginator } from 'primeng/primeng';
 import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
+import { CompanyFiltersComponent } from '../company-filters/company-filters.component';
 
 @Component({
   selector: 'app-resumes-search',
@@ -22,7 +23,11 @@ export class ResumesSearchComponent implements OnInit {
   param: ResumessearchQuery;
   pagination: PaginationQuery;
 
+  isWorkArea: boolean;
+
   @ViewChild('p') paginator: Paginator;
+
+  @ViewChild(CompanyFiltersComponent) companyFilters: CompanyFiltersComponent;
 
   constructor(private resumeService: ResumeService) {
     this.totalRecords = 0;
@@ -33,6 +38,8 @@ export class ResumesSearchComponent implements OnInit {
     this.resumes = [];
     this.param = this.getDefaultParam();
     this.pagination = this.getDefaultPaginationParam();
+
+    this.isWorkArea = false;
   }
 
   ngOnInit() {
@@ -69,11 +76,35 @@ export class ResumesSearchComponent implements OnInit {
     this.param.finishAge = param.finishAge !== null ? param.finishAge : this.param.finishAge;
     this.param.languages = param.languages !== null ? param.languages : this.param.languages;
 
+    if (this.param.workArea) {
+      this.isWorkArea = true;
+    }
+
     this.loadResumes();
 
     if (this.paginator.first !== 0) {
       this.paginator.changePage(0);
     }
+  }
+
+  resetLanguage(index: number) {
+    const language = this.param.languages[index];
+    this.companyFilters.filter(language, null, null, null);
+  }
+
+  resetWorkArea(workArea: string) {
+    this.companyFilters.filter(null, workArea, null, null);
+    this.isWorkArea = false;
+  }
+
+  resetSchool(index: number) {
+    const school = this.param.schools[index];
+    this.companyFilters.filter(null, null, school, null);
+  }
+
+  resetFaculty(index: number) {
+    const faculty = this.param.faculties[index];
+    this.companyFilters.filter(null, null, null, faculty);
   }
 
   paginate(event) {

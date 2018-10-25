@@ -7,12 +7,12 @@
 
     <h4 class="filter-title">Schools</h4>
     <p-multiSelect [options]="schools" [(ngModel)]="selectedSchools" placeholder="Select a School(-s)" optionLabel="name"
-      maxSelectedLabels=0 filter="true" (onChange)="filter()"></p-multiSelect>
+      maxSelectedLabels=0 filter="true" (onChange)="filter()" [displaySelectedLabel]="false"></p-multiSelect>
     <hr>
 
     <h4 class="filter-title">Faculties</h4>
     <p-multiSelect [options]="faculties" [(ngModel)]="selectedFaculties" placeholder="Select a Faculty(-ies)"
-      optionLabel="name" filter="true" (onChange)="filter()"></p-multiSelect>
+      optionLabel="name" filter="true" (onChange)="filter()" [displaySelectedLabel]="false"></p-multiSelect>
     <hr>
 
     <h4>Age Range: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h4>
@@ -24,7 +24,7 @@
 
     <h4 class="filter-title">Languages</h4>
     <p-multiSelect [options]="languages" [(ngModel)]="selectedLanguages" placeholder="Select a Language(-s)"
-      optionLabel="name" filter="true" (onChange)="filter()"></p-multiSelect>
+      optionLabel="name" (onChange)="filter()" [displaySelectedLabel]="false"></p-multiSelect>
     <hr>
   </div>
 </aside>

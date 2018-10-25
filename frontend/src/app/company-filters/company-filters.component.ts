@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { FacultyService } from '../core/services/faculty.service';
@@ -52,32 +52,48 @@ export class CompanyFiltersComponent implements OnInit {
 
   loadCities() {
     this.cityService.getAll()
-    .subscribe((data: City[]) => this.cities = data);
+      .subscribe((data: City[]) => this.cities = data);
   }
 
   loadWorkAreas() {
     this.workAreaService.getAll()
-    .subscribe((data: WorkArea[]) => this.workAreas = data);
+      .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
 
   loadSchools() {
     this.schoolService.getAll()
-    .subscribe((data: School[]) => this.schools = data);
+      .subscribe((data: School[]) => this.schools = data);
   }
 
   loadFaculties() {
     this.facultyService.getAll()
-    .subscribe((data: Faculty[]) => this.faculties = data);
+      .subscribe((data: Faculty[]) => this.faculties = data);
   }
 
   loadLanguages() {
     this.languageService.getAll()
-    .subscribe((data: Language[]) => this.languages = data);
+      .subscribe((data: Language[]) => this.languages = data);
   }
 
-  filter() {
+  filter(resetedLanguage: string, resetedWorkArea: string, resetedSchool: string, resetedFaculty: string) {
+    if (resetedLanguage) {
+      const index = this.selectedLanguages.findIndex(l => l.name === resetedLanguage);
+      this.selectedLanguages.splice(index, 1);
+    }
+    if (resetedWorkArea) {
+      this.selectedWorkArea = null;
+    }
+    if (resetedSchool) {
+      const index = this.selectedSchools.findIndex(s => s.name === resetedSchool);
+      this.selectedSchools.splice(index, 1);
+    }
+    if (resetedFaculty) {
+      const index = this.selectedFaculties.findIndex(s => s.name === resetedFaculty);
+      this.selectedFaculties.splice(index, 1);
+    }
+
     this.filteredResumes.emit({
-      workArea: this.selectedWorkArea === undefined ? '' : this.selectedWorkArea.name,
+      workArea: this.selectedWorkArea === undefined || this.selectedWorkArea === null ? '' : this.selectedWorkArea.name,
       schools: this.selectedSchools === undefined ||
                this.selectedSchools === null ? [] : this.selectedSchools.map(s => s.name),
       faculties: this.selectedFaculties === undefined ||
