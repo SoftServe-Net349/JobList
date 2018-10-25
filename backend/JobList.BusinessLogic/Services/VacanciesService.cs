@@ -111,12 +111,12 @@ namespace JobList.BusinessLogic.Services
             {
                 filter = filter.And(е => е.WorkArea.Name == vacancyUrlQuery.WorkArea);
             }
-            if (!(vacancyUrlQuery.NamesOfCompanies == null))
+            if (vacancyUrlQuery.NamesOfCompanies != null && !string.IsNullOrEmpty(vacancyUrlQuery.NamesOfCompanies[0]))
             {
                 filter = filter.And(e => vacancyUrlQuery.NamesOfCompanies
                         .Contains(e.Recruiter.Company.Name));
             }
-            if (!(vacancyUrlQuery.IsChecked == false))
+            if (vacancyUrlQuery.IsChecked != false)
             {
                 filter = filter.And(е => е.IsChecked == vacancyUrlQuery.IsChecked);
             }
@@ -126,7 +126,7 @@ namespace JobList.BusinessLogic.Services
             }
             if (vacancyUrlQuery.Salary != null)
             {
-                filter = filter.And(е => е.Salary >= vacancyUrlQuery.Salary);
+                filter = filter.And(е => е.Salary >= vacancyUrlQuery.Salary.Value);
             }
 
             if (!string.IsNullOrEmpty(searchingUrlQuery.SearchString))
@@ -145,7 +145,7 @@ namespace JobList.BusinessLogic.Services
                 paginationUrlQuery: paginationUrlQuery);
 
             var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
-
+            
             return dtos;
         }
 

@@ -41,12 +41,7 @@
           <div *ngIf="recruiterForm.controls['email'].errors.maxlength">
             E-Mail should contain (6-254) chars
           </div>
-        </div>
-
-        
-        <div class="error-message" *ngIf="errorMessage">
-          {{errorMessage}}
-        </div>      
+        </div>       
       </div>
       <div class="ui-float-label phone">
         <p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
@@ -62,10 +57,13 @@
             </p>
           </ng-template>
         </p-fileUpload>
+        <div class="error-message" *ngIf="errorMessage">
+            {{errorMessage}}
+        </div>           
       </div>
       <div *ngIf="action === 'Update'" class="ui-float-label">
         <p-button icon="fa fa-paper-plane" label="Resend Email&nbsp;"></p-button>
-      </div>
+      </div>  
     </form> 
   </div>
 

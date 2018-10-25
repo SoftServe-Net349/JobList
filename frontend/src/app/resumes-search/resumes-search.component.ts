@@ -3,8 +3,10 @@ import { Resume } from '../shared/models/resume.model';
 import { ResumeService } from '../core/services/resume.service';
 import { ResumessearchQuery } from '../shared/filterQueries/ResumessearchQuery';
 import { Paginator } from 'primeng/primeng';
+import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
 import { Employee } from '../shared/models/employee.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-resumes-search',
@@ -16,22 +18,27 @@ export class ResumesSearchComponent implements OnInit {
   resumes: Resume[];
   employee: Employee;
 
-  totalRecords = 0;
+  totalRecords: number;
 
-  pageSize = 4;
-  pageNumber = 1;
-
-  search = '';
-  city = '';
+  search: string;
+  city: string;
 
   param: ResumessearchQuery;
+  pagination: PaginationQuery;
 
   @ViewChild('p') paginator: Paginator;
+
+  constructor(private resumeService: ResumeService) {
+    this.totalRecords = 0;
+
+    this.search = '';
+    this.city = '';
 
   constructor(private resumeService: ResumeService,
               private _sanitizer: DomSanitizer) {
     this.resumes = [];
     this.param = this.getDefaultParam();
+    this.pagination = this.getDefaultPaginationParam();
   }
 
   ngOnInit() {
@@ -48,6 +55,13 @@ export class ResumesSearchComponent implements OnInit {
       startAge: 0,
       finishAge: 0,
       languages: []
+    };
+  }
+
+  getDefaultPaginationParam(): PaginationQuery {
+    return {
+      pageSize: 4,
+      pageNumber: 1
     };
   }
 
@@ -82,14 +96,14 @@ export class ResumesSearchComponent implements OnInit {
   }
 
   paginate(event) {
-    this.pageNumber = event.page + 1;
-    this.pageSize = event.rows;
+    this.pagination.pageNumber = event.page + 1;
+    this.pagination.pageSize = event.rows;
 
     this.loadResumes();
   }
 
   loadResumes() {
-    this.resumeService.getByFilter(this.param, this.pageSize, this.pageNumber)
+    this.resumeService.getByFilter(this.param, this.pagination)
       .subscribe((response) => {
         this.resumes = response.body;
         this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;

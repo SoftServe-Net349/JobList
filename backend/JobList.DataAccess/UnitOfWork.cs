@@ -31,6 +31,7 @@ namespace JobList.DataAccess
         private IEmployeesRepository _employeesRepository;
         private IVacanciesRepository _vacanciesRepository;
         private IWorkAreasRepository _workAreasRepository;
+        private IInvitationsRepository _invitationsRepository;
 
         public UnitOfWork(JobListDbContext context, IMapper mapper)
         {
@@ -230,6 +231,19 @@ namespace JobList.DataAccess
                 }
 
                 return _workAreasRepository;
+            }
+        }
+
+        public IInvitationsRepository InvitationsRepository
+        {
+            get
+            {
+                if (_invitationsRepository == null)
+                {
+                    _invitationsRepository = new InvitationsRepository(_context, _mapper);
+                }
+
+                return _invitationsRepository;
             }
         }
 

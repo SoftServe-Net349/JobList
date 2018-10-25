@@ -9,7 +9,6 @@ namespace JobList.Common.Validators
         {
             RuleFor(x => x.Id).NotEmpty().WithMessage("Please specify a valid Id.");
             RuleFor(x => x.Name).NotEmpty().Length(1, 100).WithMessage("Please specify a valid Name.");
-            RuleFor(x => x.PhotoMimetype).MaximumLength(5).WithMessage("Please specify a valid Photo Mime Type.");
         }
     }
 }

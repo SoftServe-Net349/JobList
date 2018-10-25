@@ -23,5 +23,6 @@ namespace JobList.DataAccess.Entities
         public Role Role { get; set; }
         public Resume Resumes { get; set; }
         public IList<FavoriteVacancy> FavoriteVacancies { get; set; }
+        public IList<Invitation> Invitations { get; set; }
     }
 }

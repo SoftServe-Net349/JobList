@@ -166,9 +166,6 @@
             E-mail contains (2-254) chars
           </div>
         </div>
-        <div class="error-message" *ngIf="errorMessage">
-          {{errorMessage}}
-        </div>    
       </div>
       <hr class="hr-email">
 
@@ -206,6 +203,10 @@
         </div>
         <hr>
     </form>
+    <div class="error-message" *ngIf="errorMessage">
+        {{errorMessage}}
+        <hr class="hr-error-message">
+    </div>        
     <div class="agreement">
       <p-checkbox [(ngModel)]="checkedAgreementEmployee" value="false" binary="false" [formControl]="signUpEmployeeForm.controls['checkedAgreementEmployee']"></p-checkbox>
       <a (click)="openInformation()">
@@ -325,10 +326,7 @@
           <div *ngIf="signUpCompanyForm.controls['email'].errors.minlength || signUpCompanyForm.controls['email'].errors.maxlength">
               E-Mail contains (6-254) chars
           </div>  
-        </div>
-        <div class="error-message" *ngIf="errorMessage">
-          {{errorMessage}}
-        </div>    
+        </div>  
       </div>
       <hr class="hr-email">
 
@@ -398,9 +396,13 @@
 
       <div>
 				<p-fileUpload name="demo[]" mode="advanced"  [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
-		  </div>
+      </div>
+      <hr>
     </form>
-
+    <div class="error-message" *ngIf="errorMessage">
+        {{errorMessage}}
+        <hr class="hr-error-message">
+    </div>        
 
     <div class="agreement">
       <p-checkbox [(ngModel)]="checkedAgreement" value="false" binary="false" [formControl]="signUpCompanyForm.controls['checkedAgreement']"></p-checkbox>
