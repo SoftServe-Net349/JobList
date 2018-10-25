@@ -208,7 +208,7 @@
         <hr class="hr-error-message">
     </div>        
     <div class="agreement">
-      <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+      <p-checkbox [(ngModel)]="checkedAgreementEmployee" value="false" binary="false" [formControl]="signUpEmployeeForm.controls['checkedAgreementEmployee']"></p-checkbox>
       <a (click)="openInformation()">
         <p class=" title Login_text"> I confirm my agreement </p>
       </a>
@@ -405,7 +405,7 @@
     </div>        
 
     <div class="agreement">
-      <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+      <p-checkbox [(ngModel)]="checkedAgreement" value="false" binary="false" [formControl]="signUpCompanyForm.controls['checkedAgreement']"></p-checkbox>
       <a (click)="openInformation()">
         <p class="title Login_text"> I confirm my agreement </p>
       </a>
@@ -415,5 +415,16 @@
     <button type="button" pButton icon="pi pi-check" (click)="submitCompanySignUp()" label="Sing up" [disabled]="signUpCompanyForm.invalid"
       class="ui-button-success"></button>
     <button type="button" pButton icon="pi pi-times" (click)="closeForm()" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog header="Information" [(visible)]="information" [modal]="true" [responsive]="true" [width]="250" [minWidth]="200" [minY]="70"
+  [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
+  <div class="title">
+    I confirm my agreement with the Terms of Use of the site joblist.ua and the Privacy Policy
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" (click)="closeInformationForm()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>

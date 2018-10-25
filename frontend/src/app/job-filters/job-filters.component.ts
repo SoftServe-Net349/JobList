@@ -43,8 +43,8 @@ export class JobFiltersComponent implements OnInit {
   loadCompanies() {
     this.companyService.getAll()
       .subscribe((data: Company[]) => {
-        this.companies = data
-     if(this.companyName !== '') {
+        this.companies = data;
+     if (this.companyName !== '') {
        this.selectedCompanies = [];
        this.selectedCompanies[0] = this.companies.find(c => c.name === this.companyName);
       }

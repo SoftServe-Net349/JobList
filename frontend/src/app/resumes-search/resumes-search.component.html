@@ -1,5 +1,34 @@
 <div class="resumes-search">
   <app-search-line (filteredResumes)="getResumesByFilter($event)"></app-search-line>
+
+  <div class="searchlabels">
+    <span *ngIf="param.workArea !== ''" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{param?.workArea}}</span>
+        <i class="fa fa-times" (click)="resetWorkArea(param.workArea)"></i>
+      </p>
+    </span>
+    <span *ngFor="let language of param.languages; let i = index" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{language}}</span>
+        <i class="fa fa-times" (click)="resetLanguage(i)"></i>
+      </p>
+    </span>
+    <span *ngFor="let school of param.schools; let i = index" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{school}}</span>
+        <i class="fa fa-times" (click)="resetSchool(i)"></i>
+      </p>
+    </span>
+    <span *ngFor="let faculty of param.faculties; let i = index" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{faculty}}</span>
+        <i class="fa fa-times" (click)="resetFaculty(i)"></i>
+      </p>
+    </span>
+    <button *ngIf="isButtonReset" pButton type="button" label="Reset All" (click)="resetAll()" class="searchlabels-button"></button>
+  </div>
+
   <div class="container">
     <div class="filter-container">
       <app-company-filters (filteredResumes)="getResumesByFilter($event)"></app-company-filters>
@@ -9,17 +38,15 @@
       <article class="resume-block" *ngFor="let resume of resumes">
         <div class="avatar">
           <a [routerLink]="['/resume-details/', resume.id]">
-            <img src="https://avatars1.githubusercontent.com/u/33777825?s=400&u=03881b8285bcb4c26c62dd1505b8ca9a9dd7e61f&v=4">
+             <img  [src]="sanitizeEmployeesImg(employee?.photoData)" alt="photoData">
           </a>
         </div>
         <div class="inform">
           <h3>
-            <a [routerLink]="['/resume-details/', resume.id]">{{resume?.position}}</a>
+           {{resume?.position}}
           </h3>
           <p class="person-inform">
-            <span>
-              {{resume?.employee?.firstName}} {{resume?.employee?.lastName}}
-            </span>
+            <a [routerLink]="['/resume-details/', resume.id]">{{resume?.employee?.firstName}} {{resume?.employee?.lastName}}</a>
           </p>
           <p>
             <i class="fa fa-user"></i>
@@ -33,7 +60,6 @@
             </span>
           </p>
           <p class="agotime">
-            <i class="fa fa-refresh"></i>
             <span>
               {{resume?.createDate | date}}
             </span>

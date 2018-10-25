@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../shared/models/employee.model';
 import { WorkAreaService } from '../core/services/work-area.service';
@@ -23,7 +23,7 @@ export class ResumeFormComponent implements OnInit {
   resumeForm: FormGroup;
 
   display: Boolean = false;
-  action: String;
+  @Input() action: string;
 
   employee: Employee;
   resume: Resume;
@@ -60,7 +60,7 @@ export class ResumeFormComponent implements OnInit {
     this.loadCities();
     this.loadSchools();
     this.loadFaculties();
-
+    console.log(this.action)
     this.resumeForm = this.defaultResumeForm();
   }
 
@@ -113,7 +113,7 @@ export class ResumeFormComponent implements OnInit {
     });
   }
 
-  showResumeForm(action: String, employee = null, resume = null) {
+  showResumeForm(action: string, employee = null, resume = null) {
     this.employee = employee;
     this.resume = resume;
     this.resumeForm.reset();
@@ -121,36 +121,37 @@ export class ResumeFormComponent implements OnInit {
     this.action = action;
 
     if (action === 'Update') {
-      this.resumeForm.setValue({
-        firstName: this.employee.firstName,
-        lastName: this.employee.lastName,
-        email: this.employee.email,
-        phone: this.employee.phone,
-        companyName: 'SoftServe',
-        position: '.NET DEVELOPER',
-        courses: this.resume.courses,
-        introduction: this.resume.introduction,
-        familyState: this.resume.familyState,
-        softSkills: this.resume.softSkills,
-        keySkills: this.resume.keySkills,
-        facebook: this.resume.facebook,
-        skype: this.resume.skype,
-        linkedIn: this.resume.linkedin,
-        gitHub: this.resume.github,
-        workArea: this.resume.workArea,
-        city: this.employee.city,
-        birthDate: ''
-      });
-      // this.selectedWorkArea = this.workAreas[1];
-      // this.selectedCity = this.cities[1];
-      this.birthDate = new Date(this.employee.birthDate);
-      this.selectedShool1 = this.schools[1];
-      this.selectedFaculty1 = this.faculties[1];
-      this.edStartDate1 = new Date();
-      this.edFinishDate1 = new Date();
-      this.expStartDate = new Date();
-      this.expFinishDate = new Date();
-      this.selectedLanguages = this.languages;
+      this.updateResume()
     }
+  }
+  updateResume() {
+    this.resumeForm.setValue({
+      firstName: this.employee.firstName,
+      lastName: this.employee.lastName,
+      email: this.employee.email,
+      phone: this.employee.phone,
+      companyName: 'SoftServe',
+      position: '.NET DEVELOPER',
+      courses: this.resume.courses,
+      introduction: this.resume.introduction,
+      familyState: this.resume.familyState,
+      softSkills: this.resume.softSkills,
+      keySkills: this.resume.keySkills,
+      facebook: this.resume.facebook,
+      skype: this.resume.skype,
+      linkedIn: this.resume.linkedin,
+      gitHub: this.resume.github,
+      workArea: this.resume.workArea,
+      city: this.employee.city,
+      birthDate: ''
+    });
+    this.birthDate = new Date(this.employee.birthDate);
+    this.selectedShool1 = this.schools[1];
+    this.selectedFaculty1 = this.faculties[1];
+    this.edStartDate1 = new Date();
+    this.edFinishDate1 = new Date();
+    this.expStartDate = new Date();
+    this.expFinishDate = new Date();
+    this.selectedLanguages = this.languages;
   }
 }
