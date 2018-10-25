@@ -14,6 +14,7 @@ export class EmployeeComponent implements OnInit {
 
   employee: Employee;
   resume: Resume;
+  action = 'Create';
 
   constructor(private employeeService: EmployeeService,
               private resumeService: ResumeService,
@@ -37,7 +38,18 @@ export class EmployeeComponent implements OnInit {
 
   loadResumeById(id: number) {
     this.resumeService.getById(id)
-    .subscribe((data: Resume) => this.resume = data);
+    .subscribe((data: Resume) => {
+      this.resume = data;
+      this.action = 'Update'
+    },
+    error => { 
+      if(error.status === 400 && error.error === `Entity with id: ${id} not found when trying to get entity.`)
+      {
+        this.action = 'Create';
+      }
+    }
+    );
+
   }
 
   getLanguages(): string {
