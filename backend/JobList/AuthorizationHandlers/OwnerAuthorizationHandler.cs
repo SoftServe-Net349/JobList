@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace JobList.AuthorizationHandlers
@@ -19,7 +20,7 @@ namespace JobList.AuthorizationHandlers
                 return Task.CompletedTask;
             }
 
-            if (context.User.Identity.Name == id.ToString())
+            if (context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value == id.ToString())
             {
                 context.Succeed(requirement);
             }

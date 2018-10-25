@@ -29,6 +29,8 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<int> CountAsync(Expression<Func<Employee, bool>> predicate = null);
 
+        Task<bool> ExistAsync(Expression<Func<Employee, bool>> predicate);
+
         int TotalRecords { get; }
     }
 }
