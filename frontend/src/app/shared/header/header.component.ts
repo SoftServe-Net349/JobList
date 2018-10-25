@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Home',
         icon: 'fa fa-home',
-        command: (event) => {console.log(this.uId); this.router.navigate(['/companies', this.uId]); }
+        command: (event) => {this.router.navigate(['/companies', this.uId]); }
       },
       {
         label: 'Settings',
@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
       {
       label: 'Sign out',
       icon: 'fa fa-sign-out',
-      command: (event) => { this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
+      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
 

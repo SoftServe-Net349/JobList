@@ -26,7 +26,7 @@ namespace JobList.DataAccess.Data
                 new City {Id = 3, Name = "Atlanta"},
                 new City {Id = 4, Name = "Los Angeles"},
                 new City {Id = 5, Name = "Boston"},
-                new City {Id = 6, Name = "Philadephia"},
+                new City {Id = 6, Name = "Philadelphia"},
                 new City {Id = 7, Name = "Seattle"},
                 new City {Id = 8, Name = "Washington DC"},
                 new City {Id = 9, Name = "Las Vegas"},

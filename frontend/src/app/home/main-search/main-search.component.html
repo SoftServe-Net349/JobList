@@ -40,7 +40,7 @@
     <div id="cities">
       <div class="list-cities" *ngIf="cities?.length > 0">
           <a *ngFor="let city of cities">
-            <img class="city-image" src="../../../images/location2.jpg" (click)="goToJobSearchByCity(city.name)">
+            <img class="city-image" [src]="'../../../images/' + city?.name + '.jpg'" (click)="goToJobSearchByCity(city.name)">
             <p>{{city?.name}}</p>
           </a>
         </div>

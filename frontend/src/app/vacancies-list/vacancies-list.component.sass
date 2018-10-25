@@ -17,7 +17,7 @@ hr
 	border: none
 	background-color: rgba(0,0,0,0.12)
 
-.invitation
+.vacancy
   position: relative
   cursor: pointer
   color: white
@@ -37,19 +37,19 @@ hr
     border-radius: 50%
     box-shadow: 0 0 1px #333
 
-/deep/ .invitation-sidebar .ui-sidebar-right
+/deep/ .vacancies-list-sidebar .ui-sidebar-right
   width: 320px !important
   overflow: scroll
 
 
-.invitation-container
+.vacancy-container
   max-width: 300px
   background-color: #fff
   overflow: hidden
   box-shadow: none
   border-radius: 0
 
-  .invitation-block
+  .vacancy-block
     display: flex
     justify-content: space-between
     border: 1px solid rgba(0,0,0,.12)
@@ -62,6 +62,11 @@ hr
     .inform
       width: 170px
 
+      .vacancy-name
+        color: #007ad9
+
+      .vacancy-name:hover
+        color: #f47442
 
       /deep/ .ui-button
         height: 24px
@@ -121,5 +126,5 @@ hr
     /deep/ .ui-paginator
       border: none
 
-/deep/ .invitation-sidebar .ui-sidebar a
+/deep/ .vacancies-list-sidebar .ui-sidebar a
   color: #7C898B

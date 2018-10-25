@@ -1,0 +1,37 @@
+<p-sidebar [(visible)]="visibleSidebar" position="right" [baseZIndex]="10000" [modal]="false" class="vacancies-list-sidebar">
+    <h1 class="vacancies">Send Invitation</h1>
+    <hr>
+  
+    <div class="vacancy-container" *ngIf="vacancies?.length > 0">
+      <article class="vacancy-block" *ngFor="let vacancy of vacancies">
+        <div class="inform">
+          <h3>
+            <a class="vacancy-name" (click)="vacancyDetails(vacancy?.id)">{{vacancy?.name}}</a>
+          </h3>
+          <p class="company-name">
+            <a (click)="companyDetails(vacancy?.recruiter?.company?.id)">{{vacancy?.recruiter?.company?.name}}</a>
+          </p>
+          <p class="location">
+            <i class="fa fa-map-marker"></i>
+            {{vacancy?.city?.name}}
+          </p>
+          <button pButton type="button" (click)="showConfirmDialog(vacancy)" label="Attach" class="ui-button-success"></button> 
+        </div>
+        <div class="logo">
+          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png" (click)="companyDetails(vacancy?.recruiter?.company?.id)">
+        </div>
+      </article>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+      </div>    
+    </div>
+  
+</p-sidebar>
+<p-dialog header="Message" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
+  [maximizable]="false" [baseZIndex]="10000" showHeader="false">
+  <span>Do you really want to send the invitation?</span>
+  <p-footer>
+      <button type="button" pButton icon="pi pi-check" (click)="sendInvitation()" label="Send" class="ui-button-success"></button>
+      <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
