@@ -6,7 +6,7 @@ import { Paginator } from 'primeng/primeng';
 import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
 import { Employee } from '../shared/models/employee.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
+import { CompanyFiltersComponent } from '../company-filters/company-filters.component';
 
 @Component({
   selector: 'app-resumes-search',
@@ -26,7 +26,11 @@ export class ResumesSearchComponent implements OnInit {
   param: ResumessearchQuery;
   pagination: PaginationQuery;
 
+  isButtonReset: boolean;
+
   @ViewChild('p') paginator: Paginator;
+
+  @ViewChild(CompanyFiltersComponent) companyFilters: CompanyFiltersComponent;
 
   constructor(private resumeService: ResumeService) {
     this.totalRecords = 0;
@@ -39,6 +43,8 @@ export class ResumesSearchComponent implements OnInit {
     this.resumes = [];
     this.param = this.getDefaultParam();
     this.pagination = this.getDefaultPaginationParam();
+
+    this.isButtonReset = false;
   }
 
   ngOnInit() {
@@ -66,14 +72,17 @@ export class ResumesSearchComponent implements OnInit {
   }
 
   getResumesByFilter(param: ResumessearchQuery) {
+    this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
     this.param.position = param.position !== null ? param.position : this.param.position;
     this.param.city = param.city !== null ? param.city : this.param.city;
-    this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
     this.param.schools = param.schools !== null ? param.schools : this.param.schools;
     this.param.faculties = param.faculties !== null ? param.faculties : this.param.faculties;
     this.param.startAge = param.startAge !== null ? param.startAge : this.param.startAge;
     this.param.finishAge = param.finishAge !== null ? param.finishAge : this.param.finishAge;
     this.param.languages = param.languages !== null ? param.languages : this.param.languages;
+
+    this.isButtonReset = param.languages.length !== 0 || param.schools.length !== 0 ||
+                         param.faculties.length !== 0 || param.workArea !== '';
 
     this.loadResumes();
 
@@ -93,11 +102,43 @@ export class ResumesSearchComponent implements OnInit {
       return '../../images/yourAvatarHere.png';
 
     }
+
+  resetWorkArea() {
+    this.companyFilters.resetWorkArea();
+    this.companyFilters.filter();
+  }
+
+  resetSchool(index: number) {
+    const school = this.param.schools[index];
+
+    this.companyFilters.resetSchool(school);
+    this.companyFilters.filter();
+  }
+
+  resetFaculty(index: number) {
+    const faculty = this.param.faculties[index];
+
+    this.companyFilters.resetFaculty(faculty);
+    this.companyFilters.filter();
+  }
+
+  resetLanguage(index: number) {
+    const language = this.param.languages[index];
+
+    this.companyFilters.resetLanguage(language);
+    this.companyFilters.filter();
+  }
+
+  resetAll() {
+    this.isButtonReset = false;
+    this.companyFilters.resetAll();
   }
 
   paginate(event) {
-    this.pagination.pageNumber = event.page + 1;
-    this.pagination.pageSize = event.rows;
+    this.pagination = {
+      pageNumber: ++event.page,
+      pageSize: event.rows
+    };
 
     this.loadResumes();
   }

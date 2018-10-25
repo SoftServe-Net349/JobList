@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CityService } from '../core/services/city.service';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { FacultyService } from '../core/services/faculty.service';
@@ -52,32 +52,51 @@ export class CompanyFiltersComponent implements OnInit {
 
   loadCities() {
     this.cityService.getAll()
-    .subscribe((data: City[]) => this.cities = data);
+      .subscribe((data: City[]) => this.cities = data);
   }
 
   loadWorkAreas() {
     this.workAreaService.getAll()
-    .subscribe((data: WorkArea[]) => this.workAreas = data);
+      .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
 
   loadSchools() {
     this.schoolService.getAll()
-    .subscribe((data: School[]) => this.schools = data);
+      .subscribe((data: School[]) => this.schools = data);
   }
 
   loadFaculties() {
     this.facultyService.getAll()
-    .subscribe((data: Faculty[]) => this.faculties = data);
+      .subscribe((data: Faculty[]) => this.faculties = data);
   }
 
   loadLanguages() {
     this.languageService.getAll()
-    .subscribe((data: Language[]) => this.languages = data);
+      .subscribe((data: Language[]) => this.languages = data);
+  }
+
+  resetWorkArea() {
+    this.selectedWorkArea = null;
+  }
+
+  resetSchool(resetedSchool: string) {
+    const index = this.selectedSchools.findIndex(s => s.name === resetedSchool);
+    this.selectedSchools.splice(index, 1);
+  }
+
+  resetFaculty(resetedFaculty: string) {
+    const index = this.selectedFaculties.findIndex(f => f.name === resetedFaculty);
+    this.selectedFaculties.splice(index, 1);
+  }
+
+  resetLanguage(resetedLanguage: string) {
+    const index = this.selectedLanguages.findIndex(l => l.name === resetedLanguage);
+    this.selectedLanguages.splice(index, 1);
   }
 
   filter() {
     this.filteredResumes.emit({
-      workArea: this.selectedWorkArea === undefined ? '' : this.selectedWorkArea.name,
+      workArea: this.selectedWorkArea === undefined || this.selectedWorkArea === null ? '' : this.selectedWorkArea.name,
       schools: this.selectedSchools === undefined ||
                this.selectedSchools === null ? [] : this.selectedSchools.map(s => s.name),
       faculties: this.selectedFaculties === undefined ||
@@ -88,6 +107,24 @@ export class CompanyFiltersComponent implements OnInit {
                  this.rangeValues === null || this.rangeValues[1].toString() === '' ? 0 : this.rangeValues[1],
       languages: this.selectedLanguages === undefined ||
                  this.selectedLanguages === null ? [] : this.selectedLanguages.map(l => l.name),
+      city: null,
+      position: null
+    });
+  }
+
+  resetAll() {
+    this.selectedWorkArea = null;
+    this.selectedSchools = null;
+    this.selectedFaculties = null;
+    this.selectedLanguages = null;
+
+    this.filteredResumes.emit({
+      workArea: '',
+      schools: [],
+      faculties: [],
+      languages: [],
+      startAge: 0,
+      finishAge: 50,
       city: null,
       position: null
     });
