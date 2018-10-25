@@ -43,9 +43,9 @@ export class HeaderComponent implements OnInit {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
     this.signInItems = [
-      {label: 'Sign In for Employee', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('Employee'); }},
-      {label: 'Sign In for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
-      {label: 'Sign In for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
+      {label: 'Sign In as Employee', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('Employee'); }},
+      {label: 'Sign In as Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
+      {label: 'Sign In as Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
     ];
 
     this.itemsForCompany = this.getItemsForCompany();
@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Home',
         icon: 'fa fa-home',
-        command: (event) => { this.router.navigate(['/companies', this.uId]); }
+        command: (event) => {console.log(this.uId); this.router.navigate(['/companies', this.uId]); }
       },
       {
         label: 'Settings',
@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
       {
       label: 'Sign out',
       icon: 'fa fa-sign-out',
-      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
+      command: (event) => { this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
       }
     ];
 
@@ -138,8 +138,10 @@ export class HeaderComponent implements OnInit {
       this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     } else {
+
       this.role = '';
       this.uId = 0;
+
     }
   }
 }

@@ -169,6 +169,11 @@ namespace JobList.BusinessLogic.Services
             }
         }
 
+        public async Task<bool> ExistAsync(Expression<Func<Employee, bool>> predicate)
+        {
+            return await _uow.EmployeesRepository.ExistAsync(predicate);
+        }
+
         public async Task<bool> UpdateEntityByIdAsync(EmployeeUpdateRequest modelRequest, int id)
         {
             var entity = _mapper.Map<EmployeeUpdateRequest, Employee>(modelRequest);

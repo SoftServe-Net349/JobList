@@ -85,7 +85,7 @@ namespace JobList.BusinessLogic.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, recruiterDTO.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, recruiterDTO.Id.ToString()),
                 new Claim(ClaimTypes.Email, recruiterDTO.Email),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, recruiterDTO.Role.Name)
             };
