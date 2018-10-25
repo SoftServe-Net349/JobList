@@ -23,7 +23,6 @@ export class ResumesSearchComponent implements OnInit {
   param: ResumessearchQuery;
   pagination: PaginationQuery;
 
-  isWorkArea: boolean;
   isButtonReset: boolean;
 
   @ViewChild('p') paginator: Paginator;
@@ -40,7 +39,6 @@ export class ResumesSearchComponent implements OnInit {
     this.param = this.getDefaultParam();
     this.pagination = this.getDefaultPaginationParam();
 
-    this.isWorkArea = false;
     this.isButtonReset = false;
   }
 
@@ -69,24 +67,17 @@ export class ResumesSearchComponent implements OnInit {
   }
 
   getResumesByFilter(param: ResumessearchQuery) {
+    this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
     this.param.position = param.position !== null ? param.position : this.param.position;
     this.param.city = param.city !== null ? param.city : this.param.city;
-    this.param.workArea = param.workArea !== null ? param.workArea : this.param.workArea;
     this.param.schools = param.schools !== null ? param.schools : this.param.schools;
     this.param.faculties = param.faculties !== null ? param.faculties : this.param.faculties;
     this.param.startAge = param.startAge !== null ? param.startAge : this.param.startAge;
     this.param.finishAge = param.finishAge !== null ? param.finishAge : this.param.finishAge;
     this.param.languages = param.languages !== null ? param.languages : this.param.languages;
 
-    if (this.param.workArea) {
-      this.isWorkArea = true;
-    }
-
-    if (param.languages.length !== 0 || param.schools.length !== 0 || param.faculties.length !== 0 || param.workArea) {
-        this.isButtonReset = true;
-    } else {
-      this.isButtonReset = false;
-    }
+    this.isButtonReset = param.languages.length !== 0 || param.schools.length !== 0 ||
+                         param.faculties.length !== 0 || param.workArea !== '';
 
     this.loadResumes();
 
@@ -95,37 +86,44 @@ export class ResumesSearchComponent implements OnInit {
     }
   }
 
-  resetWorkArea(workArea: string) {
-    this.companyFilters.filter(null, workArea, null, null);
-    this.isWorkArea = false;
-  }
-
-  resetLanguage(index: number) {
-    const language = this.param.languages[index];
-    this.companyFilters.filter(language, null, null, null);
+  resetWorkArea() {
+    this.companyFilters.resetWorkArea();
+    this.companyFilters.filter();
   }
 
   resetSchool(index: number) {
     const school = this.param.schools[index];
-    this.companyFilters.filter(null, null, school, null);
+
+    this.companyFilters.resetSchool(school);
+    this.companyFilters.filter();
   }
 
   resetFaculty(index: number) {
     const faculty = this.param.faculties[index];
-    this.companyFilters.filter(null, null, null, faculty);
+
+    this.companyFilters.resetFaculty(faculty);
+    this.companyFilters.filter();
   }
 
-  paginate(event) {
-    this.pagination.pageNumber = event.page + 1;
-    this.pagination.pageSize = event.rows;
+  resetLanguage(index: number) {
+    const language = this.param.languages[index];
 
-    this.loadResumes();
+    this.companyFilters.resetLanguage(language);
+    this.companyFilters.filter();
   }
 
   resetAll() {
-    this.companyFilters.reset();
-    this.isWorkArea = false;
     this.isButtonReset = false;
+    this.companyFilters.resetAll();
+  }
+
+  paginate(event) {
+    this.pagination = {
+      pageNumber: ++event.page,
+      pageSize: event.rows
+    };
+
+    this.loadResumes();
   }
 
   loadResumes() {

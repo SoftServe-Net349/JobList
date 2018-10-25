@@ -2,7 +2,7 @@
   <app-search-line (filteredResumes)="getResumesByFilter($event)"></app-search-line>
 
   <div class="searchlabels">
-    <span *ngIf="isWorkArea" class="searchlabels-label">
+    <span *ngIf="param.workArea !== ''" class="searchlabels-label">
       <p class="searchlabels-label-txt">
         <span>{{param?.workArea}}</span>
         <i class="fa fa-times" (click)="resetWorkArea(param.workArea)"></i>
@@ -26,7 +26,6 @@
         <i class="fa fa-times" (click)="resetFaculty(i)"></i>
       </p>
     </span>
-
     <button *ngIf="isButtonReset" pButton type="button" label="Reset All" (click)="resetAll()" class="searchlabels-button"></button>
   </div>
 

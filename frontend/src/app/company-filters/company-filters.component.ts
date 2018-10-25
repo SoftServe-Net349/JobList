@@ -75,26 +75,26 @@ export class CompanyFiltersComponent implements OnInit {
       .subscribe((data: Language[]) => this.languages = data);
   }
 
-  filter(resetedLanguage: string, resetedWorkArea: string, resetedSchool: string, resetedFaculty: string) {
+  resetWorkArea() {
+    this.selectedWorkArea = null;
+  }
 
-    console.log(resetedFaculty);
+  resetSchool(resetedSchool: string) {
+    const index = this.selectedSchools.findIndex(s => s.name === resetedSchool);
+    this.selectedSchools.splice(index, 1);
+  }
 
-    if (resetedLanguage) {
-      const index = this.selectedLanguages.findIndex(l => l.name === resetedLanguage);
-      this.selectedLanguages.splice(index, 1);
-    }
-    if (resetedWorkArea) {
-      this.selectedWorkArea = null;
-    }
-    if (resetedSchool) {
-      const index = this.selectedSchools.findIndex(s => s.name === resetedSchool);
-      this.selectedSchools.splice(index, 1);
-    }
-    if (resetedFaculty) {
-      const index = this.selectedFaculties.findIndex(f => f.name === resetedFaculty);
-      this.selectedFaculties.splice(index, 1);
-    }
+  resetFaculty(resetedFaculty: string) {
+    const index = this.selectedFaculties.findIndex(f => f.name === resetedFaculty);
+    this.selectedFaculties.splice(index, 1);
+  }
 
+  resetLanguage(resetedLanguage: string) {
+    const index = this.selectedLanguages.findIndex(l => l.name === resetedLanguage);
+    this.selectedLanguages.splice(index, 1);
+  }
+
+  filter() {
     this.filteredResumes.emit({
       workArea: this.selectedWorkArea === undefined || this.selectedWorkArea === null ? '' : this.selectedWorkArea.name,
       schools: this.selectedSchools === undefined ||
@@ -112,7 +112,7 @@ export class CompanyFiltersComponent implements OnInit {
     });
   }
 
-  reset() {
+  resetAll() {
     this.selectedWorkArea = null;
     this.selectedSchools = null;
     this.selectedFaculties = null;
