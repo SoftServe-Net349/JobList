@@ -45,13 +45,13 @@ export class VacancyFormComponent implements OnInit {
     this.vacancy = this.defaultVacancy();
 
     this.vacancyForm = this.formBuilder.group({
-      vacancyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
+      vacancyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       salary: [''],
-      description: ['', [Validators.required, Validators.minLength(2)]],
-      offering: ['', [Validators.required, Validators.minLength(2)]],
-      requirements: ['', [Validators.required, Validators.minLength(2)]],
-      bePlus: ['', [Validators.minLength(2)]],
-      fullPartTime: ['', [Validators.minLength(2), Validators.maxLength(25)]],
+      description: ['', [Validators.required, Validators.minLength(1)]],
+      offering: ['', [Validators.required, Validators.minLength(1)]],
+      requirements: ['', [Validators.required, Validators.minLength(1)]],
+      bePlus: ['', [Validators.minLength(1)]],
+      fullPartTime: ['', [Validators.minLength(1), Validators.maxLength(25)]],
       workArea: ['', [Validators.required]],
       city: ['', [Validators.required]]
     });

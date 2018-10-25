@@ -1,4 +1,4 @@
-<p-dialog [header]="'Sing In for ' + role" [(visible)]="signInDialog" [modal]="true" [responsive]="true" [width]="330"
+<p-dialog [header]="'Sing In as ' + role" [(visible)]="signInDialog" [modal]="true" [responsive]="true" [width]="330"
   [minWidth]="200" [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true"
   [dismissableMask]="false" [baseZIndex]="10000">
   <div id="authoruzations">
@@ -42,36 +42,42 @@
       </div>
     </div>
 
-    <div class="or-section Login_with">
-      <hr class="fd-f1 ">
-      <p class="Login_text"> Login with </p>
-      <hr class="fd-f1 ">
-    </div>
-    <div class=fb_google>
-      <div class=fb_google1>
-        <a class="google fd-f" target="_blank" href="https://api.rabota.ua/login/google">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
-            alt="google">
-        </a>
-      </div>
-      <div class=fb_google1>
-        <a class="facebook fd-f" target="_blank" href="https://api.rabota.ua/login/facebook">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
-            alt="facabook">
-        </a>
-      </div>
+
+
+    <div  *ngIf="role=='Employee'">
+     
+        <div class="or-section Login_with">
+            <hr class="fd-f1 ">
+            <p class="Login_text"> Login with </p>
+            <hr class="fd-f1 ">
+          </div>
+          <div class=fb_google>
+            <div class=fb_google1>
+              <a class="google fd-f" target="_blank">
+                <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
+                  alt="google">
+              </a>
+            </div>
+            <div class=fb_google1>
+              <a class="facebook fd-f" target="_blank">
+                <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
+                  alt="facabook">
+              </a>
+            </div>
+          </div>
     </div>
 
     <hr *ngIf="role!='Recruiter'">
     <div class=fb_google *ngIf="role!='Recruiter'">
       <label class="title"> Don't have an account?</label>
     </div>
-    <div class=fb_google *ngIf="role=='Employee'">
-      <a (click)="showSignUpEmployee()" class="title">
-        Sing Up
-        <i class="fa fa-sign-in icon" aria-hidden="true"></i>
-      </a>
+    <div  *ngIf="role=='Employee'">
+        <a (click)="showSignUpEmployee()" class="title">
+            Sing Up
+            <i class="fa fa-sign-in icon" aria-hidden="true"></i>
+          </a>
     </div>
+    
     <div class=fb_google *ngIf="role=='Company'">
       <a (click)="showSignUpCompany()" class="title">
         Sing Up
@@ -213,13 +219,13 @@
     </div>
     <div class=fb_google>
       <div class=fb_google1>
-        <a class="google fd-f" target="_blank" href="https://api.rabota.ua/login/google">
+        <a class="google fd-f" target="_blank">
           <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
             alt="google">
         </a>
       </div>
       <div class=fb_google1>
-        <a class="facebook fd-f" target="_blank" href="https://api.rabota.ua/login/facebook">
+        <a class="facebook fd-f" target="_blank">
           <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
             alt="facabook">
         </a>
