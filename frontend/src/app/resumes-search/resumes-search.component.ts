@@ -29,15 +29,15 @@ export class ResumesSearchComponent implements OnInit {
 
   @ViewChild(CompanyFiltersComponent) companyFilters: CompanyFiltersComponent;
 
-
   constructor(private resumeService: ResumeService,
               private _sanitizer: DomSanitizer) {
 
-    this.totalRecords = 0;
 
     this.resumes = [];
     this.param = this.getDefaultParam();
+
     this.pagination = this.getDefaultPaginationParam();
+    this.totalRecords = 0;
 
     this.isButtonReset = false;
   }
