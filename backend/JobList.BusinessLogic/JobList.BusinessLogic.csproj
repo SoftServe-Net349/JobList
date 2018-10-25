@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,7 +17,7 @@ export class FacultyService {
 
   getById(id: number): Observable<Faculty> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+ }
 
   create(request: FacultyRequest): Observable<Faculty> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);

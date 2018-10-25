@@ -45,9 +45,6 @@ export class CompanyComponent implements OnInit {
 
   }
 
-  console() {
-    console.log(this.company);
-  }
   loadCompanyById(id: number = this.company.id) {
 
     this.companyService.getById(id)

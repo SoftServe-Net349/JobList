@@ -17,7 +17,7 @@
         <a routerLink="/resumessearch" routerLinkActive="active">Find Resumes</a>
         <a href="">Vacancies</a>
 
-        <p-sidebar [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
+        <p-sidebar class="profile-sidebar" [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
           <h1 class="company-profile">Profile</h1>
           <hr>
           <p-panelMenu [model]="itemsForCompany" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
@@ -33,7 +33,7 @@
     <div *ngIf="role === 'recruiter'">
       <div id="right-side-menu">
         <a routerLink="/resumessearch" routerLinkActive="active">Find Resumes</a>
-        <p-sidebar [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
+        <p-sidebar class="profile-sidebar" [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
           <h1 class="company-profile">Profile</h1>
           <hr>
           <p-panelMenu [model]="itemsForRecruiter" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
@@ -49,10 +49,10 @@
     <div *ngIf="role === 'employee'">
       <div id="right-side-menu">
         <a routerLink="/jobsearch" routerLinkActive="active">Find Vacancies</a>
-        <a>Invitation</a>
+        <app-invitation [employeeId]="uId"></app-invitation>
         <a>Favourite Vacancies</a>
 
-        <p-sidebar [(visible)]="visibleForEmployee" position="right" [baseZIndex]="10000" blockScroll="true">
+        <p-sidebar class="profile-sidebar" [(visible)]="visibleForEmployee" position="right" [baseZIndex]="10000" blockScroll="true">
           <h1 class="company-profile">Profile</h1>
           <hr>
           <p-panelMenu [model]="itemsForEmployee" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
