@@ -76,6 +76,9 @@ export class CompanyFiltersComponent implements OnInit {
   }
 
   filter(resetedLanguage: string, resetedWorkArea: string, resetedSchool: string, resetedFaculty: string) {
+
+    console.log(resetedFaculty);
+
     if (resetedLanguage) {
       const index = this.selectedLanguages.findIndex(l => l.name === resetedLanguage);
       this.selectedLanguages.splice(index, 1);

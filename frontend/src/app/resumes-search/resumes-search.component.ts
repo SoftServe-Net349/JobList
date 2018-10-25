@@ -95,14 +95,14 @@ export class ResumesSearchComponent implements OnInit {
     }
   }
 
-  resetLanguage(index: number) {
-    const language = this.param.languages[index];
-    this.companyFilters.filter(language, null, null, null);
-  }
-
   resetWorkArea(workArea: string) {
     this.companyFilters.filter(null, workArea, null, null);
     this.isWorkArea = false;
+  }
+
+  resetLanguage(index: number) {
+    const language = this.param.languages[index];
+    this.companyFilters.filter(language, null, null, null);
   }
 
   resetSchool(index: number) {
