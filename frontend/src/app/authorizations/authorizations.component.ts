@@ -77,9 +77,10 @@ export class AuthorizationsComponent implements OnInit {
   getSignUpEmployeeForm(): FormGroup {
 
     return this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(2), Validators.maxLength(254)]],
+      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
+        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       birthDate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
