@@ -9,17 +9,15 @@
       <article class="resume-block" *ngFor="let resume of resumes">
         <div class="avatar">
           <a [routerLink]="['/resume-details/', resume.id]">
-            <img src="https://avatars1.githubusercontent.com/u/33777825?s=400&u=03881b8285bcb4c26c62dd1505b8ca9a9dd7e61f&v=4">
+             <img  [src]="sanitizeEmployeesImg(employee?.photoData)" alt="photoData">
           </a>
         </div>
         <div class="inform">
           <h3>
-            <a [routerLink]="['/resume-details/', resume.id]">{{resume?.position}}</a>
+           {{resume?.position}}
           </h3>
           <p class="person-inform">
-            <span>
-              {{resume?.employee?.firstName}} {{resume?.employee?.lastName}}
-            </span>
+            <a [routerLink]="['/resume-details/', resume.id]">{{resume?.employee?.firstName}} {{resume?.employee?.lastName}}</a>
           </p>
           <p>
             <i class="fa fa-user"></i>
@@ -33,7 +31,6 @@
             </span>
           </p>
           <p class="agotime">
-            <i class="fa fa-refresh"></i>
             <span>
               {{resume?.createDate | date}}
             </span>

@@ -4,6 +4,9 @@ import { ResumeService } from '../core/services/resume.service';
 import { ResumessearchQuery } from '../shared/filterQueries/ResumessearchQuery';
 import { Paginator } from 'primeng/primeng';
 import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
+import { Employee } from '../shared/models/employee.model';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-resumes-search',
@@ -13,6 +16,7 @@ import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
 export class ResumesSearchComponent implements OnInit {
 
   resumes: Resume[];
+  employee: Employee;
 
   totalRecords: number;
 
@@ -30,6 +34,8 @@ export class ResumesSearchComponent implements OnInit {
     this.search = '';
     this.city = '';
 
+  constructor(private resumeService: ResumeService,
+              private _sanitizer: DomSanitizer) {
     this.resumes = [];
     this.param = this.getDefaultParam();
     this.pagination = this.getDefaultPaginationParam();
@@ -73,6 +79,19 @@ export class ResumesSearchComponent implements OnInit {
 
     if (this.paginator.first !== 0) {
       this.paginator.changePage(0);
+    }
+  }
+
+  sanitizeEmployeesImg(imageBase64): SafeUrl {
+    if (this.employee !== undefined && this.employee.photoData !== undefined &&
+        this.employee.photoData !== null && this.employee.photoData !== '') {
+
+      return this._sanitizer.bypassSecurityTrustUrl(`data:image/${this.employee.photoMimeType};base64,` + imageBase64);
+
+    } else {
+
+      return '../../images/yourAvatarHere.png';
+
     }
   }
 
