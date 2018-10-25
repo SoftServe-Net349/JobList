@@ -29,6 +29,8 @@
       <div class="ui-float-label">
         <input id="email" type="text" pInputText formControlName="email"> 
         <label for="email">E-Mail<span class="required-input-symbol">*</span></label>
+
+
         <div *ngIf="recruiterForm.get('email').invalid && (recruiterForm.get('email').dirty || recruiterForm.get('email').touched)" class="alert alert-danger">
           <div *ngIf="recruiterForm.controls['email'].errors.required">
             E-Mail is required
@@ -40,6 +42,8 @@
             E-Mail should contain (6-254) chars
           </div>
         </div>
+
+        
         <div class="error-message" *ngIf="errorMessage">
           {{errorMessage}}
         </div>      

@@ -91,23 +91,25 @@ export class ResumeFormComponent implements OnInit {
 
   defaultResumeForm(): FormGroup {
     return this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)]],
+      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
+        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       phone: [''],
-      companyName: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      position: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      courses: [''],
-      familyState: ['', [Validators.minLength(2), Validators.maxLength(20)]],
+      companyName: ['', [Validators.minLength(1), Validators.maxLength(200)]],
+      position: ['', [Validators.minLength(1), Validators.maxLength(100)]],
+      familyState: ['', [Validators.minLength(1), Validators.maxLength(20)]],
       softSkills: [''],
       keySkills: [''],
-      linkedIn: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      gitHub: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      facebook: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      skype: ['', [Validators.minLength(2), Validators.maxLength(200)]],
+      courses: [''],
+      linkedIn: ['', [Validators.minLength(1), Validators.maxLength(200)]],
+      gitHub: ['', [Validators.minLength(1), Validators.maxLength(200)]],
+      facebook: ['', [Validators.minLength(1), Validators.maxLength(200)]],
+      skype: ['', [Validators.minLength(1), Validators.maxLength(200)]],
       workArea: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      birthDate: ['', [Validators.required]]
+      birthDate: ['', [Validators.required]],
+      introduction: ['', [Validators.minLength(1), Validators.maxLength(300)]],
     });
   }
 
@@ -127,6 +129,7 @@ export class ResumeFormComponent implements OnInit {
         companyName: 'SoftServe',
         position: '.NET DEVELOPER',
         courses: this.resume.courses,
+        introduction: this.resume.introduction,
         familyState: this.resume.familyState,
         softSkills: this.resume.softSkills,
         keySkills: this.resume.keySkills,
@@ -140,7 +143,7 @@ export class ResumeFormComponent implements OnInit {
       });
       // this.selectedWorkArea = this.workAreas[1];
       // this.selectedCity = this.cities[1];
-      this.birthDate = new Date();
+      this.birthDate = new Date(this.employee.birthDate);
       this.selectedShool1 = this.schools[1];
       this.selectedFaculty1 = this.faculties[1];
       this.edStartDate1 = new Date();
