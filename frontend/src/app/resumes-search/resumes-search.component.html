@@ -42,6 +42,6 @@
       </article>
     </div>
   </div>
-  <p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
+  <p-paginator #p class="paginator" [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
     [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 </div>

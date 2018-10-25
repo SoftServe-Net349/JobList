@@ -29,6 +29,7 @@ export class InvitationComponent implements OnInit {
 
     this.loadInvitations();
     this.subscribeToInvitationEvents();
+
   }
 
   loadInvitations(id: number = this.employeeId,
@@ -61,9 +62,31 @@ export class InvitationComponent implements OnInit {
 
     this.invitationHub.invitationReceived.subscribe((invitation: Invitation) => {
       this.invitationCounter ++;
-      this.invitations.unshift(invitation);
+
+      if (this.invitations) {
+
+        this.invitations.unshift(invitation);
+
+      } else {
+
+        this.invitations = [invitation];
+
+      }
     });
 
   }
 
+  acceptInvitation(id: number) {
+
+    this.invitationService.delete(id)
+    .subscribe(data => { this.loadInvitations(); });
+
+  }
+
+  rejectInvitation(id: number) {
+
+    this.invitationService.delete(id)
+    .subscribe(data => { this.loadInvitations(); });
+
+  }
 }

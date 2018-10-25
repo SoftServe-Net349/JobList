@@ -13,8 +13,8 @@ export class VacancyDetailsComponent implements OnInit {
   vacancy: Vacancy;
   display: Boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private vacancyService: VacancyService) {
-    this.vacancy = this.defaultVacany();
+  constructor(private activatedRoute: ActivatedRoute,
+              private vacancyService: VacancyService) {
   }
 
   ngOnInit() {
@@ -27,25 +27,6 @@ export class VacancyDetailsComponent implements OnInit {
   loadVacancyById(id: number = this.vacancy.id) {
     this.vacancyService.getById(id)
     .subscribe((data: Vacancy) => this.vacancy = data);
-  }
-
-  defaultVacany(): Vacancy {
-    return {
-      id: 0,
-      name: '',
-      description: '',
-      offering: '',
-      requirements: '',
-      bePlus: '',
-      isChecked: false,
-      salary: 0,
-      fullPartTime: '',
-      createDate: new Date(),
-      modDate: new Date(),
-      city: null,
-      recruiter: null,
-      workArea: null
-    };
   }
 
   showDialog() {

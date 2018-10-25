@@ -17,8 +17,8 @@
           <i class="fa fa-map-marker"></i>
           {{invitation.vacancy.city.name}}
         </p>
-        <button pButton type="button" (click)="visibleSidebar5 = false" label="Accept" class="ui-button-success"></button> 
-        <button pButton type="button" (click)="visibleSidebar5 = false" label="Reject" class="ui-button-secondary"></button>  
+        <button pButton type="button" (click)="acceptInvitation(invitation?.id)" label="Accept" class="ui-button-success"></button> 
+        <button pButton type="button" (click)="rejectInvitation(invitation?.id)" label="Reject" class="ui-button-secondary"></button>  
       </div>
       <div class="logo">
         <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png" [routerLink]="['/company-details/', invitation.vacancy.recruiter.company.id]" routerLinkActive="active">
