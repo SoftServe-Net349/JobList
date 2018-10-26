@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../shared/models/employee.model';
 import { WorkAreaService } from '../core/services/work-area.service';
@@ -29,6 +29,7 @@ import { Experience } from '../shared/models/experience.model';
   templateUrl: './resume-form.component.html',
   styleUrls: ['./resume-form.component.sass']
 })
+
 export class ResumeFormComponent implements OnInit {
   FormEducation: FormGroup;
   FormExperience: FormGroup;
@@ -85,7 +86,6 @@ export class ResumeFormComponent implements OnInit {
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadResumeById(id);
-      this.loadEducationPeriod(id);
       // this.loadExperience(id);
     });
 
@@ -136,17 +136,6 @@ export class ResumeFormComponent implements OnInit {
   loadResumeById(id: number) {
     this.resumeService.getById(id)
     .subscribe((data: Resume) => this.resume = data);
-  }
-
-  loadEducationPeriod(id: number) {
-    this.educationPeriodsService.getEducationPeriodByResumeId(id)
-    .subscribe((data: EducationPeriod[]) => this.educationPeriods = data
-  );
-  }
-
-  loadExperience(id: number) {
-    this.experienceService.getExperienceByResumeId(id)
-    .subscribe((data: Experience[]) => this.experience = data);
   }
 
   initEducation() {

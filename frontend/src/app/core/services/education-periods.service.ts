@@ -10,33 +10,27 @@ import { EducationPeriod } from '../../shared/models/education-period.model';
 export class EducationPeriodsService {
 
   private ctrlUrl = 'educationPeriods';
-constructor(private apiService: ApiService) {
-}
 
+  constructor(private apiService: ApiService) {}
 
+  getAll(): Observable<EducationPeriod[]> {
+      return this.apiService.get(`/${this.ctrlUrl}`);
+  }
 
-getAll(): Observable<EducationPeriod[]> {
-    return this.apiService.get(`/${this.ctrlUrl}`);
-}
+  getById(id: number): Observable<EducationPeriod> {
+    return this.apiService.get(`/${this.ctrlUrl}/${id}`);
+  }
 
-getEducationPeriodByResumeId(id: number): Observable<EducationPeriod[]> {
-  return this.apiService.get(`/${this.ctrlUrl}/resume/${id}`);
-}
+  create(request: EducationPeriodRequest): Observable<EducationPeriod> {
+    return this.apiService.post(`/${this.ctrlUrl}`, request);
+  }
 
+  update(id: number, request: EducationPeriodRequest): Observable<Object> {
+    return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
+  }
 
-getById(id: number): Observable<EducationPeriod> {
-  return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  delete(id: number): Observable<Object> {
+    return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
+  }
 
-create(request: EducationPeriodRequest): Observable<EducationPeriod> {
-  return this.apiService.post(`/${this.ctrlUrl}`, request);
-}
-
-update(id: number, request: EducationPeriodRequest): Observable<Object> {
-  return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
-}
-
-delete(id: number): Observable<Object> {
-  return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
-}
 }

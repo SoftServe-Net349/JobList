@@ -7,36 +7,31 @@ import { Experience } from '../../shared/models/experience.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ExperienceService {
 
   private ctrlUrl = 'experience';
-constructor(private apiService: ApiService) {
-}
 
+  constructor(private apiService: ApiService) {}
 
+  getAll(): Observable<Experience[]> {
+      return this.apiService.get(`/${this.ctrlUrl}`);
+  }
 
-getAll(): Observable<Experience[]> {
-    return this.apiService.get(`/${this.ctrlUrl}`);
-}
+  getById(id: number): Observable<Experience> {
+    return this.apiService.get(`/${this.ctrlUrl}/${id}`);
+  }
 
-getExperienceByResumeId(id: number): Observable<Experience[]> {
-  return this.apiService.get(`/${this.ctrlUrl}/resume/${id}`);
-}
+  create(request: ExperienceRequest): Observable<Experience> {
+    return this.apiService.post(`/${this.ctrlUrl}`, request);
+  }
 
+  update(id: number, request: ExperienceRequest): Observable<Object> {
+    return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
+  }
 
-getById(id: number): Observable<Experience> {
-  return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  delete(id: number): Observable<Object> {
+    return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
+  }
 
-create(request: ExperienceRequest): Observable<Experience> {
-  return this.apiService.post(`/${this.ctrlUrl}`, request);
-}
-
-update(id: number, request: ExperienceRequest): Observable<Object> {
-  return this.apiService.put(`/${this.ctrlUrl}/${id}`, request);
-}
-
-delete(id: number): Observable<Object> {
-  return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
-}
 }
