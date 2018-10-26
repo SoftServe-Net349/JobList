@@ -45,9 +45,7 @@ export class AuthorizationsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private authHelper: AuthHelper,
-              private cityService: CityService) {
-
-  }
+              private cityService: CityService) {}
 
   ngOnInit() {
 
@@ -60,8 +58,10 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   loadCities() {
+
     this.cityService.getAll()
     .subscribe((data: City[]) => this.cities = data);
+
   }
 
   getAuthoruzationForm(): FormGroup {
@@ -79,7 +79,7 @@ export class AuthorizationsComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
-        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       birthDate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -95,7 +95,7 @@ export class AuthorizationsComponent implements OnInit {
       companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       bossName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(254),
-        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       phone: [''],
       shortDescription: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
       site: ['', [Validators.minLength(3), Validators.maxLength(100),
@@ -151,6 +151,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   submitSignIn() {
+
     const request: LoginRequest = {
       email: this.authoruzationsForm.get('login').value,
       password: sha512_224(this.authoruzationsForm.get('password').value).toString()
@@ -197,14 +198,19 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   submitEmployeeSignUp() {
+
     const request: EmployeeRequest = this.getEmployeeRequest();
+
     this.authService.employeeSignUp(request).subscribe(
+
       (data: Employee) => {
         this.errorMessage = '';
         this.signUpEmployee = false;
         this.showSignIn('Employee', data.email); },
+
       error => { this.errorMessage = error.error; }
-      );
+    );
+
   }
 
   getEmployeeRequest(): EmployeeRequest {
@@ -257,13 +263,18 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   onUpload(event) {
+
     this.uploadedFile = event.files[0];
     const reader = new FileReader();
+
     reader.onload = () => {
      this.dataString = reader.result;
      this.base64 = this.dataString.toString().split(',')[1];
     };
+
     reader.readAsDataURL(this.uploadedFile);
     this.type = this.uploadedFile.type.toString().split('/')[1];
+
   }
+
 }

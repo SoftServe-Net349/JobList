@@ -85,7 +85,7 @@ export class RecruiterComponent implements OnInit {
       this.loadVacancies(this.recruiter.id, this.pageSize, this.pageNumber);
     } else {
       this.vacancyService
-      .getByRecruiterIdSearchStringWithPagination(this.recruiter.id,
+      .getFilteredVacancies(this.recruiter.id,
                                                 this.searchString,
                                                 this.pageSize,
                                                 this.pageNumber)
@@ -110,7 +110,7 @@ export class RecruiterComponent implements OnInit {
     if (this.searchString === '') {
       this.loadVacancies(this.recruiter.id, pageSize, this.pageNumber);
     } else {
-      this.vacancyService.getByRecruiterIdSearchStringWithPagination(this.recruiter.id, this.searchString, pageSize, this.pageNumber)
+      this.vacancyService.getFilteredVacancies(this.recruiter.id, this.searchString, pageSize, this.pageNumber)
         .subscribe((response) => {
           this.vacancies = response.body;
 
@@ -134,4 +134,5 @@ export class RecruiterComponent implements OnInit {
     this.router.navigate(['/company-details', id]);
 
   }
+
 }

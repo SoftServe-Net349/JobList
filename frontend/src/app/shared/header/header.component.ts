@@ -34,9 +34,7 @@ export class HeaderComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
               private authHelper: AuthHelper,
-              private jwtHelper: JwtHelperService) {
-
-  }
+              private jwtHelper: JwtHelperService) {}
 
   ngOnInit() {
 
@@ -144,4 +142,5 @@ export class HeaderComponent implements OnInit {
 
     }
   }
+
 }

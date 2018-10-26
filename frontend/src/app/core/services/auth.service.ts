@@ -15,11 +15,11 @@ import { RecruiterRequest } from '../../shared/models/recruiter-request.model';
 
 @Injectable()
 export class AuthService {
+
   constructor(private tokenService: TokenService,
               private employeeServise: EmployeeService,
               private recruiterService: RecruiterService,
-              private companyService: CompanyService) {
-  }
+              private companyService: CompanyService) {}
 
   employeeLogin(request: LoginRequest): Observable<Token> {
     return this.tokenService.getToken('employee', request);

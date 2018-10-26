@@ -31,9 +31,7 @@ export class CompanyComponent implements OnInit {
               private recruiterService: RecruiterService,
               private activatedRoute: ActivatedRoute,
               private confirmationService: ConfirmationService,
-              private _sanitizer: DomSanitizer) {
-
-  }
+              private _sanitizer: DomSanitizer) {}
 
   ngOnInit() {
 
@@ -53,8 +51,8 @@ export class CompanyComponent implements OnInit {
   }
 
   loadRecruiters(id: number = this.company.id,
-    pageSize: number = this.pageSize,
-    pageNumber: number = this.pageNumber) {
+                 pageSize: number = this.pageSize,
+                 pageNumber: number = this.pageNumber) {
 
     this.recruiterService.getByCompanyIdWithPagination(id, pageSize, pageNumber)
     .subscribe((response) => {
@@ -65,32 +63,36 @@ export class CompanyComponent implements OnInit {
         this.totalRecords = XPagination.TotalRecords;
       }
     });
+
   }
 
   deleteConfirm(id: number) {
 
     this.confirmationService.confirm({
-        message: 'Do you want to delete this record ?',
-        header: 'Delete Confirmation',
-        icon: 'pi pi-info-circle',
-        accept: () => { this.recruiterService.delete(id).subscribe(data => this.loadRecruiters()); }
+      message: 'Do you want to delete this record ?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => { this.recruiterService.delete(id).subscribe(data => this.loadRecruiters()); }
     });
 
   }
 
   search() {
+
     this.pageNumber = 1;
+
     if (this.searchString === '') {
+
       this.loadRecruiters(this.company.id, this.pageSize, this.pageNumber);
+
     } else {
-      this.recruiterService
-      .getByCompanyIdSearchStringWithPagination(this.company.id,
-                                                this.searchString,
-                                                this.pageSize,
-                                                this.pageNumber)
+
+      this.recruiterService.getFilteredRecruiters(this.company.id,
+                                                  this.searchString,
+                                                  this.pageSize,
+                                                  this.pageNumber)
       .subscribe((response) => {
         this.recruiters = response.body;
-
         const XPagination = JSON.parse(response.headers.get('X-Pagination'));
 
         if (XPagination !== null) {
@@ -99,17 +101,23 @@ export class CompanyComponent implements OnInit {
 
         this.recruitersPaginator.changePage(0);
       });
+
     }
+
   }
 
   paginate(event) {
+
     this.pageNumber = ++event.page;
     const pageSize = event.rows;
 
     if (this.searchString === '') {
+
       this.loadRecruiters(this.company.id, pageSize, this.pageNumber);
+
     } else {
-      this.recruiterService.getByCompanyIdSearchStringWithPagination(this.company.id, this.searchString, pageSize, this.pageNumber)
+
+      this.recruiterService.getFilteredRecruiters(this.company.id, this.searchString, pageSize, this.pageNumber)
         .subscribe((response) => {
           this.recruiters = response.body;
 
@@ -119,10 +127,13 @@ export class CompanyComponent implements OnInit {
             this.totalRecords = XPagination.TotalRecords;
           }
       });
+
     }
+
   }
 
   sanitizeCompanyImg(imageBase64): SafeUrl {
+
     if (this.company !== undefined && this.company.logoData !== undefined &&
         this.company.logoData !== null && this.company.logoData !== '') {
 
@@ -133,9 +144,11 @@ export class CompanyComponent implements OnInit {
       return '../../images/yourLogoHere.png';
 
     }
+
   }
 
   sanitizeRecruiterImg(imageBase64, recruiter: Recruiter): SafeUrl {
+
     if (this.recruiters !== undefined && recruiter.photoData !== undefined &&
           recruiter.photoData !== null && recruiter.photoData !== '') {
 
@@ -146,5 +159,7 @@ export class CompanyComponent implements OnInit {
       return '../../images/defaultUser.png';
 
     }
+
   }
+
 }
