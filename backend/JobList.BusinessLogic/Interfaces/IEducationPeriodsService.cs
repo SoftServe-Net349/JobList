@@ -13,6 +13,8 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<EducationPeriodDTO> CreateEntityAsync(EducationPeriodRequest modelRequest);
 
+        Task<IEnumerable<EducationPeriodDTO>> GetEducationPeriodsByResumeId(int id);
+
         Task<bool> UpdateEntityByIdAsync(EducationPeriodRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
