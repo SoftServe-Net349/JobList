@@ -93,7 +93,7 @@ namespace JobList.Controllers
 
                 if (dtos == null)
                 {
-                    return StatusCode(500);
+                    return StatusCode(500, "Sth went wrong. Please try again!");
                 }
 
                 return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);

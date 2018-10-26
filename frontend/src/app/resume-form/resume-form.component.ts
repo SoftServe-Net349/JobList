@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../shared/models/employee.model';
 import { WorkAreaService } from '../core/services/work-area.service';
@@ -35,7 +35,7 @@ export class ResumeFormComponent implements OnInit {
   resumeForm: FormGroup;
 
   display: Boolean = false;
-  action: String;
+  @Input() action: string;
 
   @Output() loadResume = new EventEmitter();
   employee: Employee;
@@ -81,6 +81,7 @@ export class ResumeFormComponent implements OnInit {
     this.loadCities();
     this.loadSchools();
     this.loadFaculties();
+
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadResumeById(id);
@@ -197,7 +198,7 @@ export class ResumeFormComponent implements OnInit {
     });
   }
 
-  showResumeForm(action: String, employee = null, resume = null) {
+  showResumeForm(action: string, employee = null, resume = null) {
     this.employee = employee;
     this.resume = resume;
     this.resumeForm.reset();

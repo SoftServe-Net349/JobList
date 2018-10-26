@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.Common.UrlQuery;
@@ -87,14 +88,20 @@ namespace JobList.Controllers
                     return Forbid();
                 }
             }
-
-            var dto = await _resumesService.GetEntityByIdAsync(id);
-            if (dto == null)
+            try
             {
-                return NotFound();
+                var dto = await _resumesService.GetEntityByIdAsync(id);
+                if (dto == null)
+                {
+                    return NotFound();
+                }
+                return Ok(dto);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            return Ok(dto);
         }
 
         // POST: /resumes

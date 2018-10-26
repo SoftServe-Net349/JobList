@@ -12,12 +12,12 @@
       <p><span>Family state: </span>{{resume?.familyState}}</p>
     </div>
     <div>
-      <button type="button" (click)="resumeForm.showResumeForm('Update', employee, resume)" pButton icon="pi pi-copy" label="Update CV"></button>
-      <app-resume-form #resumeForm></app-resume-form> 
+      <button type="button" (click)="resumeForm.showResumeForm(action, employee, resume)" pButton icon="pi pi-copy" [label]="action + ' CV'"></button>
+      <app-resume-form [action] = "action" #resumeForm></app-resume-form> 
     </div>
   </div>
 
-  <div class="resume-info">
+  <div class="resume-info" *ngIf="resume">
     <p-fieldset legend="Intro">
       <p>
         {{resume?.introduction}}
@@ -39,7 +39,7 @@
         <hr>    
       </div>
     </p-fieldset>
-    <p-fieldset legend="Experience">
+    <p-fieldset legend="Experience" >
       <div *ngFor="let exp of resume?.experiences">
         <p><span>Company Name: </span>{{exp.companyName}}</p>
         <p><span>Position: </span>{{exp.position}}</p>
