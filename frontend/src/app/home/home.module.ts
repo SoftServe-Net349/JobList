@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -12,6 +12,8 @@ import { ResumesSearchComponent } from '../resumes-search/resumes-search.compone
 import { CompanyDetailsComponent } from '../company-details/company-details.component';
 import { ResumeDetailsComponent } from '../resume-details/resume-details.component';
 import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.component';
+import { AdminAuthorizationComponent } from '../admin-authorization/admin-authorization.component';
+
 
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -48,7 +50,8 @@ import { CoreModule } from '../core/core.module';
     PaginatorModule,
     CoreModule,
     KeyFilterModule,
-    CalendarModule
+    CalendarModule,
+    ReactiveFormsModule
   ],
   declarations: [
     HomeComponent,
@@ -59,7 +62,8 @@ import { CoreModule } from '../core/core.module';
     ResumesSearchComponent,
     CompanyDetailsComponent,
     ResumeDetailsComponent,
-    VacancyDetailsComponent
+    VacancyDetailsComponent,
+    AdminAuthorizationComponent
   ]
 })
 export class HomeModule { }

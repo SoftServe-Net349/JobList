@@ -1,0 +1,23 @@
+<div class="wrap-login">
+    <form [formGroup]="authoruzationsForm" class="login-form" novalidate>
+        <span class="login-form-title">Welcome</span>
+        <span class="login-form-avatar">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Stevejobs.jpg" alt="AVATAR">
+        </span>
+        <div class="wrap-input"> 
+            <input type="text" placeholder="Username" pInputText formControlName="login" required>
+        </div>
+
+        <div class="wrap-input">
+            <input type="password" placeholder="Password" pPassword formControlName="password" required>
+        </div>
+        <button type="submit" (click)="submit()">Login</button>
+
+        <ul class="login-more">
+            <li>
+                <span class="txt1">Forget </span>
+                <a class="txt2" href="#">Password?</a>
+            </li>
+        </ul>
+    </form>
+</div>
