@@ -1,12 +1,29 @@
 <div id="vacancy-page" *ngIf="vacancy">
   <img class="vacancy-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png"
-   alt="Vacancy logo" [routerLink]="['/company-details/', vacancy?.recruiter?.company?.id]" routerLinkActive="active">
+   alt="Vacancy logo" (click)=companyDetails(vacancy?.recruiter?.company?.id) >
   <div class="wrapper-flex">
     <div class="additional-info">
       <h1>{{vacancy?.name}}</h1>
-      <h2>{{vacancy?.salary}} $</h2>
-      <h5>
-        <font color="grey">Posted </font>{{vacancy?.createDate | date}}
+      <h2 *ngIf="vacancy?.salary">{{vacancy?.salary}} $</h2>
+      <h3>
+          <span><i class="fa fa-map-marker" ></i>
+           </span>{{vacancy?.city?.name}}
+      </h3>
+      <h3 *ngIf="vacancy?.isChecked">
+          <span ><i class="fa fa-clock-o"></i> </span>{{vacancy?.fullPartTime}}
+      </h3>
+      <h3 *ngIf="vacancy?.isChecked">
+          <span class="checked"><i class="fa fa-check-circle-o"></i> Checked</span>
+      </h3>
+      <h3 *ngIf="!vacancy?.isChecked">
+            <span class="unchecked"><i class="fa fa-times-circle-o"></i> Unchecked</span>
+      </h3>
+     
+      <h5 *ngIf="vacancy?.modDate">
+         <span> {{vacancy?.modDate | date}}</span>
+      </h5>
+      <h5 *ngIf="!vacancy?.modDate">
+        <span> {{vacancy?.createDate | date}}</span>
       </h5>
       <hr>
 
@@ -23,52 +40,49 @@
     <button type="text" (click)="showDialog()" pButton icon="fa fa-file-text" label="Send my CV" style="height:35px"></button>
   </div>
   <div class="additional-info">
-    <h3>
-      <font color="grey"><i class="fa fa-bank" style="font-size: 0.9em"></i> Company: </font>{{vacancy?.recruiter?.company?.name}}
+      
+    <h3 class="link" (click)=companyDetails(vacancy?.recruiter?.company?.id) >
+     <span> <i class="fa fa-bank" ></i> Company: </span>{{vacancy?.recruiter?.company?.name}}
     </h3>
-    <h3>
-      <font color="grey"><i class="fa fa-map-marker" style="margin-right: 6px; margin-left: 3px; font-size: 1.1em"></i>
-        City: </font>{{vacancy?.city?.name}}
+    
+    <h3  class="link" (click)=recruiterDetails(vacancy?.recruiter?.id)>
+       <span><i class="fa fa-user"></i> Recruiter: </span>{{vacancy?.recruiter?.firstName}}
+        {{vacancy?.recruiter?.lastName}}
     </h3>
-    <h3>
-      <font color="grey"><i class="fa fa-user" style="margin-right: 5px; margin-left: 2px"></i> Recruiter: </font>{{vacancy?.recruiter?.firstName}}
-      {{vacancy?.recruiter?.lastName}}
+    <h3 >
+        <span><i class="fa fa-envelope"></i> Email: </span>
+         {{vacancy?.recruiter?.email}}
+     </h3>
+    <h3 *ngIf="vacancy?.recruiter?.company?.site"> 
+        <span><i class="fa fa-globe"></i> Web-site: </span><a
+        href={{vacancy?.recruiter?.company?.site}}>{{vacancy?.recruiter?.company?.site}}</a>
     </h3>
-    <h3>
-      <font color="grey"><i class="fa fa-globe" style="margin-right: 4px; margin-left: 1px"></i> Web-site: </font><a
-        href="www.softserveinc.com">{{vacancy?.recruiter?.company?.site}}</a>
-    </h3>
-    <h4 *ngIf="vacancy?.isChecked">
-      <font color="green"><i class="fa fa-check-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Checked</font>
-    </h4>
-    <h4 *ngIf="!vacancy?.isChecked">
-      <font color="red"><i class="fa fa-times-circle-o" style="margin-right: 4px; margin-left: 1px"></i> Unchecked</font>
-    </h4>
+   
   </div>
   <div class="additional-info">
-    <p-card title="About the vacancy" [style]="{width: '100%', 'margin-bottom':'20px'}">
+    <p-card title="About the vacancy">
       <div>
         <p>{{vacancy?.description}}</p>
       </div>
     </p-card>
-    <p-card title="Requirements" [style]="{width: '100%', 'margin-bottom':'20px'}">
+    <p-card title="Requirements">
       <ul>
         <li>
-          <p><i class="pi pi-check"></i> {{vacancy?.requirements}}</p>
+          <p>{{vacancy?.requirements}}</p>
         </li>
       </ul>
     </p-card>
-    <p-card title="Nice to have" [style]="{width: '100%', 'margin-bottom':'20px'}">
+    <p-card *ngIf="vacancy?.bePlus"title="Nice to have" >
       <ul>
         <li>
-          <p><i class="pi pi-check"></i>{{vacancy?.bePlus}}</p>
+          <p>{{vacancy?.bePlus}}</p>
         </li>
       </ul>
     </p-card>
-    <p-card title="We offer" [style]="{width: '100%', 'margin-bottom':'20px'}">
+    <p-card title="We offer" >
       <ul>
         <li>
-          <p><i class="pi pi-check"></i> {{vacancy?.offering}}</p>
+          <p>{{vacancy?.offering}}</p>
         </li>
       </ul>
     </p-card>
