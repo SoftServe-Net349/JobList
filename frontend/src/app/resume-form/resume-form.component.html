@@ -147,21 +147,21 @@
         </div>     
        <hr>
 
-        <h4 class="resume-title">Education</h4>
+    <div *ngFor="let ed of resume?.educationPeriods">
+        <h4 class="resume-title">Education </h4>
         <div class="ui-float-label education size-input">
-            <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="selectedShool1" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
-            <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="selectedFaculty1" [ngModelOptions]="{standalone: true}" placeholder="Select a Faculty"></p-dropdown>
+            <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="ed.school" [ngModelOptions]="{standalone: true}" placeholder="Select a School" ></p-dropdown>
+            <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="ed.faculty" [ngModelOptions]="{standalone: true}"
+                placeholder="Select a Faculty"></p-dropdown>
         </div>
         <div class="ui-float-label education size-input">
-            <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}"
-            placeholder="Start Date"></p-calendar>
-            <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}"
-            placeholder="Finish Date"></p-calendar>
-        </div>
-        <div class="ui-float-label">
-            <button pButton type="button" icon="pi pi-plus" label="Add School"></button>
-        </div>    
+                <p-calendar dateFormat="dd.mm.yy"  [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}"
+                placeholder="Start Date"></p-calendar>
+                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}"
+                placeholder="Finish Date"></p-calendar>
+            </div>
         <hr>
+    </div>
 
         <h4 class="resume-title">Experience</h4>
         <div class="size-input">

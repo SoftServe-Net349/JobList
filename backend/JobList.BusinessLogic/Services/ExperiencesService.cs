@@ -6,6 +6,7 @@ using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobList.BusinessLogic.Services
 {
@@ -66,6 +67,16 @@ namespace JobList.BusinessLogic.Services
             var dto = _mapper.Map<Experience, ExperienceDTO>(entity);
 
             return dto;
+        }
+
+        public async Task<IEnumerable<ExperienceDTO>> GetExperiencesByResumeId(int id)
+        {
+            var entities = await _uow.ExperiencesRepository.GetRangeAsync(filter: r => r.ResumeId == id,
+                  include: r => r.Include(v => v.Resume));
+            if (entities == null) return null;
+
+            var dtos = _mapper.Map<List<Experience>, List<ExperienceDTO>>(entities);
+            return dtos;
         }
 
         public async Task<bool> UpdateEntityByIdAsync(ExperienceRequest modelRequest, int id)

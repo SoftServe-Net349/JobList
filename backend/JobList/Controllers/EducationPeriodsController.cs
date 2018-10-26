@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
+
+
+
+
 namespace JobList.Controllers
 {
     [Route("api/[controller]")]
@@ -95,6 +99,17 @@ namespace JobList.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("resume/{id}")]
+        public virtual async Task<ActionResult<IEnumerable<EducationPeriodDTO>>> GetEducationPeriodsByResumeId(int id)
+        {
+            var dtos = await _educationPeriodsService.GetEducationPeriodsByResumeId(id);
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+            return Ok(dtos);
         }
 
         // DELETE: /educationPeriods/:id
