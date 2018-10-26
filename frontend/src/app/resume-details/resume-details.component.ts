@@ -36,9 +36,15 @@ export class ResumeDetailsComponent implements OnInit {
 
   getLanguages(): string {
     let languages = '';
-    this.resume.resumeLanguages.forEach(rl => {
-      languages =  rl.language.name + ', ' + languages;
-    });
-    return languages.slice(0, languages.length - 2); // to delete the last ,
+    if (this.resume && this.resume.resumeLanguages) {
+      this.resume.resumeLanguages.forEach(rl => {
+        languages =  rl.language.name + ', ' + languages;
+      });
+
+      return languages.slice(0, languages.length - 2); // to delete the last ,
+    }
+
+    return '';
   }
+
 }

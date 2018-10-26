@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { VacancyService } from '../core/services/vacancy.service';
 import { InvitationService } from '../core/services/invitation.service';
 import { AuthHelper } from '../shared/helpers/auth-helper';
 import { Router } from '@angular/router';
 import { InvitationRequest } from '../shared/models/invitation-request.model';
+import { MessageService, ConfirmationService, Message } from 'primeng/api';
+import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
+import { Paginator } from 'primeng/primeng';
 
 @Component({
   selector: 'app-vacancies-list',
   templateUrl: './vacancies-list.component.html',
-  styleUrls: ['./vacancies-list.component.sass']
+  styleUrls: ['./vacancies-list.component.sass'],
+  providers: [MessageService, ConfirmationService]
 })
 export class VacanciesListComponent implements OnInit {
 
   visibleSidebar = false;
-  display = false;
-  searchString = '';
+  searchedVacancy: Vacancy;
 
-  totalRecords = 0;
-  pageSize = 6;
-  pageNumber = 1;
+  totalRecords: number;
+  pagination: PaginationQuery = { pageSize: 6, pageNumber: 1};
+  placeholder = 'Enter vacancy name';
+  searchString = '';
+  suggestField = 'name';
 
   vacancies: Vacancy[];
   selectedVacancy: Vacancy;
@@ -27,26 +32,32 @@ export class VacanciesListComponent implements OnInit {
   uId = 0;
   employeeId: number;
 
+  msgs: Message[] = [];
+
+  @ViewChild('p') paginator: Paginator;
+
   constructor(private vacancyService: VacancyService,
               private authHelper: AuthHelper,
               private invitationService: InvitationService,
-              private router: Router) {
+              private router: Router,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService) {
 
     this.uId = +this.authHelper.getCurrentUser().id;
-
-              }
+  }
 
   ngOnInit() {
 
-    this.loadVacanciesByRecruiterId(this.uId);
+    this.loadVacanciesByRecruiterId();
 
   }
 
-  loadVacanciesByRecruiterId(id: number,
-    pageSize: number = this.pageSize,
-    pageNumber: number = this.pageNumber) {
+  loadVacanciesByRecruiterId() {
 
-      this.vacancyService.getByRecruiterIdWithPagination(id, pageSize, pageNumber)
+      this.vacancyService.getByRecruiterIdSearchStringWithPagination(this.uId,
+        this.searchString,
+        this.pagination.pageSize,
+        this.pagination.pageNumber)
       .subscribe((response) => {
         this.vacancies = response.body;
         const XPagination = JSON.parse(response.headers.get('X-Pagination'));
@@ -67,10 +78,10 @@ export class VacanciesListComponent implements OnInit {
 
   paginate(event) {
 
-    this.pageNumber = ++event.page;
+    this.pagination.pageNumber = ++event.page;
     const pageSize = event.rows;
 
-    this.loadVacanciesByRecruiterId(this.uId, pageSize, this.pageNumber);
+    this.loadVacanciesByRecruiterId();
 
   }
 
@@ -86,11 +97,18 @@ export class VacanciesListComponent implements OnInit {
 
   }
 
-  showConfirmDialog(vacancy: Vacancy) {
+  confirmDialog(vacancy: Vacancy) {
 
     this.selectedVacancy = vacancy;
-    this.display = true;
 
+    this.confirmationService.confirm({
+        message: 'Are you sure that you want to send this invitation?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.sendInvitation();
+        }
+    });
   }
 
   sendInvitation() {
@@ -99,11 +117,34 @@ export class VacanciesListComponent implements OnInit {
       employeeId: this.employeeId,
       vacancyId: this.selectedVacancy.id
     };
-    console.log(request);
 
     this.invitationService.create(request)
-    .subscribe(data => { this.display = false; alert('Sended'); });
+    .subscribe(data => { this.showSuccess(); });
 
   }
 
+  showSuccess() {
+    this.messageService.add({severity: 'success', summary: 'Success Message', detail: 'Invitation Sent'});
+  }
+
+  filterVacancies(event) {
+    this.searchString = event.query;
+    this.loadVacanciesByRecruiterId();
+
+    if (this.paginator.first !== 0) {
+        this.paginator.changePage(0);
+    }
+}
+
+  select(event) {
+    this.searchString = event.name;
+    this.vacancies = [];
+    this.vacancies[0] = event;
+    this.totalRecords = 1;
+  }
+
+  clear() {
+      this.searchString = '';
+      this.loadVacanciesByRecruiterId();
+  }
 }
