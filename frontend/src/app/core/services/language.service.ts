@@ -6,10 +6,10 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class LanguageService {
+
   private ctrlUrl = 'languages';
 
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Language[]> {
       return this.apiService.get(`/${this.ctrlUrl}`);
@@ -17,7 +17,7 @@ export class LanguageService {
 
   getById(id: number): Observable<Language> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   create(request: LanguageRequest): Observable<Language> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
@@ -30,4 +30,5 @@ export class LanguageService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

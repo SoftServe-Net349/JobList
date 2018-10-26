@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ResumesController : Controller
     {
@@ -105,7 +105,7 @@ namespace JobList.Controllers
         }
 
         // POST: /resumes
-        [Authorize(Roles = "employee, admin")]
+        [Authorize(Roles = "employee")]
         [HttpPost]
         public virtual async Task<ActionResult<ResumeDTO>> Create([FromBody] ResumeRequest request)
         {

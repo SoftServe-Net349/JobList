@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class InvitationsController : ControllerBase
     {

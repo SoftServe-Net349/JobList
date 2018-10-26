@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {throwError as observableThrowError,  Observable ,  BehaviorSubject } from 'rxjs';
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenService } from '../services/token.service';
 import { AuthHelper } from '../../shared/helpers/auth-helper';
@@ -9,12 +9,11 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtTokenInterceptor implements HttpInterceptor {
+
   constructor(private jwtHelper: JwtHelperService,
               private tokenService: TokenService,
               private authHelper: AuthHelper,
-              private router: Router) {
-
-  }
+              private router: Router) {}
 
   isRefreshingToken = false;
 
@@ -27,10 +26,11 @@ export class JwtTokenInterceptor implements HttpInterceptor {
       let token = localStorage.getItem('token');
       const currentUser = this.authHelper.getCurrentUser();
       const refreshToken =  this.authHelper.getRefreshToken();
+
       console.log('Adding token header| isRefreshingToken: ', this.isRefreshingToken);
 
       if (this.jwtHelper.isTokenExpired(token) && !this.isRefreshingToken) {
-        // renew token
+        // Refresh token
         this.isRefreshingToken = true;
 
         return this.tokenService.refreshToken(currentUser.role, {uId: +currentUser.id, refreshToken: refreshToken})
@@ -52,7 +52,9 @@ export class JwtTokenInterceptor implements HttpInterceptor {
 
           finalize(() => {
             this.isRefreshingToken = false;
+
             console.log('RefreshToken finalized| isRefreshingToken:', this.isRefreshingToken);
+
           })
 
         );
@@ -61,6 +63,7 @@ export class JwtTokenInterceptor implements HttpInterceptor {
     clone = this.cloneRequest(request, token);
 
     } else {
+
       console.log('Unathorized . isRefreshingToken: ', this.isRefreshingToken);
 
       clone = this.cloneRequest(request, undefined);
