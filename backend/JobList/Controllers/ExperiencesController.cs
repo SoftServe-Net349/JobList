@@ -70,6 +70,19 @@ namespace JobList.Controllers
             return CreatedAtAction("GetById", new { id = dtos.Id }, dtos);
         }
 
+        [HttpGet("{id}")]
+        [Authorize(Roles = "employee, admin")]
+        public virtual async Task<ActionResult<IEnumerable<ExperienceDTO>>> GetExperiencesByResumeId(int id)
+        {
+            var dtos = await _experiencesService.GetExperiencesByResumeId(id);
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+            return Ok(dtos);
+        }
+
+
         // PUT: /experiences/:id
         [Authorize(Roles = "employee, admin")]
         [HttpPut("{id}")]
