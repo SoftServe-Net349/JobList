@@ -2,8 +2,9 @@
 
 <div id="recruiter-page">
 	<div class="recruiter-info">
-		<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="recruiter logo" (click)="companyDetails(recruiter?.company?.id)">
-
+		<div class="image">
+		    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="recruiter logo" (click)="companyDetails(recruiter?.company?.id)">
+	    </div>
 		<div class="wrapper-grid">
 			<div>
 				<img class="recruiter-avatar" src="https://avatars0.githubusercontent.com/u/38991419?s=460&v=4" alt="Recruiter avatar">
@@ -13,7 +14,7 @@
 					<span>Name:</span> {{recruiter?.firstName}} {{recruiter?.lastName}}</p>
 				<p>
 					<span>Email:</span> {{recruiter?.email}}</p>
-				<p>
+				<p *ngIf="recruiter?.phone">
 					<span>Phone:</span> {{recruiter?.phone}}</p>
 			</div>
 			<div class="vacancy-modification">
@@ -45,7 +46,7 @@
 						<div class="vacancy">
 							<div class="inform">
 								<h3>
-									<a (click)="vacancyDetails(vacacy?.id)">{{vacancy.name}}</a>
+									<a (click)="vacancyDetails(vacancy.id)">{{vacancy.name}}</a>
 								</h3>
 								<p class="company-name" >
 									<a (click)="companyDetails(recruiter?.company?.id)">{{recruiter?.company?.name}}</a>

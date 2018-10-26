@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Vacancy } from '../shared/models/vacancy.model';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { VacancyService } from '../core/services/vacancy.service';
 
 @Component({
@@ -14,7 +14,8 @@ export class VacancyDetailsComponent implements OnInit {
   display: Boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private vacancyService: VacancyService) {
+              private vacancyService: VacancyService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -32,5 +33,14 @@ export class VacancyDetailsComponent implements OnInit {
   showDialog() {
     this.display = true;
   }
+  companyDetails(id: number) {
 
+    this.router.navigate(['/company-details', id]);
+
+  }
+  recruiterDetails(id: number) {
+
+    this.router.navigate(['/recruiters', id]);
+
+  }
 }
