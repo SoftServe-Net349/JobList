@@ -37,6 +37,8 @@ export class JobFiltersComponent implements OnInit {
   ngOnInit() {
     this.loadCompanies();
     this.loadWorkAreas();
+
+    this.checked = false;
   }
 
   loadCompanies() {
@@ -89,7 +91,7 @@ export class JobFiltersComponent implements OnInit {
       workArea: '',
       namesOfCompanies: [],
       typeOfEmployment: '',
-      isChecked: null,
+      isChecked: false,
       salary: 0,
       city: null,
       name: null
