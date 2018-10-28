@@ -4,12 +4,27 @@
         <span class="login-form-avatar">
             <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Stevejobs.jpg" alt="AVATAR">
         </span>
-        <div class="wrap-input"> 
-            <input type="text" placeholder="Username" pInputText formControlName="login" required>
+        <div class="error-message" *ngIf="errorMessage">
+            {{errorMessage}}
+        </div>
+        <div class="wrap-input">
+            <input type="text" placeholder="Login" pInputText formControlName="login" required>
+            <div *ngIf="authoruzationsForm.get('login').invalid && (authoruzationsForm.get('login').dirty || authoruzationsForm.get('login').touched)"
+                class="alert alert-danger">
+                <div *ngIf="authoruzationsForm.controls['login'].errors.required">
+                    Login is required
+                </div>
+            </div>
         </div>
 
         <div class="wrap-input">
             <input type="password" placeholder="Password" pPassword formControlName="password" required>
+            <div *ngIf="authoruzationsForm.get('password').invalid && (authoruzationsForm.get('password').dirty || authoruzationsForm.get('password').touched)"
+                class="alert alert-danger">
+                <div *ngIf="authoruzationsForm.controls['password'].errors.required">
+                    Password is required
+                </div>
+            </div>
         </div>
         <button type="submit" (click)="submit()">Login</button>
 
