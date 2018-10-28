@@ -6,6 +6,7 @@ using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobList.BusinessLogic.Services
 {

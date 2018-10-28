@@ -7,13 +7,13 @@ import { HttpResponse, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class InvitationService {
+
   private ctrlUrl = 'invitations';
 
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Invitation[]> {
-      return this.apiService.get(`/${this.ctrlUrl}`);
+    return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
   getById(id: number): Observable<Invitation> {
@@ -38,4 +38,5 @@ export class InvitationService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

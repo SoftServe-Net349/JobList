@@ -26,7 +26,7 @@ namespace JobList.DataAccess.Data
                 new City {Id = 3, Name = "Atlanta"},
                 new City {Id = 4, Name = "Los Angeles"},
                 new City {Id = 5, Name = "Boston"},
-                new City {Id = 6, Name = "Philadephia"},
+                new City {Id = 6, Name = "Philadelphia"},
                 new City {Id = 7, Name = "Seattle"},
                 new City {Id = 8, Name = "Washington DC"},
                 new City {Id = 9, Name = "Las Vegas"},
@@ -94,15 +94,101 @@ namespace JobList.DataAccess.Data
                 new Faculty{ Id = 10, Name = "Journalism"}
             };
 
-            var employee = new Employee { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "M", BirthDate = new DateTime(1995, 8, 3), Email = "andr@gmail.com", Password = "qwerty", RoleId = 2, CityId = 8 };
-            var resume = new Resume { Id = 46, WorkAreaId = 3, Courses = "Certification training", CreateDate = new DateTime(2018, 4, 5), KeySkills = "hardworking, persuasive", SoftSkills = "plastic surgery", Facebook = "www.facebook.com", FamilyState = "not married", Introduction = "Hello!" };
+            var employee = new Employee { Id = 46, FirstName = "Andrew", LastName = "Felton", Phone = "0502758765", Sex = "m", BirthDate = new DateTime(1995, 8, 3), Email = "employee@gmail.com", Password = "CdMwWKQ0n40R4dK/zsjIx0XhXdgxXCcyJfbbuViFMJC2mVik", RoleId = 2, CityId = 8 };
+            var resume = new Resume
+            {
+                Id = 46,
+                WorkAreaId = 3,
+                Courses = "Certification training",
+                CreateDate = new DateTime(2018, 4, 5),
+                KeySkills = "Hardworking, persuasive",
+                SoftSkills = "Plastic surgery",
+                Facebook = "www.facebook.com",
+                FamilyState = "not married",
+                Introduction = "Persuasive person with strong desire to work",
+                Linkedin = "https://www.linkedin.com/",
+                Instagram = "https://www.instagram.com/",
+                Skype = "https://www.skype.com/",
+                Github = "https://www.github.com/"
+                ,
+                Position = "Surgeon"
+            };
+
             var resume_language1 = new ResumeLanguage { Id = 111, ResumeId = 46, LanguageId = 10 };
             var resume_language2 = new ResumeLanguage { Id = 112, ResumeId = 46, LanguageId = 5 };
             var resume_language3 = new ResumeLanguage { Id = 113, ResumeId = 46, LanguageId = 7 };
-            var experience = new Experience { Id = 65, ResumeId = 46, CompanyName = "Triomed", Position = "Surgeon", StartDate = new DateTime(2008, 12, 25), FinishDate = new DateTime(2018, 9, 5) };
+            var experience1 = new Experience { Id = 65, ResumeId = 46, CompanyName = "Triomed", Position = "Surgeon", StartDate = new DateTime(2008, 12, 25), FinishDate = new DateTime(2016, 9, 5) };
+            var experience2 = new Experience { Id = 66, ResumeId = 46, CompanyName = "Medis", Position = "Surgeon", StartDate = new DateTime(2016, 12, 25), FinishDate = new DateTime(2018, 9, 5) };
+            var experience3 = new Experience { Id = 67, ResumeId = 46, CompanyName = "Synevo", Position = "Surgeon", StartDate = new DateTime(2018, 9, 5), FinishDate = new DateTime(2018, 9, 10) };
             var school1 = new EducationPeriod { Id = 111, ResumeId = 46, SchoolId = 8, FacultyId = 4, StartDate = new DateTime(2002, 12, 3), FinishDate = new DateTime(2005, 6, 14) };
             var school2 = new EducationPeriod { Id = 112, ResumeId = 46, SchoolId = 5, FacultyId = 2, StartDate = new DateTime(2004, 8, 13), FinishDate = new DateTime(2007, 1, 15) };
 
+
+            var company = new Company
+            {
+                Id = 11111,
+                Name = "SoftServe",
+                BossName = "Taras Kytsmey",
+                FullDescription = "At SoftServe, we strive to make the world a better place. Our Corporate Social Responsibility program ensures a sustainable future for our associates, our company, and the communities in which we live and work across the globe. The key to fulfilling this mission is our responsibility towards customers, associates, and society. We are committed to addressing various economic, social, and environmental issues.",
+                ShortDescription = "Build you career here",
+                Address = "2D Sadova Street Lviv",
+                Phone = "0322409090",
+                Site = "https://softserveinc.com/en-us/",
+                Email = "company@gmail.com",
+                RoleId = 3,
+                Password = "CdMwWKQ0n40R4dK/zsjIx0XhXdgxXCcyJfbbuViFMJC2mVik"
+            };
+            var recruiter = new Recruiter
+            {
+                Id = 11111,
+                FirstName = "Kate",
+                LastName = "Janner",
+                Phone = "0934561223",
+                Email = "recruiter@gmail.com",
+                Password = "CdMwWKQ0n40R4dK/zsjIx0XhXdgxXCcyJfbbuViFMJC2mVik",
+                CompanyId = 11111,
+                RoleId = 4
+            };
+
+            var fullVacancy1 = new Vacancy
+            {
+                Id = 11111,
+                Name = ".Net Developer",
+                Description = "Client: is a European company, one of the industry leaders in transport and traffic solutions. It develops innovative systems for parking automation, traffic lights navigation, public transport management and data streams for autonomous vehicles." +
+                "If you want to take part in developing solutions which power the transport of the future — it’s a good project for you.",
+                Requirements = "Minimal 3 year experience in .NET web/API development (preferably .NET core). " +
+                "Good knowledge of SQL(MySQL / PostgreSQL). " +
+                "Being capable to do some front-end tasks. ",
+                BePlus = "Experience with Angular JS. " +
+               "Experience in setting up CI / CD. " +
+               "English: intermediate or higher.",
+                IsChecked = true,
+                Offering = "Working in friendly successful team. Ability to grow in professional area.",
+                Salary = 5000,
+                FullPartTime = "Part-time",
+                CreateDate = new DateTime(2018, 10, 10),
+                RecruiterId = 11111,
+                CityId = 5,
+                WorkAreaId = 1
+            };
+            var fullVacancy2 = new Vacancy
+            {
+                Id = 11112,
+                Name = " Project Manager",
+                Description = "The Project Manager manages key client projects. Project management responsibilities include the coordination and completion of projects on time within budget and within scope.Prepare reports for upper management regarding status of project.",
+                Requirements = "Proven working experience in project management. " +
+                "Excellent client - facing and internal communication skill. " +
+                "Strong working knowledge of Microsoft Office.",
+                BePlus = "Project Management Professional(PMP) / PRINCE II certification ",
+                Offering = "Working in friendly successful team. Ability to grow in professional area.",
+                IsChecked = false,
+                Salary = 1000,
+                FullPartTime = "Full-time",
+                CreateDate = new DateTime(2018, 10, 20),
+                RecruiterId = 11111,
+                CityId = 5,
+                WorkAreaId = 1
+            };
 
             var companyFaker = new Faker<Company>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)
@@ -117,7 +203,8 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.Password, f => f.Internet.Password())
                 .RuleFor(o => o.RoleId, f => roles[2].Id);
 
-            var companies = companyFaker.Generate(amount).ToArray();
+            var companies = companyFaker.Generate(amount + 1).ToArray();
+            companies[amount] = company;
 
 
             var recruiterFaker = new Faker<Recruiter>()
@@ -130,7 +217,8 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.CompanyId, f => f.PickRandom(companies).Id)
                 .RuleFor(o => o.RoleId, f => roles[3].Id);
 
-            var recruiters = recruiterFaker.Generate(amount).ToArray();
+            var recruiters = recruiterFaker.Generate(amount + 1).ToArray();
+            recruiters[amount] = recruiter;
 
 
             var vacancyFaker = new Faker<Vacancy>()
@@ -149,7 +237,9 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id)
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var vacancies = vacancyFaker.Generate(amount).ToArray();
+            var vacancies = vacancyFaker.Generate(amount + 2).ToArray();
+            vacancies[amount - 1] = fullVacancy1;
+            vacancies[amount] = fullVacancy2;
 
 
             var employeeFaker = new Faker<Employee>()
@@ -201,8 +291,11 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.FinishDate, new DateTime(2017, 3, 4))
                 .RuleFor(o => o.ResumeId, f => f.PickRandom(fakeResumes).Id);
 
-            var experiences = experienceFaker.Generate(amount + 1).ToArray();
-            experiences[10] = experience;
+            var experiences = experienceFaker.Generate(amount + 3).ToArray();
+            experiences[10] = experience1;
+            experiences[11] = experience2;
+            experiences[12] = experience3;
+
 
 
 

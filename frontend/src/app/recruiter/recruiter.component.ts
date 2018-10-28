@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Recruiter } from '../shared/models/recruiter.model';
 import { ConfirmationService } from 'primeng/api';
 import { RecruiterService } from '../core/services/recruiter.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { VacancyService } from '../core/services/vacancy.service';
 import { Vacancy } from '../shared/models/vacancy.model';
 import { Paginator } from 'primeng/paginator';
@@ -35,7 +35,8 @@ export class RecruiterComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private recruiterService: RecruiterService,
     private vacancyService: VacancyService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
 
     }
 
@@ -84,7 +85,7 @@ export class RecruiterComponent implements OnInit {
       this.loadVacancies(this.recruiter.id, this.pageSize, this.pageNumber);
     } else {
       this.vacancyService
-      .getByRecruiterIdSearchStringWithPagination(this.recruiter.id,
+      .getFilteredVacancies(this.recruiter.id,
                                                 this.searchString,
                                                 this.pageSize,
                                                 this.pageNumber)
@@ -109,7 +110,7 @@ export class RecruiterComponent implements OnInit {
     if (this.searchString === '') {
       this.loadVacancies(this.recruiter.id, pageSize, this.pageNumber);
     } else {
-      this.vacancyService.getByRecruiterIdSearchStringWithPagination(this.recruiter.id, this.searchString, pageSize, this.pageNumber)
+      this.vacancyService.getFilteredVacancies(this.recruiter.id, this.searchString, pageSize, this.pageNumber)
         .subscribe((response) => {
           this.vacancies = response.body;
 
@@ -121,4 +122,17 @@ export class RecruiterComponent implements OnInit {
       });
     }
   }
+
+  vacancyDetails(id: number) {
+
+    this.router.navigate(['/vacancy-details', id]);
+
+  }
+
+  companyDetails(id: number) {
+
+    this.router.navigate(['/company-details', id]);
+
+  }
+
 }
