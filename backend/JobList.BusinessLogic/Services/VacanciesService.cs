@@ -153,7 +153,7 @@ namespace JobList.BusinessLogic.Services
                 filter = filter.And(e => vacancyUrlQuery.NamesOfCompanies
                         .Contains(e.Recruiter.Company.Name));
             }
-            if (vacancyUrlQuery.IsChecked.Value)
+            if (vacancyUrlQuery.IsChecked.HasValue && vacancyUrlQuery.IsChecked.Value)
             {
                 filter = filter.And(е => е.IsChecked == vacancyUrlQuery.IsChecked);
             }
@@ -161,7 +161,7 @@ namespace JobList.BusinessLogic.Services
             {
                 filter = filter.And(е => е.FullPartTime == vacancyUrlQuery.TypeOfEmployment);
             }
-            if (vacancyUrlQuery.Salary.Value != 0)
+            if (vacancyUrlQuery.Salary.HasValue && vacancyUrlQuery.Salary.Value != 0)
             {
                 filter = filter.And(е => е.Salary >= vacancyUrlQuery.Salary.Value);
             }

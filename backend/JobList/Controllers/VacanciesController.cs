@@ -54,7 +54,8 @@ namespace JobList.Controllers
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(
             [FromQuery]VacancyUrlQuery vacancyUrlQuery = null, 
-            [FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null, 
+            [FromQuery]SearchingUrlQuery searchingUrlQuery = null, 
+            [FromQuery]SortingUrlQuery sortingUrlQuery = null, 
             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
             var dtos = await _vacanciesService.GetFilteredEntitiesAsync(vacancyUrlQuery, searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
@@ -75,6 +76,7 @@ namespace JobList.Controllers
 
             return Ok(dtos);
         }
+
         [AllowAnonymous]
         [HttpGet("recruiter/{id}/filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(int id, string searchString, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)

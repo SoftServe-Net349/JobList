@@ -98,42 +98,7 @@ namespace JobList.BusinessLogic.Services
 
         public async Task<IEnumerable<ResumeDTO>> GetFilteredEntitiesAsync(ResumeUrlQuery resumeUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null)
         {
-            Expression<Func<Resume, bool>> filter = e => true;
-
-            if(resumeUrlQuery.Position != null)
-            {
-                filter = filter.And(r => r.Position
-                    .Contains(resumeUrlQuery.Position));
-            }
-
-            if(resumeUrlQuery.WorkArea != null)
-            {
-                filter = filter.And(r => r.WorkArea.Name == resumeUrlQuery.WorkArea);
-            }
-            if(resumeUrlQuery.City != null)
-            {
-                filter = filter.And(r => r.Employee.City.Name == resumeUrlQuery.City);
-            }
-            if(resumeUrlQuery.StartAge.Value >= 0 && resumeUrlQuery.FinishAge.Value > 0)
-            {
-                filter = filter.And(r => (DateTime.Now - r.Employee.BirthDate).Days / 365 > resumeUrlQuery.StartAge && 
-                                         (DateTime.Now - r.Employee.BirthDate).Days / 365 < resumeUrlQuery.FinishAge);
-            }
-            if(resumeUrlQuery.Languages != null)
-            {
-                filter = filter.And(r => r.ResumeLanguages
-                    .Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name)));
-            }
-            if(resumeUrlQuery.Schools != null)
-            {
-                filter = filter.And(r => r.EducationPeriods
-                    .Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name)));
-            }
-            if(resumeUrlQuery.Faculties != null)
-            {
-                filter = filter.And(r => r.EducationPeriods
-                    .Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name)));
-            }
+            var filter = GetFilter(resumeUrlQuery);
 
             var resumes = await _uow.ResumesRepository.GetRangeAsync(
                 include: r => r.Include(o => o.Employee).ThenInclude(u => u.City)
@@ -149,6 +114,49 @@ namespace JobList.BusinessLogic.Services
 
             return dtos;
         }
+
+        private Expression<Func<Resume, bool>> GetFilter(ResumeUrlQuery resumeUrlQuery)
+        {
+            Expression<Func<Resume, bool>> filter = e => true;
+
+            if (!string.IsNullOrEmpty(resumeUrlQuery.Position))
+            {
+                filter = filter.And(r => r.Position
+                    .Contains(resumeUrlQuery.Position));
+            }
+
+            if (!string.IsNullOrEmpty(resumeUrlQuery.WorkArea))
+            {
+                filter = filter.And(r => r.WorkArea.Name == resumeUrlQuery.WorkArea);
+            }
+            if (!string.IsNullOrEmpty(resumeUrlQuery.City))
+            {
+                filter = filter.And(r => r.Employee.City.Name == resumeUrlQuery.City);
+            }
+            if (resumeUrlQuery.StartAge.Value >= 0 && resumeUrlQuery.FinishAge.Value > 0)
+            {
+                filter = filter.And(r => (DateTime.Now - r.Employee.BirthDate).Days / 365 > resumeUrlQuery.StartAge &&
+                                         (DateTime.Now - r.Employee.BirthDate).Days / 365 < resumeUrlQuery.FinishAge);
+            }
+            if (resumeUrlQuery.Languages != null)
+            {
+                filter = filter.And(r => r.ResumeLanguages
+                    .Any(rl => resumeUrlQuery.Languages.Contains(rl.Language.Name)));
+            }
+            if (resumeUrlQuery.Schools != null)
+            {
+                filter = filter.And(r => r.EducationPeriods
+                    .Any(ep => resumeUrlQuery.Schools.Contains(ep.School.Name)));
+            }
+            if (resumeUrlQuery.Faculties != null)
+            {
+                filter = filter.And(r => r.EducationPeriods
+                    .Any(ep => resumeUrlQuery.Faculties.Contains(ep.Faculty.Name)));
+            }
+
+            return filter;
+        }
+
 
         public async Task<ResumeDTO> GetEntityByIdAsync(int id)
         {

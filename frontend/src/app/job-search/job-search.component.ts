@@ -79,7 +79,7 @@ export class JobSearchComponent implements OnInit {
     this.param.isChecked = param.isChecked !== false ? true : false;
     this.param.salary = param.salary !== null ? param.salary : this.param.salary;
 
-    this.isButtonReset = param.namesOfCompanies.length !== 0 || param.workArea !== '';
+    this.isButtonReset = this.param.namesOfCompanies.length !== 0 || this.param.workArea !== '';
 
     this.loadVacancies();
 
