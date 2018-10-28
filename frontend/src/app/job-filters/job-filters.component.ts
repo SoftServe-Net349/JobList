@@ -66,6 +66,10 @@ export class JobFiltersComponent implements OnInit {
     this.selectedCompanies.splice(index, 1);
   }
 
+  resetEmployment() {
+    this.selectedTypeOfEmployment = null;
+  }
+
   filter() {
     this.filteredVacancies.emit({
       workArea: this.selectedWorkArea === undefined || this.selectedWorkArea === null ? '' : this.selectedWorkArea.name,

@@ -1,5 +1,5 @@
 <div class="jobsearch">
-  <app-search-line [searchString]="param.name" [cityName]="param.city"  (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
+  <app-search-line [searchString]="param.name" [cityName]="param.city" (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
 
   <div class="searchlabels">
     <span *ngIf="param.workArea !== ''" class="searchlabels-label">
@@ -12,6 +12,12 @@
       <p class="searchlabels-label-txt">
         <span>{{company}}</span>
         <i class="fa fa-times" (click)="resetCompany(i)"></i>
+      </p>
+    </span>
+    <span *ngIf="param.typeOfEmployment !== ''" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{param?.typeOfEmployment}}</span>
+        <i class="fa fa-times" (click)="resetEmployment()"></i>
       </p>
     </span>
 

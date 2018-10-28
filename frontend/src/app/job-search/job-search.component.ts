@@ -79,7 +79,8 @@ export class JobSearchComponent implements OnInit {
     this.param.isChecked = param.isChecked !== false ? true : false;
     this.param.salary = param.salary !== null ? param.salary : this.param.salary;
 
-    this.isButtonReset = this.param.namesOfCompanies.length !== 0 || this.param.workArea !== '';
+    this.isButtonReset = this.param.namesOfCompanies.length !== 0 || this.param.workArea !== '' ||
+                         this.param.typeOfEmployment !== '';
 
     this.loadVacancies();
 
@@ -97,6 +98,11 @@ export class JobSearchComponent implements OnInit {
     const company = this.param.namesOfCompanies[index];
 
     this.jobFilters.resetCompany(company);
+    this.jobFilters.filter();
+  }
+
+  resetEmployment() {
+    this.jobFilters.resetEmployment();
     this.jobFilters.filter();
   }
 
