@@ -6,13 +6,15 @@ import { AdminVacanciesComponent } from './admin-vacancies/admin-vacancies.compo
 import { AdminRecruitersComponent } from './admin-recruiters/admin-recruiters.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
+import { AuthGuard } from '../core/guards/auth.guard';
+import { AdminGuard } from '../core/guards/admin.guard';
 
 const childRoutes: Routes = [
-  { path: 'admin-employees', component: AdminEmployeesComponent },
-  { path: 'admin-companies', component: AdminCompaniesComponent },
-  { path: 'admin-vacancies', component: AdminVacanciesComponent },
-  { path: 'admin-recruiters', component: AdminRecruitersComponent },
-  { path: 'admin-dashboard', component: AdminDashboardComponent }
+  { path: 'admin-employees', component: AdminEmployeesComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-companies', component: AdminCompaniesComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-vacancies', component: AdminVacanciesComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-recruiters', component: AdminRecruitersComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard] }
 ];
 
 const routes: Routes = [

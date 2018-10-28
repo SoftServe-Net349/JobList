@@ -10,18 +10,20 @@ import { HomeComponent } from './home.component';
 import { MainSearchComponent } from './main-search/main-search.component';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { CompanyRecruiterAdminGuard } from '../core/guards/company-recruiter-admin.guard';
+import { AdminAuthorizationComponent } from '../admin-authorization/admin-authorization.component';
 
 const childRoutes: Routes = [
-  { path: '', component: MainSearchComponent, pathMatch: 'full'},
-  { path: 'jobsearch', component: JobSearchComponent},
+  { path: '', component: MainSearchComponent, pathMatch: 'full' },
+  { path: 'jobsearch', component: JobSearchComponent },
   { path: 'resumessearch', component: ResumesSearchComponent, canActivate: [AuthGuard, CompanyRecruiterAdminGuard] },
-  { path: 'company-details/:id', component: CompanyDetailsComponent},
+  { path: 'company-details/:id', component: CompanyDetailsComponent },
   { path: 'resume-details/:id', component: ResumeDetailsComponent, canActivate: [AuthGuard, CompanyRecruiterAdminGuard] },
-  { path: 'vacancy-details/:id', component: VacancyDetailsComponent}
+  { path: 'vacancy-details/:id', component: VacancyDetailsComponent },
+  { path: 'admin', component: AdminAuthorizationComponent }
 ];
 
 const routes: Routes = [
-  {path: '', component: HomeComponent, children: childRoutes}
+  { path: '', component: HomeComponent, children: childRoutes }
 ];
 
 @NgModule({

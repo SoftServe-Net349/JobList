@@ -1,5 +1,29 @@
 <div class="jobsearch">
-  <app-search-line [searchString]="param.name" [cityName]="param.city"  (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
+  <app-search-line [searchString]="param.name" [cityName]="param.city" (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
+
+  <div class="searchlabels">
+    <span *ngIf="param.workArea !== ''" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{param?.workArea}}</span>
+        <i class="fa fa-times" (click)="resetWorkArea()"></i>
+      </p>
+    </span>
+    <span *ngFor="let company of param.namesOfCompanies; let i = index" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{company}}</span>
+        <i class="fa fa-times" (click)="resetCompany(i)"></i>
+      </p>
+    </span>
+    <span *ngIf="param.typeOfEmployment !== ''" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{param?.typeOfEmployment}}</span>
+        <i class="fa fa-times" (click)="resetEmployment()"></i>
+      </p>
+    </span>
+
+    <button *ngIf="isButtonReset" pButton type="button" label="Reset All" (click)="resetAll()" class="searchlabels-button"></button>
+  </div>
+
   <div class="container">
     <div class="filter-container">
       <app-job-filters [companyName]="param.namesOfCompanies[0]" (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
@@ -32,6 +56,6 @@
     </div>
   </div>
 
-  <p-paginator #p [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
+  <p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
     [rowsPerPageOptions]="[2, 4, 6]"></p-paginator>
 </div>

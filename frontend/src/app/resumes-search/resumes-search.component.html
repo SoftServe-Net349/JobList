@@ -5,7 +5,7 @@
     <span *ngIf="param.workArea !== ''" class="searchlabels-label">
       <p class="searchlabels-label-txt">
         <span>{{param?.workArea}}</span>
-        <i class="fa fa-times" (click)="resetWorkArea(param.workArea)"></i>
+        <i class="fa fa-times" (click)="resetWorkArea()"></i>
       </p>
     </span>
     <span *ngFor="let language of param.languages; let i = index" class="searchlabels-label">

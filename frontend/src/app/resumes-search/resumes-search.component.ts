@@ -29,15 +29,15 @@ export class ResumesSearchComponent implements OnInit {
 
   @ViewChild(CompanyFiltersComponent) companyFilters: CompanyFiltersComponent;
 
-
   constructor(private resumeService: ResumeService,
               private _sanitizer: DomSanitizer) {
 
-    this.totalRecords = 0;
 
     this.resumes = [];
     this.param = this.getDefaultParam();
+
     this.pagination = this.getDefaultPaginationParam();
+    this.totalRecords = 0;
 
     this.isButtonReset = false;
   }
@@ -76,8 +76,8 @@ export class ResumesSearchComponent implements OnInit {
     this.param.finishAge = param.finishAge !== null ? param.finishAge : this.param.finishAge;
     this.param.languages = param.languages !== null ? param.languages : this.param.languages;
 
-    this.isButtonReset = param.languages.length !== 0 || param.schools.length !== 0 ||
-                         param.faculties.length !== 0 || param.workArea !== '';
+    this.isButtonReset = this.param.languages.length !== 0 || this.param.schools.length !== 0 ||
+                         this.param.faculties.length !== 0 || this.param.workArea !== '';
 
     this.loadResumes();
 
