@@ -94,7 +94,7 @@
 			<h4 class="info-title">Description<span class="required-input-symbol">*</span></h4>
 			<div class="description-area">
 				<textarea [rows]="5" pDescription style="resize:none" formControlName="fullDescription"></textarea>
-				<div *ngIf="companyInfoForm.get('fullDescription').invalid &&
+				<div *ngIf="companyInfoForm.get('fullDescription').invalid && 
 										(companyInfoForm.get('fullDescription').dirty || companyInfoForm.get('fullDescription').touched)"
 				 class="alert alert-danger">
 
@@ -108,7 +108,7 @@
 			<h4 class="info-title">Web Site</h4>
 			<div class="ui-float-label">
 				<input id="webSite" type="text" pInputText formControlName="site">
-				<div *ngIf="companyInfoForm.get('site').invalid &
+				<div *ngIf="companyInfoForm.get('site').invalid && 
 										(companyInfoForm.get('site').dirty || companyInfoForm.get('site').touched)" class="alert alert-danger">
 					<div *ngIf="companyInfoForm.controls['site'].errors.minlength || companyInfoForm.controls['site'].errors.maxlength">
 						Web site should contain (3-100) chars
