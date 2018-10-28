@@ -10,15 +10,7 @@
         <p><span>Phone: </span>{{resume?.employee?.phone}}</p>
         <p><span>Family state: </span>{{resume?.familyState}}</p>
         </div>
-        <p-dialog header="Message" [(visible)]="display" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200" [minY]="70" 
-            [maximizable]="false" [baseZIndex]="10000" showHeader="false">
-            <span>Do you really want to send the invitation?</span>
-            <p-footer>
-                <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
-                <button type="button" pButton icon="pi pi-times" (click)="display=false" label="No" class="ui-button-secondary"></button>
-            </p-footer>
-        </p-dialog>
-        <button type="button" (click)="showDialog()" pButton icon="pi pi-copy" label="Send invitation"></button>
+        <button type="button" (click)="vacanciesList.showSideBar(resume?.id)" pButton icon="pi pi-copy" label="Send invitation"></button>
     </div>
     <div class="additional-info">
         <p-fieldset legend="Intro">
@@ -70,3 +62,5 @@
         </p-fieldset>    
     </div>     
 </div>
+
+<app-vacancies-list #vacanciesList></app-vacancies-list>

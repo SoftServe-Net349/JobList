@@ -11,10 +11,10 @@ import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Injectable()
 export class EmployeeService {
+
   private ctrlUrl = 'employees';
 
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Employee[]> {
     return this.apiService.get(`/${this.ctrlUrl}`);
@@ -48,4 +48,5 @@ export class EmployeeService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

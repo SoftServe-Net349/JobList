@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class SchoolService {
+
   private ctrlUrl = 'schools';
 
   constructor(private apiService: ApiService) {
@@ -17,7 +18,7 @@ export class SchoolService {
 
   getById(id: number): Observable<School> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   create(request: SchoolRequest): Observable<School> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
@@ -30,4 +31,5 @@ export class SchoolService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

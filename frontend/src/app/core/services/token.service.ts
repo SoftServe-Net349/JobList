@@ -7,6 +7,7 @@ import { RefreshTokenRequest } from '../../shared/models/refresh-token-request.m
 
 @Injectable()
 export class TokenService {
+
   private ctrlUrl = 'tokens';
 
   constructor(private apiService: ApiService) {

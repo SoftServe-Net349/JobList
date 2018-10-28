@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SchoolsController : Controller
     {

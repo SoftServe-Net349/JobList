@@ -8,10 +8,9 @@ using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EducationPeriodsController : Controller
     {

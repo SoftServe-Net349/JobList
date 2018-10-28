@@ -15,7 +15,7 @@ using JobList.Common.UrlQuery;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EmployeesController : Controller
     {

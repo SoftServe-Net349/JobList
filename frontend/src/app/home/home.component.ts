@@ -20,5 +20,4 @@ export class HomeComponent implements OnInit {
       this.isShow = false;
     }
   }
-
 }

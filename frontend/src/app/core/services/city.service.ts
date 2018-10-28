@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class CityService {
+
   private ctrlUrl = 'cities';
 
   constructor(private apiService: ApiService) {
@@ -17,7 +18,7 @@ export class CityService {
 
   getById(id: number): Observable<City> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   create(request: CityRequest): Observable<City> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
@@ -30,4 +31,5 @@ export class CityService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

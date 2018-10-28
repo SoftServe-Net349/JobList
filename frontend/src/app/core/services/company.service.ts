@@ -11,10 +11,10 @@ import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 
 @Injectable()
 export class CompanyService {
+
   private ctrlUrl = 'companies';
 
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   getFullResponse(searching: SearchingQuery, sorting: SortingQuery, pagination: PaginationQuery): Observable<HttpResponse<Company[]>> {
     const params = new HttpParams()
@@ -29,12 +29,12 @@ export class CompanyService {
   }
 
   getAll(): Observable<Company[]> {
-      return this.apiService.get(`/${this.ctrlUrl}`);
+    return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
   getById(id: number): Observable<Company> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   register(request: CompanyRequest): Observable<Company> {
     return this.apiService.post(`/${this.ctrlUrl}/register`, request);
@@ -47,4 +47,5 @@ export class CompanyService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

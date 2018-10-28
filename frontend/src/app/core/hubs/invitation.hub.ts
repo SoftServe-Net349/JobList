@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-
 import { HubConnection } from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
 import { environment } from '../../../environments/environment';
@@ -26,15 +25,12 @@ export class InvitationHubService {
   private createConection(): void {
 
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`http://localhost:56681/invitationHub?token=${this.authHelper.getToken()}`)
+      .withUrl(`${environment.server_url}/invitationHub?token=${this.authHelper.getToken()}`)
       .build();
 
-      console.log('Create Hub Conection', this.authHelper.isAuthenticated());
   }
 
   private startHubConection(): void {
-
-    console.log('Start Hub Conection', this.authHelper.isAuthenticated());
 
     if (!this.authHelper.isAuthenticated()) { return; }
     if (this.connectionIsEstablished) { return; }
@@ -65,21 +61,31 @@ export class InvitationHubService {
   }
 
   send(invitation: InvitationRequest) {
+
     if (this._hubConnection) {
+
       this._hubConnection.invoke('SendInvitation', invitation)
         .catch(err => console.error(err));
+
     }
+
   }
 
   delete(id: number) {
+
     if (this._hubConnection) {
+
       this._hubConnection.invoke('DeleteInvitation', id)
         .catch(err => console.error(err));
+
     }
+
   }
 
   disconnect() {
+
     this.invitationReceived = new EventEmitter<Invitation>();
     this.connectionEstablished = new EventEmitter<Boolean>();
+
   }
 }
