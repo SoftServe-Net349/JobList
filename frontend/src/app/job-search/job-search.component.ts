@@ -4,6 +4,8 @@ import { VacancyService } from '../core/services/vacancy.service';
 import { ActivatedRoute } from '@angular/router';
 import { JobSearchQuery } from '../shared/filterQueries/JobsearchQuery';
 import { Paginator } from 'primeng/primeng';
+import { PaginationQuery } from '../shared/filterQueries/PaginationQuery';
+import { JobFiltersComponent } from '../job-filters/job-filters.component';
 
 @Component({
   selector: 'app-job-search',
@@ -12,26 +14,35 @@ import { Paginator } from 'primeng/primeng';
 })
 export class JobSearchComponent implements OnInit {
 
-  totalRecords = 0;
   vacancies: Vacancy[];
-  test: string[] = [];
 
-  pageSize = 4;
-  pageNumber = 1;
+  totalRecords: number;
 
   param: JobSearchQuery;
-  url: string;
+  pagination: PaginationQuery;
 
-  companyName: string;
+  isButtonReset: boolean;
+
   @ViewChild('p') paginator: Paginator;
+
+  @ViewChild(JobFiltersComponent) jobFilters: JobFiltersComponent;
 
   constructor(private vacancyService: VacancyService, private route: ActivatedRoute) {
     this.vacancies = [];
     this.param = this.getDefaultParam();
+
+    this.pagination = this.getDefaultPaginationParam();
+    this.totalRecords = 0;
+
+    this.isButtonReset = false;
+
     this.route.queryParams.subscribe(params => {
       this.param.city = params['city'] === undefined ? '' : params['city'];
       this.param.name = params['searchString'] === undefined ? '' : params['searchString'];
-      this.param.namesOfCompanies[0] = params['company'] === undefined ? '' : params['company'];
+
+      if (params['company'] !== undefined) {
+        this.param.namesOfCompanies[0] = params['company'];
+      }
     });
   }
 
@@ -52,6 +63,13 @@ export class JobSearchComponent implements OnInit {
     };
   }
 
+  getDefaultPaginationParam(): PaginationQuery {
+    return {
+      pageSize: 4,
+      pageNumber: 1
+    };
+  }
+
   getVacanciesByFilter(param: JobSearchQuery) {
     this.param.name = param.name !== null ? param.name : this.param.name;
     this.param.city = param.city !== null ? param.city : this.param.city;
@@ -61,6 +79,8 @@ export class JobSearchComponent implements OnInit {
     this.param.isChecked = param.isChecked !== false ? true : false;
     this.param.salary = param.salary !== null ? param.salary : this.param.salary;
 
+    this.isButtonReset = this.param.namesOfCompanies.length !== 0 || this.param.workArea !== '';
+
     this.loadVacancies();
 
     if (this.paginator.first !== 0) {
@@ -68,16 +88,35 @@ export class JobSearchComponent implements OnInit {
     }
   }
 
+  resetWorkArea() {
+    this.jobFilters.resetWorkArea();
+    this.jobFilters.filter();
+  }
+
+  resetCompany(index: number) {
+    const company = this.param.namesOfCompanies[index];
+
+    this.jobFilters.resetCompany(company);
+    this.jobFilters.filter();
+  }
+
+  resetAll() {
+    this.isButtonReset = false;
+    this.jobFilters.resetAll();
+  }
+
   paginate(event) {
-    this.pageNumber = event.page + 1;
-    this.pageSize = event.rows;
+    this.pagination = {
+      pageNumber: ++event.page,
+      pageSize: event.rows
+    };
 
     this.loadVacancies();
   }
 
 
   loadVacancies() {
-    this.vacancyService.getByFilter(this.param, this.pageSize, this.pageNumber)
+    this.vacancyService.getByFilter(this.param, this.pagination.pageSize, this.pagination.pageNumber)
       .subscribe((response) => {
         this.vacancies = response.body;
         this.totalRecords = JSON.parse(response.headers.get('X-Pagination')).TotalRecords;

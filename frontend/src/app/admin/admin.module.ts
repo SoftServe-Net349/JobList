@@ -20,6 +20,7 @@ import { ChartModule } from 'primeng/chart';
 import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 import { CoreModule } from '../core/core.module';
 
+
 @NgModule({
   imports: [
     CommonModule,

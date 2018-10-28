@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Our modules
 import { HomeRoutingModule } from './home-routing.module';
@@ -19,6 +19,7 @@ import { CompanyDetailsComponent } from '../company-details/company-details.comp
 import { ResumeDetailsComponent } from '../resume-details/resume-details.component';
 import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.component';
 import { VacanciesListComponent } from '../vacancies-list/vacancies-list.component';
+import { AdminAuthorizationComponent } from '../admin-authorization/admin-authorization.component';
 
 // PrimeNG modules & services
 import { ButtonModule } from 'primeng/button';
@@ -60,7 +61,8 @@ import { SidebarModule } from 'primeng/primeng';
     SidebarModule,
     ToastModule,
     ConfirmDialogModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ReactiveFormsModule
   ],
   declarations: [
     HomeComponent,
@@ -72,7 +74,8 @@ import { SidebarModule } from 'primeng/primeng';
     CompanyDetailsComponent,
     ResumeDetailsComponent,
     VacancyDetailsComponent,
-    VacanciesListComponent
+    VacanciesListComponent,
+    AdminAuthorizationComponent
   ]
 })
 export class HomeModule { }

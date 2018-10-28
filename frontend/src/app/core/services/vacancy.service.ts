@@ -47,7 +47,7 @@ export class VacancyService {
 
   getByFilter(param: JobSearchQuery, pageSize: number, pageNumber: number): Observable<HttpResponse<Vacancy[]>> {
     let params = new HttpParams()
-      .set('name', param.name)
+      .set('searchString', param.name)
       .set('city', param.city)
       .set('workArea', param.workArea)
       .set('typeOfEmployment', param.typeOfEmployment)
@@ -67,6 +67,7 @@ export class VacancyService {
       .set('pageNumber', pageNumber.toString());
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/recruiter/${id}`, params);
   }
+
   getFilteredVacancies(id: number, search: string, pageSize: number, pageNumber: number)
   : Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
