@@ -9,11 +9,11 @@ export interface Vacancy {
   offering: string;
   requirements: string;
   bePlus: string;
-  isChecked: boolean;
-  salary: number;
+  isChecked?: boolean;
+  salary?: number;
   fullPartTime: string;
   createDate: Date;
-  modDate: Date;
+  modDate?: Date;
   city: City;
   recruiter: Recruiter;
   workArea: WorkArea;

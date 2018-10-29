@@ -1,208 +1,330 @@
-<p-dialog header="Edit CV" [(visible)]="display" [modal]="true" [responsive]="true" [minY]="70" [focusOnShow]="false"
-[resizable]="false" [draggable]="false" [blockScroll]="true" [baseZIndex]="10000">
-<div id="resume-form">
-    <form [formGroup]="resumeForm" novalidate >
-        <h4 class="resume-title">Full Name<span class="required-input-symbol">*</span></h4>
-        <div>
-            <div class="ui-float-label size-input">
-                <input id="firstname" type="text" pInputText formControlName="firstName"> 
-                <label for="firstname">First Name</label>
-                <div *ngIf="resumeForm.get('firstName').invalid && (resumeForm.get('firstName').dirty || resumeForm.get('firstName').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['firstName'].errors.required">
-                        First Name is required
-                    </div>
-                    <div *ngIf="resumeForm.controls['firstName'].errors.minlength || resumeForm.controls['firstName'].errors.maxlength">
-                        First Name should contain (2-50) chars
+<p-dialog header="Update Info" [(visible)]="infoDialog" [modal]="true" [responsive]="true" [minY]="70" [focusOnShow]="false"
+    [width]="650" [minWidth]="300" [resizable]="false" [draggable]="false" [blockScroll]="true" [baseZIndex]="10000">
+    <div id="resume-form">
+        <form [formGroup]="employeeForm" novalidate>
+            <h4 class="info-title">Full Name
+                <span class="required-input-symbol">*</span>
+            </h4>
+            <div>
+                <div class="ui-float-label size-input">
+                    <input id="firstname" type="text" pInputText formControlName="firstName">
+                    <label for="firstname">First Name</label>
+                    <div *ngIf="employeeForm.get('firstName').invalid && (employeeForm.get('firstName').dirty || employeeForm.get('firstName').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="employeeForm.controls['firstName'].errors.required">
+                            First Name is required
+                        </div>
+                        <div *ngIf="employeeForm.controls['firstName'].errors.minlength || employeeForm.controls['firstName'].errors.maxlength">
+                            First Name should contain (1-50) chars
+                        </div>
+
                     </div>
                 </div>
-            </div> 
-            <div class="ui-float-label size-input">
-                <input id="lastname" type="text" pInputText formControlName="lastName"> 
-                <label for="lastname">Last Name</label>
-                <div *ngIf="resumeForm.get('lastName').invalid && (resumeForm.get('lastName').dirty || resumeForm.get('lastName').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['lastName'].errors.required">
-                        Last Name is required
+                <div class="ui-float-label size-input">
+                    <input id="lastname" type="text" pInputText formControlName="lastName">
+                    <label for="lastname">Last Name</label>
+                    <div *ngIf="employeeForm.get('lastName').invalid && (employeeForm.get('lastName').dirty || employeeForm.get('lastName').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="employeeForm.controls['lastName'].errors.required">
+                            Last Name is required
+                        </div>
+                        <div *ngIf="employeeForm.controls['lastName'].errors.minlength || employeeForm.controls['lastName'].errors.maxlength">
+                            Last Name should contain (1-50) chars
+                        </div>
                     </div>
-                    <div *ngIf="resumeForm.controls['lastName'].errors.minlength || resumeForm.controls['lastName'].errors.maxlength">
-                        Last Name should contain (2-50) chars
-                    </div>
-                </div>          
+                </div>
             </div>
-        </div>
-        <hr>
+            <hr>
 
-        <h4 class="resume-title">E-Mail<span class="required-input-symbol">*</span></h4>
-        <div class="ui-float-label size-input">
-            <input id="email" type="text" size="50" pInputText formControlName="email"> 
-            <div *ngIf="resumeForm.get('email').invalid && (resumeForm.get('email').dirty || resumeForm.get('email').touched)" class="alert alert-danger">
-                <div *ngIf="resumeForm.controls['email'].errors.required">
-                    Email is required
-                </div>
-                <div *ngIf="resumeForm.controls['email'].errors.email">
-                    Email should match sample@exam.com
-                </div>
-                <div *ngIf="resumeForm.controls['email'].errors.maxlength">
-                    Email should contain (5-150) chars
-                </div>
-            </div>     
-        </div>
-        <hr class="email">
-
-        <h4 class="resume-title">Work Area</h4>
-        <div class="ui-float-label">
-            <p-dropdown [options]="workAreas" optionLabel="name" [(ngModel)]="selectedWorkArea" [ngModelOptions]="{standalone: true}" placeholder="Select Work Area"></p-dropdown>
-        </div>
-        <hr>
-
-        <h4 class="resume-title">Social Networks</h4>
-        <div class="size-input">
-            <div class="ui-float-label ">
-                <input id="linkedInt" type="text" pInputText formControlName="linkedIn"> 
-                <label for="linkedIn">LinkedIn</label>
-                <div *ngIf="resumeForm.get('linkedIn').invalid && (resumeForm.get('linkedIn').dirty || resumeForm.get('linkedIn').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['linkedIn'].errors.minlength || resumeForm.controls['linkedIn'].errors.maxlength">
-                        LinkedIn contains (2-200) chars
+            <h4 class="info-title">E-Mail
+                <span class="required-input-symbol">*</span>
+            </h4>
+            <div class="ui-float-label size-input">
+                <input id="email" type="text" size="50" pInputText formControlName="email">
+                <div *ngIf="employeeForm.get('email').invalid && (employeeForm.get('email').dirty || employeeForm.get('email').touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="employeeForm.controls['email'].errors.required">
+                        Email is required
                     </div>
-                </div>                      
+                    <div *ngIf="employeeForm.controls['email'].errors.email">
+                        Email should match sample@exam.com
+                    </div>
+                    <div *ngIf="employeeForm.controls['email'].errors.maxlength">
+                        Email should contain (6-254) chars
+                    </div>
+                </div>
             </div>
+            <hr class="hr-email">
+
+            <h4 class="info-title">Birth Date
+                <span class="required-input-symbol">*</span>
+            </h4>
+            <div class="ui-float-label size-input">
+                <p-calendar [(ngModel)]="birthDate" dateFormat="D d, M yy" formControlName="birthDate"></p-calendar>
+                <div *ngIf="employeeForm.get('birthDate').invalid && (employeeForm.get('birthDate').dirty || employeeForm.get('birthDate').touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="employeeForm.controls['birthDate'].errors.required">
+                        Birth Date is required
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <h4 class="info-title">City
+                <span class="required-input-symbol">*</span>
+            </h4>
             <div class="ui-float-label">
-                <input id="gitHub" type="text" pInputText formControlName="gitHub"> 
-                <label for="gitHub">GitHub</label>
-                <div *ngIf="resumeForm.get('gitHub').invalid && (resumeForm.get('gitHub').dirty || resumeForm.get('gitHub').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['gitHub'].errors.minlength || resumeForm.controls['gitHub'].errors.maxlength">
-                        GgitHub contains (2-200) chars
+                <p-dropdown [options]="cities" optionLabel="name" [(ngModel)]="selectedCity" placeholder="Select a City" formControlName="city"></p-dropdown>
+                <div *ngIf="employeeForm.get('city').invalid && (employeeForm.get('city').dirty || employeeForm.get('city').touched)" class="alert alert-danger">
+                    <div *ngIf="employeeForm.controls['city'].errors.required">
+                        City is required
                     </div>
-                </div>              
-            </div>
-        </div>
-        <div class="size-input networks">
-            <div class="ui-float-label size-input">
-                <input id="facebook" type="text" pInputText formControlName="facebook"> 
-                <label for="facebook">Facebook</label>
-                <div *ngIf="resumeForm.get('facebook').invalid && (resumeForm.get('facebook').dirty || resumeForm.get('facebook').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['facebook'].errors.minlength || resumeForm.controls['facebook'].errors.maxlength">
-                        Facebook contains (2-200) chars
-                    </div>
-                </div>              
-            </div>
-            <div class="ui-float-label size-input">
-                <input id="skype" type="text" pInputText formControlName="skype"> 
-                <label for="skype">Skype</label>
-                <div *ngIf="resumeForm.get('skype').invalid && (resumeForm.get('skype').dirty || resumeForm.get('skype').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['skype'].errors.minlength || resumeForm.controls['skype'].errors.maxlength">
-                        Skype contains (2-200) chars
-                    </div>
-                </div>              
-            </div>
-        </div>
-        <hr>
- 
-        <h4 class="resume-title">City</h4>
-        <div class="ui-float-label">
-            <p-dropdown [options]="cities" optionLabel="name" [(ngModel)]="selectedCity" [ngModelOptions]="{standalone: true}"  placeholder="Select a City"></p-dropdown>
-        </div>
-        <hr>
-
-        <h4 class="resume-title">Birth Date</h4>
-        <div class="ui-float-label size-input">
-            <p-calendar [(ngModel)]="birthDate" [ngModelOptions]="{standalone: true}" dateFormat="D d, M yy"></p-calendar>
-        </div>
-        <hr>
-        
-        <h4 class="resume-title">Phone</h4>
-        <div class="ui-float-label phone size-input">
-            <p-inputMask id="phone" mask="(999) 999-9999" formControlName="phone"></p-inputMask>
-        </div>
-        <hr>
-
-        <h4 class="resume-title languages">Languages</h4>
-        <div class="ui-float-label">
-            <p-multiSelect [options]="languages" optionLabel="name" [(ngModel)]="selectedLanguages" [ngModelOptions]="{standalone: true}" placeholder="Select a language(-s)" filter="true"></p-multiSelect>
-        </div>     
-        <hr>
-
-        <h4 class="resume-title">Family State</h4>
-        <div class="ui-float-label size-input">
-            <input id="familyState" type="text" pInputText formControlName="familyState"> 
-            <div *ngIf="resumeForm.get('familyState').invalid && (resumeForm.get('familyState').dirty || resumeForm.get('familyState').touched)" class="alert alert-danger">
-                <div *ngIf="resumeForm.controls['familyState'].errors.minlength || resumeForm.controls['familyState'].errors.maxlength">
-                    Company Name contains (2-20) chars
                 </div>
-            </div>              
-        </div>     
-       <hr>
+            </div>
+            <hr>
 
-        <h4 class="resume-title">Education</h4>
-        <div class="ui-float-label education size-input">
-            <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="selectedShool1" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
-            <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="selectedFaculty1" [ngModelOptions]="{standalone: true}" placeholder="Select a Faculty"></p-dropdown>
-        </div>
-        <div class="ui-float-label education size-input">
-            <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}"
-            placeholder="Start Date"></p-calendar>
-            <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}"
-            placeholder="Finish Date"></p-calendar>
-        </div>
-        <div class="ui-float-label">
-            <button pButton type="button" icon="pi pi-plus" label="Add School"></button>
-        </div>    
-        <hr>
+            <h4 class="info-title">Phone</h4>
+            <div class="ui-float-label phone size-input">
+                <p-inputMask id="phone" mask="(999) 999-9999" formControlName="phone"></p-inputMask>
+            </div>
+            <hr>
+        </form>
+    </div>
 
-        <h4 class="resume-title">Experience</h4>
-        <div class="size-input">
-            <div class="ui-float-label">
-                <input id="companyname" type="text" pInputText formControlName="companyName"> 
-                <label for="companyname">Company Name</label>
-                <div *ngIf="resumeForm.get('companyName').invalid && (resumeForm.get('companyName').dirty || resumeForm.get('companyName').touched)" class="alert alert-danger">
-                    <div *ngIf="resumeForm.controls['companyName'].errors.minlength || resumeForm.controls['companyName'].errors.maxlength">
-                        Company Name contains (2-200) chars
-                    </div>
-                </div>              
-            </div> 
-            <div class="ui-float-label">
-                <input id="position" type="text" pInputText formControlName="position"> 
-                <label for="position">Position</label>
-                <div *ngIf="resumeForm.get('position').invalid && (resumeForm.get('position').dirty || resumeForm.get('position').touched)" class="alert alert-danger">
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" [disabled]="employeeForm.invalid" (click)="submitEmployeeForm()" label="Confirm"
+            class="ui-button-success"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="infoDialog=false" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>
+
+
+
+
+<p-dialog [header]="action + ' CV'" [(visible)]="display" [modal]="true" [responsive]="true" [minY]="70" [focusOnShow]="false"
+    [width]="650" [minWidth]="300" [resizable]="false" [draggable]="false" [blockScroll]="true" [baseZIndex]="10000">
+    <div id="resume-form">
+        <form [formGroup]="resumeForm" novalidate>
+
+            <h4 class="resume-title">Position</h4>
+            <div class="ui-float-label size-input">
+                <input id="position" type="text" pInputText formControlName="position">
+                <div *ngIf="resumeForm.get('position').invalid && (resumeForm.get('position').dirty || resumeForm.get('position').touched)"
+                    class="alert alert-danger">
                     <div *ngIf="resumeForm.controls['position'].errors.minlength || resumeForm.controls['position'].errors.maxlength">
-                        Position should contain (2-200) chars
+                        Position contains (1-200) chars
                     </div>
-                </div>          
-    
-            </div> 
-        </div> 
-        <div class="ui-float-label experience size-input">  
-            <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="expStartDate" [ngModelOptions]="{standalone: true}"
-            placeholder="Start Date"></p-calendar>
-            <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="expFinishDate" [ngModelOptions]="{standalone: true}"
-            placeholder="Finish Date"></p-calendar>        
-        </div>
-        <div class="ui-float-label">
-            <button pButton type="button" icon="pi pi-plus" label="Add Company"></button>
-        </div>
-        <hr>
+                </div>
+            </div>
+            <hr>
 
-        <h4 class="resume-title">Courses</h4>
-        <div class="courses">
-            <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="courses"></textarea>
-        </div>
-        <hr>
+            <h4 class="resume-title">Work Area
+                <span class="required-input-symbol">*</span>
+            </h4>
+            <div class="ui-float-label">
+                <p-dropdown [options]="workAreas" optionLabel="name" [(ngModel)]="selectedWorkArea" placeholder="Select Work Area" formControlName="workArea"></p-dropdown>
+                <div *ngIf="resumeForm.get('workArea').invalid && (resumeForm.get('workArea').dirty || resumeForm.get('workArea').touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="resumeForm.controls['workArea'].errors.required">
+                        Work Area is required
+                    </div>
+                </div>
+            </div>
+            <hr>
 
-        <h4 class="resume-title">Soft Skills</h4>
-        <div class="skills-area">
-             <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="softSkills"></textarea>
-        </div>
-        <hr>
- 
-        <h4 class="resume-title">Key Skills</h4>
-        <div class="skills-area">
-             <textarea [rows]="5" pKeySkills style="resize:none" formControlName="keySkills"></textarea>
-        </div>
-        <hr>
-    </form>
-</div>
+            <h4 class="resume-title">Social Networks</h4>
+            <div class="size-input">
+                <div class="ui-float-label ">
+                    <input id="linkedInt" type="text" pInputText formControlName="linkedIn">
+                    <label for="linkedIn">LinkedIn</label>
+                    <div *ngIf="resumeForm.get('linkedIn').invalid && (resumeForm.get('linkedIn').dirty || resumeForm.get('linkedIn').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="resumeForm.controls['linkedIn'].errors.minlength || resumeForm.controls['linkedIn'].errors.maxlength">
+                            LinkedIn contains (1-200) chars
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-float-label">
+                    <input id="gitHub" type="text" pInputText formControlName="gitHub">
+                    <label for="gitHub">GitHub</label>
+                    <div *ngIf="resumeForm.get('gitHub').invalid && (resumeForm.get('gitHub').dirty || resumeForm.get('gitHub').touched)" class="alert alert-danger">
+                        <div *ngIf="resumeForm.controls['gitHub'].errors.minlength || resumeForm.controls['gitHub'].errors.maxlength">
+                            GgitHub contains (1-200) chars
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="size-input networks">
+                <div class="ui-float-label size-input">
+                    <input id="facebook" type="text" pInputText formControlName="facebook">
+                    <label for="facebook">Facebook</label>
+                    <div *ngIf="resumeForm.get('facebook').invalid && (resumeForm.get('facebook').dirty || resumeForm.get('facebook').touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="resumeForm.controls['facebook'].errors.minlength || resumeForm.controls['facebook'].errors.maxlength">
+                            Facebook contains (1-200) chars
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-float-label size-input">
+                    <input id="skype" type="text" pInputText formControlName="skype">
+                    <label for="skype">Skype</label>
+                    <div *ngIf="resumeForm.get('skype').invalid && (resumeForm.get('skype').dirty || resumeForm.get('skype').touched)" class="alert alert-danger">
+                        <div *ngIf="resumeForm.controls['skype'].errors.minlength || resumeForm.controls['skype'].errors.maxlength">
+                            Skype contains (1-200) chars
+                        </div>
+                    </div>
+                </div>
+                <div class="size-input networks">
+                    <div class="ui-float-label size-input">
+                        <input id="instagram" type="text" pInputText formControlName="instagram">
+                        <label for="instagram">Instagram</label>
+                        <div *ngIf="resumeForm.get('instagram').invalid && (resumeForm.get('instagram').dirty || resumeForm.get('instagram').touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="resumeForm.controls['instagram'].errors.minlength || resumeForm.controls['instagram'].errors.maxlength">
+                                Instagram contains (1-200) chars
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
 
-<p-footer>
-    <button type="button" pButton icon="pi pi-check" [disabled]="resumeForm.invalid" (click)="display=false" label="Confirm" class="ui-button-success"></button>
-    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
-</p-footer>
+            <h4 class="resume-title languages">Languages</h4>
+            <div class="ui-float-label">
+                <p-multiSelect [options]="languages" optionLabel="name" [(ngModel)]="selectedLanguages" [ngModelOptions]="{standalone: true}"
+                    placeholder="Select a language(-s)" filter="true"></p-multiSelect>
+            </div>
+            <hr>
+
+            <h4 class="resume-title">Family State</h4>
+            <div class="ui-float-label size-input">
+                <input id="familyState" type="text" pInputText formControlName="familyState">
+                <div *ngIf="resumeForm.get('familyState').invalid && (resumeForm.get('familyState').dirty || resumeForm.get('familyState').touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="resumeForm.controls['familyState'].errors.minlength || resumeForm.controls['familyState'].errors.maxlength">
+                        Family State contains (1-20) chars
+                    </div>
+                </div>
+            </div>
+
+           
+            <!-- <div *ngFor="let ed of resume?.educationPeriods">
+                <h4 class="resume-title">Education </h4>
+                <div class="ui-float-label education size-input">
+                    <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="ed.school" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
+                    <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="ed.faculty" [ngModelOptions]="{standalone: true}" placeholder="Select a Faculty"></p-dropdown>
+                </div>
+                <div class="ui-float-label education size-input">
+                    <p-calendar dateFormat="dd.mm.yy"  [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                    <p-calendar dateFormat="dd.mm.yy"  [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                </div>
+                <hr>
+            </div>  -->
+            <form [formGroup]="FormEducation" novalidate (ngSubmit)="save(FormEducation)">
+                <div formArrayName="itemsEducation">
+                    <div *ngFor="let item of FormEducation.controls.itemsEducation.controls; let i=index" class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="FormEducation.controls.itemsEducation.controls.length > 1" (click)="removeEducation(i)"></span>
+                        </div>
+                        <hr>
+                        <div class="panel-body" [formGroupName]="i">
+                            <h4 class="resume-title">Education </h4>
+                            <div class="ui-float-label education size-input">
+                                <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="selectedShool1" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
+                                <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="selectedFaculty1" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Select a Faculty"></p-dropdown>
+                            </div>
+                            <div class="ui-float-label education size-input">
+                                <p-calendar dateFormat="dd.mm.yy" name="edStartDate1" [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-float-label">
+                        <button pButton type="button" icon="pi pi-plus" label="Add school" (click)="addEducation()"></button>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="FormExperience">
+                <div formArrayName="itemsExperience">
+                    <div *ngFor="let item of FormExperience.controls.itemsExperience.controls; let i=index" class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="FormExperience.controls.itemsExperience.controls.length > 1"></span>
+                        </div>
+                        <hr>
+                        <div class="panel-body" [formGroupName]="i">
+                            <h4 class="resume-title">Experience </h4>
+                            <div class="size-input">
+                                <div class="ui-float-label">
+                                    <input id="companyName" type="text" pInputText formControlName="companyName">
+                                    <label for="companyname">Company Name</label>
+                                    <div *ngIf="FormExperience.get('companyName').invalid && (FormExperience.get('companyName').dirty || FormExperience.get('companyName').touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="FormExperience.controls['companyName'].errors.minlength || FormExperience.controls['companyName'].errors.maxlength">
+                                            Company Name contains (1-200) chars
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-float-label">
+                                    <input id="position" type="text" pInputText formControlName="position">
+                                    <label for="position">Position</label>
+                                    <div *ngIf="FormExperience.get('position').invalid && (FormExperience.get('position').dirty || FormExperience.get('position').touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="FormExperience.controls['position'].errors.minlength || FormExperience.controls['position'].errors.maxlength">
+                                            Position should contain (1-200) chars
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="ui-float-label experience size-input">
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="expStartDate" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="expFinishDate" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-float-label">
+                    <button pButton type="button" icon="pi pi-plus" label="Add experience" (click)="addExperience()"></button>
+                </div>
+                <hr>
+
+
+            </form>
+
+            <h4 class="resume-title">Introduction</h4>
+            <div class="skills-area">
+                <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="introduction"></textarea>
+            </div>
+            <hr>
+
+
+
+
+            <h4 class="resume-title">Courses</h4>
+            <div class="courses">
+                <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="courses"></textarea>
+            </div>
+            <hr>
+
+            <h4 class="resume-title">Soft Skills</h4>
+            <div class="skills-area">
+                <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="softSkills"></textarea>
+            </div>
+            <hr>
+
+            <h4 class="resume-title">Key Skills</h4>
+            <div class="skills-area">
+                <textarea [rows]="5" pKeySkills style="resize:none" formControlName="keySkills"></textarea>
+            </div>
+            <hr>
+        </form>
+    </div>
+
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" [disabled]="resumeForm.invalid" (click)="submit()" label="Confirm" class="ui-button-success"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer>
 </p-dialog>

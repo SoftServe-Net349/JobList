@@ -17,10 +17,10 @@ namespace JobList.DataAccess.Interfaces
         IResumesRepository ResumesRepository { get; }
         IRolesRepository RolesRepository { get; }
         ISchoolsRepository SchoolsRepository { get; }
-        IUsersRepository UsersRepository { get; }
+        IEmployeesRepository EmployeesRepository { get; }
         IVacanciesRepository VacanciesRepository { get; }
         IWorkAreasRepository WorkAreasRepository { get; }
-
+        IInvitationsRepository InvitationsRepository { get; }
 
         Task<bool> SaveAsync();
     }

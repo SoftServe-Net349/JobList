@@ -1,8 +1,13 @@
 ﻿using JobList.Common.DTOS;
 using JobList.Common.Pagination;
+using JobList.Common.UrlQuery;
 using JobList.Common.Requests;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JobList.Common.Sorting;
+using JobList.DataAccess.Entities;
+using System;
+using System.Linq.Expressions;
 
 namespace JobList.BusinessLogic.Interfaces
 {
@@ -12,6 +17,17 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<VacancyDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null);
 
+        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, 
+                                                               SearchingUrlQuery searchingUrlQuery = null, 
+                                                               SortingUrlQuery sortingUrlQuery = null, 
+                                                               PaginationUrlQuery paginationUrlQuery = null);
+
+        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(int? recruiterId, 
+                                                               string searchString,
+                                                               PaginationUrlQuery paginationUrlQuery = null);
+
+        Task<IEnumerable<VacancyDTO>> GetVacanciesByRecruiterIdAsync(int recruiterId, PaginationUrlQuery urlQuery = null);
+
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 
         Task<VacancyDTO> CreateEntityAsync(VacancyRequest modelRequest);
@@ -19,9 +35,9 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> UpdateEntityByIdAsync(VacancyRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
+        
+        Task<int> CountAsync(Expression<Func<Vacancy, bool>> predicate = null);
 
-        Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id);
-
-        int Count { get; }
+        int TotalRecords { get; }
     }
 }

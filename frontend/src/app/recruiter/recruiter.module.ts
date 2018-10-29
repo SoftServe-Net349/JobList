@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 import { RecruiterComponent } from './recruiter.component';
-import { RecruiterHeaderComponent } from './recruiter-header/recruiter-header.component';
 
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
@@ -19,6 +18,11 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { VacancyFormComponent } from '../vacancy-form/vacancy-form.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {KeyFilterModule} from 'primeng/keyfilter';
+
+import { CoreModule } from '../core/core.module';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -32,15 +36,18 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     SidebarModule,
     PanelMenuModule,
     FormsModule,
-		SharedModule,
+    SharedModule,
     DropdownModule,
     ReactiveFormsModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    KeyFilterModule,
+    CoreModule,
+    PaginatorModule 
   ],
   declarations: [
-		RecruiterComponent,
-		RecruiterHeaderComponent,
-		VacancyFormComponent
-	]
+    RecruiterComponent,
+    VacancyFormComponent
+  ],
+  providers: [MessageService, ConfirmationService]
 })
 export class RecruiterModule { }

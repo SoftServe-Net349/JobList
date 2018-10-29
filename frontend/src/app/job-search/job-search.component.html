@@ -1,17 +1,41 @@
 <div class="jobsearch">
-  <app-search-line (filteredVacancies)="getVacanciesBySearchString($event)"></app-search-line>
+  <app-search-line [searchString]="param.name" [cityName]="param.city" (foundVacancies)="getVacanciesByFilter($event)"></app-search-line>
+
+  <div class="searchlabels">
+    <span *ngIf="param.workArea !== ''" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{param?.workArea}}</span>
+        <i class="fa fa-times" (click)="resetWorkArea()"></i>
+      </p>
+    </span>
+    <span *ngFor="let company of param.namesOfCompanies; let i = index" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{company}}</span>
+        <i class="fa fa-times" (click)="resetCompany(i)"></i>
+      </p>
+    </span>
+    <span *ngIf="param.typeOfEmployment !== ''" class="searchlabels-label">
+      <p class="searchlabels-label-txt">
+        <span>{{param?.typeOfEmployment}}</span>
+        <i class="fa fa-times" (click)="resetEmployment()"></i>
+      </p>
+    </span>
+
+    <button *ngIf="isButtonReset" pButton type="button" label="Reset All" (click)="resetAll()" class="searchlabels-button"></button>
+  </div>
+
   <div class="container">
     <div class="filter-container">
-      <app-job-filters></app-job-filters>
+      <app-job-filters [companyName]="param.namesOfCompanies[0]" (filteredVacancies)="getVacanciesByFilter($event)"></app-job-filters>
     </div>
     <div class="vacancy-container">
       <article class="vacancy-block" *ngFor="let vacancy of vacancies">
         <div class="inform">
           <h3>
-            <a>{{vacancy.name}}</a>
+            <a [routerLink]="['/vacancy-details/', vacancy.id]" routerLinkActive="active">{{vacancy.name}}</a>
           </h3>
           <p class="company-name">
-            <a>{{vacancy.recruiter.company.name}}</a>
+            <a [routerLink]="['/company-details/', vacancy.recruiter.company.id]" routerLinkActive="active">{{vacancy.recruiter.company.name}}</a>
           </p>
           <p class="location">
             <i class="fa fa-map-marker"></i>
@@ -25,11 +49,13 @@
           </p>
         </div>
         <div class="logo">
-          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png">
+          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png" [routerLink]="['/company-details/', vacancy.recruiter.company.id]"
+            routerLinkActive="active">
         </div>
       </article>
     </div>
   </div>
 
-  <p-paginator [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[pageSize-2, pageSize, pageSize+2]"></p-paginator>
+  <p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"
+    [rowsPerPageOptions]="[5, 10, 15]"></p-paginator>
 </div>

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' }
+  { path: '', loadChildren: './home/home.module#HomeModule', pathMatch: 'prefix' },
+  { path: 'companies/:id', loadChildren: './company/company.module#CompanyModule'},
+  { path: 'employees/:id', loadChildren: './employee/employee.module#EmployeeModule'},
+  { path: 'recruiters/:id', loadChildren: './recruiter/recruiter.module#RecruiterModule'},
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule' }
  ];
 
 @NgModule({

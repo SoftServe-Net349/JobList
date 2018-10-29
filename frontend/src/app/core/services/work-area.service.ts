@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class WorkAreaService {
+
   private ctrlUrl = 'workareas';
 
   constructor(private apiService: ApiService) {
@@ -17,7 +18,7 @@ export class WorkAreaService {
 
   getById(id: number): Observable<WorkArea> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   create(request: WorkAreaRequest): Observable<WorkArea> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
@@ -30,4 +31,5 @@ export class WorkAreaService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

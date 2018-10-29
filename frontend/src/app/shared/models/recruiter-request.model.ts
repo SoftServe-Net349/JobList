@@ -1,5 +1,3 @@
-import { Company } from './company.model';
-import { Role } from './role.model';
 
 export interface RecruiterRequest {
   firstName: string;
@@ -7,7 +5,7 @@ export interface RecruiterRequest {
   phone: string;
   email: string;
   password: string;
-  photoData: number[];
+  photoData: string;
   photoMimetype: string;
   companyId: number;
   roleId: number;

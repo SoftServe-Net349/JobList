@@ -2,6 +2,7 @@
 using JobList.Common.DTOS;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
+using System;
 
 namespace JobList.BusinessLogic.MappingProfiles
 {

@@ -6,18 +6,18 @@ import { ApiService } from './api.service';
 
 @Injectable()
 export class FacultyService {
+
   private ctrlUrl = 'faculties';
 
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   getAll(): Observable<Faculty[]> {
-      return this.apiService.get(`/${this.ctrlUrl}`);
+    return this.apiService.get(`/${this.ctrlUrl}`);
   }
 
   getById(id: number): Observable<Faculty> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   create(request: FacultyRequest): Observable<Faculty> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
@@ -30,4 +30,5 @@ export class FacultyService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

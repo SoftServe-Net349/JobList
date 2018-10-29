@@ -1,31 +1,42 @@
-<p-dialog header="Sign in" [(visible)]="display" [dismissableMask]="true" [draggable]="false" [resizable]="false" [modal]="true"
-  [responsive]="true" [width]="330" [minWidth]="220" [minY]="70" [baseZIndex]="10000">
+<p-dialog [header]="'Sing In as ' + role" [(visible)]="signInDialog" [modal]="true" [responsive]="true" [width]="330"
+  [minWidth]="200" [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true"
+  [dismissableMask]="false" [baseZIndex]="10000">
+  
   <div id="authoruzations">
-    
-    <h4 class="title_main">Login</h4>
-    <input id="login" type="text" size="30" pInputText>
-    <hr>
+    <form [formGroup]="authoruzationsForm" novalidate>
 
-    <h4 class="title_main">Password</h4>
-    <input type="password1" size="30" pPassword [(ngModel)]="property" />
-    <p></p>
-    <div class="or-section Login_with">
-      <hr class="fd-f1 ">
-      <p class="Login_text"> Who are you? </p>
-      <hr class="fd-f1 ">
+      <h4 class="info-title">Login<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="login" type="text" pInputText formControlName="login">
+        <div *ngIf="authoruzationsForm.get('login').invalid &&
+                    (authoruzationsForm.get('login').dirty || authoruzationsForm.get('login').touched)" class="alert alert-danger">          
+          <div *ngIf="authoruzationsForm.controls['login'].errors.required">
+            Login is required
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <h4 class="info-title">Password<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input type="password" pPassword formControlName="password" />
+        <div *ngIf="authoruzationsForm.get('password').invalid &&
+                    (authoruzationsForm.get('password').dirty || authoruzationsForm.get('password').touched)" class="alert alert-danger">
+          <div *ngIf="authoruzationsForm.controls['password'].errors.required">
+            Password is required
+          </div>
+        </div>
+      </div>
+      <hr>
+
+    </form>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{errorMessage}}
     </div>
-    <div class=fb_google>
-      <div class=fb_google1>
-          <p-radioButton name="groupname" value="val1" label="User" [(ngModel)]="selectedValue"></p-radioButton>
-      </div>
-      <div class=fb_google1>
-          <p-radioButton name="groupname" value="val1" label="Company" [(ngModel)]="selectedValue"></p-radioButton>
-      </div>
-      <div class=fb_google1>
-          <p-radioButton name="groupname" value="val1" label="Recruiter" [(ngModel)]="selectedValue"></p-radioButton>
-      </div>
-    </div>
-    <button class="sign-in">Sign in</button>
+
+    <button class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign In</button>
+    
     <div class="save-forget-password-flex">
       <div>
         <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
@@ -36,235 +47,444 @@
       </div>
     </div>
 
-    <div class="or-section Login_with">
-      <hr class="fd-f1 ">
-      <p class="Login_text"> Login with </p>
-      <hr class="fd-f1 ">
-    </div>
-    <div class=fb_google1>
-      <div class=fb_google1>
-        <a class="google fd-f" target="_blank" href="https://api.rabota.ua/login/google">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master" alt="google">
-        </a>
+    <div *ngIf="role=='Employee'">
+      <div class="or-section Login_with">
+        <hr class="fd-f1 ">
+        <p class="Login_text"> Login with </p>
+        <hr class="fd-f1 ">
       </div>
-      <div class=fb_google1>
-        <a class="facebook fd-f" target="_blank" href="https://api.rabota.ua/login/facebook">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
-            alt="facabook">
-        </a>
+      <div class=fb_google>
+        <div class=fb_google1>
+          <a class="google fd-f" target="_blank">
+            <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
+              alt="google">
+          </a>
+        </div>
+        <div class=fb_google1>
+          <a class="facebook fd-f" target="_blank">
+            <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
+              alt="facabook">
+          </a>
+        </div>
       </div>
     </div>
-    <hr>
 
-    <h4></h4>
-    <div class=fb_google>
+    <hr *ngIf="role!='Recruiter'">
+    <div class=fb_google *ngIf="role!='Recruiter'">
       <label class="title"> Don't have an account?</label>
     </div>
-    <div class=fb_google>
-      <a (click)="openSingUpUser()" class="title">
-        Sing up
+
+    <div *ngIf="role=='Employee'">
+      <a (click)="showSignUpEmployee()" class="title">
+        Sing Up
         <i class="fa fa-sign-in icon" aria-hidden="true"></i>
       </a>
     </div>
+
+    <div class=fb_google *ngIf="role=='Company'">
+      <a (click)="showSignUpCompany()" class="title">
+        Sing Up
+        <i class="fa fa-sign-in icon" aria-hidden="true"></i>
+      </a>
+    </div>
+
     <div class="footer"></div>
+
   </div>
 </p-dialog>
 
 
-<!-- <button type="button" (click)="showDialog()" pButton label="Show"></button> -->
+<p-dialog header="Sign Up as Employee" [(visible)]="signUpEmployee" [modal]="true" [responsive]="true" [width]="400"
+  [minWidth]="200" [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true"
+  [dismissableMask]="false" [baseZIndex]="10000">
 
+  <div id="employee-authoruzations">
+    <form [formGroup]="signUpEmployeeForm" novalidate>
 
-
-<p-dialog header="Sign up user" [(visible)]="display1" [dismissableMask]="true" [draggable]="false" [resizable]="false" [modal]="true"
-  [responsive]="true" [width]="400" [minWidth]="200" [minY]="70" [baseZIndex]="10000">
-  <div class="toolbar-sing-up">
-  </div>
-  <div id="authoruzations">
-    <div class="toolbar-sing-up">
-      <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpUser1()" label="Sing up user"
-        icon="fa fa-user"></button>
-      <button size="30" pButton type="button" class="ui-button-secondary sing-up-button" (click)="openSingUpCompany()" label="Sing up company"
-        icon="fa fa-users"></button>
-    </div>
-    <hr>
-    <div class="" footer1></div>
-
-    <h4>First name*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-    <input id="firstname" type="text" size="38" pInputText>
-    </span>
-    </div>
-    <hr>
-
-    <h4>Last name*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-    <input id="city" type="text" size="38" pInputText>
-    </span>
-    </div>
-    <hr>
-
-
-    <h4 >Email*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-    <input id="email" type="text" size="38" pInputText>
-    </span>
-    </div>
-    <hr>
-
-    <h4>Password*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-    <input type="password2" size="38" pPassword [(ngModel)]="property" />
-    </span>
-    </div>
-    <hr>
-
-    <h4>Confirm the password*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-    <input type="password3" size="38" pPassword [(ngModel)]="property" />
-    </span>
-    </div>
-    <div class="footer1"></div>
-    <div class="or-section Login_with">
-      <hr class="fd-f1 ">
-      <p class="Login_text"> Login with </p>
-      <hr class="fd-f1 ">
-    </div>
-    <div class=fb_google>
-      <div class=fb_google1>
-        <a class="google fd-f" target="_blank" href="https://api.rabota.ua/login/google">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master" alt="google">
-        </a>
+      <h4 class="info-title">First name<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="firstName" type="text" pInputText formControlName="firstName">
+        <div *ngIf="signUpEmployeeForm.get('firstName').invalid &&
+                    (signUpEmployeeForm.get('firstName').dirty || signUpEmployeeForm.get('firstName').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.required">
+            First name is required
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.minlength ||
+                      signUpEmployeeForm.controls['firstName'].errors.maxlength">
+            First name contains (2-50) chars
+          </div>
+        </div>
       </div>
-      <div class=fb_google1>
-        <a class="facebook fd-f" target="_blank" href="https://api.rabota.ua/login/facebook">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
-            alt="facabook">
-        </a>
+      <hr>
+
+      <h4 class="info-title">Last name<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="lastName" type="text" pInputText formControlName="lastName">
+        <div *ngIf="signUpEmployeeForm.get('lastName').invalid &&
+                    (signUpEmployeeForm.get('lastName').dirty || signUpEmployeeForm.get('lastName').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.required">
+            Last name is required
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.minlength
+                      || signUpEmployeeForm.controls['lastName'].errors.maxlength">
+            Last name contains (2-50) chars
+          </div>
+        </div>
       </div>
+      <hr>
+
+      <h4 class="resume-title">Birth Date<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label size-input">
+        <p-calendar [(ngModel)]="birthDate" dateFormat="D d, M yy" formControlName="birthDate"></p-calendar>
+        <div *ngIf="signUpEmployeeForm.get('birthDate').invalid &&
+                    (signUpEmployeeForm.get('birthDate').dirty || signUpEmployeeForm.get('birthDate').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['birthDate'].errors.required">
+            Birth Date is required
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <h4 class="resume-title">City<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <p-dropdown [options]="cities" optionLabel="name" [(ngModel)]="selectedCity" placeholder="Select a City"
+          formControlName="city"></p-dropdown>
+        <div *ngIf="signUpEmployeeForm.get('city').invalid &&
+                    (signUpEmployeeForm.get('city').dirty || signUpEmployeeForm.get('city').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['city'].errors.required">
+            City is required
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <h4 class="info-title">Email
+        <span class="required-input-symbol">*</span>
+      </h4>
+      <div class="ui-float-label">
+        <input id="email" type="text" pInputText formControlName="email">
+        <div *ngIf="signUpEmployeeForm.get('email').invalid &&
+                    (signUpEmployeeForm.get('email').dirty || signUpEmployeeForm.get('email').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['email'].errors.required">
+            E-Mail is required
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['email'].errors.email">
+            E-Mail should match sample@ex.com
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['email'].errors.minlength
+                      || signUpEmployeeForm.controls['email'].errors.maxlength">
+            E-mail contains (2-254) chars
+          </div>
+        </div>
+      </div>
+      <hr class="hr-email">
+
+      <h4 class="info-title">Password
+        <span class="required-input-symbol">*</span>
+      </h4>
+      <div class="ui-float-label">
+        <input type="password" pPassword formControlName="password" />
+        <div *ngIf="signUpEmployeeForm.get('password').invalid
+                    && (signUpEmployeeForm.get('password').dirty || signUpEmployeeForm.get('password').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['password'].errors.required">
+            Password is required
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['password'].errors.minlength ||
+                      signUpEmployeeForm.controls['password'].errors.maxlength">
+            Password contains (8-100) chars
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <h4 class="info-title">Confirm password
+        <span class="required-input-symbol">*</span>
+      </h4>
+      <div class="ui-float-label">
+        <input type="password" pPassword formControlName="passwordConfirm" />
+        <div *ngIf="signUpEmployeeForm.get('passwordConfirm').invalid &&
+                    (signUpEmployeeForm.get('passwordConfirm').dirty || signUpEmployeeForm.get('passwordConfirm').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpEmployeeForm.controls['passwordConfirm'].errors.required">
+            Password is required
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['passwordConfirm'].errors.minlength ||
+                      signUpEmployeeForm.controls['passwordConfirm'].errors.maxlength">
+            Password contains (8-100) chars
+          </div>
+        </div>
+      </div>
+      <hr>
+    </form>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{errorMessage}}
+      <hr class="hr-error-message">
     </div>
+
     <div class="agreement">
-      <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+      <p-checkbox [(ngModel)]="checkedAgreementEmployee" value="false" binary="false"
+         [formControl]="signUpEmployeeForm.controls['checkedAgreementEmployee']"></p-checkbox>
       <a (click)="openInformation()">
         <p class=" title Login_text"> I confirm my agreement </p>
       </a>
     </div>
+
+    <div class="or-section Login_with">
+      <hr class="fd-f1 ">
+      <p class="Login_text"> Sign Up with </p>
+      <hr class="fd-f1 ">
+    </div>
+
+    <div class=fb_google>
+      <div class=fb_google1>
+        <a class="google fd-f" target="_blank">
+          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
+            alt="google">
+        </a>
+      </div>
+
+      <div class=fb_google1>
+        <a class="facebook fd-f" target="_blank">
+          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
+            alt="facabook">
+        </a>
+      </div>
+
+    </div>
+    <div class="footer1"></div>
   </div>
+
   <p-footer>
     <div class="toolbar-sing-up">
-      <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Sing up" class="ui-button-success"></button>
-      <button type="button" pButton icon="pi pi-times" (click)="CloseForm()" label="Cancel" class="ui-button-secondary"></button>
+      <button type="button" pButton icon="pi pi-check" (click)="submitEmployeeSignUp()" [disabled]="signUpEmployeeForm.invalid"
+        label="Sing Up" class="ui-button-success"></button>
+      <button type="button" pButton icon="pi pi-times" (click)="closeForm()" label="Cancel" class="ui-button-secondary"></button>
     </div>
   </p-footer>
+
 </p-dialog>
 
 
+<p-dialog header="Sign Up as Company" [(visible)]="signUpCompany" [modal]="true" [responsive]="true" [width]="540"
+  [minWidth]="200" [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true"
+  [dismissableMask]="false" [baseZIndex]="10000">
 
-<p-dialog header="Sing up company" [(visible)]="display2" [modal]="true" [responsive]="true" [width]="400" [minWidth]="200"
-  [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
-  <div id="authoruzations">
-    <div class="toolbar-sing-up">
-      <button pButton type="button" class="ui-button-secondary" (click)="openSingUpUser1()" label="Sing up user" icon="fa fa-user"></button>
-      <button pButton type="button" class="ui-button-secondary" (click)="openSingUpCompany()" label="Sing up company" icon="fa fa-users"></button>
-    </div>
-    <hr>
-    <h4>Name company*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="chairman" type="text" size="38" pInputText>
-      </span>
-    </div>
-    <hr>
-    <h4>Address of the head office*</h4>
+  <div id="company-authoruzations">
+    <form [formGroup]="signUpCompanyForm" novalidate>
 
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="country" type="text" size="38" pInputText>
-        <label for="country">Country</label>
-      </span>
-      <span class="ui-float-label">
-        <input id="city" type="text" size="38" pInputText>
-        <label for="city">City</label>
-      </span>
-    </div>
-    <span class="ui-float-label">
-      <input id="street" type="text" size="38" pInputText>
-      <label for="street">Street</label>
-    </span>
+      <h4 class="info-title">Company Name<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="companyName" type="text" pInputText formControlName="companyName">
+        <div *ngIf="signUpCompanyForm.get('companyName').invalid &&
+                    (signUpCompanyForm.get('companyName').dirty || signUpCompanyForm.get('companyName').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['companyName'].errors.required">
+            Company Name is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['companyName'].errors.minlength ||
+                      signUpCompanyForm.controls['companyName'].errors.maxlength">
+            Company Name contains (1-200) chars
+          </div>
+        </div>
+      </div>
+      <hr>
 
-    <hr>
-    <h4>Chairman*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="chairman" type="text" size="38" pInputText>
-      </span>
-    </div>
-    <hr>
+      <h4 class="info-title">Boss Name<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="bossName" type="text" pInputText formControlName="bossName">
+        <div *ngIf="signUpCompanyForm.get('bossName').invalid &&
+                    (signUpCompanyForm.get('bossName').dirty || signUpCompanyForm.get('bossName').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['bossName'].errors.required">
+            Boss name is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['bossName'].errors.minlength ||
+                      signUpCompanyForm.controls['bossName'].errors.maxlength">
+            Boss name contains (1-100) chars
+          </div>
+        </div>
+      </div>
+      <hr>
 
-    <h4>Phone*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="phone" type="text" size="38" pInputText>
-      </span>
-    </div>
-    <hr>
+      <h4 class="info-title">Address<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label address">
+        <input id="address" type="text" pInputText formControlName="address">
+        <div *ngIf="signUpCompanyForm.get('address').invalid &&
+                    (signUpCompanyForm.get('address').dirty || signUpCompanyForm.get('address').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['address'].errors.required">
+            Address is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['address'].errors.minlength ||
+                      signUpCompanyForm.controls['address'].errors.maxlength">
+            Address contains (1-200) chars
+          </div>
+        </div>
+      </div>
+      <hr>
 
-    <h4>Short information about company*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <textarea [rows]="5" [cols]="39" pSoftSkills style="resize:none"></textarea>
-      </span>
-    </div>
-    <hr>
+      <h4 class="info-title">Short Description<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input id="shortDescription" type="text" pInputText formControlName="shortDescription">
+        <div *ngIf="signUpCompanyForm.get('shortDescription').invalid &&
+                    (signUpCompanyForm.get('shortDescription').dirty || signUpCompanyForm.get('shortDescription').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['shortDescription'].errors.required">
+            Short Description is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['shortDescription'].errors?.minlength ||
+                      signUpCompanyForm.controls['shortDescription'].errors?.maxlength"
+            class="alert alert-danger">
+            ShortDiscription contains (1-25) chars
+          </div>
+        </div>
+      </div>
+      <hr>
 
-    <h4>Email*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="email" type="text" size="38" pInputText>
-      </span>
-    </div>
-    <hr>
+      <h4 class="info-title">E-Mail
+        <span class="required-input-symbol">*</span>
+      </h4>
+      <div class="ui-float-label">
+        <input id="email" type="text" pInputText formControlName="email">
+        <div *ngIf="signUpCompanyForm.get('email').invalid &&
+                    (signUpCompanyForm.get('email').dirty || signUpCompanyForm.get('email').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['email'].errors.required">
+            E-Mail is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['email'].errors.pattern">
+            E-Mail should match exam@exam.com
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['email'].errors.minlength ||
+                      signUpCompanyForm.controls['email'].errors.maxlength">
+            E-Mail contains (6-254) chars
+          </div>
+        </div>
+      </div>
+      <hr class="hr-email">
 
-    <h4>Password*</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="password" type="text" size="38" pInputText>
-      </span>
-    </div>
-    <hr>
+      <h4 class="info-title">Password
+        <span class="required-input-symbol">*</span>
+      </h4>
+      <div class="ui-float-label">
+        <input type="password" pPassword formControlName="password" />
+        <div *ngIf="signUpCompanyForm.get('password').invalid &&
+                    (signUpCompanyForm.get('password').dirty || signUpCompanyForm.get('password').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['password'].errors.required">
+            Password is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['password'].errors.minlength ||
+                      signUpCompanyForm.controls['password'].errors.maxlength">
+            Password contains (8-100) chars
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h4 class="info-title">Confirm password<span class="required-input-symbol">*</span></h4>
+      <div class="ui-float-label">
+        <input type="password" pPassword formControlName="passwordConfirm" />
+        <div *ngIf="signUpCompanyForm.get('passwordConfirm').invalid &&
+                    (signUpCompanyForm.get('passwordConfirm').dirty || signUpCompanyForm.get('passwordConfirm').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['passwordConfirm'].errors.required">
+            Password is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['passwordConfirm'].errors.minlength ||
+                      signUpCompanyForm.controls['passwordConfirm'].errors.maxlength">
+            Password contains (8-100) chars
+          </div>
+        </div>
+      </div>
+      <hr>
 
-    <h4>Confirn the password *</h4>
-    <div class="sdf">
-      <span class="ui-float-label">
-        <input id="phone" type="text" size="38" pInputText>
-      </span>
+      <h4 class="vacancy-title">Full Description<span class="required-input-symbol">*</span></h4>
+      <div class="text-area">
+        <textarea [rows]="10" pDescription style="resize:none" formControlName="fullDescription" required></textarea>
+
+        <div *ngIf="signUpCompanyForm.get('fullDescription').invalid &&
+                    (signUpCompanyForm.get('fullDescription').dirty || signUpCompanyForm.get('fullDescription').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['fullDescription'].errors.required">
+            FullDescription about company is required
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <h4 class="info-title">Web Site</h4>
+      <div class="ui-float-label">
+        <input id="webSite" type="text" pInputText formControlName="site">
+        <div *ngIf="signUpCompanyForm.get('site').invalid &&
+                    (signUpCompanyForm.get('site').dirty || signUpCompanyForm.get('site').touched)"
+          class="alert alert-danger">
+          <div *ngIf="signUpCompanyForm.controls['site'].errors.minlength ||
+                      signUpCompanyForm.controls['site'].errors.maxlength">
+            Web site should contain (3-100) chars
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['site'].errors.pattern">
+            Should match [http(s)://]domain[.com]
+          </div>
+        </div>
+      </div>
+      <hr class="hr-after-website">
+
+      <h4 class="info-title">Phone</h4>
+      <div class="ui-float-label">
+        <p-inputMask id="phone" mask="(999) 999-9999" formControlName="phone"></p-inputMask>
+      </div>
+      <hr>
+
+      <div>
+        <p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Logo"
+         (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
+
+      </div>
+      <hr>
+      
+    </form>
+
+    <div class="error-message" *ngIf="errorMessage">
+      {{errorMessage}}
+      <hr class="hr-error-message">
     </div>
 
     <div class="agreement">
-      <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
+      <p-checkbox [(ngModel)]="checkedAgreement" value="false" binary="false"
+       [formControl]="signUpCompanyForm.controls['checkedAgreement']"></p-checkbox>
+
       <a (click)="openInformation()">
         <p class="title Login_text"> I confirm my agreement </p>
       </a>
     </div>
   </div>
+  
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Sing up" class="ui-button-success"></button>
-    <button type="button" pButton icon="pi pi-times" (click)="CloseForm()" label="Cancel" class="ui-button-secondary"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="submitCompanySignUp()" label="Sing up"
+     [disabled]="signUpCompanyForm.invalid" class="ui-button-success"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="closeForm()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
+
 </p-dialog>
 
 
-
-<p-dialog header="Information" [(visible)]="display3" [modal]="true" [responsive]="true" [width]="250" [minWidth]="200" [minY]="70"
-  [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true" [baseZIndex]="10000">
+<p-dialog header="Information" [(visible)]="information" [modal]="true" [responsive]="true" [width]="250" [minWidth]="200"
+  [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true"
+  [baseZIndex]="10000">
+  
   <div class="title">
     I confirm my agreement with the Terms of Use of the site joblist.ua and the Privacy Policy
   </div>
+  
   <p-footer>
-    <button type="button" pButton icon="pi pi-times" (click)="CloseForm1()" label="Cancel" class="ui-button-secondary"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="closeInformationForm()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
+
 </p-dialog>

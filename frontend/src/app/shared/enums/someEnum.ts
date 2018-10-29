@@ -1,4 +1,4 @@
-export enum SomeEnum{
+export enum SomeEnum {
 
     Item1 = 0,
     Item2 = 1,

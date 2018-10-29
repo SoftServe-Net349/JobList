@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SomePipe } from './pipes/some.pipe';
 import { SomeDirective } from './directives/some.directive';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // PrimeNG modules
 import { DialogModule } from 'primeng/dialog';
@@ -14,12 +14,16 @@ import { DropdownModule } from 'primeng/dropdown';
 import {SidebarModule} from 'primeng/sidebar';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {MenuModule} from 'primeng/menu';
+import {CalendarModule} from 'primeng/calendar';
 
 // Our created components
 import { AuthorizationsComponent } from '../authorizations/authorizations.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchLineComponent } from './search-line/search-line.component';
+import { InputMaskModule, FileUploadModule, PaginatorModule } from 'primeng/primeng';
+import { InvitationComponent } from '../invitation/invitation.component';
 
 // Our created modules
 
@@ -35,7 +39,13 @@ import { SearchLineComponent } from './search-line/search-line.component';
     PasswordModule,
     SidebarModule,
     PanelMenuModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ReactiveFormsModule,
+    MenuModule,
+    CalendarModule,
+    InputMaskModule,
+    FileUploadModule,
+    PaginatorModule
   ],
   declarations: [
     SomePipe,
@@ -43,16 +53,17 @@ import { SearchLineComponent } from './search-line/search-line.component';
     HeaderComponent,
     FooterComponent,
     SearchLineComponent,
-    AuthorizationsComponent
+    AuthorizationsComponent,
+    InvitationComponent
   ],
+  providers: [],
   exports: [
     CommonModule,
     SomePipe,
     SomeDirective,
     FooterComponent,
     HeaderComponent,
-    SearchLineComponent,
-    AuthorizationsComponent
+    SearchLineComponent
   ]
 })
 export class SharedModule { }

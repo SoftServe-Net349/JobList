@@ -7,7 +7,7 @@ namespace JobList.DataAccess.Entities
         public override int Id { get; set; }
         public string Name { get; set; }
 
-        public IList<User> Users { get; set; }
+        public IList<Employee> Employees { get; set; }
         public IList<Vacancy> Vacancies { get; set; }
     }
 }

@@ -1,0 +1,134 @@
+.container
+    display: grid
+    grid-template-columns: 20% 75%
+    grid-template-areas: "left-side-menu content"
+
+    .left-side-menu
+        margin: 0
+        min-width: 300px
+        width: 20%
+        height: 100%
+        font-family: "Open Sans", "Helvetica Neue", sans-serif
+        border: 1px solid #c8c8c8
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16)
+        position: fixed
+        grid-area: left-side-menu
+
+
+        a 
+            background-color: #fff
+            color: #7C898B
+            display: block
+            text-decoration: none
+            padding: 20px
+
+            i
+                margin-right: 5px 
+
+        a:nth-child(1)
+            margin-top: 80px
+
+        a:hover 
+            background-color: #eaeaea
+            
+        a.active 
+            background-color: #208087
+            color: white
+
+    .content
+        width: 105%
+        margin: 75px 0px 10px 15px
+        grid-area: content
+
+
+// Autocomplete searchline 
+/deep/ .ui-autocomplete
+    display: inline
+
+    /deep/ .ui-inputtext
+        font-size: 14px
+        height: 29px
+        margin-left: 10px
+
+    /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error),
+    /deep/ .ui-inputtext:enabled:hover:not(.ui-state-error)
+         border-color: #208087 !important
+
+    /deep/ .ui-autocomplete-panel
+        left: 10px !important
+        top: 31px !important
+        text-transform: none
+        min-width: 99.3%
+
+        /deep/ .ui-autocomplete-items .ui-autocomplete-list-item.ui-state-highlight
+            background-color: #208087
+
+        /deep/ .ui-autocomplete-items
+            width: 100%
+
+
+// Left dropdown
+/deep/ .left-dropdown .ui-dropdown 
+    height: 28px
+    width: 200px
+    border-radius: 3px
+
+    /deep/ .ui-dropdown-panel .ui-dropdown-items
+        width: 100%
+
+
+// Right dropdown
+/deep/ .right-dropdown p-dropdown
+    position: absolute
+    margin-left: -210px
+    text-align: center
+    margin-top: 1px
+    width: 200px
+
+    /deep/ .ui-dropdown
+        border-top: none
+        border-bottom: none
+        border-right: none
+        border-top-left-radius: 0px
+        border-bottom-left-radius: 0px
+        width: 100% !important
+
+        /deep/ label.ui-dropdown-label
+            height: 100%
+            padding-top: 5px
+
+        /deep/ .ui-dropdown-panel
+            top: 29px !important
+            width: 102%
+
+            /deep/ .ui-dropdown-items
+                width: 100%
+
+
+// Paginator 
+/deep/ p-paginator 
+    /deep/ .ui-paginator
+        width: 100%
+        
+    /deep/ .ui-dropdown
+        margin-top: 0px
+        margin-left: 0px
+        width: auto 
+
+    /deep/ .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active
+        background-color: #208087
+                
+
+// Shared styles
+/deep/ body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item.ui-state-highlight
+    background-color: #208087
+
+/deep/ body .ui-dropdown:not(.ui-state-disabled).ui-state-focus,
+/deep/ body .ui-dropdown:not(.ui-state-disabled):hover
+    border-color: #208087
+
+/deep/ .ui-widget
+    width: 98.8%
+
+/deep/ body .ui-dialog
+    width: 30em

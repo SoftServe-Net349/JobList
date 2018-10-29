@@ -1,24 +1,23 @@
 <div class="header">
   <div class="wrapper">
     <div id="left-side-menu">
-      <a id="home" href="#home">JOBLIST</a>
+      <a routerLink="/" routerLinkActive="active">JOBLIST</a>
       <p>Find job of your dream</p>
     </div>
-    <div *ngIf="isHomeHeader()">
+    <div *ngIf="role === ''">
       <div id="right-side-menu">
-        <a>Find Job</a>
-        <a href="">Resume</a>
-        <a (click)="authorizations.showDialog()">SignIn</a>
+        <a routerLink="/jobsearch" routerLinkActive="active">Find Job</a>
+        <a class="signIn" (click)="menu.toggle($event)">SignIn</a>
+        <p-menu #menu [popup]="true" [model]="signInItems"></p-menu>
       </div>
     </div>
-    <!-- COMANY HEADER -->
-    <div *ngIf="isCompanyHeader()">
+    <!-- COMPANY HEADER -->
+    <div *ngIf="role === 'company'">
       <div id="right-side-menu">
-        <a>Find Resumes</a>
-        <a class="update-info" (click)="companyInfoForm.showInformationForm('Update', company)">Update Info</a>
+        <a routerLink="/resumessearch" routerLinkActive="active">Find Resumes</a>
         <a href="">Vacancies</a>
 
-        <p-sidebar [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
+        <p-sidebar class="profile-sidebar" [(visible)]="visibleForCompany" position="right" [baseZIndex]="10000">
           <h1 class="company-profile">Profile</h1>
           <hr>
           <p-panelMenu [model]="itemsForCompany" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
@@ -31,10 +30,10 @@
       </div>
     </div>
     <!-- RECRUITER HEADER -->
-    <div *ngIf="isRecruiterHeader()">
+    <div *ngIf="role === 'recruiter'">
       <div id="right-side-menu">
-        <a>Find Resumes</a>
-        <p-sidebar [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
+        <a routerLink="/resumessearch" routerLinkActive="active">Find Resumes</a>
+        <p-sidebar class="profile-sidebar" [(visible)]="visibleForRecruiter" position="right" [baseZIndex]="10000">
           <h1 class="company-profile">Profile</h1>
           <hr>
           <p-panelMenu [model]="itemsForRecruiter" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
@@ -46,20 +45,21 @@
         </a>
       </div>
     </div>
-    <!-- USER HEADER -->
-    <div *ngIf="isUserHeader()">
+    <!-- EMPLOYEE HEADER -->
+    <div *ngIf="role === 'employee'">
       <div id="right-side-menu">
-        <a href="">Find Vacancies</a>
-        <a>Invitation</a>
+        <a routerLink="/jobsearch" routerLinkActive="active">Find Vacancies</a>
+        <app-invitation [employeeId]="uId"></app-invitation>
         <a>Favourite Vacancies</a>
 
-        <p-sidebar [(visible)]="visibleForUser" position="right" [baseZIndex]="10000" blockScroll="true">
+        <p-sidebar class="profile-sidebar" [(visible)]="visibleForEmployee" position="right" [baseZIndex]="10000"
+          blockScroll="true">
           <h1 class="company-profile">Profile</h1>
           <hr>
-          <p-panelMenu [model]="itemsForUser" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
+          <p-panelMenu [model]="itemsForEmployee" [multiple]="false" [style]="{'width':'250px'}"></p-panelMenu>
         </p-sidebar>
 
-        <a class="profile" (click)="visibleForUser = true">
+        <a class="profile" (click)="visibleForEmployee = true">
           <span>Profile</span>
           <i class="fa fa-sort-desc"></i>
         </a>
@@ -68,4 +68,4 @@
   </div>
 </div>
 
-<app-authorizations #authorizations></app-authorizations>
+<app-authorizations (chengeAuthenticatedStatus)="chengeAuthenticatedStatus($event)"></app-authorizations>

@@ -20,36 +20,13 @@ export class ResumeDetailsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private resumeService: ResumeService) {
-                this.resume = this.defaultResume();
-               }
+  }
 
   ngOnInit() {
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadResumeById(id);
     });
-  }
-
-  defaultResume(): Resume {
-    return {
-      id: 0,
-      courses: '',
-      createDate: new Date(),
-      educationPeriods: [],
-      experiences: [],
-      facebook: '',
-      familyState: '',
-      github: '',
-      instagram: '',
-      keySkills: '',
-      linkedin: '',
-      modDate: new Date(),
-      resumeLanguages: [],
-      skype: '',
-      softSkills: '',
-      user: null,
-      workArea: null
-    };
   }
 
   loadResumeById(id: number) {
@@ -59,9 +36,15 @@ export class ResumeDetailsComponent implements OnInit {
 
   getLanguages(): string {
     let languages = '';
-    this.resume.resumeLanguages.forEach(rl => {
-      languages =  rl.language.name + ', ' + languages;
-    });
-    return languages.slice(0, languages.length - 2); // to delete the last ,
+    if (this.resume && this.resume.resumeLanguages) {
+      this.resume.resumeLanguages.forEach(rl => {
+        languages =  rl.language.name + ', ' + languages;
+      });
+
+      return languages.slice(0, languages.length - 2); // to delete the last ,
+    }
+
+    return '';
   }
+
 }

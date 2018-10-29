@@ -1,7 +1,6 @@
 h1, h2, h3, h4, h5, h6 
     font: inherit
     color: inherit
-    margin: 0 0 10px
 
 h4 
     display: block
@@ -9,7 +8,7 @@ h4
     margin-inline-end: 0px
     font-weight: bold
 
-#authoruzations
+#authoruzations, #company-authoruzations, #employee-authoruzations
     max-width: 100%
     font-family: "Open Sans","Helvetica Neue",sans-serif
     padding: 15px 25px
@@ -18,12 +17,21 @@ h4
     box-shadow: none
     border-radius: 0
     position: relative
-    
+   
+    /deep/ .ui-inputtext
+        width: 100% !important
+
     .save-forget-password-flex
         font-size: 11px
         padding: 30px 0
         display: flex
         justify-content: space-between
+
+        .icon
+            font-size: 11px
+            display: flex
+            justify-content: center
+            padding: 2px 6px
 
     .Login_with
         display: flex
@@ -42,15 +50,13 @@ h4
         border: none
         background-color: rgba(0,0,0,0.12)
         flex: 1
-
-    .title_main
-        font-size: 14px
-            
+      
     .icon
         font-size: 11px
         display: flex
         justify-content: center
         padding: 2px 6px
+
     .title
         font-size: 11px
         display: flex
@@ -60,13 +66,13 @@ h4
 
     .fb_google  
         display: flex
-        justify-content: space-around
+        justify-content: center
         margin: 10px 10px
         width: 100%
-        padding-top: 10px
+        padding-top: 10px 10px 10px
         margin-left: 0
         margin-right: 0
-    
+   
     .fd-btn-block
         display: flex
         justify-content: center
@@ -75,32 +81,23 @@ h4
         font-family: "Open Sans","Helvetica Neue",sans-serif
         padding-bottom: 20px 20px
         margin-left: 10
-        margin-right: 10
-
-    .sdf
-        margin-top: -7px
+        margin-right: 10 
 
     /deep/ .ui-float-label
+        width: 100%
         margin-top: 20px
         margin-right: 20px
         display: inline-block
 
-    /deep/ .ui-dropdown,/deep/ .ui-multiselect
-        width: 242px
-
-    /deep/ .ui-multiselect
-        .ui-multiselect-panel
-            max-width: 254px
-
     .fb_google1
         display: flex
         justify-content: center
-        margin-bottom: 10px
+        margin-left: 10px
+        margin-right: 10px
         font-size: 10px
     
     .fb_google2
         display: flex
-     
         justify-content: center
         margin-left: 10px
         margin-right: 10px
@@ -109,7 +106,7 @@ h4
     hr 
         border: 0
         height: 1px        
-        margin-top: 15px
+        margin: 25px 0 15px 0
         background: rgba(0,0,0,.12)     
 
     /deep/ .ui-fluid
@@ -122,14 +119,15 @@ h4
             min-width: 3.5em
             font-size: .9em
             padding: 0.5em
-          
-    /deep/ .ui-inputgroup
-        input
-            min-width: 8.5em
 
     /deep/ .ui-button
         margin-left: 10px
+    
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect, /deep/ .ui-calendar
+        width: 100% !important
+        height: 33px
 
+       
     .toolbar-sing-up
         display: flex
         justify-content: center
@@ -142,11 +140,10 @@ h4
         font-size: 14px
         transition: background-color 0.2s
         width: 100%
+        padding-top: 10px
+        margin-top: 25px
         height: 40px
 
-    /deep/ .ui-button-secondary
-        background-color: #C0C0C0
-    
     .agreement
         font-size: 11px
         display: flex
@@ -159,3 +156,74 @@ h4
 
     .footer
         height: 50px
+   
+    .required-input-symbol
+        color: red
+
+    .alert-danger
+        font-size: small
+        font-weight: 500
+        color: red
+        position: absolute
+        width: 100%
+        padding: 3px 2px
+
+    .error-message
+        font-size: small
+        font-weight: 600
+        color: red
+        padding: 3px 2px
+        letter-spacing: .3px
+
+    .hr-error-message
+        margin: 15px 0 15px 0
+
+        
+    input.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
+
+    input.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
+
+    textarea.ng-touched.ng-invalid
+        border: 1px solid red
+        border-radius: 3px
+
+    textarea.ng-touched.ng-valid
+        border: 1px solid green
+        border-radius: 3px
+
+    .hr-email, .hr-after-website
+        margin: 35px 0 15px 0
+	
+#company-authoruzations
+    /deep/ .ui-float-label
+        width: auto
+        margin-top: 20px
+        margin-right: 20px
+        display: inline-block
+
+    /deep/ .ui-inputtext
+        width: 248px !important
+
+    /deep/ .ui-dropdown, /deep/ .ui-multiselect, /deep/ .ui-calendar
+        width: 248px !important
+            
+    /deep/ .ui-dropdown
+        height: 34px
+        width: 248px !important
+        
+    .address
+        width: 100%
+
+        input
+            width: 100% !important
+    
+    .text-area
+        margin-top: 25px
+
+    /deep/ textarea 
+        max-width: 100%
+        width: 100%

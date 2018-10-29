@@ -1,109 +1,145 @@
-<p-dialog [header]="action+ ' Information'" [(visible)]="display" [modal]="true" [responsive]="true" [width]="630" [minWidth]="200" [minY]="70" [focusOnShow]="false"
-[resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="false" [baseZIndex]="10000">
-<div id="information-form">
-	<form [formGroup]="companyInfoForm" novalidate >    
-		<h4 class="info-title">Company Name<span class="required-input-symbol">*</span></h4>
+<p-dialog [header]="action+ ' Information'" [(visible)]="display" [modal]="true" [responsive]="true" [width]="630"
+ [minWidth]="200" [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true"
+ [dismissableMask]="false" [baseZIndex]="10000">
+ 
+	<div id="information-form">
+		<form [formGroup]="companyInfoForm" novalidate>
+
+			<h4 class="info-title">Company Name<span class="required-input-symbol">*</span></h4>
 			<div class="ui-float-label">
-				<input id="companyName" type="text"  pInputText formControlName="companyName"> 
-				<div *ngIf="companyInfoForm.get('companyName').invalid && (companyInfoForm.get('companyName').dirty || companyInfoForm.get('companyName').touched)" class="alert alert-danger">
+				<input id="companyName" type="text" pInputText formControlName="companyName">
+				<div *ngIf="companyInfoForm.get('companyName').invalid &&
+									 (companyInfoForm.get('companyName').dirty || companyInfoForm.get('companyName').touched)"
+				 class="alert alert-danger">
 					<div *ngIf="companyInfoForm.controls['companyName'].errors.required">
 						Company Name is required
 					</div>
-					<div *ngIf="companyInfoForm.controls['companyName'].errors.minlength || companyInfoForm.controls['companyName'].errors.maxlength">
-						Company Name contains (2-200) chars
+					<div *ngIf="companyInfoForm.controls['companyName'].errors.minlength ||
+											companyInfoForm.controls['companyName'].errors.maxlength">
+						Company Name contains (1-200) chars
 					</div>
 				</div>
 			</div>
-		<hr>
+			<hr>
 
-		<h4 class="info-title">Boss Name<span class="required-input-symbol">*</span></h4>
-		<div class="ui-float-label">
-			<input id="bossName" type="text"  pInputText formControlName="bossName"> 
-			<div *ngIf="companyInfoForm.get('bossName').invalid && (companyInfoForm.get('bossName').dirty || companyInfoForm.get('bossName').touched)" class="alert alert-danger">
+			<h4 class="info-title">Boss Name<span class="required-input-symbol">*</span></h4>
+			<div class="ui-float-label">
+				<input id="bossName" type="text" pInputText formControlName="bossName">
+				<div *ngIf="companyInfoForm.get('bossName').invalid &&
+										(companyInfoForm.get('bossName').dirty || companyInfoForm.get('bossName').touched)"
+				 class="alert alert-danger">
 					<div *ngIf="companyInfoForm.controls['bossName'].errors.required">
 						Boss Name is required
 					</div>
-					<div *ngIf="companyInfoForm.controls['bossName'].errors.minlength || companyInfoForm.controls['bossName'].errors.maxlength">
-						Boss Name should contain (2-100) chars
+					<div *ngIf="companyInfoForm.controls['bossName'].errors.minlength ||
+											companyInfoForm.controls['bossName'].errors.maxlength">
+						Boss Name should contain (1-100) chars
 					</div>
-			</div>
-		</div> 
-		<hr>
-
-		<h4 class="info-title">Email<span class="required-input-symbol">*</span></h4>
-		<div class="ui-float-label">
-			<input id="email" type="text"  pInputText formControlName="email"> 
-			<div *ngIf="companyInfoForm.get('email').invalid && (companyInfoForm.get('email').dirty || companyInfoForm.get('email').touched)" class="alert alert-danger">
-				<div *ngIf="companyInfoForm.controls['email'].errors.required">
-					Email is required
-				</div>
-				<div *ngIf="companyInfoForm.controls['email'].errors.email">
-					Email should match sample@example.com
-				</div>
-				<div *ngIf="companyInfoForm.controls['email'].errors.maxlength">
-					Email should contain (5-150) chars
 				</div>
 			</div>
-		</div>
-		<hr class="hr-after-email">
+			<hr>
 
-		<h4 class="info-title">Address<span class="required-input-symbol">*</span></h4>
-		<div class="ui-float-label company-adress-input">
-			<input id="address" type="text"  pInputText formControlName="address"> 
-			<div *ngIf="companyInfoForm.get('address').invalid && (companyInfoForm.get('address').dirty || companyInfoForm.get('address').touched)" class="alert alert-danger">
-				<div *ngIf="companyInfoForm.controls['address'].errors.required">
-					Address is required
-				</div>
-				<div *ngIf="companyInfoForm.controls['address'].errors.minlength || companyInfoForm.controls['address'].errors.maxlength">
-					Address contains (2-200) chars
+			<h4 class="info-title">E-Mail<span class="required-input-symbol">*</span></h4>
+			<div class="ui-float-label">
+				<input id="email" type="text" pInputText formControlName="email">
+				<div *ngIf="companyInfoForm.get('email').invalid &&
+										(companyInfoForm.get('email').dirty || companyInfoForm.get('email').touched)" class="alert alert-danger">
+					<div *ngIf="companyInfoForm.controls['email'].errors.required">
+						Email is required
+					</div>
+					<div *ngIf="companyInfoForm.controls['email'].errors.pattern">
+						Email should match exam@exam.com
+					</div>
+					<div *ngIf="companyInfoForm.controls['email'].errors.maxlength">
+						Email should contain (6-254) chars
+					</div>
 				</div>
 			</div>
-		</div> 
-		<hr>
+			<hr class="hr-after-email">
 
-		<h4 class="info-title">Short Description</h4>
-		<div class="ui-float-label">
-			<input id="shortDescription" type="text"  pInputText formControlName="shortDescription"> 
-			<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength" class="alert alert-danger">
-				ShortDiscription contains (2-25) chars
+			<h4 class="info-title">Address<span class="required-input-symbol">*</span></h4>
+			<div class="ui-float-label company-adress-input">
+				<input id="address" type="text" pInputText formControlName="address">
+				<div *ngIf="companyInfoForm.get('address').invalid &&
+										(companyInfoForm.get('address').dirty || companyInfoForm.get('address').touched)" class="alert alert-danger">
+					<div *ngIf="companyInfoForm.controls['address'].errors.required">
+						Address is required
+					</div>
+					<div *ngIf="companyInfoForm.controls['address'].errors.minlength ||
+											companyInfoForm.controls['address'].errors.maxlength">
+						Address contains (1-200) chars
+					</div>
+				</div>
 			</div>
-		</div>
-		<hr>
+			<hr>
 
-		<h4 class="info-title">Web Site</h4>
-		<div class="ui-float-label">
-			<input id="webSite" type="text"  pInputText formControlName="site"> 
-			<div *ngIf="companyInfoForm.get('site').invalid && (companyInfoForm.get('site').dirty || companyInfoForm.get('site').touched)" class="alert alert-danger">
+			<h4 class="info-title">Short Description<span class="required-input-symbol">*</span></h4>
+			<div class="ui-float-label">
+				<input id="shortDescription" type="text" pInputText formControlName="shortDescription">
+				<div *ngIf="companyInfoForm.get('shortDescription').invalid &&
+										(companyInfoForm.get('shortDescription').dirty || companyInfoForm.get('shortDescription').touched)" 
+										class="alert alert-danger">
+
+					<div *ngIf="companyInfoForm.controls['shortDescription'].errors.required">
+						Short Description is required
+					</div>
+					<div *ngIf="companyInfoForm.controls['shortDescription'].errors?.minlength || companyInfoForm.controls['shortDescription'].errors?.maxlength"
+					 class="alert alert-danger">
+						ShortDiscription contains (1-25) chars
+					</div>
+				</div>
+			</div>
+			<hr>
+
+			<h4 class="info-title">Description<span class="required-input-symbol">*</span></h4>
+			<div class="description-area">
+				<textarea [rows]="5" pDescription style="resize:none" formControlName="fullDescription"></textarea>
+				<div *ngIf="companyInfoForm.get('fullDescription').invalid && 
+										(companyInfoForm.get('fullDescription').dirty || companyInfoForm.get('fullDescription').touched)"
+				 class="alert alert-danger">
+
+					<div *ngIf="companyInfoForm.controls['fullDescription'].errors.required">
+						Full Description is required
+					</div>
+				</div>
+			</div>
+			<hr>
+
+			<h4 class="info-title">Web Site</h4>
+			<div class="ui-float-label">
+				<input id="webSite" type="text" pInputText formControlName="site">
+				<div *ngIf="companyInfoForm.get('site').invalid && 
+										(companyInfoForm.get('site').dirty || companyInfoForm.get('site').touched)" class="alert alert-danger">
 					<div *ngIf="companyInfoForm.controls['site'].errors.minlength || companyInfoForm.controls['site'].errors.maxlength">
-						Web site should contain (2-100) chars
+						Web site should contain (3-100) chars
 					</div>
 					<div *ngIf="companyInfoForm.controls['site'].errors.pattern">
-						Should match [http(s)://]domain.com
+						Should match [http(s)://]domain[.com]
 					</div>
+				</div>
 			</div>
-		</div>
-		<hr class="hr-after-website">
+			<hr class="hr-after-website">
 
-		<h4 class="info-title">Phone</h4>
-		<div class="ui-float-label">
-			<p-inputMask id="phone" mask="(999) 999-9999"  size="33" formControlName="phone"></p-inputMask>
-		</div>
-		<hr>
+			<h4 class="info-title">Phone</h4>
+			<div class="ui-float-label">
+				<p-inputMask id="phone" mask="(999) 999-9999" formControlName="phone"></p-inputMask>
+			</div>
+			<hr>
 
-		<h4 class="info-title">Description</h4>
-		<div class="description-area">
-			<textarea [rows]="5" [cols]="70" pDescription style="resize:none"  formControlName="fullDescription"></textarea>
-		</div>
-		<hr>
+			<div>
+				<p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)"
+				 accept="image/*" maxFileSize="1000000"></p-fileUpload>
+			</div>
 
-		<div>
-			<p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onBasicUploadAuto($event)" auto="true" chooseLabel="Upload Logo"></p-fileUpload>
-		</div>
-	</form> 
-</div>
+		</form>
+	</div>
 
-<p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="submit()" [disabled]="companyInfoForm.invalid" label="Confirm" class="ui-button-success"></button>
-    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
-</p-footer>
+	<p-footer>
+		<button type="button" pButton icon="pi pi-check" (click)="submit()" [disabled]="companyInfoForm.invalid" label="Confirm"
+		 class="ui-button-success"></button>
+		<button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+	</p-footer>
+	
 </p-dialog>
+
+<button type="button" (click)="showInformationForm('Update', company)" pButton icon="pi pi-fw pi-plus" label="Update info"></button>

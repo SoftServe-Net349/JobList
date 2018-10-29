@@ -7,7 +7,8 @@ namespace JobList.Common.Validators
     {
         public CityValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Please specify a valid Name.");
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Please specify a valid Id.");
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(100).WithMessage("Please specify a valid Name.");
         }
     }
 }

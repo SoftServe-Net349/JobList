@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SchoolsController : Controller
     {
@@ -21,6 +22,7 @@ namespace JobList.Controllers
         }
 
         // GET: /schools
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<SchoolDTO>>> Get()
         {
@@ -33,7 +35,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<SchoolDTO>> GetById(int id)
         {
@@ -47,6 +49,7 @@ namespace JobList.Controllers
         }
 
         // POST: /schools
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public virtual async Task<ActionResult<SchoolDTO>> Create([FromBody] SchoolRequest request)
         {
@@ -65,6 +68,7 @@ namespace JobList.Controllers
         }
 
         // PUT: /schools/:id
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]SchoolRequest request)
         {
@@ -83,6 +87,7 @@ namespace JobList.Controllers
         }
 
         // DELETE: /schools/:id
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {

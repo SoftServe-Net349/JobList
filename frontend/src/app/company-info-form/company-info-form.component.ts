@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Company } from '../shared/models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { CompanyRequest } from '../shared/models/company-request.model';
 import { CompanyService } from '../core/services/company.service';
+import { CompanyUpdateRequest } from '../shared/models/company-update-request.model';
 
 @Component({
   selector: 'app-company-info-form',
@@ -13,60 +12,56 @@ import { CompanyService } from '../core/services/company.service';
 export class CompanyInfoFormComponent implements OnInit {
 
   @Output() loadCompanyById = new EventEmitter();
+
+  @Input()
+  company: Company;
+
   companyInfoForm: FormGroup;
 
   display: Boolean = false;
   action: String;
 
-  uploadedFiles: any[] = [];
-
-  company: Company;
+  type: string;
+  uploadedFile: File;
+  dataString: string|ArrayBuffer;
+  base64: string;
 
   constructor(private formBuilder: FormBuilder,
-              private messageService: MessageService,
-              private companyService: CompanyService) {
-
-    this.company = this.defaultCompany();
-
-    this.companyInfoForm = this.formBuilder.group({
-      companyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      bossName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(150)]],
-      phone: [''],
-      shortDescription: ['', [Validators.minLength(2), Validators.maxLength(25)]],
-      site: ['', [Validators.minLength(2), Validators.maxLength(100),
-        Validators.pattern('^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$')]],
-      address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      fullDescription: ['']
-    });
-  }
+              private companyService: CompanyService) {}
 
   ngOnInit() {
+
+    this.companyInfoForm = this.getCompanyInfoFrorm();
+
   }
 
-  defaultCompany(): Company {
-    return {
-      id: 0, name: '',
-      bossName: '',
-      fullDescription: '',
-      shortDescription: '',
-      address: '',
-      phone: '',
-      logoData: [],
-      logoMimetype: '',
-      site: '',
-      email: '',
-      password: '',
-      roleId: 0
-    };
+  getCompanyInfoFrorm(): FormGroup {
+
+    return this.formBuilder.group({
+      companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      bossName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(254),
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+      phone: [''],
+      shortDescription: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
+      site: ['', [Validators.minLength(3), Validators.maxLength(100),
+        Validators.pattern('^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$')]],
+      address: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      fullDescription: ['', [Validators.required]]
+    });
+
   }
 
-  showInformationForm(action: String, company: Company = this.defaultCompany()) {
+  showInformationForm(action: String, company: Company = null) {
+
     this.company = company;
     this.companyInfoForm.reset();
     this.display = true;
     this.action = action;
+    this.uploadedFile = null;
+
     if (action === 'Update') {
+
       this.companyInfoForm.setValue({
         companyName: this.company.name,
         bossName: this.company.bossName,
@@ -77,43 +72,58 @@ export class CompanyInfoFormComponent implements OnInit {
         address: this.company.address,
         fullDescription: this.company.fullDescription
       });
+      this.base64 = this.company.logoData;
+      this.type = this.company.logoMimetype;
     }
 
- }
-
- onUpload(event) {
-  for (const file of event.files) {
-    this.uploadedFiles.push(file);
   }
 
-  this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+  onUpload(event) {
+
+    this.uploadedFile = event.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+     this.dataString = reader.result;
+     this.base64 = this.dataString.toString().split(',')[1];
+    };
+
+    reader.readAsDataURL(this.uploadedFile);
+    this.type = this.uploadedFile.type.toString().split('/')[1];
+
   }
 
   submit() {
+
     if (this.action === 'Update') {
+
       this.updateCompanyInfo();
+
     }
+
     this.display = false;
+
   }
 
   updateCompanyInfo() {
-    const request: CompanyRequest = {
-        name: this.companyInfoForm.get('companyName').value,
-        bossName: this.companyInfoForm.get('bossName').value,
-        email: this.companyInfoForm.get('email').value,
-        phone: this.companyInfoForm.get('phone').value,
-        shortDescription: this.companyInfoForm.get('shortDescription').value,
-        site: this.companyInfoForm.get('site').value,
-        address: this.companyInfoForm.get('address').value,
-        fullDescription: this.companyInfoForm.get('fullDescription').value,
-        password: this.company.password,
-        roleId: this.company.roleId,
-        logoData: this.company.logoData,
-        logoMimetype: this.company.logoMimetype
+
+    const request: CompanyUpdateRequest = {
+      name: this.companyInfoForm.get('companyName').value,
+      bossName: this.companyInfoForm.get('bossName').value,
+      email: this.companyInfoForm.get('email').value,
+      phone: this.companyInfoForm.get('phone').value,
+      shortDescription: this.companyInfoForm.get('shortDescription').value,
+      site: this.companyInfoForm.get('site').value,
+      address: this.companyInfoForm.get('address').value,
+      fullDescription: this.companyInfoForm.get('fullDescription').value,
+      roleId: this.company.role.id,
+      logoData: this.base64,
+      logoMimetype: this.type
     };
 
     this.companyService.update(this.company.id, request)
     .subscribe(data => this.loadCompanyById.emit());
+
   }
 
 }

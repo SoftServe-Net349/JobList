@@ -27,22 +27,41 @@ h4
 	input 
 		width: 100%
 
-input.ng-touched.ng-invalid
-  border: 1px solid red
-  border-radius: 3px
+	input.ng-touched.ng-invalid
+		border: 1px solid red
+		border-radius: 3px
 
-input.ng-touched.ng-valid
-  border: 1px solid green
-  border-radius: 3px
+	input.ng-touched.ng-valid
+		border: 1px solid green
+		border-radius: 3px
 
-.alert-danger
-	font-size: small
-	font-weight: 500
-	color: red
-	position: absolute
-	top: 35px
-	width: 100%
-	padding: 3px 2px
+	.alert-danger
+		font-size: small
+		font-weight: 500
+		color: red
+		position: absolute
+		top: 35px
+		width: 100%
+		padding: 3px 2px
 
-.phone
-	margin-top: 50px !important
+	.phone
+		margin-top: 50px !important
+	
+	/deep/.ui-button.ui-button-icon-only
+		background-color: green
+		display: none
+		
+	/deep/ .ui-fileupload .ui-fileupload-content
+		overflow: hidden
+
+	/deep/ .ui-fileupload-row>div
+		padding: .2em .3em
+
+	.error-message
+		font-size: small
+		font-weight: 600
+		color: red
+		padding: 5px 2px
+		letter-spacing: .3px
+		position: absolute
+

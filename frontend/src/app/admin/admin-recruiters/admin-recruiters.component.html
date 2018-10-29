@@ -1,0 +1,44 @@
+<div class="table-entities">
+    <div class="table-header">
+        <div class="left-dropdown">
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sorting.sortField" placeholder="Sort By" (onChange)="onSortChange($event)"
+                [autoWidth]="false"></p-dropdown>
+        </div>
+
+        <div class="table-autocomplete">
+            <p-autoComplete [(ngModel)]="searchedRecruiter" [suggestions]="recruiters" (onSelect)="select($event)"
+                (completeMethod)="filterRecruiter($event)" (onClear)="clear()" [field]="suggestField" [placeholder]="placeholder"></p-autoComplete>
+        </div>
+
+        <div class="right-dropdown">
+            <p-dropdown [options]="searchOptions" [(ngModel)]="searching.searchField" (onChange)="onSearchFieldChange($event)">
+            </p-dropdown>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th>Picture</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Company</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let recruiter of recruiters">
+            <td><img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Bill_Gates_in_WEF%2C_2007.jpg" alt="" /></td>
+            <td>{{recruiter.firstName}}</td>
+            <td>{{recruiter.lastName}}</td>
+            <td>{{recruiter.email}}</td>
+            <td>{{recruiter.phone}}</td>
+            <td>{{recruiter.company.name}}</td>
+            <td>
+                <button pButton type="button" label="Delete" (click)="deleteConfirm(recruiter.id)" class="ui-button-rounded ui-button-danger"></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
+
+<p-confirmDialog></p-confirmDialog>

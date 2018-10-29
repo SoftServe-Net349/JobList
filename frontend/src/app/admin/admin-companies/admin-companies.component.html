@@ -1,0 +1,42 @@
+<div class="table-entities">
+    <div class="table-header">
+        <div class="left-dropdown">
+            <p-dropdown [options]="sortOptions" [(ngModel)]="sorting.sortField" placeholder="Sort By" (onChange)="onSortChange($event)"
+                [autoWidth]="false"></p-dropdown>
+        </div>
+
+        <div class="table-autocomplete">
+            <p-autoComplete [(ngModel)]="searchedCompany" [suggestions]="companies" (onSelect)="select($event)"
+                (completeMethod)="filterCompanies($event)" (onClear)="clear()" [field]="suggestField" [placeholder]="placeholder"></p-autoComplete>
+        </div>
+
+        <div class="right-dropdown">
+            <p-dropdown [options]="searchOptions" [(ngModel)]="searching.searchField" (onChange)="onSearchFieldChange($event)">
+            </p-dropdown>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Site</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let company of companies">
+            <td><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/SoftServe_logo_new.png" alt="" /></td>
+            <td>{{company.name}}</td>
+            <td>{{company.phone}}</td>
+            <td>{{company.email}}</td>
+            <td>{{company.site}}</td>
+            <td>
+                <button pButton type="button" label="Delete" (click)="deleteConfirm(company.id)" class="ui-button-rounded ui-button-danger"></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" [rowsPerPageOptions]="rowsPerPage"></p-paginator>
+
+<p-confirmDialog></p-confirmDialog>

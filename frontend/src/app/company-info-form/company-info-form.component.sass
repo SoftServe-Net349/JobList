@@ -30,15 +30,20 @@ a
 
 	.description-area
 		margin-top: 20px
+		position: relative
 
 	/deep/ .ui-float-label
 		margin-top: 20px
 		margin-right: 15px
 		display: inline-block
 
-	/deep/ .ui-widget
+	/deep/ .ui-inputtext
 		width: 270px
 
+	/deep/ textarea 
+		max-width: 100%
+		width: 100%
+		
 	/deep/ .company-adress-input
 		.ui-widget
 			max-width: 529px
@@ -64,11 +69,18 @@ input.ng-touched.ng-valid
   border: 1px solid green
   border-radius: 3px
 
+textarea.ng-touched.ng-invalid
+  border: 1px solid red
+  border-radius: 3px
+
+textarea.ng-touched.ng-valid
+  border: 1px solid green
+  border-radius: 3px
+
 .alert-danger
 	font-size: small
 	font-weight: 500
 	color: red
 	position: absolute
-	top: 35px
 	width: 100%
 	padding: 3px 2px

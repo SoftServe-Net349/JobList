@@ -1,31 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.Sorting;
+using JobList.Common.UrlQuery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class VacanciesController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IVacanciesService _vacanciesService;
 
-        public VacanciesController(IVacanciesService vacanciesService)
+        public VacanciesController(IVacanciesService vacanciesService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _vacanciesService = vacanciesService;
         }
 
         // GET: /vacancies
+        [AllowAnonymous]
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery] PaginationUrlQuery urlQuery = null)
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _vacanciesService.GetRangeOfEntitiesAsync(urlQuery);
+            var dtos = await _vacanciesService.GetRangeOfEntitiesAsync(paginationUrlQuery);
             if (!dtos.Any())
             {
                 return NoContent();
@@ -33,9 +40,9 @@ namespace JobList.Controllers
 
             var pageInfo = new PageInfo()
             {
-                PageNumber = urlQuery.PageNumber,
-                PageSize = urlQuery.PageSize,
-                TotalRecords = _vacanciesService.Count
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _vacanciesService.TotalRecords
             };
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
@@ -43,39 +50,76 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("search")]
-        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(string search, string city, [FromQuery]PaginationUrlQuery urlQuery = null)
+        [AllowAnonymous]
+        [HttpGet("filtered")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(
+            [FromQuery]VacancyUrlQuery vacancyUrlQuery = null, 
+            [FromQuery]SearchingUrlQuery searchingUrlQuery = null, 
+            [FromQuery]SortingUrlQuery sortingUrlQuery = null, 
+            [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
-            var dtos = await _vacanciesService.GetAllEntitiesAsync();
+            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(vacancyUrlQuery, searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
 
             if (dtos == null)
             {
                 return NotFound();
             }
 
-            if (!string.IsNullOrEmpty(search))
+            var pageInfo = new PageInfo()
             {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.Name.ToLower()
-                    .Contains(search.ToLower()));
-            }
-            if(!string.IsNullOrEmpty(city))
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _vacanciesService.TotalRecords
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
+            return Ok(dtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("recruiter/{id}/filtered")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(int id, string searchString, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+        {
+            var dtos = await _vacanciesService.GetFilteredEntitiesAsync(id, searchString, paginationUrlQuery);
+
+            if (dtos == null)
             {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.City.Name == city);
+                return NotFound();
             }
 
-            if(urlQuery != null)
+            var pageInfo = new PageInfo()
             {
-                int count = dtos.Count();
-                dtos = dtos.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageSize);
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _vacanciesService.TotalRecords
+            };
 
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+
+            return Ok(dtos);
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet("recruiter/{id}")]
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id, [FromQuery] PaginationUrlQuery urlQuery = null)
+        {
+            var dtos = await _vacanciesService.GetVacanciesByRecruiterIdAsync(id, urlQuery);
+
+
+            if (!dtos.Any())
+            {
+                return NoContent();
+            }
+
+            if (urlQuery != null)
+            {
                 var pageInfo = new PageInfo()
                 {
                     PageNumber = urlQuery.PageNumber,
                     PageSize = urlQuery.PageSize,
-                    TotalRecords = count
+                    TotalRecords = await _vacanciesService.CountAsync(r => r.RecruiterId == id)
                 };
 
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
@@ -84,18 +128,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("recruiter/{id}")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
-        {
-            var dtos = await _vacanciesService.GetVacanciesByRectuiterId(id);
-            if (!dtos.Any())
-            {
-                return NoContent();
-            }
-            return Ok(dtos);
-        }
-
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<VacancyDTO>> GetById(int id)
         {
@@ -109,6 +142,7 @@ namespace JobList.Controllers
         }
 
         // POST: /vacancies
+        [Authorize(Roles = "recruiter, admin")]
         [HttpPost]
         public virtual async Task<ActionResult<VacancyDTO>> Create([FromBody] VacancyRequest request)
         {
@@ -127,9 +161,18 @@ namespace JobList.Controllers
         }
 
         // PUT: /vacancies/:id
+        [Authorize(Roles = "recruiter, admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]VacancyRequest request)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, request.RecruiterId, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -145,9 +188,20 @@ namespace JobList.Controllers
         }
 
         // DELETE: /vacancies/:id
+        [Authorize(Roles = "recruiter, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var entity = await _vacanciesService.GetEntityByIdAsync(id);
+
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, entity.Recruiter.Id, UserOperations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _vacanciesService.DeleteEntityByIdAsync(id);
             if (!result)
             {
@@ -157,4 +211,5 @@ namespace JobList.Controllers
             return NoContent();
         }
     }
+
 }

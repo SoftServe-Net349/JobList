@@ -1,5 +1,4 @@
-﻿
-using JobList.DataAccess.Entities;
+﻿using JobList.DataAccess.Entities;
 
 namespace JobList.DataAccess.Interfaces.Repositories
 {

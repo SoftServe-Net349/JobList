@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// Our modules
 import { HomeRoutingModule } from './home-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { CardModule } from 'primeng/card';
+import { CoreModule } from '../core/core.module';
+
+// Our components
 import { HomeComponent } from './home.component';
 import { MainSearchComponent } from './main-search/main-search.component';
 import { JobSearchComponent } from '../job-search/job-search.component';
@@ -12,19 +18,25 @@ import { ResumesSearchComponent } from '../resumes-search/resumes-search.compone
 import { CompanyDetailsComponent } from '../company-details/company-details.component';
 import { ResumeDetailsComponent } from '../resume-details/resume-details.component';
 import { VacancyDetailsComponent } from '../vacancy-details/vacancy-details.component';
+import { VacanciesListComponent } from '../vacancies-list/vacancies-list.component';
+import { AdminAuthorizationComponent } from '../admin-authorization/admin-authorization.component';
 
+// PrimeNG modules & services
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { SharedModule } from '../shared/shared.module';
-import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import {PaginatorModule} from 'primeng/paginator';
-
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {CalendarModule} from 'primeng/calendar';
+import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { SidebarModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -42,7 +54,15 @@ import {PaginatorModule} from 'primeng/paginator';
     FieldsetModule,
     DialogModule,
     CardModule,
-    PaginatorModule
+    PaginatorModule,
+    CoreModule,
+    KeyFilterModule,
+    CalendarModule,
+    SidebarModule,
+    ToastModule,
+    ConfirmDialogModule,
+    AutoCompleteModule,
+    ReactiveFormsModule
   ],
   declarations: [
     HomeComponent,
@@ -53,7 +73,9 @@ import {PaginatorModule} from 'primeng/paginator';
     ResumesSearchComponent,
     CompanyDetailsComponent,
     ResumeDetailsComponent,
-    VacancyDetailsComponent
+    VacancyDetailsComponent,
+    VacanciesListComponent,
+    AdminAuthorizationComponent
   ]
 })
 export class HomeModule { }

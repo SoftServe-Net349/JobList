@@ -1,24 +1,32 @@
 <aside class="right-job-filters">
   <div id="job-filters">
     <h4 class="filter-title">Work Areas</h4>
-    <p-dropdown [options]="workAreas" [(ngModel)]="selectedWorkArea" placeholder="Select a Work Area" optionLabel="name" filter="true"></p-dropdown>
-    <hr>  
-  
+    <p-dropdown [options]="workAreas" [(ngModel)]="selectedWorkArea" placeholder="Select a Work Area" optionLabel="name"
+      filter="true" (onChange)="filter()"></p-dropdown>
+    <hr>
+
     <h4 class="filter-title">Companies</h4>
-    <p-multiSelect [options]="companies" [(ngModel)]="selectedCompanies" placeholder="Select a Company(-ies)" optionLabel="name" filter="true"></p-multiSelect>
+    <p-multiSelect [options]="companies" [(ngModel)]="selectedCompanies" placeholder="Select a Company(-ies)"
+      optionLabel="name" filter="true" [displaySelectedLabel]="false" (onChange)="filter()"></p-multiSelect>
     <hr>
 
     <h4 class="filter-title">Checked</h4>
     <div class="checked-filter">
-      <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+      <p-inputSwitch [(ngModel)]="checked" (onChange)="filter()"></p-inputSwitch>
       <div class="approved">Checked Vacancies</div>
     </div>
     <hr>
 
     <h4 class="filter-title">Type of Employment</h4>
     <div class="ui-g" style="width:200px;margin-bottom:10px">
-      <div class="ui-g-12"><p-radioButton name="group1" value="Part time" label="Part time" [(ngModel)]="val1" inputId="opt1"></p-radioButton></div>
-      <div class="ui-g-12"><p-radioButton name="group1" value="Full time" label="Full time" [(ngModel)]="val1" inputId="opt2"></p-radioButton></div>
+      <div class="ui-g-12">
+        <p-radioButton name="groupname" label="Part time" value="Part-time" [(ngModel)]="selectedTypeOfEmployment"
+          (click)="filter()"></p-radioButton>
+      </div>
+      <div class="ui-g-12">
+        <p-radioButton name="groupname" label="Full time" value="Full-time" [(ngModel)]="selectedTypeOfEmployment"
+          (click)="filter()"></p-radioButton>
+      </div>
     </div>
     <hr>
 
@@ -27,17 +35,12 @@
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
             <span class="ui-inputgroup-addon">from</span>
-            <input type="text" pInputText placeholder="  Price">   
+            <input type="text" pKeyFilter="money" [(ngModel)] = "salary" pInputText>  
             <span class="ui-inputgroup-addon">$</span>
-            <p-button label="Ok"></p-button>      
+            <p-button label="Ok" (onClick)="filter()"></p-button>      
         </div>
       </div>
     </div>
     <hr>
-
-    <h4 class="filter-title">Cities</h4>
-    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" filter="true"></p-dropdown>
-    <hr>
-
   </div>
 </aside>

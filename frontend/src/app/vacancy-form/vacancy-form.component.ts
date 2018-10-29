@@ -45,15 +45,15 @@ export class VacancyFormComponent implements OnInit {
     this.vacancy = this.defaultVacancy();
 
     this.vacancyForm = this.formBuilder.group({
-      vacancyName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
-      salary: ['', [Validators.pattern('^[0-9 .]{1,30}$'), Validators.maxLength(15)]],
-      city: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(2)]],
-      offering: ['', [Validators.required, Validators.minLength(2)]],
-      requirements: ['', [Validators.required, Validators.minLength(2)]],
-      bePlus: ['', [Validators.minLength(2)]],
-      fullPartTime: ['', [Validators.minLength(2), Validators.maxLength(25)]],
-      workArea: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
+      vacancyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      salary: [''],
+      description: ['', [Validators.required, Validators.minLength(1)]],
+      offering: ['', [Validators.required, Validators.minLength(1)]],
+      requirements: ['', [Validators.required, Validators.minLength(1)]],
+      bePlus: ['', [Validators.minLength(1)]],
+      fullPartTime: ['', [Validators.minLength(1), Validators.maxLength(25)]],
+      workArea: ['', [Validators.required]],
+      city: ['', [Validators.required]]
     });
   }
 
@@ -86,7 +86,7 @@ export class VacancyFormComponent implements OnInit {
       .subscribe((data: City[]) => this.cities = data);
   }
 
-  loadWorkAreas(){
+  loadWorkAreas() {
     this.workAreaService.getAll()
     .subscribe((data: WorkArea[]) => this.workAreas = data);
   }
@@ -123,18 +123,18 @@ export class VacancyFormComponent implements OnInit {
   }
 
   updateVacancy() {
-    const request : VacancyRequest = this.getRequest();
+    const request: VacancyRequest = this.getRequest();
     this.vacancyService.update(this.vacancy.id, request)
       .subscribe(data => this.loadVacancy.emit());
   }
 
-  createVacancy(){
-    const request : VacancyRequest = this.getRequest();
+  createVacancy() {
+    const request: VacancyRequest = this.getRequest();
     this.vacancyService.create(request)
       .subscribe(data => this.loadVacancy.emit());
   }
 
-  getRequest(): VacancyRequest{
+  getRequest(): VacancyRequest {
     return  {
       name: this.vacancyForm.get('vacancyName').value,
       description: this.vacancyForm.get('description').value,
@@ -146,7 +146,7 @@ export class VacancyFormComponent implements OnInit {
       fullPartTime: this.vacancyForm.get('fullPartTime').value,
       createDate: this.vacancy.createDate,
       cityId: this.selectedCity.id,
-      recruiterId:this.recruiterId,
+      recruiterId: this.recruiterId,
       workAreaId: this.selectedWorkArea.id
     };
   }

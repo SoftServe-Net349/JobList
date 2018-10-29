@@ -1,27 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JobList.Authorization;
 using JobList.BusinessLogic.Interfaces;
 using JobList.Common.DTOS;
+using JobList.Common.Errors;
 using JobList.Common.Pagination;
 using JobList.Common.Requests;
+using JobList.Common.UrlQuery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ResumesController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private IResumesService _resumesService;
 
-        public ResumesController(IResumesService resumesService)
+        public ResumesController(IResumesService resumesService, IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _resumesService = resumesService;
         }
 
         // GET: /resumes
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get([FromQuery] PaginationUrlQuery urlQuery = null)
         {
@@ -35,7 +42,7 @@ namespace JobList.Controllers
             {
                 PageNumber = urlQuery.PageNumber,
                 PageSize = urlQuery.PageSize,
-                TotalRecords = _resumesService.Count
+                TotalRecords = await _resumesService.CountAsync()
             };
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
@@ -43,61 +50,62 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [HttpGet("search")]
-        public virtual async Task<ActionResult<IEnumerable<ResumeDTO>>> Get(string search, string city, [FromQuery] PaginationUrlQuery urlQuery = null)
-        {
-            var dtos = await _resumesService.GetAllEntitiesAsync();
+        [Authorize(Roles = "company, recruiter, admin")]
+        [HttpGet("filtered")]
+        public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get([FromQuery]ResumeUrlQuery resumeUrlQuery, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
+       {
+            var dtos = await _resumesService.GetFilteredEntitiesAsync(resumeUrlQuery, paginationUrlQuery);
 
-            if(dtos == null)
+            if (dtos == null)
             {
                 return NotFound();
             }
 
-            if (!string.IsNullOrEmpty(search))
+            var pageInfo = new PageInfo()
             {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.WorkArea.Name.ToLower()
-                    .Contains(search.ToLower()));
-            }
-            if (!string.IsNullOrEmpty(city))
-            {
-                dtos = dtos.Select(d => d)
-                    .Where(d => d.User.City?.Name == city);
-            }
+                PageNumber = paginationUrlQuery.PageNumber,
+                PageSize = paginationUrlQuery.PageSize,
+                TotalRecords = _resumesService.TotalRecords
+            };
 
-            if (urlQuery != null)
-            {
-                int count = dtos.Count();
-                dtos = dtos.Skip(urlQuery.PageSize * (urlQuery.PageNumber - 1))
-                    .Take(urlQuery.PageSize);
-
-                var pageInfo = new PageInfo()
-                {
-                    PageNumber = urlQuery.PageNumber,
-                    PageSize = urlQuery.PageSize,
-                    TotalRecords = count
-                };
-
-                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
-            }
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
 
             return Ok(dtos);
         }
+ 
 
-
+        [Authorize]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<ResumeDTO>> GetById(int id)
         {
-            var dto = await _resumesService.GetEntityByIdAsync(id);
-            if (dto == null)
+            if (User.IsInRole("employee"))
             {
-                return NotFound();
+                var isAuthorized = await _authorizationService
+                                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+                if (!isAuthorized.Succeeded)
+                {
+                    return Forbid();
+                }
+            }
+            try
+            {
+                var dto = await _resumesService.GetEntityByIdAsync(id);
+                if (dto == null)
+                {
+                    return NotFound();
+                }
+                return Ok(dto);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            return Ok(dto);
         }
 
         // POST: /resumes
+        [Authorize(Roles = "employee")]
         [HttpPost]
         public virtual async Task<ActionResult<ResumeDTO>> Create([FromBody] ResumeRequest request)
         {
@@ -116,9 +124,18 @@ namespace JobList.Controllers
         }
 
         // PUT: /resumes/:id
+        [Authorize(Roles = "employee, admin")]
         [HttpPut("{id}")]
         public virtual async Task<ActionResult> Update([FromRoute]int id, [FromBody]ResumeRequest request)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -134,9 +151,18 @@ namespace JobList.Controllers
         }
 
         // DELETE: /resumes/:id
+        [Authorize(Roles = "employee, admin")]
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> Delete(int id)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Delete);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var result = await _resumesService.DeleteEntityByIdAsync(id);
             if (!result)
             {

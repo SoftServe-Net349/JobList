@@ -28,9 +28,10 @@ namespace JobList.DataAccess
         private IResumesRepository _resumesRepository;
         private IRolesRepository _rolesRepository;
         private ISchoolsRepository _schoolsRepository;
-        private IUsersRepository _usersRepository;
+        private IEmployeesRepository _employeesRepository;
         private IVacanciesRepository _vacanciesRepository;
         private IWorkAreasRepository _workAreasRepository;
+        private IInvitationsRepository _invitationsRepository;
 
         public UnitOfWork(JobListDbContext context, IMapper mapper)
         {
@@ -194,16 +195,16 @@ namespace JobList.DataAccess
             }
         }
 
-        public IUsersRepository UsersRepository
+        public IEmployeesRepository EmployeesRepository
         {
             get
             {
-                if (_usersRepository == null)
+                if (_employeesRepository == null)
                 {
-                    _usersRepository = new UsersRepository(_context, _mapper);
+                    _employeesRepository = new EmployeesRepository(_context, _mapper);
                 }
 
-                return _usersRepository;
+                return _employeesRepository;
             }
         }
 
@@ -230,6 +231,19 @@ namespace JobList.DataAccess
                 }
 
                 return _workAreasRepository;
+            }
+        }
+
+        public IInvitationsRepository InvitationsRepository
+        {
+            get
+            {
+                if (_invitationsRepository == null)
+                {
+                    _invitationsRepository = new InvitationsRepository(_context, _mapper);
+                }
+
+                return _invitationsRepository;
             }
         }
 

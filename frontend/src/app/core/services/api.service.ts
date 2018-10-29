@@ -22,11 +22,10 @@ export class ApiService {
             catchError(this.handleError));
   }
 
-  getById(path: string, id: any): Observable<any> {
+  public getById(path: string, id: any): Observable<any> {
     const url = `${environment.server_url}${path}/${id}`;
     return this.http.get(url)
-      .pipe(
-          map(this.extractData),
+      .pipe(map(this.extractData),
           catchError(this.handleError));
   }
 
@@ -40,8 +39,7 @@ export class ApiService {
 
   public post(path: string, body: Object = {}, head: HttpHeaders = new HttpHeaders()): Observable<any> {
     return this.http.post(`${environment.server_url}${path}`, body)
-      .pipe(
-          map(this.extractData),
+      .pipe(map(this.extractData),
           catchError(this.handleError));
   }
 
@@ -70,4 +68,5 @@ export class ApiService {
   private extractData(res: Response): Response | {} {
     return res || { };
   }
+
 }

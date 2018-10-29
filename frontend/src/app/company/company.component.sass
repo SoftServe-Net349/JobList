@@ -3,13 +3,14 @@
   margin: auto
 
   hr 
-    height: 1px;
-    margin: 0;
-    border: none;
-    background-color: rgba(0,0,0,0.12);
+    height: 1px
+    margin: 0
+    border: none
+    background-color: rgba(0,0,0,0.12)
 
   .logo
-    height: 200px
+    max-height: 200px
+    max-width: 1024px
     background: white
     margin-top: 60px
 
@@ -35,12 +36,22 @@
     font-size: 1em
     letter-spacing: .5px
 
+  .add-new-recruiter
+    position: relative
+    margin-top: 50px
+    height: 40px
+    right: 0
+
+    // .position-right
+    //   position: absolute
+    //   right: 0
+
   .recruiter-list
 
     .recruiters-text
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      display: flex
+      justify-content: flex-start
+      align-items: center
       margin: 50px 0
 
       p
@@ -49,7 +60,7 @@
 
     .fd-f1
       flex: 1
-      background-color: rgba(0,0,0,0.5);
+      background-color: rgba(0,0,0,0.5)
 
     ul
       list-style: none
@@ -64,6 +75,7 @@
 
     .avatar
       width: 70px
+      height: 70px
       border-radius: 50%
 
     .recruiter-info
@@ -136,3 +148,7 @@
         display: inline-block
         font-size: 14px
         height: 60px
+
+  .paginator
+    /deep/ .ui-paginator
+      border: none

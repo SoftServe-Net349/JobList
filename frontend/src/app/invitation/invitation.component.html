@@ -1,0 +1,39 @@
+<a class="invitation" (click)="visibleSidebar=true">Invitation <span class="counter">{{invitationCounter}}</span></a>
+
+<p-sidebar class="invitation-sidebar" [(visible)]="visibleSidebar" position="right" [baseZIndex]="10000" [modal]="false"
+  class="invitation-sidebar">
+
+  <h1 class="invitations">Invitations</h1>
+  <hr>
+
+  <div class="invitation-container">
+    <article class="invitation-block" *ngFor="let invitation of invitations">
+
+      <div class="inform">
+        <h3>
+          <a (click)="vacancyDetails(invitation?.vacancy?.id)">{{invitation.vacancy.name}}</a>
+        </h3>
+        <p class="company-name">
+          <a (click)="companyDetails(invitation?.vacancy?.recruiter?.company?.id)">{{invitation.vacancy.recruiter.company.name}}</a>
+        </p>
+        <p class="location">
+          <i class="fa fa-map-marker"></i>
+          {{invitation.vacancy.city.name}}
+        </p>
+        <button pButton type="button" (click)="acceptInvitation(invitation?.id)" label="Accept" class="ui-button-success"></button>
+        <button pButton type="button" (click)="rejectInvitation(invitation?.id)" label="Reject" class="ui-button-secondary"></button>
+      </div>
+
+      <div class="logo">
+        <img [src]="sanitizeCompanyImg(invitation?.recruiter?.company)" (click)="companyDetails(invitation?.vacancy?.recruiter?.company?.id)">
+      </div>
+
+    </article>
+
+    <div class="paginator">
+      <p-paginator [rows]="pageSize" [totalRecords]="invitationCounter" (onPageChange)="paginate($event)"></p-paginator>
+    </div>
+
+  </div>
+
+</p-sidebar>
