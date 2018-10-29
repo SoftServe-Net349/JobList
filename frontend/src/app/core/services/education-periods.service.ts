@@ -11,6 +11,7 @@ export class EducationPeriodsService {
 
   private ctrlUrl = 'educationPeriods';
 
+
   constructor(private apiService: ApiService) {}
 
   getAll(): Observable<EducationPeriod[]> {
@@ -32,5 +33,6 @@ export class EducationPeriodsService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 
 }
