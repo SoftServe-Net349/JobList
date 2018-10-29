@@ -50,7 +50,7 @@ export class AdminEmployeesComponent implements OnInit {
         };
 
         this.pagination = {
-            pageSize: 4,
+            pageSize: 6,
             pageNumber: 1
         };
     }

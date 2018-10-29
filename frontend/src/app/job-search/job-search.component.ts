@@ -65,7 +65,7 @@ export class JobSearchComponent implements OnInit {
 
   getDefaultPaginationParam(): PaginationQuery {
     return {
-      pageSize: 4,
+      pageSize: 10,
       pageNumber: 1
     };
   }

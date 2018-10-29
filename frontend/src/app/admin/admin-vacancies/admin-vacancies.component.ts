@@ -52,7 +52,7 @@ export class AdminVacanciesComponent implements OnInit {
         };
 
         this.pagination = {
-            pageSize: 5,
+            pageSize: 10,
             pageNumber: 1
         };
     }
