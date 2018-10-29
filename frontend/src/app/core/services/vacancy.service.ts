@@ -68,6 +68,7 @@ export class VacancyService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/recruiter/${id}`, params);
   }
 
+
   getFilteredVacancies(id: number, search: string, pageSize: number, pageNumber: number)
   : Observable<HttpResponse<Vacancy[]>> {
     const params = new HttpParams()
