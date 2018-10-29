@@ -48,7 +48,7 @@ export class InvitationComponent implements OnInit {
 
         this.invitationCounter = XPagination.TotalRecords;
 
-      }
+      } else { this.invitationCounter = 0; }
     });
 
   }
