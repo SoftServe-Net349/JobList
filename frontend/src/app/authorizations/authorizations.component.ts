@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup,  FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 import { LoginRequest } from '../shared/models/login-request.model';
 import { AuthHelper } from '../shared/helpers/auth-helper';
@@ -36,7 +36,7 @@ export class AuthorizationsComponent implements OnInit {
 
   uploadedFile: File;
   type: string;
-  dataString: string|ArrayBuffer;
+  dataString: string | ArrayBuffer;
   base64: string;
 
   @Output()
@@ -45,9 +45,7 @@ export class AuthorizationsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private authHelper: AuthHelper,
-              private cityService: CityService) {
-
-  }
+              private cityService: CityService) {}
 
   ngOnInit() {
 
@@ -60,6 +58,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   loadCities() {
+
     this.cityService.getAll()
     .subscribe((data: City[]) => this.cities = data);
   }
@@ -79,7 +78,7 @@ export class AuthorizationsComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
-        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       birthDate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -95,11 +94,11 @@ export class AuthorizationsComponent implements OnInit {
       companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       bossName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(254),
-        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       phone: [''],
       shortDescription: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
       site: ['', [Validators.minLength(3), Validators.maxLength(100),
-        Validators.pattern('^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$')]],
+      Validators.pattern('^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$')]],
       address: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       fullDescription: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
@@ -114,7 +113,7 @@ export class AuthorizationsComponent implements OnInit {
     this.errorMessage = '';
     this.authoruzationsForm.reset();
     this.role = _role;
-    this.authoruzationsForm.setValue({login: _login, password: ''});
+    this.authoruzationsForm.setValue({ login: _login, password: '' });
     this.signInDialog = true;
 
   }
@@ -151,6 +150,7 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   submitSignIn() {
+
     const request: LoginRequest = {
       email: this.authoruzationsForm.get('login').value,
       password: sha512_224(this.authoruzationsForm.get('password').value).toString()
@@ -159,52 +159,56 @@ export class AuthorizationsComponent implements OnInit {
     if (this.role === 'Employee') {
 
       this.authService.employeeLogin(request)
-      .subscribe(token => {
-        this.authHelper.setToken(token);
-        this.chengeAuthenticatedStatus.emit();
-        this.errorMessage = '';
-        this.signInDialog = false;
-      },
-      error => { this.errorMessage = error.error; }
-      );
+        .subscribe(token => {
+          this.authHelper.setToken(token);
+          this.chengeAuthenticatedStatus.emit();
+          this.errorMessage = '';
+          this.signInDialog = false;
+        },
+          error => { this.errorMessage = error.error; }
+        );
 
     } else if (this.role === 'Company') {
 
       this.authService.companyLogin(request)
-      .subscribe(token => {
-        this.authHelper.setToken(token);
-        this.chengeAuthenticatedStatus.emit();
-        this.errorMessage = '';
-        this.signInDialog = false;
-      },
-      error => { this.errorMessage = error.error; }
-      );
+        .subscribe(token => {
+          this.authHelper.setToken(token);
+          this.chengeAuthenticatedStatus.emit();
+          this.errorMessage = '';
+          this.signInDialog = false;
+        },
+          error => { this.errorMessage = error.error; }
+        );
 
     } else if (this.role === 'Recruiter') {
 
       this.authService.recruiterLogin(request)
-      .subscribe(token => {
-        this.authHelper.setToken(token);
-        this.chengeAuthenticatedStatus.emit();
-        this.errorMessage = '';
-        this.signInDialog = false;
-      },
-      error => { this.errorMessage = error.error; }
-      );
+        .subscribe(token => {
+          this.authHelper.setToken(token);
+          this.chengeAuthenticatedStatus.emit();
+          this.errorMessage = '';
+          this.signInDialog = false;
+        },
+          error => { this.errorMessage = error.error; }
+        );
 
     }
 
   }
 
   submitEmployeeSignUp() {
+
     const request: EmployeeRequest = this.getEmployeeRequest();
+
     this.authService.employeeSignUp(request).subscribe(
+
       (data: Employee) => {
         this.errorMessage = '';
         this.signUpEmployee = false;
         this.showSignIn('Employee', data.email); },
+
       error => { this.errorMessage = error.error; }
-      );
+    );
   }
 
   getEmployeeRequest(): EmployeeRequest {
@@ -213,14 +217,15 @@ export class AuthorizationsComponent implements OnInit {
       firstName: this.signUpEmployeeForm.get('firstName').value,
       lastName: this.signUpEmployeeForm.get('lastName').value,
       email: this.signUpEmployeeForm.get('email').value,
-      password:  sha512_224(this.signUpEmployeeForm.get('password').value).toString(),
+      password: sha512_224(this.signUpEmployeeForm.get('password').value).toString(),
       birthDate: this.birthDate,
       cityId: this.selectedCity.id,
       phone: null,
       photoData: null,
       photoMimeType: null,
       roleId: 2,
-      sex: '' };
+      sex: ''
+    };
 
   }
 
@@ -232,9 +237,10 @@ export class AuthorizationsComponent implements OnInit {
       (data: Company) => {
         this.errorMessage = '';
         this.signUpCompany = false;
-        this.showSignIn('Company', data.email); },
+        this.showSignIn('Company', data.email);
+      },
       error => { this.errorMessage = error.error; }
-      );
+    );
 
   }
 
@@ -246,24 +252,30 @@ export class AuthorizationsComponent implements OnInit {
       address: this.signUpCompanyForm.get('address').value,
       fullDescription: this.signUpCompanyForm.get('fullDescription').value,
       email: this.signUpCompanyForm.get('email').value,
-      password:  sha512_224(this.signUpCompanyForm.get('password').value).toString(),
-      logoData:  this.base64,
-      logoMimetype:  this.type,
+      password: sha512_224(this.signUpCompanyForm.get('password').value).toString(),
+      logoData: this.base64,
+      logoMimetype: this.type,
       phone: this.signUpCompanyForm.get('phone').value,
       roleId: 3,
       shortDescription: this.signUpCompanyForm.get('shortDescription').value,
-      site: this.signUpCompanyForm.get('site').value };
+      site: this.signUpCompanyForm.get('site').value
+    };
 
   }
 
   onUpload(event) {
+
     this.uploadedFile = event.files[0];
     const reader = new FileReader();
+
     reader.onload = () => {
-     this.dataString = reader.result;
-     this.base64 = this.dataString.toString().split(',')[1];
+      this.dataString = reader.result;
+      this.base64 = this.dataString.toString().split(',')[1];
     };
+
     reader.readAsDataURL(this.uploadedFile);
     this.type = this.uploadedFile.type.toString().split('/')[1];
+
   }
+
 }

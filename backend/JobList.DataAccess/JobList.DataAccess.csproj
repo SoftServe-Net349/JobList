@@ -14,6 +14,7 @@
     <Compile Remove="Migrations\20180926074116_Initial.cs" />
     <Compile Remove="Migrations\20181025153515_init.cs" />
     <Compile Remove="Migrations\20181025183553_Initial.cs" />
+    <Compile Remove="Migrations\20181029125737_Initial.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobList.Common\JobList.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

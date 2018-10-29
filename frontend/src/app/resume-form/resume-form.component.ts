@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../shared/models/employee.model';
 import { WorkAreaService } from '../core/services/work-area.service';
@@ -29,6 +30,7 @@ import { EmployeeUpdateRequest } from '../shared/models/employee-update-request.
   templateUrl: './resume-form.component.html',
   styleUrls: ['./resume-form.component.sass']
 })
+
 export class ResumeFormComponent implements OnInit {
   FormEducation: FormGroup;
   FormExperience: FormGroup;
@@ -81,6 +83,7 @@ export class ResumeFormComponent implements OnInit {
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadResumeById(id);
+
 
       this.FormEducation = this.formBuilder.group({
         FrontEnd: [''],
@@ -156,8 +159,10 @@ export class ResumeFormComponent implements OnInit {
     .subscribe((data: Resume) => this.resume = data);
   }
 
+
   defaultResumeForm(): FormGroup {
     return this.formBuilder.group({
+
       familyState: ['', [Validators.minLength(1), Validators.maxLength(20)]],
       softSkills: [''],
       keySkills: [''],

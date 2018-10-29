@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Company } from '../shared/models/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { CompanyService } from '../core/services/company.service';
 import { CompanyUpdateRequest } from '../shared/models/company-update-request.model';
 
@@ -28,10 +27,7 @@ export class CompanyInfoFormComponent implements OnInit {
   base64: string;
 
   constructor(private formBuilder: FormBuilder,
-              private messageService: MessageService,
-              private companyService: CompanyService) {
-
-  }
+              private companyService: CompanyService) {}
 
   ngOnInit() {
 
@@ -45,7 +41,7 @@ export class CompanyInfoFormComponent implements OnInit {
       companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       bossName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(254),
-        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       phone: [''],
       shortDescription: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
       site: ['', [Validators.minLength(3), Validators.maxLength(100),
@@ -63,6 +59,7 @@ export class CompanyInfoFormComponent implements OnInit {
     this.display = true;
     this.action = action;
     this.uploadedFile = null;
+
     if (action === 'Update') {
 
       this.companyInfoForm.setValue({
@@ -123,6 +120,7 @@ export class CompanyInfoFormComponent implements OnInit {
       logoData: this.base64,
       logoMimetype: this.type
     };
+
     this.companyService.update(this.company.id, request)
     .subscribe(data => this.loadCompanyById.emit());
 

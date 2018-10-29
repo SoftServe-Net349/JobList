@@ -11,6 +11,7 @@ import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Injectable()
 export class RecruiterService {
+
   private ctrlUrl = 'recruiters';
 
   constructor(private apiService: ApiService) {
@@ -48,7 +49,7 @@ export class RecruiterService {
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/company/${id}`, params);
   }
 
-  getByCompanyIdSearchStringWithPagination(id: number, search: string, pageSize: number, pageNumber: number)
+  getFilteredRecruiters(id: number, search: string, pageSize: number, pageNumber: number)
   : Observable<HttpResponse<Recruiter[]>> {
     const params = new HttpParams()
       .set('searchString', search)
@@ -68,4 +69,5 @@ export class RecruiterService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

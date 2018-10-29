@@ -3,7 +3,9 @@ import { InvitationHubService } from '../core/hubs/invitation.hub';
 import { AuthHelper } from '../shared/helpers/auth-helper';
 import { InvitationService } from '../core/services/invitation.service';
 import { Invitation } from '../shared/models/invitation.model';
-import { Paginator } from 'primeng/primeng';
+import { Router } from '@angular/router';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
+import { Company } from '../shared/models/company.model';
 
 @Component({
   selector: 'app-invitation',
@@ -23,7 +25,9 @@ export class InvitationComponent implements OnInit {
 
   constructor(private invitationHub: InvitationHubService,
               private authHelper: AuthHelper,
-              private invitationService: InvitationService) { }
+              private invitationService: InvitationService,
+              private router: Router,
+              private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
 
@@ -89,4 +93,33 @@ export class InvitationComponent implements OnInit {
     .subscribe(data => { this.loadInvitations(); });
 
   }
+
+  vacancyDetails(id: number) {
+
+    this.router.navigate(['/vacancy-details', id]);
+
+  }
+
+  companyDetails(id: number) {
+
+    this.router.navigate(['/company-details', id]);
+
+  }
+
+  sanitizeCompanyImg(company: Company): SafeUrl {
+
+    if (company !== undefined && company !== null && company.logoData !== undefined &&
+        company.logoData !== null && company.logoData !== '') {
+
+      return this._sanitizer.bypassSecurityTrustUrl(`data:image/${company.logoMimetype};base64,` + company.logoData);
+
+    } else {
+
+      return '../../images/yourLogoHere.png';
+
+    }
+
+  }
+
+
 }

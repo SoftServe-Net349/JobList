@@ -15,7 +15,7 @@ using JobList.Common.UrlQuery;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EmployeesController : Controller
     {
@@ -29,7 +29,7 @@ namespace JobList.Controllers
         }
 
         // GET: /employees
-        [Authorize]
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> Get()
         {
@@ -42,7 +42,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered([FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
@@ -66,10 +66,18 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        [Authorize(Roles = "employee, admin")]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<EmployeeDTO>> GetById(int id)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var dto = await _employeesService.GetEntityByIdAsync(id);
             if (dto == null)
             {

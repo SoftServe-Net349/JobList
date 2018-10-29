@@ -54,7 +54,7 @@ export class VacanciesListComponent implements OnInit {
 
   loadVacanciesByRecruiterId() {
 
-      this.vacancyService.getByRecruiterIdSearchStringWithPagination(this.uId,
+      this.vacancyService.getFilteredVacancies(this.uId,
         this.searchString,
         this.pagination.pageSize,
         this.pagination.pageNumber)

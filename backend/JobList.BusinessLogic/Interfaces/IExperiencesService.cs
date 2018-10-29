@@ -13,8 +13,6 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<ExperienceDTO> CreateEntityAsync(ExperienceRequest modelRequest);
 
-        Task<IEnumerable<ExperienceDTO>> GetExperiencesByResumeId(int id);
-
         Task<bool> UpdateEntityByIdAsync(ExperienceRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);

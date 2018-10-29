@@ -17,11 +17,16 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<IEnumerable<VacancyDTO>> GetRangeOfEntitiesAsync(PaginationUrlQuery urlQuery = null);
 
-        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, SearchingUrlQuery searchingUrlQuery = null, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
+        Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null, 
+                                                               SearchingUrlQuery searchingUrlQuery = null, 
+                                                               SortingUrlQuery sortingUrlQuery = null, 
+                                                               PaginationUrlQuery paginationUrlQuery = null);
 
         Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(int? recruiterId, 
                                                                string searchString,
                                                                PaginationUrlQuery paginationUrlQuery = null);
+
+        Task<IEnumerable<VacancyDTO>> GetVacanciesByRecruiterIdAsync(int recruiterId, PaginationUrlQuery urlQuery = null);
 
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 
@@ -30,9 +35,7 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> UpdateEntityByIdAsync(VacancyRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
-
-        Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id);
-
+        
         Task<int> CountAsync(Expression<Func<Vacancy, bool>> predicate = null);
 
         int TotalRecords { get; }

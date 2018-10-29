@@ -66,7 +66,6 @@ namespace JobList
                     o.Issuer = tokensSection["Issuer"];
                     o.Audience = tokensSection["Audience"];
                     o.Access_Token_Lifetime = Convert.ToInt32(tokensSection["Access_Token_Lifetime"]);
-                    o.Refresh_Token_Lifetime = Convert.ToInt32(tokensSection["Refresh_Token_Lifetime"]);
                     o.Security_Key = tokensSection["Key"];
                 });
 

@@ -237,7 +237,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.CityId, f => f.PickRandom(cities).Id)
                 .RuleFor(o => o.WorkAreaId, f => f.PickRandom(workAreas).Id);
 
-            var vacancies = vacancyFaker.Generate(amount + 2).ToArray();
+            var vacancies = vacancyFaker.Generate(1000).ToArray();
             vacancies[amount - 1] = fullVacancy1;
             vacancies[amount] = fullVacancy2;
 
@@ -330,7 +330,7 @@ namespace JobList.DataAccess.Data
                 .RuleFor(o => o.VacancyId, f => f.PickRandom(vacancies).Id)
                 .RuleFor(o => o.EmployeeId, f => f.PickRandom(employees).Id);
 
-            var favoriteVacancies = favoriteVacancyFaker.Generate(amount).ToArray();
+            var favoriteVacancies = favoriteVacancyFaker.Generate(10).ToArray();
 
             var invitationFaker = new Faker<Invitation>()
                 .RuleFor(o => o.Id, f => f.UniqueIndex)

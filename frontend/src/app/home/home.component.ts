@@ -9,11 +9,15 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   public href: String = '';
+  isShow = true;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
     this.href = this.router.url;
-  }
 
+    if (this.href === '/admin') {
+      this.isShow = false;
+    }
+  }
 }

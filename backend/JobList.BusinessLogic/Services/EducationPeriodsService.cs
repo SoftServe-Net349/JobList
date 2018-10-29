@@ -69,18 +69,6 @@ namespace JobList.BusinessLogic.Services
             return dto;
         }
 
-        public async Task<IEnumerable<EducationPeriodDTO>> GetEducationPeriodsByResumeId(int id)
-        {
-            var entities = await _uow.EducationPeriodsRepository.GetRangeAsync(filter: r => r.ResumeId == id,
-                  include: r => r.Include(v => v.Resume)
-                                .Include(v => v.School)
-                                .Include(v => v.Faculty));
-            if (entities == null) return null;
-
-            var dtos = _mapper.Map<List<EducationPeriod>, List<EducationPeriodDTO>>(entities);
-            return dtos;
-        }
-
         public async Task<bool> UpdateEntityByIdAsync(EducationPeriodRequest modelRequest, int id)
         {
             var entity = _mapper.Map<EducationPeriodRequest, EducationPeriod>(modelRequest);

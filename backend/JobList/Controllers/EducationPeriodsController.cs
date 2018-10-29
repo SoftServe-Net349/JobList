@@ -8,14 +8,9 @@ using JobList.Common.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
-
-
-
-
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EducationPeriodsController : Controller
     {
@@ -101,6 +96,7 @@ namespace JobList.Controllers
             return NoContent();
         }
 
+
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<IEnumerable<EducationPeriodDTO>>> GetEducationPeriodsByResumeId(int id)
         {
@@ -111,6 +107,7 @@ namespace JobList.Controllers
             }
             return Ok(dtos);
         }
+
 
         // DELETE: /educationPeriods/:id
         [Authorize(Roles = "employee, admin")]

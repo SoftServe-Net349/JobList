@@ -9,10 +9,10 @@ import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
 @Injectable()
 export class ResumeService {
+
   private ctrlUrl = 'resumes';
 
-  constructor(private apiService: ApiService) {
-  }
+  constructor(private apiService: ApiService) {}
 
   getFullResponse(pageSize: number, pageNumber: number): Observable<HttpResponse<Resume[]>> {
     const params = new HttpParams()
@@ -59,7 +59,7 @@ export class ResumeService {
 
   getById(id: number): Observable<Resume> {
     return this.apiService.get(`/${this.ctrlUrl}/${id}`);
-}
+  }
 
   create(request: ResumeRequest): Observable<Resume> {
     return this.apiService.post(`/${this.ctrlUrl}`, request);
@@ -72,4 +72,5 @@ export class ResumeService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 }

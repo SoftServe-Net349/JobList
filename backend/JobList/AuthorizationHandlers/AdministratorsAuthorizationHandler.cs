@@ -18,7 +18,7 @@ namespace JobList.AuthorizationHandlers
                 return Task.CompletedTask;
             }
 
-            // Administrators can do anything.
+            // Administrators can do everything.
             if (context.User.IsInRole("admin"))
             {
                 context.Succeed(requirement);

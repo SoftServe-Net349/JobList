@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace JobList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class VacanciesController : Controller
     {
@@ -54,7 +54,8 @@ namespace JobList.Controllers
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(
             [FromQuery]VacancyUrlQuery vacancyUrlQuery = null, 
-            [FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null, 
+            [FromQuery]SearchingUrlQuery searchingUrlQuery = null, 
+            [FromQuery]SortingUrlQuery sortingUrlQuery = null, 
             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
         {
             var dtos = await _vacanciesService.GetFilteredEntitiesAsync(vacancyUrlQuery, searchingUrlQuery, sortingUrlQuery, paginationUrlQuery);
@@ -75,6 +76,7 @@ namespace JobList.Controllers
 
             return Ok(dtos);
         }
+
         [AllowAnonymous]
         [HttpGet("recruiter/{id}/filtered")]
         public virtual async Task<ActionResult<IEnumerable<VacancyDTO>>> Get(int id, string searchString, [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
@@ -101,13 +103,28 @@ namespace JobList.Controllers
 
         [AllowAnonymous]
         [HttpGet("recruiter/{id}")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id, [FromQuery] PaginationUrlQuery urlQuery = null)
         {
-            var dtos = await _vacanciesService.GetVacanciesByRectuiterId(id);
+            var dtos = await _vacanciesService.GetVacanciesByRecruiterIdAsync(id, urlQuery);
+
+
             if (!dtos.Any())
             {
                 return NoContent();
             }
+
+            if (urlQuery != null)
+            {
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = urlQuery.PageNumber,
+                    PageSize = urlQuery.PageSize,
+                    TotalRecords = await _vacanciesService.CountAsync(r => r.RecruiterId == id)
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+            }
+
             return Ok(dtos);
         }
 
