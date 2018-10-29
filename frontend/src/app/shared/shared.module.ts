@@ -63,8 +63,7 @@ import { InvitationComponent } from '../invitation/invitation.component';
     SomeDirective,
     FooterComponent,
     HeaderComponent,
-    SearchLineComponent,
-    AuthorizationsComponent
+    SearchLineComponent
   ]
 })
 export class SharedModule { }

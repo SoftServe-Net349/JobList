@@ -18,6 +18,7 @@ export class TokenService {
   }
 
   refreshToken(role: string, request: RefreshTokenRequest): Observable<Token> {
+    if (role === 'admin') { role = 'employee'; }
     return this.apiService.post(`/${role + this.ctrlUrl}/refresh`, request);
   }
 
