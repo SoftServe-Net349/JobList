@@ -1,6 +1,38 @@
 .resumes-search
     background: #f4f4f4
- 
+
+    .searchlabels
+        font-family: "Graphik Regular",sans-serif
+        margin: auto
+        width: 1024px
+
+        .searchlabels-label 
+            background-color: hsla(0,0%,100%,.8)
+            display: inline-block
+            border: 1px solid rgba(0,0,0,.54)
+            margin-right: 20px
+            margin-top: 5px
+            margin-bottom: 5px
+            border-radius: 2px
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, .5)
+
+            .searchlabels-label-txt
+                font-size: 15px
+                margin: 0
+                padding: 5px 15px
+                letter-spacing: .3px
+
+            i
+                margin-left: 8px
+                cursor: pointer
+                font-size: 12px
+                display: inline-block
+
+        .searchlabels-button
+            font-size: 13px
+            padding: 0px 15px
+            height: 32px
+
     .container
         margin: auto
         padding: 15px 0px
@@ -11,9 +43,6 @@
         grid-column-gap: 24px
         grid-template-areas: "vacancy-list filter" 
 
-        .filter-container
-            max-width: 300px
-            grid-area: filter
 
         .resume-container
             grid-area: vacancy-list
@@ -31,14 +60,13 @@
             display: flex
             justify-content: space-between
             border-bottom: 1px solid rgba(0,0,0,.12)
-            padding: 30px 0px  
+            padding: 30px 0px
 
             .inform
                 width: 460px
                 font-family: "Graphik Medium",sans-serif 
 
                 .person-inform
-                    a
                     a:hover
                         color: #f47442
                         margin-right: 20px
@@ -78,12 +106,3 @@
                 span
                     font-size: 13px
                     color: #777
-
-
-
-        
-
-    
-                
-                    
-                

@@ -13,8 +13,7 @@ namespace JobList.DataAccess.Data
             : base(options)
         {
         }
-
-
+        
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<EducationPeriod> EducationPeriods { get; set; }
@@ -30,6 +29,7 @@ namespace JobList.DataAccess.Data
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Vacancy> Vacancies { get; set; }
         public virtual DbSet<WorkArea> WorkAreas { get; set; }
+        public virtual DbSet<Invitation> Invitations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,14 +49,6 @@ namespace JobList.DataAccess.Data
                     .IsRequired()
                     .HasColumnName("NAME")
                     .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PhotoData)
-                .HasColumnName("PHOTO_DATA");
-
-                entity.Property(e => e.PhotoMimetype)
-                    .HasColumnName("PHOTO_MIMETYPE")
-                    .HasMaxLength(5)
                     .IsUnicode(false);
 
             });
@@ -267,6 +259,29 @@ namespace JobList.DataAccess.Data
                     .HasForeignKey(d => d.VacancyId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_FAVORITE_VACANCIES_TO_VACANCIES");
+            });
+
+            modelBuilder.Entity<Invitation>(entity =>
+            {
+                entity.ToTable("INVITATIONS");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
+
+                entity.Property(e => e.VacancyId).HasColumnName("VACANCY_ID");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.Invitations)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_INVITATIONS_TO_EMPLOYEES");
+
+                entity.HasOne(d => d.Vacancy)
+                    .WithMany(p => p.Invitations)
+                    .HasForeignKey(d => d.VacancyId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_INVITATIONS_TO_VACANCIES");
             });
 
             modelBuilder.Entity<Language>(entity =>
@@ -713,13 +728,6 @@ namespace JobList.DataAccess.Data
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PhotoData)
-                    .HasColumnName("PHOTO_DATA");
-
-                entity.Property(e => e.PhotoMimetype)
-                    .HasColumnName("PHOTO_MIMETYPE")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Seed();

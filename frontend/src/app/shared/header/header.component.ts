@@ -43,9 +43,9 @@ export class HeaderComponent implements OnInit {
     this.activeRoute.params.forEach( (params: Params) =>  this.index = params.id);
 
     this.signInItems = [
-      {label: 'Sign In for Employee', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('Employee'); }},
-      {label: 'Sign In for Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
-      {label: 'Sign In for Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
+      {label: 'Sign In as Employee', icon: 'fa fa-user', command: (event) => { this.authorizations.showSignIn('Employee'); }},
+      {label: 'Sign In as Company', icon: 'fa fa-building', command: (event) => { this.authorizations.showSignIn('Company'); }},
+      {label: 'Sign In as Recruiter', icon: 'fa fa-user-circle-o', command: (event) => { this.authorizations.showSignIn('Recruiter'); }}
     ];
 
     this.itemsForCompany = this.getItemsForCompany();
@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Home',
         icon: 'fa fa-home',
-        command: (event) => { this.router.navigate(['/companies', this.uId]); }
+        command: (event) => {this.router.navigate(['/companies', this.uId]); }
       },
       {
         label: 'Settings',
@@ -135,11 +135,13 @@ export class HeaderComponent implements OnInit {
       const token = this.authHelper.getToken();
       const decodeToken = this.jwtHelper.decodeToken(token);
       this.role = decodeToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+      this.uId = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     } else {
+
       this.role = '';
       this.uId = 0;
+
     }
   }
 }

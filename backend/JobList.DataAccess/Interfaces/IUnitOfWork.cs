@@ -20,7 +20,7 @@ namespace JobList.DataAccess.Interfaces
         IEmployeesRepository EmployeesRepository { get; }
         IVacanciesRepository VacanciesRepository { get; }
         IWorkAreasRepository WorkAreasRepository { get; }
-
+        IInvitationsRepository InvitationsRepository { get; }
 
         Task<bool> SaveAsync();
     }

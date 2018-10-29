@@ -26,8 +26,13 @@ import { FieldsetModule } from 'primeng/fieldset';
 import {PaginatorModule} from 'primeng/paginator';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {CalendarModule} from 'primeng/calendar';
+import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 import { CoreModule } from '../core/core.module';
+import { VacanciesListComponent } from '../vacancies-list/vacancies-list.component';
+import { SidebarModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -48,7 +53,11 @@ import { CoreModule } from '../core/core.module';
     PaginatorModule,
     CoreModule,
     KeyFilterModule,
-    CalendarModule
+    CalendarModule,
+    SidebarModule,
+    ToastModule,
+    ConfirmDialogModule,
+    AutoCompleteModule
   ],
   declarations: [
     HomeComponent,
@@ -59,7 +68,8 @@ import { CoreModule } from '../core/core.module';
     ResumesSearchComponent,
     CompanyDetailsComponent,
     ResumeDetailsComponent,
-    VacancyDetailsComponent
+    VacancyDetailsComponent,
+    VacanciesListComponent
   ]
 })
 export class HomeModule { }

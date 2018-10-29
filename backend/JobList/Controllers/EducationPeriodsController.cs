@@ -101,7 +101,7 @@ namespace JobList.Controllers
             return NoContent();
         }
 
-        [HttpGet("resume/{id}")]
+        [HttpGet("{id}")]
         public virtual async Task<ActionResult<IEnumerable<EducationPeriodDTO>>> GetEducationPeriodsByResumeId(int id)
         {
             var dtos = await _educationPeriodsService.GetEducationPeriodsByResumeId(id);

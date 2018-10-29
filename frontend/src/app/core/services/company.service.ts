@@ -5,6 +5,9 @@ import { CompanyRequest } from '../../shared/models/company-request.model';
 import { ApiService } from './api.service';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { CompanyUpdateRequest } from '../../shared/models/company-update-request.model';
+import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
+import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
+import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 
 @Injectable()
 export class CompanyService {
@@ -13,15 +16,14 @@ export class CompanyService {
   constructor(private apiService: ApiService) {
   }
 
-  getFullResponse(searchString: string, searchField: string, sortField: string,
-    sortOrder: boolean, pageSize: number, pageNumber: number): Observable<HttpResponse<Company[]>> {
+  getFullResponse(searching: SearchingQuery, sorting: SortingQuery, pagination: PaginationQuery): Observable<HttpResponse<Company[]>> {
     const params = new HttpParams()
-      .set('sortField', sortField)
-      .set('sortOrder', sortOrder.toString())
-      .set('pageSize', pageSize.toString())
-      .set('pageNumber', pageNumber.toString())
-      .set('searchString', searchString)
-      .set('searchField', searchField);
+      .set('sortField', sorting.sortField)
+      .set('sortOrder', sorting.sortOrder.toString())
+      .set('pageSize', pagination.pageSize.toString())
+      .set('pageNumber', pagination.pageNumber.toString())
+      .set('searchString', searching.searchString)
+      .set('searchField', searching.searchField);
 
     return this.apiService.getFullResponse(`/${this.ctrlUrl}/filtered`, params);
   }

@@ -19,9 +19,9 @@ getAll(): Observable<Experience[]> {
     return this.apiService.get(`/${this.ctrlUrl}`);
 }
 
-getExperienceByResumeId(id: number): Observable<Experience[]> {
-  return this.apiService.get(`/${this.ctrlUrl}/resume/${id}`);
-}
+// getExperienceByResumeId(id: number): Observable<Experience[]> {
+//   return this.apiService.get(`/${this.ctrlUrl}/resume/${id}`);
+// }
 
 
 getById(id: number): Observable<Experience> {

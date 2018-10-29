@@ -1,0 +1,35 @@
+<p-sidebar [(visible)]="visibleSidebar" position="right" [baseZIndex]="10000" [modal]="false" class="vacancies-list-sidebar">
+    <h1 class="vacancies">Send Invitation</h1>
+    <hr>
+    <div class="vacancy-search">
+      <p-autoComplete class="vacancy-autocomplete" [(ngModel)]="searchedVacancy" [suggestions]="vacancies" (onSelect)="select($event)"
+      (completeMethod)="filterVacancies($event)" (onClear)="clear()" [field]="suggestField" [placeholder]="placeholder"></p-autoComplete>
+    </div>
+    <div class="vacancy-container" *ngIf="vacancies?.length > 0">
+      <article class="vacancy-block" *ngFor="let vacancy of vacancies">
+        <div class="inform">
+          <h3>
+            <a class="vacancy-name" (click)="vacancyDetails(vacancy?.id)">{{vacancy?.name}}</a>
+          </h3>
+          <p class="company-name">
+            <a (click)="companyDetails(vacancy?.recruiter?.company?.id)">{{vacancy?.recruiter?.company?.name}}</a>
+          </p>
+          <p class="location">
+            <i class="fa fa-map-marker"></i>
+            {{vacancy?.city?.name}}
+          </p>
+          <button pButton type="button" (click)="confirmDialog(vacancy)" label="Attach" class="ui-button-success"></button> 
+        </div>
+        <div class="logo">
+          <img src="https://logo-frankfurt.cf-rabota.com.ua/959_20180227113934.png" (click)="companyDetails(vacancy?.recruiter?.company?.id)">
+        </div>
+      </article>
+      <div class="paginator">
+        <p-paginator #p [rows]="pagination.pageSize" [totalRecords]="totalRecords" (onPageChange)="paginate($event)"></p-paginator>
+      </div>    
+    </div>
+  
+</p-sidebar>
+<p-confirmDialog></p-confirmDialog>
+
+<p-toast [style]="{marginTop: '60px'}" position="top-left"></p-toast>
