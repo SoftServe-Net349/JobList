@@ -61,6 +61,11 @@ export class ResumeFormComponent implements OnInit {
   selectedLanguages: Language[];
   birthDate: Date;
 
+  type: string;
+  uploadedFile: File;
+  dataString: string|ArrayBuffer;
+  base64: string;
+
   constructor(private formBuilder: FormBuilder,
               private workAreaService: WorkAreaService,
               private cityService: CityService,
@@ -105,6 +110,21 @@ export class ResumeFormComponent implements OnInit {
 
     this.employeeForm = this.defaultEmployeeForm();
     this.resumeForm = this.defaultResumeForm();
+  }
+  
+  onUpload(event) {
+
+    this.uploadedFile = event.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+     this.dataString = reader.result;
+     this.base64 = this.dataString.toString().split(',')[1];
+    };
+
+    reader.readAsDataURL(this.uploadedFile);
+    this.type = this.uploadedFile.type.toString().split('/')[1];
+
   }
 
   initEducation() {
@@ -277,8 +297,8 @@ export class ResumeFormComponent implements OnInit {
       firstName: this.employeeForm.get('firstName').value,
       lastName: this.employeeForm.get('lastName').value,
       phone: this.employeeForm.get('phone').value,
-      photoData: this.employee.photoData,
-      photoMimeType: this.employee.photoMimeType,
+      photoData: this.base64,
+      photoMimeType: this.type,
       sex: this.employee.sex,
       birthDate: this.employeeForm.get('birthDate').value,
       email: this.employeeForm.get('email').value,
@@ -327,8 +347,8 @@ export class ResumeFormComponent implements OnInit {
     this.employee.sex = this.employee.sex;
     this.employee.birthDate = this.employeeForm.get('birthDate').value;
     this.employee.email = this.employeeForm.get('email').value;
-    this.employee.photoData = this.employee.photoData;
-    this.employee.photoMimeType = this.employee.photoMimeType;
+    this.employee.photoData = this.base64;
+    this.employee.photoMimeType = this.type;
     this.employee.city = this.employeeForm.get('city').value;
   }
 

@@ -133,6 +133,7 @@ export class CompanyComponent implements OnInit {
   }
 
   sanitizeCompanyImg(imageBase64): SafeUrl {
+    
 
     if (this.company !== undefined && this.company.logoData !== undefined &&
         this.company.logoData !== null && this.company.logoData !== '') {
