@@ -4,6 +4,7 @@ import { Resume } from '../shared/models/resume.model';
 import { EmployeeService } from '../core/services/employee.service';
 import { ResumeService } from '../core/services/resume.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-employee',
@@ -17,8 +18,9 @@ export class EmployeeComponent implements OnInit {
   action = 'Create';
 
   constructor(private employeeService: EmployeeService,
-              private resumeService: ResumeService,
-              private activatedRoute: ActivatedRoute) {
+    private resumeService: ResumeService,
+    private activatedRoute: ActivatedRoute,
+    private _sanitizer: DomSanitizer) {
 
   }
 
@@ -33,21 +35,21 @@ export class EmployeeComponent implements OnInit {
 
   loadEmployeeById(id: number) {
     this.employeeService.getById(id)
-    .subscribe((data: Employee) => this.employee = data);
+      .subscribe((data: Employee) => this.employee = data);
   }
 
   loadResumeById(id: number) {
     this.resumeService.getById(id)
-    .subscribe((data: Resume) => {
-      this.resume = data;
-      this.action = 'Update';
-    },
-    error => {
-      if ( error.status === 400 && error.error === `Entity with id: ${id} not found when trying to get entity.`) {
-        this.action = 'Create';
-      }
-    }
-    );
+      .subscribe((data: Resume) => {
+        this.resume = data;
+        this.action = 'Update';
+      },
+        error => {
+          if (error.status === 400 && error.error === `Entity with id: ${id} not found when trying to get entity.`) {
+            this.action = 'Create';
+          }
+        }
+      );
 
   }
 
@@ -56,11 +58,26 @@ export class EmployeeComponent implements OnInit {
 
     if (this.resume !== undefined) {
       this.resume.resumeLanguages.forEach(rl => {
-        languages =  rl.language.name + ', ' + languages;
+        languages = rl.language.name + ', ' + languages;
       });
     }
 
     return languages.slice(0, languages.length - 2); // to delete the last ,
   }
 
+  sanitizeEmployeeImg(imageBase64): SafeUrl {
+    console.log(imageBase64);
+    if (this.employee !== undefined && this.employee.photoData !== undefined &&
+      this.employee.photoData !== null && this.employee.photoData !== '') {
+      console.log(imageBase64);
+      return this._sanitizer.bypassSecurityTrustUrl(`data:image/${this.employee.photoMimeType};base64,` + imageBase64);
+
+    }
+   else {
+      
+      return '../../images/defaultUser.png';
+
+    }
+
+  }
 }

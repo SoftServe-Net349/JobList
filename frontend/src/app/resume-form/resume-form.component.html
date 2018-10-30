@@ -2,6 +2,10 @@
     [width]="650" [minWidth]="300" [resizable]="false" [draggable]="false" [blockScroll]="true" [baseZIndex]="10000">
     <div id="resume-form">
         <form [formGroup]="employeeForm" novalidate>
+         <div>
+             <p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Photo" (onSelect)="onUpload($event)"
+              accept="image/*" maxFileSize="1000000"></p-fileUpload>
+         </div>
             <h4 class="info-title">Full Name
                 <span class="required-input-symbol">*</span>
             </h4>

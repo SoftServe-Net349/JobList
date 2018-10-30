@@ -1,8 +1,10 @@
 <app-header></app-header>
 <div id="employee-page">
   <div class="wrapper-flex">
-    <img class="profile-avatar" src="https://avatars0.githubusercontent.com/u/43314300?s=400&u=1ab66ea04a1b8060af09ee83b3ba69a44a9f8710&v=4"
+    <img class="profile-avatar" [src]="sanitizeEmployeeImg(employee?.photoData)"
+     
       alt="Profile Avatar">
+      
     <div class="additional-info">
       <p>
         <span>Full Name: </span>{{employee?.firstName}} {{employee?.lastName}}</p>
