@@ -57,6 +57,14 @@ namespace JobList
                        .WithExposedHeaders("X-Pagination");
             }));
 
+            // Configuring FacebookAuthOptions
+            var facebookAuthSection = Configuration.GetSection("FacebookAuth");
+
+            services.Configure<FacebookAuthOptions>(o =>
+                {
+                    o.AppId = facebookAuthSection["AppId"];
+                    o.AppSecret = facebookAuthSection["AppSecret"];
+                });
 
             // Configuring JobListTokenOptions
             var tokensSection = Configuration.GetSection("Tokens");
@@ -88,7 +96,7 @@ namespace JobList
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
             services.AddTransient<IInvitationsService, InvitationsService>();
-            services.AddTransient<ITokensService<EmployeeDTO>, EmployeeTokensService>();
+            services.AddTransient<IEmployeeTokensService, EmployeeTokensService>();
             services.AddTransient<ITokensService<CompanyDTO>, CompanyTokensService>();
             services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 

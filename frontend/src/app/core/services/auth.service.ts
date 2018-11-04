@@ -12,14 +12,37 @@ import { CompanyRequest } from '../../shared/models/company-request.model';
 import { Company } from '../../shared/models/company.model';
 import { Recruiter } from '../../shared/models/recruiter.model';
 import { RecruiterRequest } from '../../shared/models/recruiter-request.model';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
 
+  private user: Observable<firebase.User>;
+
   constructor(private tokenService: TokenService,
               private employeeServise: EmployeeService,
               private recruiterService: RecruiterService,
-              private companyService: CompanyService) {}
+              private companyService: CompanyService,
+              private _firebaseAuth: AngularFireAuth,
+              private router: Router) {
+
+    this.user = _firebaseAuth.authState;
+
+  }
+
+  signInWithFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    provider.addScope('email');
+    provider.setCustomParameters({ auth_type: 'reauthenticate'});
+
+    return this._firebaseAuth.auth.signInWithPopup(provider);
+  }
+
+  employeeFacebookLogin(accessToken: string): Observable<Token> {
+    return this.tokenService.getTokenForFacebookAuth('employee', accessToken);
+  }
 
   employeeLogin(request: LoginRequest): Observable<Token> {
     return this.tokenService.getToken('employee', request);
@@ -43,6 +66,11 @@ export class AuthService {
 
   recruiterSignUp(request: RecruiterRequest): Observable<Recruiter> {
     return this.recruiterService.register(request);
+  }
+
+  logout() {
+    this._firebaseAuth.auth.signOut()
+    .then((res) => { this.router.navigate(['/']); } );
   }
 
 }
