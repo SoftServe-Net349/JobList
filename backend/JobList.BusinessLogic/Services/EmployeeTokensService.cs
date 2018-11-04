@@ -16,20 +16,75 @@ using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
+using JobList.Common.Models;
 
 namespace JobList.BusinessLogic.Services
 {
-    public class EmployeeTokensService : ITokensService<EmployeeDTO>
+    public class EmployeeTokensService : IEmployeeTokensService
     {
         private readonly IOptions<JobListTokenOptions> tokenOptions;
+        private readonly IOptions<FacebookAuthOptions> facebookAuthOptions;
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
+        private static readonly HttpClient Client = new HttpClient();
 
-        public EmployeeTokensService(IUnitOfWork _uow, IMapper _mapper, IOptions<JobListTokenOptions> _tokenOptions)
+        public EmployeeTokensService(IUnitOfWork _uow,
+                                     IMapper _mapper,
+                                     IOptions<JobListTokenOptions> _tokenOptions,
+                                     IOptions<FacebookAuthOptions> _facebookAuthOptions)
         {
             uow = _uow;
             mapper = _mapper;
             tokenOptions = _tokenOptions;
+            facebookAuthOptions = _facebookAuthOptions;
+        }
+
+        public async Task<TokenDTO> CreateTokenByFacebookAsync(FacebookAuthRequest request)
+        {
+            // Generate an app access token
+            var appAccessTokenResponse = await Client.GetStringAsync($"https://graph.facebook.com/oauth/access_token?client_id={facebookAuthOptions.Value.AppId}&client_secret={facebookAuthOptions.Value.AppSecret}&grant_type=client_credentials");
+            var appAccessToken = JsonConvert.DeserializeObject<FacebookAppAccessToken>(appAccessTokenResponse);
+
+            // Validate the user access token
+            var userAccessTokenValidationResponse = await Client.GetStringAsync($"https://graph.facebook.com/debug_token?input_token={request.AccessToken}&access_token={appAccessToken.AccessToken}");
+            var userAccessTokenValidation = JsonConvert.DeserializeObject<FacebookUserAccessTokenValidation>(userAccessTokenValidationResponse);
+
+            if (!userAccessTokenValidation.Data.IsValid)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Invalid facebook token.");
+            }
+
+            // Request user data from fb
+            var userInfoResponse = await Client.GetStringAsync($"https://graph.facebook.com/v2.8/me?fields=id,email&access_token={request.AccessToken}");
+            var userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
+
+            var entity = await uow.EmployeesRepository.GetFirstOrDefaultAsync(
+                filter: u => u.Email == userInfo.Email,
+                include: r => r.Include(o => o.Role));
+
+            if (entity == null)
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Login is uncorrect!");
+            }
+
+            var refreshToken = GenerateRefreshToken();
+
+            entity.RefreshToken = refreshToken;
+
+            var result = await uow.SaveAsync();
+            if (!result)
+            {
+                return null;
+            }
+
+            var dto = mapper.Map<Employee, EmployeeDTO>(entity);
+
+            var jwt = GenerateJWT(dto);
+
+            return new TokenDTO(jwt, refreshToken);
+
         }
 
         public async Task<TokenDTO> CreateTokenAsync(LoginRequest request)

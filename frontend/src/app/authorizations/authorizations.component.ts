@@ -278,4 +278,21 @@ export class AuthorizationsComponent implements OnInit {
 
   }
 
+  signInWithFacebook() {
+    this.authService.signInWithFacebook()
+    .then((res: any) => {
+      console.log('Successed login by Facebook');
+     this.authService.employeeFacebookLogin(res.credential.accessToken)
+     .subscribe(token => {
+      this.authHelper.setToken(token);
+      this.chengeAuthenticatedStatus.emit();
+      this.errorMessage = '';
+      this.signInDialog = false;
+      },
+        error => { this.errorMessage = error.error; }
+      );
+    })
+    .catch((err) => console.log(err));
+  }
+
 }

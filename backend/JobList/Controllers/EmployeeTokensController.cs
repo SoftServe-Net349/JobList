@@ -12,11 +12,32 @@ namespace JobList.Controllers
     [ApiController]
     public class EmployeeTokensController : ControllerBase
     {
-        private readonly ITokensService<EmployeeDTO> tokensService;
+        private readonly IEmployeeTokensService tokensService;
 
-        public EmployeeTokensController(ITokensService<EmployeeDTO> _tokensService)
+        public EmployeeTokensController(IEmployeeTokensService _tokensService)
         {
             tokensService = _tokensService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("facebook")]
+        public async Task<IActionResult> TokenByFacebook([FromBody] FacebookAuthRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+
+                var tokenResponse = await tokensService.CreateTokenByFacebookAsync(request);
+                return Ok(tokenResponse);
+
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [AllowAnonymous]
@@ -29,6 +50,7 @@ namespace JobList.Controllers
             }
             try
             {
+      
                 var tokenResponse = await tokensService.CreateTokenAsync(request);
                 return Ok(tokenResponse);
 
