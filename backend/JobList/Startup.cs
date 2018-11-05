@@ -44,7 +44,9 @@ namespace JobList
         public void ConfigureServices(IServiceCollection services)
         {
             // Connection to DataBase
-            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // For Tests
+            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDb;Initial Catalog=JOB_LIST_DB;Integrated Security=True;MultipleActiveResultSets=True;"));
 
 
             // Add Cors policy
@@ -120,14 +122,25 @@ namespace JobList
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        //ValidateIssuer = true,
+                        //ValidateAudience = true,
+                        //ValidateLifetime = true,
+                        //ValidateIssuerSigningKey = true,
+                        //ValidIssuer = tokensSection["Issuer"],
+                        //ValidAudience = tokensSection["Audience"],
+                        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
+                        //ClockSkew = TimeSpan.Zero
+
+                        // For Tests
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = tokensSection["Issuer"],
-                        ValidAudience = tokensSection["Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
+                        ValidIssuer = "http://localhost:56681/",
+                        ValidAudience = "http://localhost:56681/",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("TokensSuperSecretKey")),
                         ClockSkew = TimeSpan.Zero
+
                     };
 
                     options.Events = new JwtBearerEvents
