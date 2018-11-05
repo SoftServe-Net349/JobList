@@ -20,20 +20,20 @@ using System.Threading.Tasks;
 namespace JobList.Tests.ServiceTests
 {
     [TestFixture]
-    public class CompanyTokensServiceTests
+    public class RecruiterTokensServiceTests
     {
-        ITokensService<CompanyDTO> _companyTokensService;
+        ITokensService<RecruiterDTO> _recruiterTokensService;
         IMapper _mapper;
         IOptions<JobListTokenOptions> _tokenOptions;
         IOptions<FacebookAuthOptions> _facebookAuthOptions;
         IUnitOfWork _unitOfWork;
 
         [SetUp]
-        public void Set_UnitOfWork_And_CompaniesService()
+        public void Set_UnitOfWork_And_RecruitersService()
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<CompanyProfile>();
+                cfg.AddProfile<RecruiterProfile>();
             });
 
             _tokenOptions = Options.Create(new JobListTokenOptions
@@ -45,7 +45,7 @@ namespace JobList.Tests.ServiceTests
             });
 
             _unitOfWork = A.Fake<IUnitOfWork>();
-            _companyTokensService = new CompanyTokensService(_unitOfWork, config.CreateMapper(), _tokenOptions);
+            _recruiterTokensService = new RecruiterTokensService(_unitOfWork, config.CreateMapper(), _tokenOptions);
         }
 
         [Test]
@@ -58,21 +58,22 @@ namespace JobList.Tests.ServiceTests
                 Password = "1620856d708f0918693c2bfda4f962adff6344b248eb1a39b7c82146"
             };
 
-            A.CallTo(() => _unitOfWork.CompaniesRepository
-            .GetFirstOrDefaultAsync(A<Expression<Func<Company, bool>>>._, null, A<Func<IQueryable<Company>, IIncludableQueryable<Company, object>>>._))
-            .Returns(new Company
+            A.CallTo(() => _unitOfWork.RecruitersRepository
+            .GetFirstOrDefaultAsync(A<Expression<Func<Recruiter, bool>>>._, null, A<Func<IQueryable<Recruiter>, IIncludableQueryable<Recruiter, object>>>._))
+            .Returns(new Recruiter
             {
                 Id = 1,
                 Email = "pavlo@gmail.com",
-                BossName = "Pavlo Paitak",
+                FirstName = "Pavlo",
+                LastName = "Paitak",
                 Password = "QM0rSdDxR1hZa+zFebNYrF4JHC+hm6INGMi4RKbf71exF2cO",
                 RoleId = 1,
-                Role = new Role { Id = 1, Name = "company" },
+                Role = new Role { Id = 1, Name = "recruiter" },
             });
             A.CallTo(() => _unitOfWork.SaveAsync()).Returns(true);
 
             // Act
-            var resualt = await _companyTokensService.CreateTokenAsync(request);
+            var resualt = await _recruiterTokensService.CreateTokenAsync(request);
 
             // Assert
             Assert.IsInstanceOf(typeof(TokenDTO), resualt);
@@ -89,12 +90,12 @@ namespace JobList.Tests.ServiceTests
                 Password = "1620856d708f0918693c2bfda4f962adff6344b248eb1a39b7c82146"
             };
 
-            A.CallTo(() => _unitOfWork.CompaniesRepository
-            .GetFirstOrDefaultAsync(A<Expression<Func<Company, bool>>>._, null, A<Func<IQueryable<Company>, IIncludableQueryable<Company, object>>>._))
-            .Returns((Company)null);
+            A.CallTo(() => _unitOfWork.RecruitersRepository
+            .GetFirstOrDefaultAsync(A<Expression<Func<Recruiter, bool>>>._, null, A<Func<IQueryable<Recruiter>, IIncludableQueryable<Recruiter, object>>>._))
+            .Returns((Recruiter)null);
 
             // Assert & Act
-            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _companyTokensService.CreateTokenAsync(request));
+            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _recruiterTokensService.CreateTokenAsync(request));
             Assert.That(ex.Message, Is.EqualTo("Login is uncorrect!"));
         }
 
@@ -108,20 +109,21 @@ namespace JobList.Tests.ServiceTests
                 Password = "not correct password"
             };
 
-            A.CallTo(() => _unitOfWork.CompaniesRepository
-            .GetFirstOrDefaultAsync(A<Expression<Func<Company, bool>>>._, null, A<Func<IQueryable<Company>, IIncludableQueryable<Company, object>>>._))
-            .Returns(new Company
+            A.CallTo(() => _unitOfWork.RecruitersRepository
+            .GetFirstOrDefaultAsync(A<Expression<Func<Recruiter, bool>>>._, null, A<Func<IQueryable<Recruiter>, IIncludableQueryable<Recruiter, object>>>._))
+            .Returns(new Recruiter
             {
                 Id = 1,
                 Email = "pavlo@gmail.com",
-                BossName = "Pavlo Paitak",
+                FirstName = "Pavlo",
+                LastName = "Paitak",
                 Password = "QM0rSdDxR1hZa+zFebNYrF4JHC+hm6INGMi4RKbf71exF2cO",
                 RoleId = 1,
-                Role = new Role { Id = 1, Name = "company" },
+                Role = new Role { Id = 1, Name = "recruiter" },
             });
 
             // Assert & Act
-            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _companyTokensService.CreateTokenAsync(request));
+            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _recruiterTokensService.CreateTokenAsync(request));
             Assert.That(ex.Message, Is.EqualTo("Password is uncorrect!"));
         }
 
@@ -135,22 +137,23 @@ namespace JobList.Tests.ServiceTests
                 RefreshToken = "refresh_Token"
             };
 
-            A.CallTo(() => _unitOfWork.CompaniesRepository
-            .GetEntityAsync(A<int>._, A<Func<IQueryable<Company>, IIncludableQueryable<Company, object>>>._))
-            .Returns(new Company
+            A.CallTo(() => _unitOfWork.RecruitersRepository
+            .GetEntityAsync(A<int>._, A<Func<IQueryable<Recruiter>, IIncludableQueryable<Recruiter, object>>>._))
+            .Returns(new Recruiter
             {
                 Id = 1,
                 Email = "pavlo@gmail.com",
-                BossName = "Pavlo Paitak",
+                FirstName = "Pavlo",
+                LastName = "Paitak",
                 Password = "QM0rSdDxR1hZa+zFebNYrF4JHC+hm6INGMi4RKbf71exF2cO",
                 RoleId = 1,
-                Role = new Role { Id = 1, Name = "company" },
+                Role = new Role { Id = 1, Name = "recruiter" },
                 RefreshToken = "refresh_Token"
             });
             A.CallTo(() => _unitOfWork.SaveAsync()).Returns(true);
 
             // Act
-            var resualt = await _companyTokensService.RefreshTokenAsync(request);
+            var resualt = await _recruiterTokensService.RefreshTokenAsync(request);
 
             // Assert
             Assert.IsInstanceOf(typeof(TokenDTO), resualt);
@@ -167,13 +170,13 @@ namespace JobList.Tests.ServiceTests
                 RefreshToken = "refresh_Token"
             };
 
-            A.CallTo(() => _unitOfWork.CompaniesRepository
-            .GetEntityAsync(A<int>._, A<Func<IQueryable<Company>, IIncludableQueryable<Company, object>>>._))
-            .Returns((Company)null);
+            A.CallTo(() => _unitOfWork.RecruitersRepository
+            .GetEntityAsync(A<int>._, A<Func<IQueryable<Recruiter>, IIncludableQueryable<Recruiter, object>>>._))
+            .Returns((Recruiter)null);
 
             // Assert & Act
-            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _companyTokensService.RefreshTokenAsync(request));
-            Assert.That(ex.Message, Is.EqualTo("Company with such Id not registered yet!"));
+            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _recruiterTokensService.RefreshTokenAsync(request));
+            Assert.That(ex.Message, Is.EqualTo("Recruiter with such Id not registered yet!"));
 
         }
 
@@ -187,23 +190,23 @@ namespace JobList.Tests.ServiceTests
                 RefreshToken = "invalid_refresh_Token"
             };
 
-            A.CallTo(() => _unitOfWork.CompaniesRepository
-            .GetEntityAsync(A<int>._, A<Func<IQueryable<Company>, IIncludableQueryable<Company, object>>>._))
-            .Returns(new Company
+            A.CallTo(() => _unitOfWork.RecruitersRepository
+            .GetEntityAsync(A<int>._, A<Func<IQueryable<Recruiter>, IIncludableQueryable<Recruiter, object>>>._))
+            .Returns(new Recruiter
             {
                 Id = 1,
                 Email = "pavlo@gmail.com",
-                BossName = "Pavlo Paitak",
+                FirstName = "Pavlo",
+                LastName = "Paitak",
                 Password = "QM0rSdDxR1hZa+zFebNYrF4JHC+hm6INGMi4RKbf71exF2cO",
                 RoleId = 1,
-                Role = new Role { Id = 1, Name = "company" },
+                Role = new Role { Id = 1, Name = "recruiter" },
                 RefreshToken = "refresh_Token"
             });
 
             // Assert & Act
-            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _companyTokensService.RefreshTokenAsync(request));
+            var ex = Assert.ThrowsAsync<HttpStatusCodeException>(() => _recruiterTokensService.RefreshTokenAsync(request));
             Assert.That(ex.Message, Is.EqualTo("RefreshToken is Invalid!"));
         }
-
     }
 }
