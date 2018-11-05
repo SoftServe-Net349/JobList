@@ -97,18 +97,6 @@ namespace JobList.Controllers
         }
 
 
-       /* [HttpGet("{id}")]
-        public virtual async Task<ActionResult<IEnumerable<EducationPeriodDTO>>> GetEducationPeriodsByResumeId(int id)
-        {
-            var dtos = await _educationPeriodsService.GetEducationPeriodsByResumeId(id);
-            if (!dtos.Any())
-            {
-                return NoContent();
-            }
-            return Ok(dtos)
-        }
-        */
-
         // DELETE: /educationPeriods/:id
         [Authorize(Roles = "employee, admin")]
         [HttpDelete("{id}")]

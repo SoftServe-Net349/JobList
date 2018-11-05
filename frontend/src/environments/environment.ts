@@ -5,6 +5,14 @@ export const environment = {
   production: false,
   server_url: 'http://localhost:56681',
   client_url: 'http://localhost:4200',
+  firebase: {
+    apiKey: 'AIzaSyAG1-eRjUhpALauRp4MchwAcOGr8EPAC_4',
+    authDomain: 'joblist-f3c1b.firebaseapp.com',
+    databaseURL: 'https://joblist-f3c1b.firebaseio.com',
+    projectId: 'joblist-f3c1b',
+    storageBucket: 'joblist-f3c1b.appspot.com',
+    messagingSenderId: '669284982796'
+  }
 };
 
 /*

@@ -4,7 +4,9 @@ import { MenuItem } from 'primeng/api';
 import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
 import { AuthHelper } from '../helpers/auth-helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../core/services/auth.service';
 import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
+
 
 @Component({
   selector: 'app-header',
@@ -37,7 +39,8 @@ export class HeaderComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
               private authHelper: AuthHelper,
-              private jwtHelper: JwtHelperService) {}
+              private jwtHelper: JwtHelperService,
+              private authService: AuthService) {}
 
   ngOnInit() {
 
@@ -76,7 +79,7 @@ export class HeaderComponent implements OnInit {
       {
       label: 'Sign out',
       icon: 'fa fa-sign-out',
-      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
+      command: (event) => { this.authHelper.logout(); this.authService.logout(); this.chengeAuthenticatedStatus(); }
       }
     ];
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../models/user.model';
+import { AuthService } from '../../core/services/auth.service';
 
 @Injectable()
 
