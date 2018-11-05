@@ -8,6 +8,7 @@ import { EmployeeUpdateRequest } from '../../shared/models/employee-update-reque
 import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
 import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
+import { EmployeeResetPasswordRequest } from 'src/app/shared/models/employee-reset-password-request.model';
 
 @Injectable()
 export class EmployeeService {
@@ -48,5 +49,9 @@ export class EmployeeService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
+  resetPassword(id: number, request: EmployeeResetPasswordRequest): Observable<Object> {
+    return this.apiService.put(`/${this.ctrlUrl}/${id}/reset`, request);
+     }
 
 }
