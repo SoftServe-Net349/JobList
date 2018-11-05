@@ -34,7 +34,6 @@ export class AuthService {
 
   signInWithFacebook() {
     const provider = new firebase.auth.FacebookAuthProvider();
-    provider.addScope('email');
     provider.setCustomParameters({ auth_type: 'reauthenticate'});
 
     return this._firebaseAuth.auth.signInWithPopup(provider);

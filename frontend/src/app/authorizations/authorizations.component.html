@@ -35,8 +35,9 @@
       {{errorMessage}}
     </div>
 
-    <button class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign In</button>
-    
+    <button *ngIf="!isLoading" class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign In</button>
+    <button *ngIf="isLoading" class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign In...</button>
+   
     <div class="save-forget-password-flex">
       <div>
         <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
