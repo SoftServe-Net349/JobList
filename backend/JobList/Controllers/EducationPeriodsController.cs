@@ -96,6 +96,7 @@ namespace JobList.Controllers
             return NoContent();
         }
 
+
         // DELETE: /educationPeriods/:id
         [Authorize(Roles = "employee, admin")]
         [HttpDelete("{id}")]

@@ -69,5 +69,6 @@ export class RecruiterService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+  
 
 }

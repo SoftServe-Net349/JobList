@@ -66,10 +66,8 @@ export class EmployeeComponent implements OnInit {
   }
 
   sanitizeEmployeeImg(imageBase64): SafeUrl {
-    console.log(imageBase64);
     if (this.employee !== undefined && this.employee.photoData !== undefined &&
       this.employee.photoData !== null && this.employee.photoData !== '') {
-      console.log(imageBase64);
       return this._sanitizer.bypassSecurityTrustUrl(`data:image/${this.employee.photoMimeType};base64,` + imageBase64);
 
     }

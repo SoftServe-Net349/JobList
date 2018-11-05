@@ -25,6 +25,7 @@ import { SearchLineComponent } from './search-line/search-line.component';
 import { InputMaskModule, FileUploadModule, PaginatorModule } from 'primeng/primeng';
 import { InvitationComponent } from '../invitation/invitation.component';
 
+
 // Our created modules
 
 @NgModule({
@@ -54,7 +55,7 @@ import { InvitationComponent } from '../invitation/invitation.component';
     FooterComponent,
     SearchLineComponent,
     AuthorizationsComponent,
-    InvitationComponent
+    InvitationComponent,
   ],
   providers: [],
   exports: [
@@ -63,7 +64,8 @@ import { InvitationComponent } from '../invitation/invitation.component';
     SomeDirective,
     FooterComponent,
     HeaderComponent,
-    SearchLineComponent
+    SearchLineComponent,
+
   ]
 })
 export class SharedModule { }

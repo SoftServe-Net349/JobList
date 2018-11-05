@@ -9,6 +9,7 @@ import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
 import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 
+
 @Injectable()
 export class CompanyService {
 

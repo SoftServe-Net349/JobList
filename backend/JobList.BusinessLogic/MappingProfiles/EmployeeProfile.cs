@@ -26,8 +26,9 @@ namespace JobList.BusinessLogic.MappingProfiles
 
             CreateMap<EmployeeUpdateRequest, Employee>()
                 .ForMember(d => d.Id, o => o.UseValue(0))
-                .ForMember(d => d.PhotoData, o => o.MapFrom<byte[]>(cr => MapLogoData(cr.PhotoData))); 
-           
+                .ForMember(d => d.PhotoData, o => o.MapFrom<byte[]>(cr => MapLogoData(cr.PhotoData)));
+
+
         }
         private byte[] MapLogoData(string logoData)
         {

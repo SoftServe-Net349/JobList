@@ -33,7 +33,8 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-  AppComponent
+  AppComponent,
+
   ],
   imports: [
     BrowserModule,

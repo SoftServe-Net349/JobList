@@ -9,6 +9,7 @@ import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
 import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 
+
 @Injectable()
 export class EmployeeService {
 
@@ -48,5 +49,6 @@ export class EmployeeService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+
 
 }
