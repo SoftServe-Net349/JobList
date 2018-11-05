@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
 import { AuthHelper } from '../helpers/auth-helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../core/services/auth.service';
-import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
 
 
 @Component({
@@ -32,9 +32,7 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild(AuthorizationsComponent)
   authorizations: AuthorizationsComponent;
-  @ViewChild(ResetPasswordComponent)
-  resetPassword: ResetPasswordComponent;
-
+ 
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -72,8 +70,8 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o',
-          command: (event) => {this.resetPassword.showResetPassword(this.role, this.uId);}}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'
+          }
         ]
       },
       {
@@ -91,14 +89,12 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Home',
         icon: 'fa fa-home',
-        command: (event) => { this.router.navigate(['/recruiters', this.uId]); }
-      },
+        command: (event) => { this.router.navigate(['/recruiters', this.uId]); }},
       {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o',
-          command: (event) => {this.resetPassword.showResetPassword(this.role, this.uId);}}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
         ]
       },
       {
@@ -122,8 +118,7 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o',
-          command: (event) => {this.resetPassword.showResetPassword(this.role, this.uId);}}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
         ]
       },
       {

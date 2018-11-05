@@ -163,47 +163,6 @@ namespace JobList.BusinessLogic.Services
 
             return result;
         }
-        public async Task<bool> ResetPasswordEntityByIdAsync(CompanyResetPasswordRequest modelRequest, int id)
-        {
-            var entity = await _uow.CompaniesRepository.GetFirstOrDefaultAsync(
-                filter: u => u.Id == id,
-                  include: r => r.Include(o => o.Role));
-
-            byte[] hashPasswordFromDB = Convert.FromBase64String(entity.Password);
-            byte[] salt = new byte[16];
-            Array.Copy(hashPasswordFromDB, 0, salt, 0, 16);
-            var hashRequestPassword = new Rfc2898DeriveBytes(modelRequest.CurrentPassword, salt, 1000);
-            byte[] bytesFromHashRequest = hashRequestPassword.GetBytes(20);
-            bool flag = false;
-            for (int i = 0; i < 20; i++)
-            {
-                if (hashPasswordFromDB[i + 16] == bytesFromHashRequest[i])
-                {
-                    flag = true;
-                }
-                else break;
-
-            }
-            if (flag == true)
-            {
-                byte[] newSalt;
-                new RNGCryptoServiceProvider().GetBytes(newSalt = new byte[16]);
-                var hashedPassword = new Rfc2898DeriveBytes(modelRequest.NewPassword, newSalt, 1000);
-                byte[] bytesFromHashedPassw = hashedPassword.GetBytes(20);
-                byte[] arrayOfHashedBytes = new byte[36];
-                Array.Copy(newSalt, 0, arrayOfHashedBytes, 0, 16);
-                Array.Copy(bytesFromHashedPassw, 0, arrayOfHashedBytes, 16, 20);
-                entity.Password = Convert.ToBase64String(arrayOfHashedBytes);
-
-            }
-            if (flag == false)
-            {
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Recent Password doesnt match");
-            }
-
-            var result = await _uow.SaveAsync();
-            return result;
-
-        }
+        
     }
 }
