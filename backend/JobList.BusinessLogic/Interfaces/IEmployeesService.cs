@@ -25,6 +25,8 @@ namespace JobList.BusinessLogic.Interfaces
 
         Task<bool> UpdateEntityByIdAsync(EmployeeUpdateRequest modelRequest, int id);
 
+        Task<bool> ResetPasswordEntityByIdAsync(EmployeeResetPasswordRequest modelRequest, int id);
+
         Task<bool> DeleteEntityByIdAsync(int id);
 
         Task<int> CountAsync(Expression<Func<Employee, bool>> predicate = null);

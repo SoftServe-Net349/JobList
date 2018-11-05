@@ -8,6 +8,7 @@ import { RecruiterUpdateRequest } from '../../shared/models/recruiter-update-req
 import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
 import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
 import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
+import { RecruiterResetPasswordRequest } from 'src/app/shared/models/recruiter-reset-password-request.model';
 
 @Injectable()
 export class RecruiterService {
@@ -69,5 +70,9 @@ export class RecruiterService {
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
   }
+  
+  resetPassword(id: number, request: RecruiterResetPasswordRequest): Observable<Object> {
+    return this.apiService.put(`/${this.ctrlUrl}/${id}/reset`, request);
+     }
 
 }

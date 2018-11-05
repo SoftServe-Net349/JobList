@@ -5,6 +5,8 @@ import { AuthorizationsComponent } from '../../authorizations/authorizations.com
 import { AuthHelper } from '../helpers/auth-helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../core/services/auth.service';
+import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
+
 
 @Component({
   selector: 'app-header',
@@ -30,6 +32,8 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild(AuthorizationsComponent)
   authorizations: AuthorizationsComponent;
+  @ViewChild(ResetPasswordComponent)
+  resetPassword: ResetPasswordComponent;
 
 
   constructor(private activeRoute: ActivatedRoute,
@@ -68,7 +72,8 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o',
+          command: (event) => {this.resetPassword.showResetPassword(this.role, this.uId);}}
         ]
       },
       {
@@ -92,7 +97,8 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o',
+          command: (event) => {this.resetPassword.showResetPassword(this.role, this.uId);}}
         ]
       },
       {
@@ -116,7 +122,8 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o',
+          command: (event) => {this.resetPassword.showResetPassword(this.role, this.uId);}}
         ]
       },
       {
