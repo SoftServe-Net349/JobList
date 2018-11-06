@@ -48,14 +48,22 @@ namespace JobList.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tokenResponse = await tokensService.RefreshTokenAsync(request);
-
-            if (tokenResponse == null)
+            try
             {
-                return BadRequest("Recruiter with such Id not registered yet!");
+                var tokenResponse = await tokensService.RefreshTokenAsync(request);
+
+                if (tokenResponse == null)
+                {
+                    return BadRequest("Recruiter with such Id not registered yet!");
+                }
+
+                return Ok(tokenResponse);
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            return Ok(tokenResponse);
         }
 
     }
