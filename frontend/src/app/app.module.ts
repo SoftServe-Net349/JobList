@@ -25,6 +25,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { AuthService } from './core/services/auth.service';
 
+
 export function tokenGetter() {
 
   return  window.localStorage.getItem('token');
@@ -34,7 +35,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
   AppComponent,
-
   ],
   imports: [
     BrowserModule,

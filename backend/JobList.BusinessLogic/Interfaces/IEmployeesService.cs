@@ -20,10 +20,12 @@ namespace JobList.BusinessLogic.Interfaces
         Task<IEnumerable<EmployeeDTO>> GetFilteredEntitiesAsync(SearchingUrlQuery searchingUrlQuery, SortingUrlQuery sortingUrlQuery = null, PaginationUrlQuery paginationUrlQuery = null);
 
         Task<EmployeeDTO> GetEntityByIdAsync(int id);
-
+        
         Task<EmployeeDTO> CreateEntityAsync(EmployeeRequest modelRequest);
 
         Task<bool> UpdateEntityByIdAsync(EmployeeUpdateRequest modelRequest, int id);
+
+        Task<bool> ResetEntityByIdAsync(EmployeeResetPasswordRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
 

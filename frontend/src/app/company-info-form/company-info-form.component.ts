@@ -12,7 +12,6 @@ import { CompanyUpdateRequest } from '../shared/models/company-update-request.mo
 export class CompanyInfoFormComponent implements OnInit {
 
   @Output() loadCompanyById = new EventEmitter();
-
   @Input()
   company: Company;
 

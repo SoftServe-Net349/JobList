@@ -162,7 +162,40 @@ namespace JobList.Controllers
 
             return NoContent();
         }
+        [Authorize(Roles = "employee")]
+        [HttpPut("{id}/reset")]
+        public virtual async Task<ActionResult> ResetPassword([FromRoute]int id, [FromBody]EmployeeResetPasswordRequest request)
+        {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, UserOperations.Update);
 
-     
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _employeesService.ResetEntityByIdAsync(request, id);
+                if (!result)
+                {
+                    return StatusCode(500);
+                }
+
+                return NoContent();
+
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
+
+
+   
