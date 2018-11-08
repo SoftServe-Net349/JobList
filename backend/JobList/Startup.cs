@@ -28,6 +28,8 @@ using Microsoft.AspNetCore.SignalR;
 using JobList.BusinessLogic.Hubs;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using JobList.BusinessLogic.Providers;
 
 namespace JobList
 {
@@ -106,6 +108,15 @@ namespace JobList
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddTransient<IEmailSender, EmailProvider>(i =>
+               new EmailProvider(
+                   Configuration["EmailSender:Host"],
+                   Configuration.GetValue<int>("EmailSender:Port"),
+                   Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                   Configuration["EmailSender:UserName"],
+                   Configuration["EmailSender:Password"]
+               )
+           );
 
             // Add your authorization handlers here
             services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();

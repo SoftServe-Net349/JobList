@@ -6,6 +6,7 @@ using JobList.Common.Pagination;
 using JobList.Common.Requests;
 using JobList.DataAccess.Entities;
 using JobList.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -21,12 +22,14 @@ namespace JobList.BusinessLogic.Services
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly IHubContext<InvitationHub> _hubContext;
+        IEmailSender _emailProvider;
 
-        public InvitationsService(IUnitOfWork uow, IMapper mapper, IHubContext<InvitationHub> hubContext)
+        public InvitationsService(IUnitOfWork uow, IMapper mapper, IHubContext<InvitationHub> hubContext, IEmailSender emailProvider)
         {
             _uow = uow;
             _mapper = mapper;
             _hubContext = hubContext;
+            _emailProvider = emailProvider;
         }
 
 
@@ -47,7 +50,12 @@ namespace JobList.BusinessLogic.Services
                                                                             .Include(o => o.WorkArea)
                                                                             .Include(o => o.Recruiter).ThenInclude(v => v.Company));
 
+            var employee = await _uow.EmployeesRepository.GetEntityAsync(int.Parse(request.EmployeeId));
+
             var dto = _mapper.Map<Invitation, InvitationDTO>(entity);
+
+            await this._emailProvider.SendEmailAsync(employee.Email, "Invitation", entity.Vacancy.Name);
+
             await _hubContext.Clients.User(request.EmployeeId).SendAsync("receiveInvitation", dto);
 
             return dto;
