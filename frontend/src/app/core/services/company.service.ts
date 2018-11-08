@@ -8,6 +8,7 @@ import { CompanyUpdateRequest } from '../../shared/models/company-update-request
 import { PaginationQuery } from 'src/app/shared/filterQueries/PaginationQuery';
 import { SearchingQuery } from 'src/app/shared/filterQueries/SearchingQuery';
 import { SortingQuery } from 'src/app/shared/filterQueries/SortingQuery';
+import { CompanyResetPasswordRequest } from 'src/app/shared/models/company-reset-password-request.model';
 
 
 @Injectable()
@@ -47,6 +48,9 @@ export class CompanyService {
 
   delete(id: number): Observable<Object> {
     return this.apiService.delete(`/${this.ctrlUrl}/${id}`);
+  }
+  reset(id: number, request: CompanyResetPasswordRequest): Observable<Object> {
+    return this.apiService.put(`/${this.ctrlUrl}/${id}/reset`, request);
   }
 
 }

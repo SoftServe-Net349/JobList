@@ -249,7 +249,50 @@ namespace JobList.BusinessLogic.Services
             }
         }
 
-       
+        public async Task<bool> ResetEntityByIdAsync(RecruierResetPasswordRequest modelRequest, int id)
+        {
+            var entity = await _uow.RecruitersRepository.GetEntityAsync(id,
+                    include: r => r.Include(u => u.Role));
+
+
+            byte[] hashPasswordFromDB = Convert.FromBase64String(entity.Password);//got password from DB
+            byte[] salt = new byte[16];//reserve bytes for salt
+            Array.Copy(hashPasswordFromDB, 0, salt, 0, 16);//copy salt from hashPasswordFromDB
+            var hashRequestPassword = new Rfc2898DeriveBytes(modelRequest.currentPassword, salt, 1000);//encrypting RequestedPassword with salt using 1000 iterations 
+            byte[] bytesFromHashRequest = hashRequestPassword.GetBytes(20);
+            bool flag = false;
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashPasswordFromDB[i + 16] == bytesFromHashRequest[i])//compare byte by byte  password from db and requested password (excluding salt)
+                {
+                    flag = true;
+                }
+                else break;
+
+            }
+
+            if (flag == false) //if all bytes are similar- success!
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, "Current Password is incorrect!");
+            }
+
+
+            byte[] salt1;
+            new RNGCryptoServiceProvider().GetBytes(salt1 = new byte[16]); //generate unique salt (length 16 bytes)!
+            var hashedPassword = new Rfc2898DeriveBytes(modelRequest.newPassword, salt1, 1000); //hash password with that salt using 1000 iterations
+            byte[] bytesFromHashedPassw = hashedPassword.GetBytes(20);//hashwd passw to bytes
+            byte[] arrayOfHashedBytes = new byte[36];//reserve array for salt +hashed passw
+            Array.Copy(salt1, 0, arrayOfHashedBytes, 0, 16);// add to reserved array salt
+            Array.Copy(bytesFromHashedPassw, 0, arrayOfHashedBytes, 16, 20);//then add to same array hashed pswd
+            entity.Password = Convert.ToBase64String(arrayOfHashedBytes);//convert that array hashed (salt+ psw) o string
+
+
+            var result = await _uow.SaveAsync();
+
+            return result;
+        }
+
+
     }
 }
 
