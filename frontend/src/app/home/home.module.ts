@@ -37,6 +37,7 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { SidebarModule } from 'primeng/primeng';
+import { ChatComponent } from '../chat/chat.component';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ import { SidebarModule } from 'primeng/primeng';
     ResumeDetailsComponent,
     VacancyDetailsComponent,
     VacanciesListComponent,
-    AdminAuthorizationComponent
+    AdminAuthorizationComponent,
+    ChatComponent
   ]
 })
 export class HomeModule { }

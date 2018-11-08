@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+    crossorigin="anonymous">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="roomList" class="list-group">
+                <a *ngFor="let room of rooms; let i = index" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{isActives[i]}}"
+                    (click)="changeRoom(room.id, i)">{{room.name}}</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <ul id="chatHistory" class="card-body">
+                            <li *ngFor="let message of messages">
+                                <div class="message-header">
+                                    <span class="name">{{message.senderName }}</span>
+                                    <span class="time">{{message.sendAt | date}} </span>
+                                </div>
+                                <div class="message-body">
+                                    {{message.text}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form id="chatForm" class="form-inline mt-2">
+                        <input id="messageTextbox" name="text" [(ngModel)]="message.text" placeholder="Type a message"
+                            class="form-control mr-sm-2 flex-grow-1" />
+                        <button (click)="sendMessage()" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

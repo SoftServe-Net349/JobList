@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.href = this.router.url;
 
-    if (this.href === '/admin') {
+    if (this.href === '/admin' || this.href === '/chat') {
       this.isShow = false;
     }
   }

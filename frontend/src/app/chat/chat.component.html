@@ -1,0 +1,31 @@
+<div *ngIf="isShowDialog" id="chatDialog" title="Chat with the admin" [class]="connect">
+    <div *ngIf="isAskName" id="chatWelcomePanel">
+        <h3>Have a question?</h3>
+        <form id="chatConnectForm">
+            <input name="name" [(ngModel)]="message.senderName" placeholder="Enter your name" />
+            <button (click)="startChat()">Connect</button>
+        </form>
+    </div>
+    <div id="chatConnectionInfo">
+        <strong>Connecting...</strong>
+    </div>
+    <div id="chatMainPanel">
+        <ul id="chatHistory">
+            <li *ngFor="let message of messages">
+                <div class="message-header">
+                    <span class="name">{{message.senderName }}</span>
+                    <span class="time">{{message.sendAt | date}} </span>
+                </div>
+                <div class="message-body">
+                    {{message.text}}
+                </div>
+            </li>
+        </ul>
+        <div id="bottomPanel">
+            <form id="chatForm">
+                <input id="messageTextbox" name="text" [(ngModel)]="message.text" placeholder="Type a message" />
+                <button (click)="sendMessage()">Send</button>
+            </form>
+        </div>
+    </div>
+</div>

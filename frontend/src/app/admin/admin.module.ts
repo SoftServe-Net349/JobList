@@ -19,6 +19,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { ChartModule } from 'primeng/chart';
 import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 import { CoreModule } from '../core/core.module';
+import { AdminChatComponent } from './admin-chat/admin-chat.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { CoreModule } from '../core/core.module';
     AdminEmployeesComponent,
     AdminVacanciesComponent,
     AdminDashboardComponent,
-    AdminHeaderComponent
+    AdminHeaderComponent,
+    AdminChatComponent
   ],
     providers: [MessageService, ConfirmationService]
 })
