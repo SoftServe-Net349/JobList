@@ -10,7 +10,7 @@ import { Company } from '../shared/models/company.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
 import { sha512_224 } from 'js-sha512';
-import { Router, RouteReuseStrategy } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authorizations',
@@ -282,17 +282,20 @@ export class AuthorizationsComponent implements OnInit {
   }
 
   signInWithFacebook() {
+
+    this.isLoading = true;
+
     this.authService.signInWithFacebook()
     .then((res: any) => {
-      this.isLoading = true;
-      // console.log('Successed login by Facebook');
+
      this.authService.employeeFacebookLogin(res.credential.accessToken)
      .subscribe(token => {
       this.authHelper.setToken(token);
       this.chengeAuthenticatedStatus.emit();
       this.errorMessage = '';
       this.isLoading = false;
-      this.signInDialog = false;
+      location.replace('/');
+
       },
         error => { this.errorMessage = error.error; this.isLoading = false; }
       );
