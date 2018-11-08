@@ -1,5 +1,4 @@
-﻿using JobList.BusinessLogic.Hubs;
-using JobList.BusinessLogic.Services;
+﻿using JobList.Common.ChatHelpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

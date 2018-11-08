@@ -1,5 +1,5 @@
-﻿using JobList.BusinessLogic.Hubs;
-using JobList.BusinessLogic.Interfaces;
+﻿using JobList.BusinessLogic.Interfaces;
+using JobList.Common.ChatHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,12 +71,5 @@ namespace JobList.BusinessLogic.Services
 
             return Task.CompletedTask;
         }
-    }
-
-    public class ChatRoom
-    {
-        public string OwnerConnectionId { get; set; }
-
-        public string Name { get; set; }
     }
 }

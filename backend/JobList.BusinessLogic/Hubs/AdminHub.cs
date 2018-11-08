@@ -1,4 +1,5 @@
 ﻿using JobList.BusinessLogic.Interfaces;
+using JobList.Common.ChatHelpers;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;

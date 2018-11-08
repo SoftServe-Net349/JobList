@@ -1,4 +1,5 @@
 ﻿using JobList.BusinessLogic.Interfaces;
+using JobList.Common.ChatHelpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -78,12 +79,5 @@ namespace JobList.BusinessLogic.Hubs
 
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId.ToString());
         }
-    }
-
-    public class ChatMessage
-    {
-        public string SenderName { get; set; }
-        public string Text { get; set; }
-        public DateTimeOffset SendAt { get; set; }
     }
 }
