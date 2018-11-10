@@ -23,7 +23,7 @@ export class AdminChatComponent implements OnInit {
 
     rooms: Room[] = [];
 
-    isActives: string[] = [];
+    actives = [];
 
     constructor() {
     }
@@ -137,8 +137,8 @@ export class AdminChatComponent implements OnInit {
     }
 
     changeRoom(roomId, index) {
-        this.isActives = [];
-        this.isActives[index] = 'active';
+        this.actives = [];
+        this.actives[index] = 'active';
         this.switchActiveRoomTo(roomId);
     }
 }

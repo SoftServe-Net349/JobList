@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit {
     isAskName = true;
 
     connect = 'disconnected';
+    roles = [];
 
     constructor() {
     }
@@ -40,6 +41,11 @@ export class ChatComponent implements OnInit {
 
     receiveMessage(): void {
         this.hubConnection.on('ReceiveMessage', (name, time, text) => {
+            if (name === 'JobList Admin') {
+                this.roles.push('admin');
+            } else {
+                this.roles.push('user');
+            }
             this.messages.push({ senderName: name, sendAt: time, text: text });
         });
     }

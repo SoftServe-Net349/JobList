@@ -28,7 +28,7 @@ namespace JobList.BusinessLogic.Hubs
         {
             var message = new ChatMessage
             {
-                SenderName = "Admin Bohdan",
+                SenderName = "JobList Admin",
                 Text = text,
                 SendAt = DateTimeOffset.UtcNow
             };

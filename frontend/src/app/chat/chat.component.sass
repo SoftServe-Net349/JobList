@@ -8,38 +8,45 @@
     width: 300px
     box-shadow: 3px 2px 13px 2px rgba(0, 0, 0, 0.1)
     display: block
-    text-align: center
-    
+    text-align: center    
 
 #chatDialog::before 
+    text-align: left
     content: attr(title)
-    background-color: #333
-    color: white
-    width: inherit
+    background-color: rgb(59, 71, 80)
+    color: #f0f1f1
+    width: 290px
+    height: 30px
     display: inline-block
-    padding: 10px 0 15px 0
+    padding: 15px 0 5px 10px
     
 
 #chatWelcomePanel h3 
     margin: 20px 0 20px 0
 
-
-#chatMainPanel 
-    padding-left: 15px
-
-
 #chatHistory 
     list-style-type: none
-    text-align: left
-    padding-top: 15px
     margin-bottom: 15px
     height: 285px
     overflow-y: scroll
+    font-size: 13px
+    text-align: left 
 
+    li.user
+        background: #eee6ff
+        float: right
+        margin-right: 5px
 
-    li 
-        padding-bottom: 15px
+    li.admin
+        margin-left: 5px
+        background: #e4eefd
+        float: left
     
+    li
+        margin-top: 10px
+        width: 220px
+        padding: 10px
+
         .name 
             font-weight: bold
             margin-right: 5px
@@ -47,7 +54,6 @@
         .time
             color: #999
         
-
         .message-body 
             padding-top: 5px
         
@@ -58,7 +64,16 @@
 
     #messageTextbox 
         width: 200px
-
+        vertical-align: middle
+        font-size: 1rem
+        line-height: 1.5
+        color: #495057
+        background-color: #fff
+        border: 1px solid #ced4da
+        border-radius: .25rem
+        padding: .375rem .75rem
+        width: 100%
+        margin-left: 5px
 
 #chatConnectionInfo 
     position: absolute
@@ -81,3 +96,12 @@
     width: 100%
     height: 100%
     z-index: 3
+
+.nameTextbox
+    font-size: 1rem
+    color: #495057
+    background-color: #fff
+    border: 1px solid #ced4da
+    border-radius: .25rem
+    padding: 5px 1px
+    width: 90%

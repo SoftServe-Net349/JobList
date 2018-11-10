@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div id="roomList">
-            <a *ngFor="let room of rooms; let i = index" class="room {{isActives[i]}}" (click)="changeRoom(room.id, i)">{{room.name}}</a>
+            <a *ngFor="let room of rooms; let i = index" class="room {{actives[i]}}" (click)="changeRoom(room.id, i)">{{room.name}}</a>
         </div>
         <div class="chat-container">
             <div class="row">
