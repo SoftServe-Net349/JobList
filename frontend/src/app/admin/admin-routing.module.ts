@@ -8,13 +8,15 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { AdminGuard } from '../core/guards/admin.guard';
+import { AdminChatComponent } from './admin-chat/admin-chat.component';
 
 const childRoutes: Routes = [
   { path: 'admin-employees', component: AdminEmployeesComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin-companies', component: AdminCompaniesComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin-vacancies', component: AdminVacanciesComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin-recruiters', component: AdminRecruitersComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard] }
+  { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'admin-chat', component: AdminChatComponent, canActivate: [AuthGuard, AdminGuard]}
 ];
 
 const routes: Routes = [

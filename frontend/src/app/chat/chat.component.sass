@@ -1,0 +1,124 @@
+#chatDialog 
+    position: fixed
+    z-index: 10
+    bottom: 0px
+    right: 200px
+    background-color: white
+    height: 400px
+    width: 300px
+    box-shadow: 3px 2px 13px 2px rgba(0, 0, 0, 0.1)
+    display: block
+    text-align: center    
+
+#chatDialog::before 
+    text-align: left
+    content: attr(title)
+    background-color: rgb(59, 71, 80)
+    color: #f0f1f1
+    width: 290px
+    height: 30px
+    display: inline-block
+    padding: 15px 0 5px 10px
+    
+
+#chatWelcomePanel h3 
+    margin: 20px
+
+#chatHistory 
+    list-style-type: none
+    margin-bottom: 15px
+    height: 285px
+    overflow-y: scroll
+    font-size: 13px
+    text-align: left 
+
+    li.user
+        background: #eee6ff
+        float: right
+        margin-right: 5px
+
+    li.admin
+        margin-left: 5px
+        background: #e4eefd
+        float: left
+    
+    li
+        margin-top: 10px
+        width: 220px
+        padding: 10px
+
+        .name 
+            font-weight: bold
+            margin-right: 5px
+        
+        .time
+            color: #999
+        
+        .message-body 
+            padding-top: 5px
+        
+
+#bottomPanel 
+    position: absolute
+    width: 270px
+
+    #messageTextbox 
+        width: 200px
+        vertical-align: middle
+        font-size: 1rem
+        line-height: 1.5
+        color: #495057
+        background-color: #fff
+        border: 1px solid #ced4da
+        border-radius: .25rem
+        padding: .375rem .75rem
+        width: 100%
+        margin-left: 5px
+
+#chatConnectionInfo 
+    position: absolute
+    width: 100%
+    left: 0
+    height: 100%
+    padding-top: 100px
+    color: darkred
+    z-index: 2
+    display: none
+
+
+#chatDialog.disconnected #chatMainPanel 
+    filter: blur(2px)
+
+#chatDialog.disconnected #chatConnection
+    display: block
+
+#chatWelcomePanel 
+    width: 100%
+    height: 100%
+    z-index: 3
+
+.nameTextbox
+    font-size: 1rem
+    color: #495057
+    background-color: #fff
+    border: 1px solid #ced4da
+    border-radius: .25rem
+    padding: 5px 1px
+    width: 90%
+
+
+.close-window
+    margin-top: 0
+    margin-left: -20px
+    width: 23px 
+    height: 23px
+    cursor: pointer
+    overflow: visible
+    opacity: 0
+
+
+path
+    fill: none
+    stroke: #383d45
+    stroke-width: 1.5
+    stroke-linecap: round

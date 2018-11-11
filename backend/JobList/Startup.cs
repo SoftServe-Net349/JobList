@@ -174,6 +174,9 @@ namespace JobList
                 });
 
             services.AddSignalR();
+
+            services.AddSingleton<IChatRoomService, ChatRoomService>();
+
             // Add user id provider
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
@@ -219,6 +222,11 @@ namespace JobList
             app.UseSignalR(routes =>
             {
                 routes.MapHub<InvitationHub>("/invitationHub");
+            });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chat");
+                routes.MapHub<AdminHub>("/adminHub");
             });
             app.UseMvc();
         }

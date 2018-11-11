@@ -92,8 +92,10 @@ namespace JobList.BusinessLogic.Services
             return dtos;
         }
 
-        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(VacancyUrlQuery vacancyUrlQuery = null,
-            SearchingUrlQuery searchingUrlQuery = null, SortingUrlQuery sortingUrlQuery = null,
+        public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(
+            VacancyUrlQuery vacancyUrlQuery = null,
+            SearchingUrlQuery searchingUrlQuery = null, 
+            SortingUrlQuery sortingUrlQuery = null,
             PaginationUrlQuery paginationUrlQuery = null)
         {
 

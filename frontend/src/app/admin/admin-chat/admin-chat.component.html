@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div id="roomList">
+            <a *ngFor="let room of rooms; let i = index" class="room {{actives[i]}}" (click)="changeRoom(room.id, i)">{{room.name}}</a>
+        </div>
+        <div class="chat-container">
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                        <ul id="chatHistory">
+                            <li *ngFor="let message of messages">
+                                <div class="message-header">
+                                    <span class="name">{{message.senderName }}</span>
+                                    <span class="time">{{message.sendAt | date}} </span>
+                                </div>
+                                <div class="message-body">
+                                    {{message.text}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <form id="chatForm">
+                        <input id="messageTextbox" name="text" [(ngModel)]="message.text" placeholder="Type a message" />
+                        <button (click)="sendMessage()" class="btn-send">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

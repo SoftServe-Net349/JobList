@@ -11,6 +11,7 @@ import { MainSearchComponent } from './main-search/main-search.component';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { CompanyRecruiterAdminGuard } from '../core/guards/company-recruiter-admin.guard';
 import { AdminAuthorizationComponent } from '../admin-authorization/admin-authorization.component';
+import { ChatComponent } from '../chat/chat.component';
 
 const childRoutes: Routes = [
   { path: '', component: MainSearchComponent, pathMatch: 'full' },
@@ -19,7 +20,8 @@ const childRoutes: Routes = [
   { path: 'company-details/:id', component: CompanyDetailsComponent },
   { path: 'resume-details/:id', component: ResumeDetailsComponent, canActivate: [AuthGuard, CompanyRecruiterAdminGuard] },
   { path: 'vacancy-details/:id', component: VacancyDetailsComponent },
-  { path: 'admin', component: AdminAuthorizationComponent }
+  { path: 'admin', component: AdminAuthorizationComponent },
+  { path: 'chat', component: ChatComponent}
 ];
 
 const routes: Routes = [

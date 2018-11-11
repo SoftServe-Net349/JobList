@@ -1,0 +1,108 @@
+.container
+    max-width: 1140px
+    width: 100%
+    padding-right: 15px
+    padding-left: 15px
+    margin-right: auto
+    margin-left: auto
+    margin-top: 20px
+
+    #roomList
+        position: relative
+
+        .room
+            display: block
+            padding: .75rem 1.25rem
+            margin-bottom: 5px
+            background-color: #fff
+            border: 1px solid rgba(0,0,0,.125)
+            cursor: pointer
+            height: 55px
+            color: #7C898B
+        
+        .room:hover
+            background-color: #eaeaea
+
+        .room.active
+            background-color: #208087
+            color: #fff
+
+
+    .chat-container
+        width: 66.6%
+        margin-left: 10px
+
+        .card
+            position: relative
+            display: flex
+            border: 1px solid rgba(0,0,0,.125)
+            border-radius: .25rem
+            background-color: #fff
+            
+
+            #chatHistory 
+                list-style-type: none
+                text-align: left
+                height: 400px
+                overflow-y: scroll
+                margin-bottom: 0
+                width: 100%
+                padding: 10px 15px
+
+
+                li .name
+                    font-weight: bold
+                    margin-right: 5px
+
+
+                li .time 
+                    color: #999
+                
+                div.message-body
+                    margin-top: 2px
+                    padding-bottom: 15px
+
+
+        #chatForm
+            margin-top: .5rem
+            display: flex
+
+            #messageTextbox
+                display: inline-block
+                vertical-align: middle
+                font-size: 1rem
+                line-height: 1.5
+                color: #495057
+                background-color: #fff
+                border: 1px solid #ced4da
+                border-radius: .25rem
+                flex-grow: 1
+                padding: .375rem .75rem
+                margin-right: 5px
+
+            .btn-send
+                border: 1px solid transparent
+                cursor: pointer
+                padding: .375rem .75rem
+                font-size: 1rem
+                line-height: 1.5
+                border-radius: .25rem
+                color: #fff
+                border-color: #208087
+                background-color: #208087
+
+            .btn-send:hover
+                background-color: #298989
+
+
+
+.row
+    display: flex
+    margin-right: -15px
+    margin-left: -15px
+
+
+.column
+    width: 100%
+    padding-right: 15px
+    padding-left: 15px
