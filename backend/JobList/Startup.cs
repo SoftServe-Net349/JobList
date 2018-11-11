@@ -163,7 +163,9 @@ namespace JobList
                             // If the request is for our hub...
                             var path = context.HttpContext.Request.Path;
                             if (!string.IsNullOrEmpty(accessToken) &&
-                                (path.StartsWithSegments("/invitationHub")))
+                                (path.StartsWithSegments("/invitationHub")) || 
+                                path.StartsWithSegments("/chatHub") || 
+                                path.StartsWithSegments("/adminHub"))
                             {
                                 // Read the token out of the query string
                                 context.Token = accessToken;
@@ -222,10 +224,7 @@ namespace JobList
             app.UseSignalR(routes =>
             {
                 routes.MapHub<InvitationHub>("/invitationHub");
-            });
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<ChatHub>("/chat");
+                routes.MapHub<ChatHub>("/chatHub");
                 routes.MapHub<AdminHub>("/adminHub");
             });
             app.UseMvc();

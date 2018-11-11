@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit {
 
     createConection(): void {
         this.hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl(`${environment.server_url}/chat`)
+            .withUrl(`${environment.server_url}/chatHub`)
             .build();
     }
 

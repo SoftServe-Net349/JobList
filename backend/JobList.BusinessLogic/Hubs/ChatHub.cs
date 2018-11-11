@@ -20,12 +20,6 @@ namespace JobList.BusinessLogic.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if(Context.User.Identity.IsAuthenticated)
-            {
-                await base.OnConnectedAsync();
-                return;
-            }
-
             var roomId = await _chatRoomService.CreateRoom(Context.ConnectionId);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
@@ -62,7 +56,7 @@ namespace JobList.BusinessLogic.Hubs
             await _adminHub.Clients.All.SendAsync("ActiveRooms", await _chatRoomService.GetAllRooms());
         }
 
-        //[Authorize]
+        [Authorize(Roles = "admin")]
         public async Task JoinRoom(Guid roomId)
         {
             if (roomId == Guid.Empty)
@@ -71,7 +65,7 @@ namespace JobList.BusinessLogic.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
         }
 
-        //[Authorize]
+        [Authorize(Roles = "admin")]
         public async Task LeaveRoom(Guid roomId)
         {
             if (roomId == Guid.Empty)

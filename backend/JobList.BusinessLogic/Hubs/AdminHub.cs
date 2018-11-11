@@ -1,11 +1,13 @@
 ﻿using JobList.BusinessLogic.Interfaces;
 using JobList.Common.ChatHelpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 
 namespace JobList.BusinessLogic.Hubs
 {
+    [Authorize(Roles = "admin")]
     public class AdminHub : Hub
     {
         private readonly IChatRoomService _chatRoomService;
