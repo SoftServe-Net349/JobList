@@ -4,6 +4,7 @@ import * as signalR from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
 import { Message } from 'src/app/shared/models/message.model';
 import { Room } from 'src/app/shared/models/room.model';
+import { AuthHelper } from 'src/app/shared/helpers/auth-helper';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class AdminChatComponent implements OnInit {
 
     actives = [];
 
-    constructor() {
+    constructor(private authHelper: AuthHelper) {
     }
 
     ngOnInit() {
@@ -43,13 +44,13 @@ export class AdminChatComponent implements OnInit {
 
     createChatConection(): void {
         this.chatConnection = new signalR.HubConnectionBuilder()
-            .withUrl(`${environment.server_url}/chat`)
+            .withUrl(`${environment.server_url}/chatHub?token=${this.authHelper.getToken()}`)
             .build();
     }
 
     createAdminConnection(): void {
         this.adminConnection = new signalR.HubConnectionBuilder()
-            .withUrl(`${environment.server_url}/adminHub`)
+            .withUrl(`${environment.server_url}/adminHub?token=${this.authHelper.getToken()}`)
             .build();
     }
 
@@ -89,7 +90,8 @@ export class AdminChatComponent implements OnInit {
                 this.messages.push({
                     senderName: message.senderName,
                     sendAt: message.sendAt,
-                    text: message.text });
+                    text: message.text
+                });
             });
         });
     }
