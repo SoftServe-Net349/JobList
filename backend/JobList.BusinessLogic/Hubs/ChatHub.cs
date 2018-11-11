@@ -79,5 +79,10 @@ namespace JobList.BusinessLogic.Hubs
 
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId.ToString());
         }
+
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            return base.OnDisconnectedAsync(exception);
+        }
     }
 }
