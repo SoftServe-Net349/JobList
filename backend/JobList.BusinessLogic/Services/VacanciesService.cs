@@ -114,6 +114,20 @@ namespace JobList.BusinessLogic.Services
             
             return dtos;
         }
+        public async Task<IEnumerable<VacancyDTO>> GetVacanciesByRecruiterIdAsync(int recruiterId, PaginationUrlQuery urlQuery = null)
+        {
+            var entities = await _uow.VacanciesRepository.GetRangeAsync(filter: r => r.RecruiterId == recruiterId,
+              include: r => r.Include(o => o.City)
+                             .Include(o => o.WorkArea)
+                             .Include(o => o.Recruiter).ThenInclude(v => v.Company),
+              paginationUrlQuery: urlQuery);
+
+            if (entities == null) return null;
+
+            var dtos = _mapper.Map<List<Vacancy>, List<VacancyDTO>>(entities);
+
+            return dtos;
+        }
 
         public async Task<IEnumerable<VacancyDTO>> GetFilteredEntitiesAsync(int? recruiterId,
                                                                            string searchString,

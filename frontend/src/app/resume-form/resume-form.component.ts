@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../shared/models/employee.model';
@@ -15,13 +16,13 @@ import { Resume } from '../shared/models/resume.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ResumeService } from '../core/services/resume.service';
 import { EmployeeService } from '../core/services/employee.service';
-import { EmployeeRequest } from '../shared/models/employee-request.model';
 import { ResumeRequest } from '../shared/models/resume-request.model';
-import { Role} from '../shared/models/role.model';
 import { EducationPeriodsService } from '../core/services/education-periods.service';
 import { ExperienceService } from '../core/services/experience.service';
 import { EducationPeriod } from '../shared/models/education-period.model';
 import { Experience } from '../shared/models/experience.model';
+import { EmployeeUpdateRequest } from '../shared/models/employee-update-request.model';
+
 
 
 @Component({
@@ -34,20 +35,24 @@ export class ResumeFormComponent implements OnInit {
   FormEducation: FormGroup;
   FormExperience: FormGroup;
   resumeForm: FormGroup;
+  employeeForm: FormGroup;
 
-  display: Boolean = false;
-  @Input() action: string;
+  infoDialog = false;
+  display = false;
+  @Input() action = 'Create';
 
   @Output() loadResume = new EventEmitter();
+
   employee: Employee;
   resume: Resume;
-  role: Role;
-
+  // role: Role;
+  sex: string;
   workAreas: WorkArea[];
   languages: Language[];
   cities: City[];
   schools: School[];
   faculties: Faculty[];
+
   educationPeriods: EducationPeriod [];
   experience: Experience[];
 
@@ -55,12 +60,11 @@ export class ResumeFormComponent implements OnInit {
   selectedCity: City;
   selectedLanguages: Language[];
   birthDate: Date;
-  selectedShool1: School;
-  selectedFaculty1: Faculty;
-  edStartDate1: Date;
-  edFinishDate1: Date;
-  expStartDate: Date;
-  expFinishDate: Date;
+
+  type: string;
+  uploadedFile: File;
+  dataString: string|ArrayBuffer;
+  base64: string;
 
   constructor(private formBuilder: FormBuilder,
               private workAreaService: WorkAreaService,
@@ -73,7 +77,6 @@ export class ResumeFormComponent implements OnInit {
               private employeeService: EmployeeService,
               private educationPeriodsService: EducationPeriodsService,
               private experienceService: ExperienceService) {
-                this.defaultFormExperience();
   }
 
   ngOnInit() {
@@ -82,30 +85,68 @@ export class ResumeFormComponent implements OnInit {
     this.loadCities();
     this.loadSchools();
     this.loadFaculties();
-
     this.activatedRoute.params.forEach((params: Params) => {
       const id = +params['id'];
       this.loadResumeById(id);
-      // this.loadExperience(id);
+
+
+      this.FormEducation = this.formBuilder.group({
+        FrontEnd: [''],
+        itemsEducation: this.formBuilder.array([
+          this.initEducation(),
+        ])
+      });
+
+      this.FormExperience = this.formBuilder.group({
+        FrontEnd: [''],
+        companyName: [''],
+        position: [''],
+        itemsExperience: this.formBuilder.array([
+          this.initExperience(),
+        ])
+      });
+
     });
 
-    this.FormEducation = this.formBuilder.group({
-      FrontEnd: [''],
-      itemsEducation: this.formBuilder.array([
-        this.initEducation(),
-      ])
-    });
-
-    this.FormExperience = this.formBuilder.group({
-      FrontEnd: [''],
-      companyName: [''],
-      position: [''],
-      itemsExperience: this.formBuilder.array([
-        this.initExperience(),
-      ])
-    });
-
+    this.employeeForm = this.defaultEmployeeForm();
     this.resumeForm = this.defaultResumeForm();
+  }
+  
+  onUpload(event) {
+
+    this.uploadedFile = event.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+     this.dataString = reader.result;
+     this.base64 = this.dataString.toString().split(',')[1];
+    };
+
+    reader.readAsDataURL(this.uploadedFile);
+    this.type = this.uploadedFile.type.toString().split('/')[1];
+
+  }
+
+  initEducation() {
+        return this.formBuilder.group({
+        });
+  }
+
+  initExperience() {
+        return this.formBuilder.group({
+          companyName: ['', [Validators.minLength(2), Validators.maxLength(200)]],
+          position: ['', [Validators.minLength(2), Validators.maxLength(200)]],
+        });
+  }
+
+  addEducation() {
+        const control = <FormArray>this.FormEducation.controls['itemsEducation'];
+        control.push(this.initEducation());
+  }
+
+  addExperience() {
+        const control = <FormArray>this.FormExperience.controls['itemsExperience'];
+        control.push(this.initExperience());
   }
 
   loadWorkAreas() {
@@ -138,70 +179,78 @@ export class ResumeFormComponent implements OnInit {
     .subscribe((data: Resume) => this.resume = data);
   }
 
-  initEducation() {
-    return this.formBuilder.group({
-    });
-  }
-  initExperience() {
-    return this.formBuilder.group({
-      companyName: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      position: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-    });
-  }
-  addEducation() {
-    const control = <FormArray>this.FormEducation.controls['itemsEducation'];
-    control.push(this.initEducation());
 
-  }
-  addExperience() {
-    const control = <FormArray>this.FormExperience.controls['itemsExperience'];
-    control.push(this.initExperience());
-  }
   defaultResumeForm(): FormGroup {
     return this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
-        Validators.pattern('^[a-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
-      phone: [''],
-      companyName: ['', [Validators.minLength(1), Validators.maxLength(200)]],
-      position: ['', [Validators.minLength(1), Validators.maxLength(100)]],
+
       familyState: ['', [Validators.minLength(1), Validators.maxLength(20)]],
       softSkills: [''],
       keySkills: [''],
       courses: [''],
+      position: [''],
       linkedIn: ['', [Validators.minLength(1), Validators.maxLength(200)]],
       gitHub: ['', [Validators.minLength(1), Validators.maxLength(200)]],
       facebook: ['', [Validators.minLength(1), Validators.maxLength(200)]],
       skype: ['', [Validators.minLength(1), Validators.maxLength(200)]],
+      instagram: ['', [Validators.minLength(1), Validators.maxLength(200)]],
       workArea: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      birthDate: ['', [Validators.required]],
       introduction: ['', [Validators.minLength(1), Validators.maxLength(300)]],
     });
   }
-  defaultFormExperience(): FormGroup {
+
+  defaultEmployeeForm(): FormGroup {
     return this.formBuilder.group({
-      companyName: ['', [Validators.minLength(2), Validators.maxLength(200)]],
-      position: ['', [Validators.minLength(2), Validators.maxLength(200)]]
+      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
+        Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
+      city: ['', [Validators.required]],
+      birthDate: ['', [Validators.required]],
+      phone: ['']
     });
   }
 
-  showResumeForm(action: string, employee = null, resume = null) {
+  showInfoForm(employee: Employee) {
     this.employee = employee;
+    this.employeeForm.reset();
+    this.infoDialog = true;
+
+    this.employeeForm.setValue({
+      firstName: this.employee.firstName,
+      lastName: this.employee.lastName,
+      email: this.employee.email,
+      phone: this.employee.phone,
+      city: this.employee.city,
+      birthDate: new Date(this.employee.birthDate),
+      // sex: this.sex,
+    });
+    this.selectedCity = this.employee.city;
+  }
+
+  showResumeForm(action: string,  resume = null) {
     this.resume = resume;
     this.resumeForm.reset();
     this.display = true;
     this.action = action;
 
+    this.resumeForm.setValue({
+      courses: '',
+      introduction: '',
+      instagram: '',
+      familyState: '',
+      softSkills: '',
+      keySkills: '',
+      facebook: '',
+      skype: '',
+      linkedIn: '',
+      gitHub: '',
+      workArea: '',
+      position: '',
+    });
+
     if (action === 'Update') {
       this.resumeForm.setValue({
-        firstName: this.employee.firstName,
-        lastName: this.employee.lastName,
-        email: this.employee.email,
-        phone: this.employee.phone,
-        companyName: this.resume.experiences,
-        position: this.resume.experiences,
+        position: this.resume.position,
         courses: this.resume.courses,
         introduction: this.resume.introduction,
         familyState: this.resume.familyState,
@@ -211,86 +260,107 @@ export class ResumeFormComponent implements OnInit {
         skype: this.resume.skype,
         linkedIn: this.resume.linkedin,
         gitHub: this.resume.github,
+        instagram: this.resume.instagram,
         workArea: this.resume.workArea,
-        city: this.employee.city,
-        birthDate: ''
       });
-      // this.selectedWorkArea = this.workAreas[1];
-      // this.selectedCity = this.cities[1];
-      this.birthDate = new Date(this.employee.birthDate);
-      this.selectedShool1 = this.schools[1];
-      this.selectedFaculty1 = this.faculties[1];
-      this.edStartDate1 = new Date();
-      this.edFinishDate1 = new Date();
-      this.expStartDate = new Date();
-      this.expFinishDate = new Date();
       this.selectedLanguages = this.languages;
+
     }
   }
-  updateResume() {
-    const requestEmployee: EmployeeRequest = this.getRequestEmployee();
+
+
+  getLanguages(): string {
+    let languages = '';
+
+    if (this.resume !== undefined) {
+      this.resume.resumeLanguages.forEach(rl => {
+        languages =  rl.language.name + ', ' + languages;
+      });
+    }
+
+    return languages.slice(0, languages.length - 2); // to delete the last ,
+  }
+  updateInformation() {
+    const requestEmployee: EmployeeUpdateRequest = this.getRequestEmployee();
     this.employeeService.update(this.employee.id, requestEmployee)
       .subscribe(data => this.loadResume.emit());
+  }
 
+  updateResume() {
      const requestResume: ResumeRequest = this.getRequestResume();
-     this.resumeService.update(this.employee.id, requestResume)
+     this.resumeService.update(this.resume.id, requestResume)
        .subscribe(data => this.loadResume.emit());
   }
-getRequestEmployee(): EmployeeRequest {
+
+  getRequestEmployee(): EmployeeUpdateRequest {
     return  {
-      firstName: this.resumeForm.get('firstName').value,
-      lastName: this.resumeForm.get('lastName').value,
-      phone: this.resumeForm.get('phone').value,
-      photoData: this.employee.photoData,
-      photoMimeType: this.employee.photoMimeType,
+      firstName: this.employeeForm.get('firstName').value,
+      lastName: this.employeeForm.get('lastName').value,
+      phone: this.employeeForm.get('phone').value,
+      photoData: this.base64,
+      photoMimeType: this.type,
       sex: this.employee.sex,
-      birthDate: this.employee.birthDate,
-      email: this.resumeForm.get('email').value,
-      password: 'qwerty',
+      birthDate: this.employeeForm.get('birthDate').value,
+      email: this.employeeForm.get('email').value,
       cityId: this.selectedCity.id,
       roleId: this.employee.role.id,
     };
   }
-getRequestResume(): ResumeRequest {
+
+  getRequestResume(): ResumeRequest {
     return {
       id: this.resume.id,
       linkedin: this.resumeForm.get('linkedIn').value,
       github: this.resumeForm.get('gitHub').value,
       facebook: this.resumeForm.get('facebook').value,
       skype: this.resumeForm.get('skype').value,
-      instagram: this.resume.instagram,
+      instagram: this.resumeForm.get('instagram').value,
       familyState: this.resumeForm.get('familyState').value,
       softSkills: this.resumeForm.get('softSkills').value,
       keySkills: this.resumeForm.get('keySkills').value,
       courses: this.resumeForm.get('courses').value,
       createDate: this.resume.createDate,
       workAreaId: this.selectedWorkArea.id,
-      position: this.resumeForm. get('keySkills').value,
+      position: this.resumeForm. get('position').value,
       introduction: this.resumeForm. get('keySkills').value,
     };
   }
-Update() {
-    this.employee.firstName = this.resumeForm.get('firstName').value;
-    this.employee.lastName = this.resumeForm.get('lastName').value;
-    this.employee.phone = this.resumeForm.get('phone').value;
-    this.employee.photoData = this.employee.photoData;
-    this.employee.photoMimeType = this.employee.photoMimeType;
-    this.employee.sex = this.employee.sex;
-    this.employee.birthDate = this.employee.birthDate;
-    this.employee.email = this.resumeForm.get('email').value;
+
+  UpdateResume() {
+    this.resume.position = this.resumeForm.get('position').value;
     this.resume.linkedin = this.resumeForm.get('linkedIn').value;
     this.resume.github = this.resumeForm.get('gitHub').value;
     this.resume.facebook = this.resumeForm.get('facebook').value;
     this.resume.skype = this.resumeForm.get('skype').value;
-    this.resume.instagram = this.resume.instagram;
+    this.resume.instagram = this.resumeForm.get('instagram').value;
     this.resume.familyState = this.resumeForm.get('familyState').value;
     this.resume.softSkills = this.resumeForm.get('softSkills').value;
     this.resume.keySkills = this.resumeForm.get('keySkills').value;
     this.resume.courses = this.resumeForm.get('courses').value;
+    this.resume.workArea = this.resumeForm.get('workArea').value;
   }
-submit() {
-  this.updateResume();
-  this.Update();
-  this.display = false;
+
+  UpdateEmployee() {
+    this.employee.firstName = this.employeeForm.get('firstName').value;
+    this.employee.lastName = this.employeeForm.get('lastName').value;
+    this.employee.phone = this.employeeForm.get('phone').value;
+    this.employee.sex = this.employee.sex;
+    this.employee.birthDate = this.employeeForm.get('birthDate').value;
+    this.employee.email = this.employeeForm.get('email').value;
+    this.employee.photoData = this.base64;
+    this.employee.photoMimeType = this.type;
+    this.employee.city = this.employeeForm.get('city').value;
+  }
+
+  submitEmployeeForm() {
+    this.updateInformation();
+    this.UpdateEmployee();
+    this.infoDialog = false;
+  }
+
+  submit() {
+    this.updateResume();
+    this.UpdateResume();
+    this.display = false;
   }
 }

@@ -29,7 +29,7 @@ namespace JobList.Controllers
         }
 
         // GET: /employees
-        [Authorize]
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> Get()
         {
@@ -42,7 +42,7 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        [Authorize(Roles = "company, recruiter, admin")]
         [HttpGet("filtered")]
         public virtual async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetFiltered([FromQuery]SearchingUrlQuery searchingUrlQuery = null, [FromQuery]SortingUrlQuery sortingUrlQuery = null,
                                                                             [FromQuery]PaginationUrlQuery paginationUrlQuery = null)
@@ -66,10 +66,18 @@ namespace JobList.Controllers
             return Ok(dtos);
         }
 
-        [Authorize]
+        [Authorize(Roles = "employee, admin")]
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<EmployeeDTO>> GetById(int id)
         {
+            var isAuthorized = await _authorizationService
+                    .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             var dto = await _employeesService.GetEntityByIdAsync(id);
             if (dto == null)
             {
@@ -154,5 +162,40 @@ namespace JobList.Controllers
 
             return NoContent();
         }
+        [Authorize(Roles = "employee")]
+        [HttpPut("{id}/reset")]
+        public virtual async Task<ActionResult> ResetPassword([FromRoute]int id, [FromBody]EmployeeResetPasswordRequest request)
+        {
+            var isAuthorized = await _authorizationService
+                                .AuthorizeAsync(User, id, UserOperations.Update);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _employeesService.ResetEntityByIdAsync(request, id);
+                if (!result)
+                {
+                    return StatusCode(500);
+                }
+
+                return NoContent();
+
+            }
+            catch (HttpStatusCodeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
+
+
+   

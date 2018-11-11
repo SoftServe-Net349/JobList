@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthorizationsComponent } from '../../authorizations/authorizations.component';
 import { AuthHelper } from '../helpers/auth-helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../core/services/auth.service';
+import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
+
 
 @Component({
   selector: 'app-header',
@@ -29,12 +33,14 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild(AuthorizationsComponent)
   authorizations: AuthorizationsComponent;
-
+  @ViewChild(ResetPasswordComponent)
+  resetPassword: ResetPasswordComponent;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
               private authHelper: AuthHelper,
-              private jwtHelper: JwtHelperService) {}
+              private jwtHelper: JwtHelperService,
+              private authService: AuthService) {}
 
   ngOnInit() {
 
@@ -66,13 +72,14 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o',
+          command: (event) => { this.resetPassword.showSignIn(this.role, this.uId);}}
         ]
       },
       {
       label: 'Sign out',
       icon: 'fa fa-sign-out',
-      command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
+      command: (event) => { this.authHelper.logout(); this.authService.logout(); this.chengeAuthenticatedStatus(); }
       }
     ];
 
@@ -84,13 +91,13 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Home',
         icon: 'fa fa-home',
-        command: (event) => { this.router.navigate(['/recruiters', this.uId]); }
-      },
+        command: (event) => { this.router.navigate(['/recruiters', this.uId]); }},
       {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o',
+          command: (event) => { this.resetPassword.showSignIn(this.role, this.uId);}}
         ]
       },
       {
@@ -114,7 +121,8 @@ export class HeaderComponent implements OnInit {
         label: 'Settings',
         icon: 'fa fa-cog',
         items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o'}
+          {label: 'Change password', icon: 'fa fa-pencil-square-o',
+          command: (event) => { this.resetPassword.showSignIn(this.role, this.uId);}}
         ]
       },
       {

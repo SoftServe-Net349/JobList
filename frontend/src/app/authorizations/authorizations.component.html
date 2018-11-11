@@ -1,7 +1,7 @@
 <p-dialog [header]="'Sing In as ' + role" [(visible)]="signInDialog" [modal]="true" [responsive]="true" [width]="330"
   [minWidth]="200" [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true"
   [dismissableMask]="false" [baseZIndex]="10000">
-  
+
   <div id="authoruzations">
     <form [formGroup]="authoruzationsForm" novalidate>
 
@@ -9,7 +9,8 @@
       <div class="ui-float-label">
         <input id="login" type="text" pInputText formControlName="login">
         <div *ngIf="authoruzationsForm.get('login').invalid &&
-                    (authoruzationsForm.get('login').dirty || authoruzationsForm.get('login').touched)" class="alert alert-danger">          
+                    (authoruzationsForm.get('login').dirty || authoruzationsForm.get('login').touched)"
+          class="alert alert-danger">
           <div *ngIf="authoruzationsForm.controls['login'].errors.required">
             Login is required
           </div>
@@ -21,7 +22,8 @@
       <div class="ui-float-label">
         <input type="password" pPassword formControlName="password" />
         <div *ngIf="authoruzationsForm.get('password').invalid &&
-                    (authoruzationsForm.get('password').dirty || authoruzationsForm.get('password').touched)" class="alert alert-danger">
+                    (authoruzationsForm.get('password').dirty || authoruzationsForm.get('password').touched)"
+          class="alert alert-danger">
           <div *ngIf="authoruzationsForm.controls['password'].errors.required">
             Password is required
           </div>
@@ -35,8 +37,11 @@
       {{errorMessage}}
     </div>
 
-    <button class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign In</button>
-    
+    <button *ngIf="!isLoading" class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign
+      In</button>
+    <button *ngIf="isLoading" class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign
+      In...</button>
+
     <div class="save-forget-password-flex">
       <div>
         <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
@@ -55,13 +60,13 @@
       </div>
       <div class=fb_google>
         <div class=fb_google1>
-          <a class="google fd-f" target="_blank">
+          <a class="google fd-f">
             <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
               alt="google">
           </a>
         </div>
         <div class=fb_google1>
-          <a class="facebook fd-f" target="_blank">
+          <a class="facebook fd-f" (click)="signInWithFacebook()">
             <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
               alt="facabook">
           </a>
@@ -211,12 +216,13 @@
         <div *ngIf="signUpEmployeeForm.get('passwordConfirm').invalid &&
                     (signUpEmployeeForm.get('passwordConfirm').dirty || signUpEmployeeForm.get('passwordConfirm').touched)"
           class="alert alert-danger">
-          <div *ngIf="signUpEmployeeForm.controls['passwordConfirm'].errors.required">
-            Password is required
+          <div *ngIf="signUpEmployeeForm.get('passwordConfirm').invalid &&
+          (signUpEmployeeForm.get('passwordConfirm').dirty || signUpEmployeeForm.get('passwordConfirm').touched)"
+            class="alert alert-danger">
           </div>
-          <div *ngIf="signUpEmployeeForm.controls['passwordConfirm'].errors.minlength ||
-                      signUpEmployeeForm.controls['passwordConfirm'].errors.maxlength">
-            Password contains (8-100) chars
+          <div *ngIf="signUpEmployeeForm.get('passwordConfirm').value!=signUpEmployeeForm.get('password').value && signUpEmployeeForm.get('passwordConfirm').dirty"
+            class="alert alert-danger">
+            Passwords should match!
           </div>
         </div>
       </div>
@@ -229,8 +235,7 @@
     </div>
 
     <div class="agreement">
-      <p-checkbox [(ngModel)]="checkedAgreementEmployee" value="false" binary="false"
-         [formControl]="signUpEmployeeForm.controls['checkedAgreementEmployee']"></p-checkbox>
+      <p-checkbox [(ngModel)]="checkedAgreementEmployee" value="false" binary="false" [formControl]="signUpEmployeeForm.controls['checkedAgreementEmployee']"></p-checkbox>
       <a (click)="openInformation()">
         <p class=" title Login_text"> I confirm my agreement </p>
       </a>
@@ -397,9 +402,9 @@
           <div *ngIf="signUpCompanyForm.controls['passwordConfirm'].errors.required">
             Password is required
           </div>
-          <div *ngIf="signUpCompanyForm.controls['passwordConfirm'].errors.minlength ||
-                      signUpCompanyForm.controls['passwordConfirm'].errors.maxlength">
-            Password contains (8-100) chars
+          <div *ngIf="signUpCompanyForm.get('passwordConfirm').value!=signUpCompanyForm.get('password').value && signUpCompanyForm.get('passwordConfirm').dirty"
+            class="alert alert-danger">
+            Passwords should match!
           </div>
         </div>
       </div>
@@ -443,12 +448,12 @@
       <hr>
 
       <div>
-        <p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Logo"
-         (onSelect)="onUpload($event)" accept="image/*" maxFileSize="1000000"></p-fileUpload>
+        <p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Logo" (onSelect)="onUpload($event)"
+          accept="image/*" maxFileSize="1000000"></p-fileUpload>
 
       </div>
       <hr>
-      
+
     </form>
 
     <div class="error-message" *ngIf="errorMessage">
@@ -457,18 +462,17 @@
     </div>
 
     <div class="agreement">
-      <p-checkbox [(ngModel)]="checkedAgreement" value="false" binary="false"
-       [formControl]="signUpCompanyForm.controls['checkedAgreement']"></p-checkbox>
+      <p-checkbox [(ngModel)]="checkedAgreement" value="false" binary="false" [formControl]="signUpCompanyForm.controls['checkedAgreement']"></p-checkbox>
 
       <a (click)="openInformation()">
         <p class="title Login_text"> I confirm my agreement </p>
       </a>
     </div>
   </div>
-  
+
   <p-footer>
-    <button type="button" pButton icon="pi pi-check" (click)="submitCompanySignUp()" label="Sing up"
-     [disabled]="signUpCompanyForm.invalid" class="ui-button-success"></button>
+    <button type="button" pButton icon="pi pi-check" (click)="submitCompanySignUp()" label="Sing up" [disabled]="signUpCompanyForm.invalid"
+      class="ui-button-success"></button>
     <button type="button" pButton icon="pi pi-times" (click)="closeForm()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>
 
@@ -478,11 +482,11 @@
 <p-dialog header="Information" [(visible)]="information" [modal]="true" [responsive]="true" [width]="250" [minWidth]="200"
   [minY]="70" [focusOnShow]="false" [resizable]="false" [draggable]="false" [blockScroll]="true" [dismissableMask]="true"
   [baseZIndex]="10000">
-  
+
   <div class="title">
     I confirm my agreement with the Terms of Use of the site joblist.ua and the Privacy Policy
   </div>
-  
+
   <p-footer>
     <button type="button" pButton icon="pi pi-times" (click)="closeInformationForm()" label="Cancel" class="ui-button-secondary"></button>
   </p-footer>

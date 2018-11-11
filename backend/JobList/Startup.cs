@@ -28,6 +28,8 @@ using Microsoft.AspNetCore.SignalR;
 using JobList.BusinessLogic.Hubs;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using JobList.BusinessLogic.Providers;
 
 namespace JobList
 {
@@ -44,7 +46,9 @@ namespace JobList
         public void ConfigureServices(IServiceCollection services)
         {
             // Connection to DataBase
-            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<JobListDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // For Tests
+            services.AddDbContext<JobListDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDb;Initial Catalog=JOB_LIST_DB;Integrated Security=True;MultipleActiveResultSets=True;"));
 
 
             // Add Cors policy
@@ -57,6 +61,14 @@ namespace JobList
                        .WithExposedHeaders("X-Pagination");
             }));
 
+            // Configuring FacebookAuthOptions
+            var facebookAuthSection = Configuration.GetSection("FacebookAuth");
+
+            services.Configure<FacebookAuthOptions>(o =>
+                {
+                    o.AppId = facebookAuthSection["AppId"];
+                    o.AppSecret = facebookAuthSection["AppSecret"];
+                });
 
             // Configuring JobListTokenOptions
             var tokensSection = Configuration.GetSection("Tokens");
@@ -66,7 +78,6 @@ namespace JobList
                     o.Issuer = tokensSection["Issuer"];
                     o.Audience = tokensSection["Audience"];
                     o.Access_Token_Lifetime = Convert.ToInt32(tokensSection["Access_Token_Lifetime"]);
-                    o.Refresh_Token_Lifetime = Convert.ToInt32(tokensSection["Refresh_Token_Lifetime"]);
                     o.Security_Key = tokensSection["Key"];
                 });
 
@@ -89,7 +100,7 @@ namespace JobList
             services.AddTransient<IVacanciesService, VacanciesService>();
             services.AddTransient<IWorkAreasService, WorkAreasService>();
             services.AddTransient<IInvitationsService, InvitationsService>();
-            services.AddTransient<ITokensService<EmployeeDTO>, EmployeeTokensService>();
+            services.AddTransient<IEmployeeTokensService, EmployeeTokensService>();
             services.AddTransient<ITokensService<CompanyDTO>, CompanyTokensService>();
             services.AddTransient<ITokensService<RecruiterDTO>, RecruiterTokensService>();
 
@@ -97,6 +108,15 @@ namespace JobList
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddTransient<IEmailSender, EmailProvider>(i =>
+               new EmailProvider(
+                   Configuration["EmailSender:Host"],
+                   Configuration.GetValue<int>("EmailSender:Port"),
+                   Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                   Configuration["EmailSender:UserName"],
+                   Configuration["EmailSender:Password"]
+               )
+           );
 
             // Add your authorization handlers here
             services.AddSingleton<IAuthorizationHandler, OwnerAuthorizationHandler>();
@@ -113,14 +133,25 @@ namespace JobList
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        //ValidateIssuer = true,
+                        //ValidateAudience = true,
+                        //ValidateLifetime = true,
+                        //ValidateIssuerSigningKey = true,
+                        //ValidIssuer = tokensSection["Issuer"],
+                        //ValidAudience = tokensSection["Audience"],
+                        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
+                        //ClockSkew = TimeSpan.Zero
+
+                        // For Tests
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = tokensSection["Issuer"],
-                        ValidAudience = tokensSection["Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokensSection["Key"])),
+                        ValidIssuer = "http://localhost:56681/",
+                        ValidAudience = "http://localhost:56681/",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("TokensSuperSecretKey")),
                         ClockSkew = TimeSpan.Zero
+
                     };
 
                     options.Events = new JwtBearerEvents

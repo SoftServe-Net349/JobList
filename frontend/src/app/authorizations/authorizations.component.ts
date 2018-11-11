@@ -10,6 +10,7 @@ import { Company } from '../shared/models/company.model';
 import { City } from '../shared/models/city.model';
 import { CityService } from '../core/services/city.service';
 import { sha512_224 } from 'js-sha512';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authorizations',
@@ -23,6 +24,7 @@ export class AuthorizationsComponent implements OnInit {
   signUpEmployee = false;
   signUpCompany = false;
   information = false;
+  isLoading = false;
 
   role: string;
   errorMessage: string;
@@ -45,7 +47,8 @@ export class AuthorizationsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private authHelper: AuthHelper,
-              private cityService: CityService) {}
+              private cityService: CityService,
+              private router: Router) {}
 
   ngOnInit() {
 
@@ -276,6 +279,28 @@ export class AuthorizationsComponent implements OnInit {
     reader.readAsDataURL(this.uploadedFile);
     this.type = this.uploadedFile.type.toString().split('/')[1];
 
+  }
+
+  signInWithFacebook() {
+
+    this.isLoading = true;
+
+    this.authService.signInWithFacebook()
+    .then((res: any) => {
+
+     this.authService.employeeFacebookLogin(res.credential.accessToken)
+     .subscribe(token => {
+      this.authHelper.setToken(token);
+      this.chengeAuthenticatedStatus.emit();
+      this.errorMessage = '';
+      this.isLoading = false;
+      location.replace('/');
+
+      },
+        error => { this.errorMessage = error.error; this.isLoading = false; }
+      );
+    })
+    .catch((err) => {console.log(err); this.isLoading = false; });
   }
 
 }

@@ -1,19 +1,35 @@
 <app-header></app-header>
 <div id="employee-page">
   <div class="wrapper-flex">
-    <img class="profile-avatar" src="https://avatars0.githubusercontent.com/u/43314300?s=400&u=1ab66ea04a1b8060af09ee83b3ba69a44a9f8710&v=4" alt="Profile Avatar">
+    <img class="profile-avatar" [src]="sanitizeEmployeeImg(employee?.photoData)"
+     
+      alt="Profile Avatar">
+      
     <div class="additional-info">
-      <p><span>Full Name: </span>{{employee?.firstName}} {{employee?.lastName}}</p>
-      <p><span>E-Mail: </span>{{employee?.email}}</p>
-      <p><span>Sex: </span>{{employee?.sex ==='m'?'Male':employee?.sex==='f'?'Female':''}}</p>
-      <p><span>Address: </span>{{employee?.address}}</p>
-      <p><span>Birth Date: </span>{{employee?.birthDate | date}}</p>
-      <p><span>Phone: </span>{{employee?.phone}}</p>
-      <p><span>Family state: </span>{{resume?.familyState}}</p>
+      <p>
+        <span>Full Name: </span>{{employee?.firstName}} {{employee?.lastName}}</p>
+      <p>
+        <span>E-Mail: </span>{{employee?.email}}</p>
+      <p>
+        <span>Sex: </span>{{employee?.sex ==='m'?'Male':employee?.sex==='f'?'Female':''}}</p>
+      <p>
+        <span>City: </span>{{employee?.city.name}}</p>
+      <p>
+        <span>Birth Date: </span>{{employee?.birthDate | date}}</p>
+      <p>
+        <span>Phone: </span>{{employee?.phone}}</p>
+      <p>
+        <span>Family state: </span>{{resume?.familyState}}</p>
     </div>
-    <div>
-      <button type="button" (click)="resumeForm.showResumeForm(action, employee, resume)" pButton icon="pi pi-copy" [label]="action + ' CV'"></button>
-      <app-resume-form [action] = "action" #resumeForm></app-resume-form> 
+    <div  class="additional-button">
+      <div class="additional-button"> 
+        <button type="button" (click)="employeeForm.showInfoForm(employee)" pButton icon="pi pi-copy" label="Update info"></button>
+        <app-resume-form #employeeForm></app-resume-form>
+      </div>
+      <div class="additional-button">
+        <button type="button" (click)="resumeForm.showResumeForm(action, resume)" pButton icon="pi pi-copy" [label]="action + ' CV'"></button>
+        <app-resume-form [action]="action" #resumeForm></app-resume-form>
+      </div>
     </div>
   </div>
 
@@ -23,28 +39,50 @@
         {{resume?.introduction}}
       </p>
     </p-fieldset>
+    <p-fieldset legend="Position">
+      <p>
+        {{resume?.position}}
+      </p>
+    </p-fieldset>
+    <p-fieldset legend="Work area">
+      <p>
+        {{resume?.workArea.name}}
+      </p>
+    </p-fieldset>
     <p-fieldset legend="Social Networks">
-      <p><span>GitHub: </span>{{resume?.github}}</p>
-      <p><span>Facebook: </span>{{resume?.facebook}}</p>
-      <p><span>Instagram: </span>{{resume?.instagram}}</p>
-      <p><span>Skype: </span>{{resume?.skype}}</p>
-      <p><span>Linkedin: </span>{{resume?.linkedin}}</p>
+      <p>
+        <span>GitHub: </span>{{resume?.github}}</p>
+      <p>
+        <span>Facebook: </span>{{resume?.facebook}}</p>
+      <p>
+        <span>Instagram: </span>{{resume?.instagram}}</p>
+      <p>
+        <span>Skype: </span>{{resume?.skype}}</p>
+      <p>
+        <span>Linkedin: </span>{{resume?.linkedin}}</p>
     </p-fieldset>
     <p-fieldset legend="Educations">
       <div *ngFor="let ed of resume?.educationPeriods">
-        <p><span>School: </span>{{ed.school?.name}}</p>
+        <p>
+          <span>School: </span>{{ed.school?.name}}</p>
         <p *ngIf="ed.faculty">{{ed.faculty?.name}}</p>
-        <p><span>Start Date: </span>{{ed.startDate | date}}</p>
-        <p><span>Finish Date: </span>{{ed.finishDate | date}}</p>
-        <hr>    
+        <p>
+          <span>Start Date: </span>{{ed.startDate | date}}</p>
+        <p>
+          <span>Finish Date: </span>{{ed.finishDate | date}}</p>
+        <hr>
       </div>
     </p-fieldset>
-    <p-fieldset legend="Experience" >
+    <p-fieldset legend="Experience">
       <div *ngFor="let exp of resume?.experiences">
-        <p><span>Company Name: </span>{{exp.companyName}}</p>
-        <p><span>Position: </span>{{exp.position}}</p>
-        <p><span>Start Date: </span>{{exp.startDate | date}}</p>
-        <p><span>Finish Date: </span>{{exp.finishDate | date}}</p>
+        <p>
+          <span>Company Name: </span>{{exp.companyName}}</p>
+        <p>
+          <span>Position: </span>{{exp.position}}</p>
+        <p>
+          <span>Start Date: </span>{{exp.startDate | date}}</p>
+        <p>
+          <span>Finish Date: </span>{{exp.finishDate | date}}</p>
         <hr>
       </div>
 
@@ -60,7 +98,7 @@
     </p-fieldset>
     <p-fieldset legend="Key Skills">
       <p>{{resume?.keySkills}}</p>
-    </p-fieldset>    
+    </p-fieldset>
   </div>
 </div>
 

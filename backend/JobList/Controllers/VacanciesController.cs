@@ -103,13 +103,28 @@ namespace JobList.Controllers
 
         [AllowAnonymous]
         [HttpGet("recruiter/{id}")]
-        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetVacanciesByRecruiterId(int id)
+        public virtual async Task<ActionResult<IEnumerable<RecruiterDTO>>> GetRecruitersByCompanyId(int id, [FromQuery] PaginationUrlQuery urlQuery = null)
         {
-            var dtos = await _vacanciesService.GetVacanciesByRectuiterId(id);
+            var dtos = await _vacanciesService.GetVacanciesByRecruiterIdAsync(id, urlQuery);
+
+
             if (!dtos.Any())
             {
                 return NoContent();
             }
+
+            if (urlQuery != null)
+            {
+                var pageInfo = new PageInfo()
+                {
+                    PageNumber = urlQuery.PageNumber,
+                    PageSize = urlQuery.PageSize,
+                    TotalRecords = await _vacanciesService.CountAsync(r => r.RecruiterId == id)
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageInfo));
+            }
+
             return Ok(dtos);
         }
 

@@ -26,6 +26,8 @@ namespace JobList.BusinessLogic.Interfaces
                                                                string searchString,
                                                                PaginationUrlQuery paginationUrlQuery = null);
 
+        Task<IEnumerable<VacancyDTO>> GetVacanciesByRecruiterIdAsync(int recruiterId, PaginationUrlQuery urlQuery = null);
+
         Task<VacancyDTO> GetEntityByIdAsync(int id);
 
         Task<VacancyDTO> CreateEntityAsync(VacancyRequest modelRequest);
@@ -33,9 +35,7 @@ namespace JobList.BusinessLogic.Interfaces
         Task<bool> UpdateEntityByIdAsync(VacancyRequest modelRequest, int id);
 
         Task<bool> DeleteEntityByIdAsync(int id);
-
-        Task<IEnumerable<VacancyDTO>> GetVacanciesByRectuiterId(int id);
-
+        
         Task<int> CountAsync(Expression<Func<Vacancy, bool>> predicate = null);
 
         int TotalRecords { get; }

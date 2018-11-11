@@ -24,6 +24,8 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchLineComponent } from './search-line/search-line.component';
 import { InputMaskModule, FileUploadModule, PaginatorModule } from 'primeng/primeng';
 import { InvitationComponent } from '../invitation/invitation.component';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+
 
 // Our created modules
 
@@ -54,7 +56,8 @@ import { InvitationComponent } from '../invitation/invitation.component';
     FooterComponent,
     SearchLineComponent,
     AuthorizationsComponent,
-    InvitationComponent
+    InvitationComponent,
+    ResetPasswordComponent,
   ],
   providers: [],
   exports: [
@@ -64,7 +67,7 @@ import { InvitationComponent } from '../invitation/invitation.component';
     FooterComponent,
     HeaderComponent,
     SearchLineComponent,
-    AuthorizationsComponent
+
   ]
 })
 export class SharedModule { }

@@ -15,15 +15,29 @@ namespace JobList.BusinessLogic.MappingProfiles
                 .ForMember(d => d.Password, o => o.Ignore())
                 .ForMember(d => d.RefreshToken, o => o.Ignore()); 
 
-            CreateMap<Employee, EmployeeDTO>();
+            CreateMap<Employee, EmployeeDTO>()
+                 .ForMember(d => d.PhotoData, o => o.MapFrom<string>(c => MapLogoData(c.PhotoData)));
 
             CreateMap<EmployeeDTO, Employee>();
+                
 
             CreateMap<EmployeeRequest, Employee>()
                 .ForMember(d => d.Id, o => o.UseValue(0));
 
             CreateMap<EmployeeUpdateRequest, Employee>()
-                .ForMember(d => d.Id, o => o.UseValue(0));
+                .ForMember(d => d.Id, o => o.UseValue(0))
+                .ForMember(d => d.PhotoData, o => o.MapFrom<byte[]>(cr => MapLogoData(cr.PhotoData)));
+
+
+        }
+        private byte[] MapLogoData(string logoData)
+        {
+            return Convert.FromBase64String(logoData);
+        }
+
+        private string MapLogoData(byte[] logoData)
+        {
+            return Convert.ToBase64String(logoData);
         }
     }
 }

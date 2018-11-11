@@ -18,6 +18,14 @@ import { JwtTokenInterceptor } from './core/interceptors/jwt-token-interceptor';
 import { TokenService } from './core/services/token.service';
 import { ApiService } from './core/services/api.service';
 
+// Firebase Angular modules
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+import { AuthService } from './core/services/auth.service';
+
+
 export function tokenGetter() {
 
   return  window.localStorage.getItem('token');
@@ -26,7 +34,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [
-  AppComponent
+  AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,12 +46,14 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter
       }
-    })
+    }),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule // imports firebase/auth, only needed for auth features
   ],
   providers: [
+    ApiService,
     AuthHelper,
     TokenService,
-    ApiService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtTokenInterceptor, multi: true }
   ],
   bootstrap: [
