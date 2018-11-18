@@ -115,6 +115,9 @@
           <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.required">
             First name is required
           </div>
+          <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.pattern">
+            First name must contain only letters
+          </div>
           <div *ngIf="signUpEmployeeForm.controls['firstName'].errors.minlength ||
                       signUpEmployeeForm.controls['firstName'].errors.maxlength">
             First name contains (2-50) chars
@@ -131,6 +134,9 @@
           class="alert alert-danger">
           <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.required">
             Last name is required
+          </div>
+          <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.pattern">
+            Last name must contain only letters
           </div>
           <div *ngIf="signUpEmployeeForm.controls['lastName'].errors.minlength
                       || signUpEmployeeForm.controls['lastName'].errors.maxlength">
@@ -292,6 +298,9 @@
           class="alert alert-danger">
           <div *ngIf="signUpCompanyForm.controls['companyName'].errors.required">
             Company Name is required
+          </div>
+          <div *ngIf="signUpCompanyForm.controls['companyName'].errors.pattern">
+            Company name must contain only letters
           </div>
           <div *ngIf="signUpCompanyForm.controls['companyName'].errors.minlength ||
                       signUpCompanyForm.controls['companyName'].errors.maxlength">

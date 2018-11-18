@@ -74,10 +74,21 @@ namespace JobList.BusinessLogic.Services
             var entity = _mapper.Map<ExperienceRequest, Experience>(modelRequest);
             entity.Id = id;
 
-            var updated = await _uow.ExperiencesRepository.UpdateAsync(entity);
+            var entityUpdate = await _uow.ExperiencesRepository.GetFirstOrDefaultAsync(filter: u => u.Id == id);
+
+            if (entityUpdate != null)
+            {
+                var updated = await _uow.ExperiencesRepository.UpdateAsync(entity);
+            }
+            else
+            {
+                var created = await _uow.ExperiencesRepository.CreateEntityAsync(entity);
+            }
+
             var result = await _uow.SaveAsync();
 
             return result;
+
         }
     }
 }

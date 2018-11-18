@@ -2,10 +2,10 @@
     [width]="650" [minWidth]="300" [resizable]="false" [draggable]="false" [blockScroll]="true" [baseZIndex]="10000">
     <div id="resume-form">
         <form [formGroup]="employeeForm" novalidate>
-         <div>
-             <p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Photo" (onSelect)="onUpload($event)"
-              accept="image/*" maxFileSize="1000000"></p-fileUpload>
-         </div>
+            <div>
+                <p-fileUpload name="demo[]" mode="advanced" [showUploadButton]="false" chooseLabel="Upload Photo" (onSelect)="onUpload($event)"
+                    accept="image/*" maxFileSize="1000000"></p-fileUpload>
+            </div>
             <h4 class="info-title">Full Name
                 <span class="required-input-symbol">*</span>
             </h4>
@@ -210,53 +210,93 @@
                     </div>
                 </div>
             </div>
+            <hr>
 
-           
-            <!-- <div *ngFor="let ed of resume?.educationPeriods">
+            <div *ngFor="let ed of resume?.educationPeriods">
                 <h4 class="resume-title">Education </h4>
                 <div class="ui-float-label education size-input">
                     <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="ed.school" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
                     <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="ed.faculty" [ngModelOptions]="{standalone: true}" placeholder="Select a Faculty"></p-dropdown>
                 </div>
                 <div class="ui-float-label education size-input">
-                    <p-calendar dateFormat="dd.mm.yy"  [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
-                    <p-calendar dateFormat="dd.mm.yy"  [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                    <p-calendar [(ngModel)]="ed.startDate" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                    <p-calendar [(ngModel)]="ed.finishDate" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                </div>
+                <div class="ui-float-label">
+                    <button pButton type="button" icon="pi pi-plus" (click)="deleteConfirm(resume?.educationPeriods.id)" label="Delete school"></button>
                 </div>
                 <hr>
-            </div>  -->
+            </div>
+
+
+
+
             <form [formGroup]="FormEducation" novalidate (ngSubmit)="save(FormEducation)">
                 <div formArrayName="itemsEducation">
                     <div *ngFor="let item of FormEducation.controls.itemsEducation.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
                             <span class="glyphicon glyphicon-remove pull-right" *ngIf="FormEducation.controls.itemsEducation.controls.length > 1" (click)="removeEducation(i)"></span>
                         </div>
-                        <hr>
+
                         <div class="panel-body" [formGroupName]="i">
                             <h4 class="resume-title">Education </h4>
                             <div class="ui-float-label education size-input">
-                                <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="selectedShool1" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
-                                <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="selectedFaculty1" [ngModelOptions]="{standalone: true}"
+                                <p-dropdown [options]="schools" optionLabel="name" [(ngModel)]="array[i].school" [ngModelOptions]="{standalone: true}" placeholder="Select a School"></p-dropdown>
+                                <p-dropdown [options]="faculties" optionLabel="name" [(ngModel)]="array[i].faculty" [ngModelOptions]="{standalone: true}"
                                     placeholder="Select a Faculty"></p-dropdown>
                             </div>
                             <div class="ui-float-label education size-input">
-                                <p-calendar dateFormat="dd.mm.yy" name="edStartDate1" [(ngModel)]="edStartDate1" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
-                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="edFinishDate1" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="array[i].startDate" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="array[i].finishDate" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
                             </div>
+                            <div *ngIf="i < FormEducation.controls.itemsEducation.controls.length " class="ui-float-label">
+                                <button pButton type="button" icon="pi pi-plus" (click)="deleteEducation(i)" label="Delete school"></button>
+                            </div>
+                            <hr>
                         </div>
                     </div>
+
                     <div class="ui-float-label">
                         <button pButton type="button" icon="pi pi-plus" label="Add school" (click)="addEducation()"></button>
                     </div>
                 </div>
             </form>
 
-            <form [formGroup]="FormExperience">
+            <div>
+                <hr>
+                <div class="size-input" formArrayName="items" *ngFor="let item of resumeForm.controls.items.controls; let i = index">
+                    <div [formGroupName]="i">
+                        <h4 class="resume-title">Experience </h4>
+                        <div class="ui-float-label">
+                            <input type="text" pInputText formControlName="companyName">
+                            <label for="companyname">Company Name</label>
+                        </div>
+                        <div class="ui-float-label">
+                            <input type="text" pInputText formControlName="positionExp">
+                            <label for="position">Position</label>
+                        </div>
+                    </div>
+                    <div class="ui-float-label education size-input">
+                        <p-calendar [(ngModel)]="resume?.experiences[i].startDate" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                        <p-calendar [(ngModel)]="resume?.experiences[i].finishDate" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                    </div>
+                    <div class="ui-float-label">
+                        <button pButton type="button" icon="pi pi-plus" label="Delete experience"></button>
+                    </div>
+                    <hr>
+                </div>
+
+
+            </div>
+
+
+            <form [formGroup]="FormExperience" (ngSubmit)="save(FormExperience)">
                 <div formArrayName="itemsExperience">
                     <div *ngFor="let item of FormExperience.controls.itemsExperience.controls; let i=index" class="panel panel-default">
                         <div class="panel-heading">
-                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="FormExperience.controls.itemsExperience.controls.length > 1"></span>
+                            <span class="glyphicon glyphicon-remove pull-right" *ngIf="FormExperience.controls.itemsExperience.controls.length > 1" (click)="removeExperience(i)"></span>
                         </div>
-                        <hr>
+
                         <div class="panel-body" [formGroupName]="i">
                             <h4 class="resume-title">Experience </h4>
                             <div class="size-input">
@@ -271,33 +311,28 @@
                                     </div>
                                 </div>
                                 <div class="ui-float-label">
-                                    <input id="position" type="text" pInputText formControlName="position">
+                                    <input id="position" type="text" pInputText formControlName="positionExp">
                                     <label for="position">Position</label>
-                                    <div *ngIf="FormExperience.get('position').invalid && (FormExperience.get('position').dirty || FormExperience.get('position').touched)"
-                                        class="alert alert-danger">
-                                        <div *ngIf="FormExperience.controls['position'].errors.minlength || FormExperience.controls['position'].errors.maxlength">
-                                            Position should contain (1-200) chars
-                                        </div>
-                                    </div>
 
                                 </div>
                             </div>
                             <div class="ui-float-label experience size-input">
-                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="expStartDate" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
-                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="expFinishDate" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="arrayExperience[i].startDate" [ngModelOptions]="{standalone: true}" placeholder="Start Date"></p-calendar>
+                                <p-calendar dateFormat="dd.mm.yy" [(ngModel)]="arrayExperience[i].finishDate" [ngModelOptions]="{standalone: true}" placeholder="Finish Date"></p-calendar>
                             </div>
+                            <div *ngIf="i < FormExperience.controls.itemsExperience.controls.length" class="ui-float-label">
+                                <button pButton type="button" icon="pi pi-plus" label="Delete experience" (click)="deleteExperience()"></button>
+                            </div>
+                            <hr>
                         </div>
                     </div>
-                </div>
 
+                </div>
                 <div class="ui-float-label">
                     <button pButton type="button" icon="pi pi-plus" label="Add experience" (click)="addExperience()"></button>
                 </div>
-                <hr>
-
-
             </form>
-
+            <hr>
             <h4 class="resume-title">Introduction</h4>
             <div class="skills-area">
                 <textarea [rows]="5" pSoftSkills style="resize:none" formControlName="introduction"></textarea>
@@ -328,7 +363,7 @@
     </div>
 
     <p-footer>
-        <button type="button" pButton icon="pi pi-check" [disabled]="resumeForm.invalid" (click)="submit()" label="Confirm" class="ui-button-success"></button>
+        <button type="button" pButton icon="pi pi-check" (click)="submit()" label="Confirm" class="ui-button-success"></button>
         <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
     </p-footer>
 </p-dialog>

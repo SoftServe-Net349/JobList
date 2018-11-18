@@ -10,7 +10,7 @@ import { Experience } from '../../shared/models/experience.model';
 
 export class ExperienceService {
 
-  private ctrlUrl = 'experience';
+  private ctrlUrl = 'experiences';
 
   constructor(private apiService: ApiService) {}
 

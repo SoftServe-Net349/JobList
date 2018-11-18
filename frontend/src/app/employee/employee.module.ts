@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeeComponent } from './employee.component';
 import { ButtonModule } from 'primeng/button';
@@ -51,6 +51,7 @@ import { CoreModule } from '../core/core.module';
   declarations: [
     EmployeeComponent,
     ResumeFormComponent
-  ]
+  ],
+  providers: [MessageService, ConfirmationService]
 })
 export class EmployeeModule { }

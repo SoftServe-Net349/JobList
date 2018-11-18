@@ -74,7 +74,17 @@ namespace JobList.BusinessLogic.Services
             var entity = _mapper.Map<EducationPeriodRequest, EducationPeriod>(modelRequest);
             entity.Id = id;
 
-            var updated = await _uow.EducationPeriodsRepository.UpdateAsync(entity);
+            var entityUpdate = await _uow.EducationPeriodsRepository.GetFirstOrDefaultAsync(filter: u => u.Id == id);
+
+            if (entityUpdate != null)
+            {
+                var updated = await _uow.EducationPeriodsRepository.UpdateAsync(entity);
+            }
+            else
+            {
+                var created = await _uow.EducationPeriodsRepository.CreateEntityAsync(entity);
+            }
+
             var result = await _uow.SaveAsync();
 
             return result;
