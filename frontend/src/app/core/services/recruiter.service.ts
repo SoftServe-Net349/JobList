@@ -74,6 +74,6 @@ export class RecruiterService {
   reset(id: number, request: RecruierResetPasswordRequest): Observable<Object> {
     return this.apiService.put(`/${this.ctrlUrl}/${id}/reset`, request);
   }
-  
+
 
 }

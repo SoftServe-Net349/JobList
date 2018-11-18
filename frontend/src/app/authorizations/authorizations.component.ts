@@ -78,8 +78,10 @@ export class AuthorizationsComponent implements OnInit {
   getSignUpEmployeeForm(): FormGroup {
 
     return this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50),
+        Validators.pattern('^[a-zA-Z ]*$')]],
+      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50),
+        Validators.pattern('^[a-zA-Z ]*$')]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(254),
         Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],
       birthDate: ['', [Validators.required]],
@@ -94,7 +96,8 @@ export class AuthorizationsComponent implements OnInit {
   getSignUpCompanyForm(): FormGroup {
 
     return this.formBuilder.group({
-      companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      companyName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200),
+        Validators.pattern('^[a-zA-Z ]*$')]],
       bossName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(254),
         Validators.pattern('^[A-Za-z0-9!#$%&\'*+\/=?^_`{|}~.-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')]],

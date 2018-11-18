@@ -1,6 +1,6 @@
-
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
 import { Employee } from '../shared/models/employee.model';
 import { WorkAreaService } from '../core/services/work-area.service';
 import { CityService } from '../core/services/city.service';
@@ -22,8 +22,9 @@ import { ExperienceService } from '../core/services/experience.service';
 import { EducationPeriod } from '../shared/models/education-period.model';
 import { Experience } from '../shared/models/experience.model';
 import { EmployeeUpdateRequest } from '../shared/models/employee-update-request.model';
-
-
+import { EducationPeriodRequest } from '../shared/models/education-period-request.model';
+import { ExperienceRequest } from '../shared/models/experience-request.model';
+import { controlNameBinding } from '@angular/forms/src/directives/reactive_directives/form_control_name';
 
 @Component({
   selector: 'app-resume-form',
@@ -54,7 +55,7 @@ export class ResumeFormComponent implements OnInit {
   faculties: Faculty[];
 
   educationPeriods: EducationPeriod [];
-  experience: Experience[];
+  experiences: Experience[];
 
   selectedWorkArea: WorkArea;
   selectedCity: City;
@@ -65,6 +66,8 @@ export class ResumeFormComponent implements OnInit {
   uploadedFile: File;
   dataString: string|ArrayBuffer;
   base64: string;
+  array: EducationPeriod[] = [];
+  arrayExperience: Experience[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private workAreaService: WorkAreaService,
@@ -76,7 +79,8 @@ export class ResumeFormComponent implements OnInit {
               private resumeService: ResumeService,
               private employeeService: EmployeeService,
               private educationPeriodsService: EducationPeriodsService,
-              private experienceService: ExperienceService) {
+              private experienceService: ExperienceService,
+              private confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
@@ -93,7 +97,7 @@ export class ResumeFormComponent implements OnInit {
       this.FormEducation = this.formBuilder.group({
         FrontEnd: [''],
         itemsEducation: this.formBuilder.array([
-          this.initEducation(),
+          // this.initEducation(),
         ])
       });
 
@@ -102,7 +106,7 @@ export class ResumeFormComponent implements OnInit {
         companyName: [''],
         position: [''],
         itemsExperience: this.formBuilder.array([
-          this.initExperience(),
+         // this.initExperience(),
         ])
       });
 
@@ -111,7 +115,7 @@ export class ResumeFormComponent implements OnInit {
     this.employeeForm = this.defaultEmployeeForm();
     this.resumeForm = this.defaultResumeForm();
   }
-  
+
   onUpload(event) {
 
     this.uploadedFile = event.files[0];
@@ -141,11 +145,39 @@ export class ResumeFormComponent implements OnInit {
 
   addEducation() {
         const control = <FormArray>this.FormEducation.controls['itemsEducation'];
+         this.array.push({
+          id: 0,
+          startDate: new Date(),
+          finishDate: new Date(),
+          resumeId: this.resume.id,
+          school: null,
+          faculty: null,
+          });
         control.push(this.initEducation());
+  }
+
+  deleteEducation(i: number) {
+    const control = <FormArray>this.FormEducation.controls['itemsEducation'];
+    control.removeAt(i);
+    this.array.splice(i, 1);
+  }
+
+  deleteExperience(i: number) {
+    const control = <FormArray>this.FormExperience.controls['itemsExperience'];
+    control.removeAt(i);
+    this.array.splice(i, 1);
   }
 
   addExperience() {
         const control = <FormArray>this.FormExperience.controls['itemsExperience'];
+        this.arrayExperience.push({
+          id: 0,
+          startDate: new Date(),
+          finishDate: new Date(),
+          resumeId: this.resume.id,
+          position: 'ttrtr',
+          companyName: 'rtete',
+          });
         control.push(this.initExperience());
   }
 
@@ -176,9 +208,10 @@ export class ResumeFormComponent implements OnInit {
 
   loadResumeById(id: number) {
     this.resumeService.getById(id)
-    .subscribe((data: Resume) => this.resume = data);
+    .subscribe((data: Resume) => {
+      this.resume = data;
+    });
   }
-
 
   defaultResumeForm(): FormGroup {
     return this.formBuilder.group({
@@ -195,7 +228,22 @@ export class ResumeFormComponent implements OnInit {
       instagram: ['', [Validators.minLength(1), Validators.maxLength(200)]],
       workArea: ['', [Validators.required]],
       introduction: ['', [Validators.minLength(1), Validators.maxLength(300)]],
+      items: this.formBuilder.array([
+        this.formBuilder.group({
+          positionExp: '',
+          companyName: ''
+        })
+      ])
     });
+
+  }
+
+  addItem(positionExp: string, companyName: string) {
+    (<FormArray>this.resumeForm.controls['items']).push(
+      this.formBuilder.group({
+      positionExp: positionExp,
+      companyName: companyName
+    }));
   }
 
   defaultEmployeeForm(): FormGroup {
@@ -227,28 +275,27 @@ export class ResumeFormComponent implements OnInit {
     this.selectedCity = this.employee.city;
   }
 
+  deleteConfirm(id: number) {
+    this.confirmationService.confirm({
+        message: 'Do you want to delete this record?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        accept: () => { this.educationPeriodsService.delete(id);
+      }
+    });
+  }
+
   showResumeForm(action: string,  resume = null) {
     this.resume = resume;
     this.resumeForm.reset();
     this.display = true;
     this.action = action;
 
-    this.resumeForm.setValue({
-      courses: '',
-      introduction: '',
-      instagram: '',
-      familyState: '',
-      softSkills: '',
-      keySkills: '',
-      facebook: '',
-      skype: '',
-      linkedIn: '',
-      gitHub: '',
-      workArea: '',
-      position: '',
-    });
+    // const length = (<FormArray>this.resumeForm.controls['items']).length;
+    // for (let index = 0; index < length; index++) {
+    //   (<FormArray>this.resumeForm.controls['items']).removeAt(index);
+    // }
 
-    if (action === 'Update') {
       this.resumeForm.setValue({
         position: this.resume.position,
         courses: this.resume.courses,
@@ -262,11 +309,35 @@ export class ResumeFormComponent implements OnInit {
         gitHub: this.resume.github,
         instagram: this.resume.instagram,
         workArea: this.resume.workArea,
+        items: [{
+          'positionExp': new FormControl(),
+          'companyName': new FormControl()
+        }]
       });
+
+      this.resume.educationPeriods.forEach( ePeriod => {
+        ePeriod.startDate = new Date(ePeriod.startDate);
+      });
+      this.resume.educationPeriods.forEach( ePeriod => {
+        ePeriod.finishDate = new Date(ePeriod.finishDate);
+      });
+
+      this.resume.experiences.forEach( experiences => {
+        experiences.startDate = new Date(experiences.startDate);
+      });
+      this.resume.experiences.forEach( experiences => {
+        experiences.finishDate = new Date(experiences.finishDate);
+      });
+
+      this.resume.experiences.forEach(exp => {
+        this.addItem(exp.position, exp.companyName);
+      });
+
+      (<FormArray>this.resumeForm.controls['items']).removeAt(0);
+
       this.selectedLanguages = this.languages;
 
     }
-  }
 
 
   getLanguages(): string {
@@ -280,6 +351,7 @@ export class ResumeFormComponent implements OnInit {
 
     return languages.slice(0, languages.length - 2); // to delete the last ,
   }
+
   updateInformation() {
     const requestEmployee: EmployeeUpdateRequest = this.getRequestEmployee();
     this.employeeService.update(this.employee.id, requestEmployee)
@@ -287,9 +359,33 @@ export class ResumeFormComponent implements OnInit {
   }
 
   updateResume() {
-     const requestResume: ResumeRequest = this.getRequestResume();
-     this.resumeService.update(this.resume.id, requestResume)
-       .subscribe(data => this.loadResume.emit());
+    const requestResume: ResumeRequest = this.getRequestResume();
+    this.resumeService.update(this.resume.id, requestResume)
+      .subscribe(data => this.loadResume.emit());
+
+    this.resume.educationPeriods.forEach(education => {
+      const educationRequest: EducationPeriodRequest = {
+        startDate: education.startDate,
+        finishDate: education.finishDate,
+        resumeId: education.resumeId,
+        schoolId: education.school.id,
+        facultyId: education.faculty.id
+      };
+      this.educationPeriodsService.update(education.id, educationRequest)
+        .subscribe(data => this.loadResume.emit());
+    });
+
+    this.resume.experiences.forEach(experience => {
+      const experiencesRequest: ExperienceRequest = {
+        startDate: experience.startDate,
+        finishDate: experience.finishDate,
+        resumeId: experience.resumeId,
+        position: experience.position,
+        companyName: experience.companyName,
+      };
+      this.experienceService.update(experience.id, experiencesRequest)
+        .subscribe(data => this.loadResume.emit());
+    });
   }
 
   getRequestEmployee(): EmployeeUpdateRequest {
@@ -327,17 +423,18 @@ export class ResumeFormComponent implements OnInit {
   }
 
   UpdateResume() {
-    this.resume.position = this.resumeForm.get('position').value;
-    this.resume.linkedin = this.resumeForm.get('linkedIn').value;
-    this.resume.github = this.resumeForm.get('gitHub').value;
-    this.resume.facebook = this.resumeForm.get('facebook').value;
-    this.resume.skype = this.resumeForm.get('skype').value;
-    this.resume.instagram = this.resumeForm.get('instagram').value;
-    this.resume.familyState = this.resumeForm.get('familyState').value;
-    this.resume.softSkills = this.resumeForm.get('softSkills').value;
-    this.resume.keySkills = this.resumeForm.get('keySkills').value;
-    this.resume.courses = this.resumeForm.get('courses').value;
-    this.resume.workArea = this.resumeForm.get('workArea').value;
+     this.resume.position = this.resumeForm.get('position').value;
+     this.resume.linkedin = this.resumeForm.get('linkedIn').value;
+     this.resume.github = this.resumeForm.get('gitHub').value;
+     this.resume.facebook = this.resumeForm.get('facebook').value;
+     this.resume.skype = this.resumeForm.get('skype').value;
+     this.resume.instagram = this.resumeForm.get('instagram').value;
+     this.resume.familyState = this.resumeForm.get('familyState').value;
+     this.resume.softSkills = this.resumeForm.get('softSkills').value;
+     this.resume.keySkills = this.resumeForm.get('keySkills').value;
+     this.resume.courses = this.resumeForm.get('courses').value;
+     this.resume.workArea = this.resumeForm.get('workArea').value;
+
   }
 
   UpdateEmployee() {
@@ -352,6 +449,7 @@ export class ResumeFormComponent implements OnInit {
     this.employee.city = this.employeeForm.get('city').value;
   }
 
+
   submitEmployeeForm() {
     this.updateInformation();
     this.UpdateEmployee();
@@ -359,8 +457,28 @@ export class ResumeFormComponent implements OnInit {
   }
 
   submit() {
+    this.array.forEach(element => {
+      // this.schools.find(x => x.name == element.school);
+      this.resume.educationPeriods.push(element);
+     });
     this.updateResume();
     this.UpdateResume();
     this.display = false;
+
+    const control = <FormArray>this.FormEducation.controls['itemsEducation'];
+    let ind = 0;
+    this.array.forEach(el => {
+      control.removeAt(ind);
+      ind++;
+    });
+   this.array = [];
+
+   const controlExp = <FormArray>this.FormEducation.controls['itemsExperience'];
+   let exp = 0;
+   this.arrayExperience.forEach(el => {
+    controlExp.removeAt(exp);
+    exp++;
+   });
+  this.arrayExperience = [];
   }
 }

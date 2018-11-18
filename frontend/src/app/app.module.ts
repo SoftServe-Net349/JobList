@@ -28,13 +28,13 @@ import { AuthService } from './core/services/auth.service';
 
 export function tokenGetter() {
 
-  return  window.localStorage.getItem('token');
+  return window.localStorage.getItem('token');
 
 }
 
 @NgModule({
   declarations: [
-  AppComponent,
+    AppComponent,
   ],
   imports: [
     BrowserModule,
