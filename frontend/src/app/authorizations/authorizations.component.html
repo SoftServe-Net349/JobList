@@ -42,38 +42,6 @@
     <button *ngIf="isLoading" class="sign-in" pButton [disabled]="authoruzationsForm.invalid" (click)="submitSignIn()">Sign
       In...</button>
 
-    <div class="save-forget-password-flex">
-      <div>
-        <p-checkbox [(ngModel)]="value" binary="true"></p-checkbox>
-        <label> Save</label>
-      </div>
-      <div>
-        <a href="">Forgot a password?</a>
-      </div>
-    </div>
-
-    <div *ngIf="role=='Employee'">
-      <div class="or-section Login_with">
-        <hr class="fd-f1 ">
-        <p class="Login_text"> Login with </p>
-        <hr class="fd-f1 ">
-      </div>
-      <div class=fb_google>
-        <div class=fb_google1>
-          <a class="google fd-f">
-            <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
-              alt="google">
-          </a>
-        </div>
-        <div class=fb_google1>
-          <a class="facebook fd-f" (click)="signInWithFacebook()">
-            <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
-              alt="facabook">
-          </a>
-        </div>
-      </div>
-    </div>
-
     <hr *ngIf="role!='Recruiter'">
     <div class=fb_google *ngIf="role!='Recruiter'">
       <label class="title"> Don't have an account?</label>
@@ -245,29 +213,6 @@
       <a (click)="openInformation()">
         <p class=" title Login_text"> I confirm my agreement </p>
       </a>
-    </div>
-
-    <div class="or-section Login_with">
-      <hr class="fd-f1 ">
-      <p class="Login_text"> Sign Up with </p>
-      <hr class="fd-f1 ">
-    </div>
-
-    <div class=fb_google>
-      <div class=fb_google1>
-        <a class="google fd-f" target="_blank">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/google.svg?v=621.1.297-83c2778-master"
-            alt="google">
-        </a>
-      </div>
-
-      <div class=fb_google1>
-        <a class="facebook fd-f" target="_blank">
-          <img width="32" height="32" src="https://images.cf-rabota.com.ua/2018/02/socials/facebook.svg?v=621.1.297-83c2778-master"
-            alt="facabook">
-        </a>
-      </div>
-
     </div>
     <div class="footer1"></div>
   </div>

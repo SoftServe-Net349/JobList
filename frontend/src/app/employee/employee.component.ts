@@ -50,7 +50,6 @@ export class EmployeeComponent implements OnInit {
           }
         }
       );
-
   }
 
   getLanguages(): string {
@@ -62,7 +61,7 @@ export class EmployeeComponent implements OnInit {
       });
     }
 
-    return languages.slice(0, languages.length - 2); // to delete the last ,
+    return languages.slice(0, languages.length - 2);
   }
 
   sanitizeEmployeeImg(imageBase64): SafeUrl {
@@ -70,12 +69,9 @@ export class EmployeeComponent implements OnInit {
       this.employee.photoData !== null && this.employee.photoData !== '') {
       return this._sanitizer.bypassSecurityTrustUrl(`data:image/${this.employee.photoMimeType};base64,` + imageBase64);
 
-    }
-   else {
-      
+    } else {
       return '../../images/defaultUser.png';
 
     }
-
   }
 }

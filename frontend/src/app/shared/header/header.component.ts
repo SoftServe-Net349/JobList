@@ -69,14 +69,6 @@ export class HeaderComponent implements OnInit {
         command: (event) => {this.router.navigate(['/companies', this.uId]); }
       },
       {
-        label: 'Settings',
-        icon: 'fa fa-cog',
-        items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o',
-          command: (event) => { this.resetPassword.showSignIn(this.role, this.uId);}}
-        ]
-      },
-      {
       label: 'Sign out',
       icon: 'fa fa-sign-out',
       command: (event) => { this.authHelper.logout(); this.authService.logout(); this.chengeAuthenticatedStatus(); }
@@ -93,14 +85,6 @@ export class HeaderComponent implements OnInit {
         icon: 'fa fa-home',
         command: (event) => { this.router.navigate(['/recruiters', this.uId]); }},
       {
-        label: 'Settings',
-        icon: 'fa fa-cog',
-        items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o',
-          command: (event) => { this.resetPassword.showSignIn(this.role, this.uId);}}
-        ]
-      },
-      {
       label: 'Sign out',
       icon: 'fa fa-sign-out',
       command: (event) => { this.authHelper.logout(); this.router.navigate(['/']); this.chengeAuthenticatedStatus(); }
@@ -116,14 +100,6 @@ export class HeaderComponent implements OnInit {
         label: 'Home',
         icon: 'fa fa-home',
         command: (event) => { this.router.navigate(['/employees', this.uId]); }
-      },
-      {
-        label: 'Settings',
-        icon: 'fa fa-cog',
-        items: [
-          {label: 'Change password', icon: 'fa fa-pencil-square-o',
-          command: (event) => { this.resetPassword.showSignIn(this.role, this.uId);}}
-        ]
       },
       {
       label: 'Sign out',
@@ -147,7 +123,6 @@ export class HeaderComponent implements OnInit {
 
       this.role = '';
       this.uId = 0;
-
     }
   }
 

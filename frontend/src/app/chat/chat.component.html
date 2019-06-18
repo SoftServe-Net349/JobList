@@ -1,35 +1,34 @@
 <div *ngIf="isShowDialog" id="chatDialog" title="Chat with the admin" [class]="connect">
-    <!-- <div class="close-window">
-        <svg id="close-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle сx="12" cy="12" r="11"></circle>
-            <path d="M7.5 16.5l9-9M16.5 16.5l-9-9"></path>
-        </svg>
-    </div> -->
+  <div class="close-btn" title="Close chat" (click)="closeChat()">
+    <img src="https://img.icons8.com/cotton/64/000000/delete-sign.png">
+  </div>
     <div *ngIf="isAskName" id="chatWelcomePanel">
-        <h3>Have a question?</h3>
-        <form id="chatConnectForm">
-            <input name="name" [(ngModel)]="message.senderName" (keyup.enter)="startChat()" class="nameTextbox" placeholder="Enter your name" />
-        </form>
+      <h3>Have a question?</h3>
+      <form id="chatConnectForm">
+        <input name="name" [(ngModel)]="message.senderName" (keyup.enter)="startChat()" class="nameTextbox"
+          placeholder="Enter your name" />
+      </form>
     </div>
     <div id="chatConnectionInfo">
-        <strong>Connecting...</strong>
+      <strong>Connecting...</strong>
     </div>
     <div id="chatMainPanel">
-        <ul id="chatHistory">
-            <li *ngFor="let message of messages; let i = index" class="{{roles[i]}}">
-                <div class="message-header">
-                    <span class="name">{{message.senderName }}</span>
-                    <span class="time">{{message.sendAt | date}} </span>
-                </div>
-                <div class="message-body">
-                    {{message.text}}
-                </div>
-            </li>
-        </ul>
-        <div id="bottomPanel">
-            <form id="chatForm">
-                <input id="messageTextbox" name="text" [(ngModel)]="message.text" (keyup.enter)="sendMessage()" placeholder="Type a message" />
-            </form>
-        </div>
+      <ul id="chatHistory">
+        <li *ngFor="let message of messages; let i = index" class="{{roles[i]}}">
+          <div class="message-header">
+            <span class="name">{{message.senderName }}</span>
+            <span class="time">{{message.sendAt | date}} </span>
+          </div>
+          <div class="message-body">
+            {{message.text}}
+          </div>
+        </li>
+      </ul>
+      <div id="bottomPanel">
+        <form id="chatForm">
+          <input id="messageTextbox" name="text" [(ngModel)]="message.text" (keyup.enter)="sendMessage()"
+            placeholder="Type a message" />
+        </form>
+      </div>
     </div>
 </div>

@@ -80,4 +80,9 @@ export class ChatComponent implements OnInit {
             this.startConnection();
         }
     }
+
+    closeChat() {
+        this.isShowDialog = false;
+        setTimeout(() => this.isShowDialog = true, 300000);
+    }
 }

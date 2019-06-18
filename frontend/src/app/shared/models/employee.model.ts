@@ -1,5 +1,4 @@
 import { City } from './city.model';
-import { FavoriteVacancy } from './favorite-vacancy.model';
 import { Role } from './role.model';
 
 export interface Employee {
@@ -14,6 +13,4 @@ export interface Employee {
   email: string;
   city: City;
   role: Role;
-
-  favoriteVacancies: FavoriteVacancy[];
 }

@@ -23,12 +23,11 @@
     </div>
     <div  class="additional-button">
       <div class="additional-button"> 
-        <button type="button" (click)="employeeForm.showInfoForm(employee)" pButton icon="pi pi-copy" label="Update info"></button>
-        <app-resume-form #employeeForm></app-resume-form>
+        <app-resume-form #resumeForm (loadResume)="loadResumeById(employee?.id)"></app-resume-form>
+        <button type="button" (click)="resumeForm.showInfoForm(employee)" pButton icon="pi pi-copy" label="Update info"></button>
       </div>
       <div class="additional-button">
         <button type="button" (click)="resumeForm.showResumeForm(action, resume)" pButton icon="pi pi-copy" [label]="action + ' CV'"></button>
-        <app-resume-form [action]="action" #resumeForm></app-resume-form>
       </div>
     </div>
   </div>

@@ -15,7 +15,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { AdminVacanciesComponent } from './admin-vacancies/admin-vacancies.component';
 import { AdminRecruitersComponent } from './admin-recruiters/admin-recruiters.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ChartModule } from 'primeng/chart';
 import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
 import { CoreModule } from '../core/core.module';
@@ -48,7 +47,6 @@ import { AdminChatComponent } from './admin-chat/admin-chat.component';
     AdminRecruitersComponent,
     AdminEmployeesComponent,
     AdminVacanciesComponent,
-    AdminDashboardComponent,
     AdminHeaderComponent,
     AdminChatComponent
   ],

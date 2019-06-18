@@ -18,6 +18,5 @@ namespace JobList.Common.DTOS
 
         public RoleDTO Role { get; set; }
         public CityDTO City { get; set; }
-        public IList<FavoriteVacancyDTO> FavoriteVacancies { get; set; }
     }
 }
